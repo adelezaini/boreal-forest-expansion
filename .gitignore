@@ -6,6 +6,7 @@
 #Mac
 .DS_Store
 */.DS_Store
+
 .ipynb_checkpoints/
 to-do.txt
 generate_env_yml.py
@@ -15,3 +16,5 @@ generate_env_yml.py
 #Nac
 brl-frst-env/
 run_jupyter.sh
+
+# Private files
