@@ -1,0 +1,26 @@
+Found variables:
+LAISHA
+LAISUN
+TLAI
+FSH
+FLDS
+FSDS
+QSOIL
+TSA
+TSOI
+WIND
+ZWT
+MEG_carene_3
+MEG_isoprene
+MEG_pinene_a
+
+Missing variables:
+RAINRATE
+SNOWRATE
+MEG_acetaldehyde
+MEG_acetic_acid
+MEG_acetone
+MEG_ethanol
+MEG_formaldehyde
+MEG_methanol
+MEG_thujene_a
