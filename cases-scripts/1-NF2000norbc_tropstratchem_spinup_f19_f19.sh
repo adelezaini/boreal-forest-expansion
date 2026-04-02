@@ -1,15 +1,21 @@
 #!/bin/bash
 
-# NF2000 test case to see which surfdata file points to
+# Spinup for MET and CTRL_PD, extra output: cpl auxiliary files for land-only run
 
 # Simulation specifics:
-export CASENAME=NF2000norbc_f19_f19_test
+export CASENAME=NF2000norbc_tropstratchem_spinup_f19_f19
 export PROJECT=nn9188k
 export NORESM_ROOT=/cluster/home/$USER/NorESM2.3_beta01
-export COMPSET=2000_CAM60%NORESM%NORBC_CLM50%BGC_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
+export COMPSET=2000_CAM60%NORESM%NORBC%TROPSTRATCHEM_CLM50%BGC_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
 export RES=f19_f19
 
-CASEROOT=$HOME/cases/BRL_FRST_XSPN/$CASENAME
+# Initial files:
+export REFCASE=NF1850norbc_f19_f19_20241127_test01
+export REFDATE=0031-01-01-00000
+export REFDIR=/cluster/projects/$PROJECT/$USER/cases/$CASENAME/run/
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+CASEROOT=$HOME/cases/BRL_FRST_XPSN/$CASENAME
 rm -rf $CASEROOT #remove previous cases
 
 cd $NORESM_ROOT/cime/scripts || exit 1
@@ -19,6 +25,23 @@ cd $NORESM_ROOT/cime/scripts || exit 1
 cd $CASEROOT
 
 ./xmlchange CAM_AEROCOM=TRUE #aerosol diagnostics
+
+#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+mkdir -p $REFDIR
+cp /nird/datalake/NS9560K/noresm2.3/cases/$REFCASE/rest/$REFDATE/* $REFDIR
+gunzip $REFDIR*.gz 
+
+./xmlchange RUN_TYPE=hybrid
+./xmlchange RUN_REFCASE=$REFCASE
+./xmlchange RUN_REFDATE=$REFDATE
+#./xmlchange STOP_OPTION=nyears,STOP_N=1
+# Alternatevely: I could directly copy to RUNDIR=/cluster/projects/nn9188k/adelez/cases/$CASENAME/run and avoid the next commands
+#./xmlchange RUN_REFDIR=$REFDIR                     # path to restarts 
+#./xmlchange GET_REFCASE=TRUE                       # get refcase from outside rundir
+#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+#./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00
+#./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=48:59:00
 
 #./case.build --clean
 ./case.setup

@@ -3,13 +3,13 @@
 # NF2000 test case to see which surfdata file points to
 
 # Simulation specifics:
-export CASENAME=NF2000norbc_crop_f19_f19_test
+export CASENAME=NF2000norbc_f19_f19_test
 export PROJECT=nn9188k
 export NORESM_ROOT=/cluster/home/$USER/NorESM2.3_beta01
-export COMPSET=2000_CAM60%NORESM%NORBC_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
+export COMPSET=2000_CAM60%NORESM%NORBC_CLM50%BGC_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
 export RES=f19_f19
 
-CASEROOT=$HOME/cases/BRL_FRST_XSPN/$CASENAME
+CASEROOT=$HOME/cases/BRL_FRST_XPSN/$CASENAME
 rm -rf $CASEROOT #remove previous cases
 
 cd $NORESM_ROOT/cime/scripts || exit 1
@@ -41,21 +41,17 @@ cat << EOF >> user_nl_cam
 'CLDTOT','CDNUMC','SO2','isoprene','monoterp','SOA_SV','OH_vmr','AOD_VIS','CAODVIS','CLDFREE',
 'CDOD550','CDOD440','CDOD870','AEROD_v','CABS550','CABS550A',
 
-'SOA_SEC01','SOA_SEC02','SOA_SEC03','SOA_SEC04','SOA_SEC05',
-'SO4_SEC01','SO4_SEC02','SO4_SEC03','SO4_SEC04','SO4_SEC05',
-'nrSOA_SEC01','nrSOA_SEC02','nrSOA_SEC03','nrSOA_SEC04','nrSOA_SEC05',
-'nrSO4_SEC01','nrSO4_SEC02','nrSO4_SEC03','nrSO4_SEC04','nrSO4_SEC05',
-'cb_SOA_SEC01','cb_SOA_SEC02','cb_SOA_SEC03','cb_SOA_SEC04','cb_SOA_SEC05',
-'cb_SO4_SEC01','cb_SO4_SEC02','cb_SO4_SEC03','cb_SO4_SEC04','cb_SO4_SEC05',
-
 'SST','PRECC','PRECL','PRECT','ozone','O3','TROP_P','TROP_T','TROP_Z','VT100',
-'MEG_CH3COCH3','MEG_CH3CHO','MEG_CH2O','MEG_CO','MEG_C2H6','MEG_C3H8','MEG_C2H4','MEG_C3H6',
-'MEG_C2H5OH','MEG_C10H16','MEG_ISOP','MEG_CH3OH','MEG_isoprene','MEG_monoterp',
-'SFisoprene','SFmonoterp','cb_isoprene','cb_monoterp'
- fincl2 = 'SFisoprene','SFmonoterp', 'TROP_O3', 'TROP_NO', 'TROP_NO2', 'TROP_H2O2', 'TROP_HNO3', 'TROP_CO', 'TROP_SO2', 'TROP_NH3', 'TROP_HCHO', 'TROP_CH4', 'TROP_C2H6', 'TROP_C3H8', 'TROP_C2H4', 'TROP_C3H6', 'TROP_C2H5OH', 'TROP_C10H16', 'TROP_ISOP', 'TROP_CH3OH', 'TROP_isoprene', 'TROP_monoterp'
+'MEG_isoprene','MEG_monoterp', 'SFisoprene','SFmonoterp','cb_isoprene','cb_monoterp'
+ fincl2 = 'SFisoprene','SFmonoterp'
 EOF
 
+# Look when full atmospheric chemistry:
+# fincl1 = 'MEG_CH3COCH3','MEG_CH3CHO','MEG_CH2O','MEG_CO','MEG_C2H6','MEG_C3H8','MEG_C2H4','MEG_C3H6', 'MEG_C2H5OH','MEG_C10H16','MEG_ISOP','MEG_CH3OH'
+# fincl2 = 'TROP_O3', 'TROP_NO', 'TROP_NO2', 'TROP_H2O2', 'TROP_HNO3', 'TROP_CO', 'TROP_SO2', 'TROP_NH3', 'TROP_HCHO', 'TROP_CH4', 'TROP_C2H6', 'TROP_C3H8', 'TROP_C2H4', 'TROP_C3H6', 'TROP_C2H5OH', 'TROP_C10H16', 'TROP_ISOP', 'TROP_CH3OH', 'TROP_isoprene', 'TROP_monoterp'
+
 #cat << EOF >> user_nl_clm 
+# doesn't work
 # hist_fincl1 = 'LAISHA', 'LAISUN', 'TLAI', 'FSH', 'FLDS', 'FSDS', 'QSOIL', 'RAINRATE', 'SNOWRATE', 'TSA', 'TSOI', 'WIND', 'ZWT', 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol','MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
 #EOF
 
@@ -65,3 +61,13 @@ EOF
 
 #./case.build
 #./case.submit
+
+
+#Sara's sectional scheme:
+
+#fincl1 = 'SOA_SEC01','SOA_SEC02','SOA_SEC03','SOA_SEC04','SOA_SEC05',
+#'SO4_SEC01','SO4_SEC02','SO4_SEC03','SO4_SEC04','SO4_SEC05',
+#'nrSOA_SEC01','nrSOA_SEC02','nrSOA_SEC03','nrSOA_SEC04','nrSOA_SEC05',
+#'nrSO4_SEC01','nrSO4_SEC02','nrSO4_SEC03','nrSO4_SEC04','nrSO4_SEC05',
+#'cb_SOA_SEC01','cb_SOA_SEC02','cb_SOA_SEC03','cb_SOA_SEC04','cb_SOA_SEC05',
+#'cb_SO4_SEC01','cb_SO4_SEC02','cb_SO4_SEC03','cb_SO4_SEC04','cb_SO4_SEC05',
