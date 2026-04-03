@@ -1,0 +1,24 @@
+natpft,LPJGUESS study,LPJ-GUESS names,vegetation group,NORESM - corresp,NORESM - indexes
+0,BNE,Boreal needle-leaved evergreen tree,tree,BoNET,2
+1,BINE,Boreal shade-intolerant needle-leaved evergreen tree,tree,BoNET,2
+2,BNS,Boreal needle-leaved summergreen tree,tree,BoNDT,3
+3,TeNE,Temperate needle-leaved evergreen tree,tree,TeNET,1
+4,TeBE,Temperate broad-leaved evergreen tree,tree,TeBET,5
+5,IBS,Shade-intolerant broad-leaved summergreen tree,tree,"BoBDT, TeBDT","(8, 7)"
+6,TeBS,Temperate broad-leaved summergreen tree,tree,TeBDT,7
+7,C3G,Cold C3 grass,grass,"C3, articC3","(12, 13)"
+8,HSE,High shrub evergreen,shrub,TeBES,9
+9,HSS,High shrub summergreeen,shrub,"BoBDS, TeBDS","(10, 11)"
+10,LSE,Low shrub evergreen,shrub,TeBES,9
+11,LSS,Low shrub summergreen,shrub,"BoBDS, TeBDS","(10, 11)"
+12,GRT,Graminoid and forb tundra,grass,?,?
+13,EPDS,Evergreen prostate dwarf shrub - needleleaved,grass,?,?
+14,SPDS,Summergreen prostate dwarf shrub - broadleaved,grass,?,?
+15,CLM,"Cushion forb, lichen and moss",grass,?,?
+16,pLSE,?,shrub?,?,?
+17,pLSS,?,shrub?,?,?
+18,pCLM,?,grass?,?,?
+19,WetGRS,Flood-tolerant grass/gramoid,grass?,?,?
+20,pmoss,Peatland moss,?,?,?
+21,C3G_wet,?,grass?,?,?
+22,C4G_wet,?,grass?,?,?
