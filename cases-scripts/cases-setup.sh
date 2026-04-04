@@ -24,6 +24,23 @@ ocean_filepath = '/cluster/shared/noresm/inputdata/noresm-only/atm/cam/camoslo'
 EOF
 }
 
+##--------------------coupler history
+output_cplhist_auxiliary_files(){
+    cat << EOF >> user_nl_cpl
+        &seq_infodata_inparm
+          histaux_a2x      = .true.
+          histaux_a2x1hr   = .true.
+          histaux_a2x1hri  = .true.
+          histaux_a2x3hr   = .true.
+          histaux_a2x3hrp = .false.
+          histaux_a2x24hr = .true.
+          histaux_l2x     = .true.
+          histaux_l2x1yrg = .true.
+          histaux_r2x     = .true.
+        /
+    EOF
+}
+
 ##-------------------- common functions --------------------##
 base_case_vars() {
     PROJECT="nn9188k"
