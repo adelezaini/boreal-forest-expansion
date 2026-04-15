@@ -15,7 +15,7 @@ forcings_2100(){
 }
 
 dms_forcing(){
-# DMS forcing to 2000
+# DMS forcing to 2000 (for 2100 simulation)
 cat << EOF >> user_nl_cam
 &oslo_ctl_nl
 ocean_filename = 'dms-hamocc-dow-taylor_chlor_a-lanaclim_NHIST_f19_tn14_20190710_1995-2005_cycle_version20260209.nc'
@@ -42,21 +42,148 @@ output_cplhist_auxiliary_files(){
 }
 
 ##-------------------- common functions --------------------##
-base_case_vars() {
+set_project_noresm_res_vars() {
     PROJECT="nn9188k"
     NORESM_ROOT="/cluster/home/$USER/NorESM2.3_beta01"
     RES="f19_f19"
 }
 
-improve_performance(){
-# Improve performance by using more nodes and less threads per node (if needed)
-#./xmlchange NTASKS=144
-#./xmlchange NTHRDS=1
-#./xmlchange ROOTPE_NODE=0
-#./xmlchange NTASKS_PER_NODE=36
-./xmlchange NTASKS=496
-./xmlchange NTASKS_ATM=16
-./xmlchange ROOTPE_ATM=496
+prepare_restart_files() {
+    local REST_SRC="$1"
+    local REST_LOCAL="$2"
+
+    echo "Preparing restart files..."
+
+    # Check source exists
+    if [ ! -d "$REST_SRC" ]; then
+        echo "ERROR: source directory does not exist: $REST_SRC"
+        return 1
+    fi
+
+    # Ensure local directory exists
+    mkdir -p "$REST_LOCAL" || return 1
+
+    # Local variables for list of filenames
+    local src_list dst_list
+    src_list=$(mktemp)
+    dst_list=$(mktemp)
+
+    # Remove local temp files to save space when exit
+    trap 'rm -f "$src_list" "$dst_list"' RETURN
+
+    # Expected file list from source (strip .gz)
+    find "$REST_SRC" -maxdepth 1 -type f -printf '%f\n' \
+        | sed 's/\.gz$//' \
+        | sort -u > "$src_list"
+
+    # Actual file list from local (exclude .gz)
+    find "$REST_LOCAL" -maxdepth 1 -type f ! -name '*.gz' -printf '%f\n' \
+        | sort -u > "$dst_list"
+
+    # If list differs, copy files; otherwise skip
+    if diff -q "$src_list" "$dst_list" >/dev/null; then
+        echo "Restart files already in $REST_LOCAL"
+    else
+        rsync -havP "$REST_SRC"/ "$REST_LOCAL"/ || return 1
+    fi
+
+    # Unzip .gz files
+    if find "$REST_LOCAL" -maxdepth 1 -type f -name '*.gz' -print -quit | grep -q .; then
+        gunzip -fv "$REST_LOCAL"/*.gz || return 1
+        echo "Restart files in $REST_LOCAL"
+    fi
+}
+
+improve_performance() {
+    # Usage: improve_performance [-v|--verbose] A|B|C|Z
+    # in 1 day simulation Z (original) > C > A > B 
+
+    if [ ! -x ./xmlchange ] || [ ! -x ./pelayout ]; then
+        echo "Error: run this from your case directory."
+        return 1
+    fi
+
+    TPN=128
+    VERBOSE=0
+
+    if [ "$1" = "-v" ] || [ "$1" = "--verbose" ]; then
+        VERBOSE=1
+        shift
+    fi
+
+    case "$1" in
+        A|a)
+            CASE_NAME="A"
+            NTASKS_OTHER=128
+            NTASKS_ATM=384
+            ROOT_OTHER=384
+            ROOT_ATM=0
+            STRATEGY="Atmosphere-heavy (~75/25)"
+            ;;
+        B|b)
+            CASE_NAME="B"
+            NTASKS_OTHER=256
+            NTASKS_ATM=256
+            ROOT_OTHER=256
+            ROOT_ATM=0
+            STRATEGY="Balanced (50/50)"
+            ;;
+        C|c)
+            CASE_NAME="C"
+            NTASKS_OTHER=64
+            NTASKS_ATM=448
+            ROOT_OTHER=448
+            ROOT_ATM=0
+            STRATEGY="Extreme ATM-heavy (~90/10)"
+            ;;
+        Z|z)
+            CASE_NAME="Z"
+            NTASKS_OTHER=512
+            NTASKS_ATM=512
+            ROOT_OTHER=0
+            ROOT_ATM=0
+            STRATEGY="Original fully shared layout"
+            ;;
+        *)
+            echo "Usage: improve_performance [-v|--verbose] A|B|C|D|Z"
+            return 1
+            ;;
+    esac
+
+    # Build SETTINGS string (special case for Z)
+    if [ "$CASE_NAME" = "Z" ]; then
+        SETTINGS="NTASKS=512,NTASKS_ATM=512,ROOTPE_ATM=0,ROOTPE_CPL=0,ROOTPE_LND=0,ROOTPE_ICE=0,ROOTPE_OCN=0,ROOTPE_ROF=0,ROOTPE_GLC=0,ROOTPE_WAV=0"
+        TOTAL_TASKS=512
+    else
+        SETTINGS="NTASKS=$NTASKS_OTHER,NTASKS_ATM=$NTASKS_ATM,ROOTPE_ATM=$ROOT_ATM,ROOTPE_CPL=$ROOT_OTHER,ROOTPE_LND=$ROOT_OTHER,ROOTPE_ICE=$ROOT_OTHER,ROOTPE_OCN=$ROOT_OTHER,ROOTPE_ROF=$ROOT_OTHER,ROOTPE_GLC=$ROOT_OTHER,ROOTPE_WAV=$ROOT_OTHER"
+        TOTAL_TASKS=$((ROOT_OTHER + NTASKS_OTHER))
+    fi
+
+    ./xmlchange "$SETTINGS" || {
+        echo "Error: xmlchange failed."
+        return 1
+    }
+
+    NODES_USED=$(( (TOTAL_TASKS + TPN - 1) / TPN ))
+
+    if [ "$VERBOSE" -eq 1 ]; then
+        echo
+        echo "Setting PE layout:"
+        echo "  Case                        : $CASE_NAME"
+        echo "  Strategy                    : $STRATEGY"
+        echo "  ATM tasks                   : $NTASKS_ATM"
+        echo "  Shared non-ATM task block   : $NTASKS_OTHER"
+        echo "  ATM ROOTPE                  : $ROOT_ATM"
+        echo "  Non-ATM ROOTPE              : $ROOT_OTHER"
+        echo "  Total tasks                 : $TOTAL_TASKS"
+        echo "  Tasks per node              : $TPN"
+        echo "  Nodes used                  : $NODES_USED"
+        echo
+        echo "Resulting pelayout:"
+        ./pelayout
+    else
+        echo "PE layout updated (case=$CASE_NAME)"
+    fi
 }
 
 aerosol_cosp_diagnostics(){
