@@ -38,7 +38,7 @@ output_cplhist_auxiliary_files(){
           histaux_l2x1yrg = .true.
           histaux_r2x     = .true.
         /
-    EOF
+EOF
 }
 
 ##-------------------- common functions --------------------##
