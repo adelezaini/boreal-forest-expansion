@@ -91,19 +91,18 @@ output_cplhist_auxiliary_files(){
     # Output auxiliary files for coupler history (cplhist) to be able to run an offline CLM simulation with my climate data and not the default ones in NorESM2.3
     # To add to the coupled/AMIP run, prior to the land-only run 
     # Source: https://noresm-docs.readthedocs.io/en/noresm2/configurations/clm.html#spin-up-of-clm5
-    
-    cat << EOF >> user_nl_cpl
-        &seq_infodata_inparm
-          histaux_a2x      = .true.
-          histaux_a2x1hr   = .true.
-          histaux_a2x1hri  = .true.
-          histaux_a2x3hr   = .true.
-          histaux_a2x3hrp = .false.
-          histaux_a2x24hr = .true.
-          histaux_l2x     = .true.
-          histaux_l2x1yrg = .true.
-          histaux_r2x     = .true.
-        /
+cat << EOF >> user_nl_cpl
+&seq_infodata_inparm
+  histaux_a2x      = .true.
+  histaux_a2x1hr   = .true.
+  histaux_a2x1hri  = .true.
+  histaux_a2x3hr   = .true.
+  histaux_a2x3hrp  = .false.
+  histaux_a2x24hr  = .true.
+  histaux_l2x      = .true.
+  histaux_l2x1yrg  = .true.
+  histaux_r2x      = .true.
+/
 EOF
 }
 
