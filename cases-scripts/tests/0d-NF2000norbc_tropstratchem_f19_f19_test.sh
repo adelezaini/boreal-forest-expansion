@@ -15,7 +15,7 @@ source cases-setup.sh
 #––––––––––– For tests - adding date to name to avoid overwriting previous tests:
 today=$(date +'%Y%m%d')
 testname="test-$today"
-CASENAME="NF2000norbc_tropstratchem_$testname-4"
+CASENAME="NF2000norbc_tropstratchem_${testname}-timing_C"
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 COMPSET=NF2000norbc_tropstratchem
@@ -41,6 +41,9 @@ cd $NORESM_ROOT/cime/scripts || exit 1
 echo "Case $CASENAME created with compset $COMPSET and resolution $RES"
 
 cd $CASEROOT 
+
+# chek permance with layout change:
+# improve_performance -v C
 
 aerosol_cosp_diagnostics
 forcings_2000
