@@ -14,7 +14,7 @@ forcings_2100(){
 ./xmlchange OCN_FLUX_SCHEME=1
 }
 
-dms_forcing(){
+dms_forcing_2100_to_2000(){
 # DMS forcing to 2000 (for 2100 simulation)
 cat << EOF >> user_nl_cam
 &oslo_ctl_nl
@@ -162,6 +162,33 @@ fincl2 = 'SFisoprene','SFmonoterp',
 'TROP_C2H4', 'TROP_C3H6', 'TROP_C2H5OH', 'TROP_C10H16', 'TROP_ISOP', 
 'TROP_CH3OH', 'TROP_isoprene', 'TROP_monoterp'
 /
+EOF
+}
+
+cam_spinup_diagnostics(){
+# To check if reached equilibrium in the spinup
+cat << EOF >> user_nl_cam
+mfilt = 12, 24
+nhtfrq = 0, 1
+avgflag_pertape = 'A','I'
+history_aerosol = .true.
+
+fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC'
+
+fincl2 = 'NUCLRATE','FORMRATE','COAGNUCL','H2SO4','SOA_LV','SOA_NA','SO4_NA'
+
+EOF
+}
+
+clm_spinup_diagnostics(){
+# To check if reached equilibrium in the spinup
+cat << EOF >> user_nl_clm
+hist_mfilt = 12, 24
+hist_nhtfrq = 0, -24
+
+hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','RAIN','SNOW','QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT','GPP','NPP','AR','HR','NEE'
+hist_fincl2 = 'TSA','TLAI','FSH','EFLX_LH_TOT','QSOIL','QVEGT','QOVER','QRUNOFF','RAIN','SNOW','ZWT'
+
 EOF
 }
 
