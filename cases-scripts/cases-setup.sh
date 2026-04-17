@@ -100,7 +100,7 @@ cat << EOF >> user_nl_cpl
   histaux_a2x3hrp  = .false.
   histaux_a2x24hr  = .true.
   histaux_l2x      = .true.
-  histaux_l2x1yrg  = .true.
+  histaux_l2x1yrg  = .false.
   histaux_r2x      = .true.
 /
 EOF

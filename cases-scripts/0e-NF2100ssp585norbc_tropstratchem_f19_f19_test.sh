@@ -22,7 +22,7 @@ REFCASE="NSSP585frc2_f19_tn14_20191014"
 REFDATE="2100-01-01"
 
 REST_SRC="/nird/datalake/NS9560K/olivie/restart/${REFCASE}/${REFDATE}-00000"
-REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}_${REFDATE}-00000"
+REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"

@@ -15,7 +15,7 @@ source cases-setup.sh
 #––––––––––– For tests - adding date to name to avoid overwriting previous tests:
 today=$(date +'%Y%m%d')
 testname="test-$today"
-CASENAME="NF2000norbc_tropstratchem_${testname}"
+CASENAME="NF2000norbc_tropstratchem_${testname}-1day"
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 COMPSET=NF2000norbc_tropstratchem
@@ -26,7 +26,7 @@ REFCASE="NHIST_tropstratchem_01_f19_tn14_r1990_s01_20241118"
 REFDATE="2000-01-01"
 
 REST_SRC="/nird/datalake/NS9560K/olivie/restart/${REFCASE}/${REFDATE}-00000"
-REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}_${REFDATE}-00000"
+REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
@@ -59,7 +59,7 @@ forcings_2000
 ./xmlchange GET_REFCASE=TRUE
 
 # Simulation length
-./xmlchange STOP_OPTION=nyears
+./xmlchange STOP_OPTION=ndays
 ./xmlchange STOP_N=1
 ./xmlchange JOB_WALLCLOCK_TIME=24:00:00
 
