@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# 2000 Spinup for MET and CTRL_PD & for extra output cpl auxiliary files for land-only run
+# Meteorology for winds (u,v) for nudging
 # Free run, no nudging
-# Initial file: NHIST_f19_tn14_20190710 (2000-01-01)
+# Initial file: 2000 spin up...........................
 # 20/30 years
-# Clphist auxiliary files as extra output
 
 # Exit if error, undefined variable...
 set -euo pipefail
@@ -21,7 +20,7 @@ REFCASE="NHIST_tropstratchem_01_f19_tn14_r1990_s01_20241118"
 REFDATE="2000-01-01"
 
 REST_SRC="/nird/datalake/NS9560K/olivie/restart/${REFCASE}/${REFDATE}-00000"
-REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
+REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}_${REFDATE}-00000"
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
