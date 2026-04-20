@@ -6,13 +6,20 @@
 # 20/30 years
 # Clphist auxiliary files as extra output
 
+# -2 I made the walltime longer, but then problem:
+#   2026-04-18 17:18:26: case.submit error 
+#   ERROR: Command: 'sbatch --time 48:00:00 --account nn9188k  --dependency=afterok:1490364 case.st_archive --resubmit' failed with error 'b'sbatch: error: Batch job submission failed: Requested time limit is invalid (missing or exceeds some limit)'' from dir '/cluster/projects/nn9188k/adelez/cases/BRL_FRST_XPSN/NF2100ssp585norbc_tropstratchem_spinup_f19_f19-2'
+# -3 try fix:
+#   ./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00
+#   ./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=48:59:00
+
 # Exit if error, undefined variable...
 set -euo pipefail
 # Load common functions for case setup
 source cases-setup.sh
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-CASENAME="NF2100ssp585norbc_tropstratchem_spinup_f19_f19"
+CASENAME="NF2100ssp585norbc_tropstratchem_spinup_f19_f19-3"
 COMPSET=NF2100ssp585norbc_tropstratchem
 set_project_noresm_res_vars
 
@@ -56,7 +63,9 @@ dms_forcing_2100_to_2000
 ./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
 ./xmlchange RUN_STARTDATE=0001-01-01
 
-./xmlchange JOB_WALLCLOCK_TIME=24:00:00 # ok with ~7 simulated years/day for STOP_N = 5 years
+#./xmlchange JOB_WALLCLOCK_TIME=48:00:00 # ok with ~7 simulated years/day for STOP_N = 5 years
+./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00
+./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=48:59:00
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 #./case.build --clean
