@@ -6,7 +6,9 @@
 # 20/30 years
 # Clphist auxiliary files as extra output
 
-# -2 I made the walltime longer, but then problem:
+# -2 I made the walltime longer:
+#  ./xmlchange JOB_WALLCLOCK_TIME=48:00:00
+# But then problem:
 #   2026-04-18 17:18:26: case.submit error 
 #   ERROR: Command: 'sbatch --time 48:00:00 --account nn9188k  --dependency=afterok:1490364 case.st_archive --resubmit' failed with error 'b'sbatch: error: Batch job submission failed: Requested time limit is invalid (missing or exceeds some limit)'' from dir '/cluster/projects/nn9188k/adelez/cases/BRL_FRST_XPSN/NF2100ssp585norbc_tropstratchem_spinup_f19_f19-2'
 # -3 try fix:
