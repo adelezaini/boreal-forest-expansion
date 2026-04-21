@@ -165,6 +165,13 @@ fincl2 = 'SFisoprene','SFmonoterp',
 EOF
 }
 
+clm_diagnostics(){
+cat << EOF >> user_nl_clm 
+hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','RAIN','SNOW','RAINRATE','SNOWRATE','QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT','GPP','NPP','AR','HR','NEE','WIND', 'ZWT', 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol','MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
+EOF
+}
+
+
 cam_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 cat << EOF >> user_nl_cam

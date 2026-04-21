@@ -2,8 +2,9 @@
 
 # Meteorology for winds (u,v) for nudging
 # Free run, no nudging
-# Initial file: 2000 spin up...........................
+# Initial file: NF2000norbc_tropstratchem_spinup_f19_f19
 # 20/30 years
+# Output (u,v)
 
 # Exit if error, undefined variable...
 set -euo pipefail
@@ -68,13 +69,9 @@ echo -e " use_init_interp = .true.">> user_nl_clm
 # Diagnostics
 cosp_diagnostics
 cam_diagnostics
-# In spinup no diagnostics necessary but I'm gonna run to chekc if it is everything that I need
+clm_diagnostics
 
 output_cplhist_auxiliary_files
-
-#cat << EOF >> user_nl_clm 
-# hist_fincl1 = 'LAISHA', 'LAISUN', 'TLAI', 'FSH', 'FLDS', 'FSDS', 'QSOIL', 'RAINRATE', 'SNOWRATE', 'TSA', 'TSOI', 'WIND', 'ZWT', 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol','MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
-#EOF
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 ./case.build

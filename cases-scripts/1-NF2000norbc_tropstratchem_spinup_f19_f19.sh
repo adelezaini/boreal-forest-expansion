@@ -69,6 +69,7 @@ echo -e " use_init_interp = .true.">> user_nl_clm
 # Diagnostics
 cosp_diagnostics
 cam_diagnostics
+# missing: clm diagnostics (created afterwards)
 # In spinup no diagnostics necessary but I'm gonna run to chekc if it is everything that I need
 
 output_cplhist_auxiliary_files
