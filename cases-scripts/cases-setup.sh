@@ -105,6 +105,19 @@ cat << EOF >> user_nl_cpl
 /
 EOF
 }
+##----------------- nudging ------------------##
+cam_generate_nudging_data(){
+# Generate meteorological fields for nudging (NorESM2 / CAM)
+cat << EOF >> user_nl_cam
+&camexp
+  mfilt = 1, 4
+  nhtfrq = 0, -6
+  avgflag_pertape = 'A','I'
+
+  fincl2 = 'PS','U','V','T','Q'
+EOF
+
+}
 
 ##----------------- extra diagnostics -----------------##
 aerosol_cosp_diagnostics(){
