@@ -7,6 +7,7 @@ This is a cleaned version of the original notebook-derived script, keeping only 
 steps needed to generate the new file, plus defensive checks/fixes so the output is
 less likely to contain silent errors.
 """
+#fsurdat = '/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/release-clm5.0.18/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc
 
 from __future__ import annotations
 
