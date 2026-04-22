@@ -18,6 +18,7 @@ brl-frst-env/
 run_jupyter.sh
 
 # Private files
+data/LPJ-GUESS/
 
 # Large data
 data/surfdatamap/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc
