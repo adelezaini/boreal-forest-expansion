@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boreal-forest-expansion" 
+version = "0.1.0"
+description = "Utilities for climate model preprocessing, diagnostics, and analysis"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+  { name = "Adele Zaini", email = "adele.zaini@cicero.oslo.no" }
+]
+license = { text = "MIT" }
+dependencies = [
+  "numpy",
+  "pandas",
+  "xarray",
+  "scipy",
+  "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
