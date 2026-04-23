@@ -5,7 +5,7 @@ import numpy as np
 import math
 from textwrap import wrap
 import xarray as xr; xr.set_options(display_style='html')
-from scipy.optimize import curve_fit
+#from scipy.optimize import curve_fit
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import transforms
@@ -16,19 +16,13 @@ import proplot as pplt
 import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-import cartopy.mpl.ticker as cticker
+#import cartopy.mpl.ticker as cticker
 from cartopy.util import add_cyclic_point
-from owslib.wms import WebMapService
+#from owslib.wms import WebMapService
 import warnings; warnings.filterwarnings('ignore')
-plt.rcParams['mathtext.fontset'] = 'stix'
-plt.rcParams['font.family'] = 'STIXGeneral'
-#'Ubuntu'#'Times New Roman'#'Source Sans Pro'#'Noto Sans'#'AppleMyungjo'#'STIXGeneral'
-#plt.rcParams['font.size'] = 14
-#plt.rcParams['figure.facecolor'] = 'none'
-#plt.rcParams['figure.titlesize'] = '16'
 
-import sys; sys.path.append("..")
-from plot import *
+
+from boreal_forest_expansion.plotting.common import ax_map_properties, cut_extent_Orthographic
 
 
 ################ GridSpec: PlanteCaree Map with Lat_lon distributions ################

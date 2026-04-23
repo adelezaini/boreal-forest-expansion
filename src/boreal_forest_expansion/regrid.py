@@ -3,7 +3,6 @@
 ####### Import packages
 import numpy as np
 import xarray as xr; xr.set_options(display_style='html')
-import xesmf as xe
 
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
 def regrid(dset_in, dset_target, method='bilinear', mask=True):
@@ -14,6 +13,11 @@ def regrid(dset_in, dset_target, method='bilinear', mask=True):
     - method (string): interpolation method. Default: 'bilinear'. See https://xesmf.readthedocs.io/en/latest/notebooks/Compare_algorithms.html and https://earthsystemmodeling.org/regrid/#regridding-methods
     - mask (bool): mask to regrid to coarser. Default: True.
     """
+    try:
+        import xesmf as xe
+    except ImportError:
+        raise ImportError "xesmf is required for regridding. Use the geo-regrid environment."
+    
     # Check if they are DataArray convert to Dataset
     if type(dset_in) == xr.DataArray: ds_in = dset_in.to_dataset()
     else: ds_in = dset_in.copy()

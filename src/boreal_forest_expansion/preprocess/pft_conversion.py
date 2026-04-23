@@ -1,13 +1,12 @@
 ###### This python file collects fuctions to convert LPJGUESS pfts to CLM ones
 
-####### Import packages
 import numpy as np
 import xarray as xr
 import sys; sys.path.append(".")
 from dataset_manipulation import *
 
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
-def PFT_convert_LPJGUESS_to_CLM(CLM_pfts, LPJGUESS_pfts, convertion_scheme = {}):
+def convert_lpjguess_to_clm_pfts(CLM_pfts, LPJGUESS_pfts, convertion_scheme = {}):
     """Convert PFTs from LPJGUESS into PFTs of CLM.
     Args:
     - CLM_pfts (DataArray): original DataArray with CLM PFTs (lat, lon, natpft)
@@ -55,7 +54,7 @@ def PFT_convert_LPJGUESS_to_CLM(CLM_pfts, LPJGUESS_pfts, convertion_scheme = {})
     return LPJGUESS_converted
 
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
-def PFT_convert_LPJGUESS_to_CLM_finegrid(CLM_pfts, LPJGUESS_pfts, convertion_scheme = {}):
+def convert_lpjguess_to_clm_pfts_finegrid(CLM_pfts, LPJGUESS_pfts, convertion_scheme = {}):
     """Convert PFTs from LPJGUESS into PFTs of CLM - on the finer grid of LPJGUESS.
     Args:
     - CLM_pfts (DataArray): original DataArray with CLM PFTs (lat, lon, natpft)

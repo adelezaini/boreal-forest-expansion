@@ -1,27 +1,59 @@
-from .derived import add_derived_cam_fields
-from .io import open_mfdataset_selected
-from .metadata import get_units, infer_lat_lon_names
-from .spatial import (
-    collapse_extra_dims,
-    reduce_series,
-    region_to_dataset_lon_bounds,
-    subset_region,
-    weighted_mean_latlon,
+"""
+Core utilities for boreal_forest_expansion.
+
+This module provides generic, reusable functions for:
+- coordinate transformations
+- xarray operations
+- fitting
+- landunit/gridcell conversions
+"""
+
+# Coordinates
+from .coordinates import (
+    convert360_180,
+    convert180_360,
+    convert_lsmcoord,
+    convert_to_lsmcoord,
+    match_coord,
+    filter_lonlat,
 )
-from .temporal import annual_mean, rolling_mean
-from .units import maybe_convert_units
+
+# Landunit / normalization
+from .landunit import (
+    convert_landunit_to_gridcell,
+    convert_gridcell_to_landunit,
+)
+
+# Xarray operations
+from .xr_operations import (
+    check_da_equal,
+    xr_prod_along_dim,
+)
+
+# Fitting
+from .fitting import (
+    polynomial_fit,
+    gaussian_fit,
+)
 
 __all__ = [
-    "add_derived_cam_fields",
-    "annual_mean",
-    "collapse_extra_dims",
-    "get_units",
-    "infer_lat_lon_names",
-    "maybe_convert_units",
-    "open_mfdataset_selected",
-    "reduce_series",
-    "region_to_dataset_lon_bounds",
-    "rolling_mean",
-    "subset_region",
-    "weighted_mean_latlon",
+    # coordinates
+    "convert360_180",
+    "convert180_360",
+    "convert_lsmcoord",
+    "convert_to_lsmcoord",
+    "match_coord",
+    "filter_lonlat",
+
+    # landunit
+    "convert_landunit_to_gridcell",
+    "convert_gridcell_to_landunit",
+
+    # xarray ops
+    "check_da_equal",
+    "xr_prod_along_dim",
+
+    # fitting
+    "polynomial_fit",
+    "gaussian_fit",
 ]
