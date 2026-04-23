@@ -16,11 +16,11 @@ generate_env_yml.py
 *.egg-info/
 
 #Nac
-brl-frst-env/
-run_jupyter.sh
+#brl-frst-env/
+#run_jupyter.sh
 
 # Private files
-data/LPJ-GUESS/
+data/LPJ-GUESS/*.txt
 
 # Large data
 data/surfdatamap/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc
