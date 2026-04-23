@@ -4,46 +4,76 @@ import glob
 
 import xarray as xr
 
-
-def open_mfdataset_sorted(file_glob: str) -> xr.Dataset:
-    """
-    Open multiple NetCDF files matching a glob pattern and sort them by time.
-
+def fix_cam_time(ds, timetype = 'datetime64'):
+    # Inspired by Marte Sofie Buraas / Ada Gjermundsen
+    # Adampted for cam and clm output and to have time in DatetimeNoLeap or in 'datetime64' types (default)
+    
+    """ NorESM raw h0 files has incorrect time variable output,
+    thus it is necessary to use time boundaries to get the correct time
+    If the time variable is not corrected, none of the functions involving time
+    e.g. yearly_avg, seasonal_avg etc. will provide correct information
+    Source: https://noresm-docs.readthedocs.io/en/latest/faq/postp_plotting_faq.html
+    
     Parameters
     ----------
-    file_glob
-        Glob pattern matching one or more NetCDF files.
-
+    ds : xarray.DaraSet
+    type: string, type of ds.time
+    
     Returns
     -------
-    xr.Dataset
-        Combined dataset, sorted along the time coordinate if present.
-
-    Raises
-    ------
-    FileNotFoundError
-        If no files match the provided glob pattern.
-
-    Notes
-    -----
-    - Files are combined using xarray's 'by_coords' logic.
-    - Time decoding is enabled.
-    - `use_cftime=False` assumes the dataset can be decoded into standard datetime-like
-      objects. This may need to be changed for model calendars such as 'noleap'.
+    ds : xarray.DaraSet with corrected time
     """
-    files = sorted(glob.glob(file_glob))
-    if not files:
+
+    # Make compatible variable names for CAM and CLM (CLM names converted to CAM)
+    ds_ = ds.copy() # remove deep=True (22 April 26, long processing time) --- IGNORE ---
+    if 'time_bounds' in list(ds_.data_vars): 
+        ds_ = ds_.rename_vars(dict(time_bounds='time_bnds'))
+        ds_ = ds_.rename_dims(dict(hist_interval='nbnd'))
+
+    # monthly data: refer data to the 15th of the month
+    if timetype == 'DatetimeNoLeap':
+        from cftime import DatetimeNoLeap
+
+        months = ds_.time_bnds.isel(nbnd=0).dt.month.values
+        years = ds_.time_bnds.isel(nbnd=0).dt.year.values
+        dates = [DatetimeNoLeap(year, month, 15) for year, month in zip(years, months)]
+      
+    elif timetype == 'datetime64':
+        dates = list(ds_.time_bnds.isel(nbnd=0).values + np.timedelta64(14, 'D'))
+      
+    else:
+        raise ValueError("time type not supported. Choose 'DatetimeNoLeap' or 'datetime64'")
+      
+    ds = ds.assign_coords({'time':('time', dates, ds.time.attrs)})
+    return ds
+
+
+TIME_HELPERS = ["time", "time_bnds", "time_bounds"]
+
+def open_mfdataset_selected(file_glob: str, keep_vars: list[str]) -> xr.Dataset:
+    """
+    Open and merge multiple NetCDF files matching a glob pattern (and sort them by time).
+    """
+    all_files = sorted(glob.glob(file_glob))
+    if not all_files:
         raise FileNotFoundError(f"No files found for pattern: {file_glob}")
 
+    # Inspect first file to determine which variables actually exist
+    ds0 = xr.open_dataset(all_files[0], decode_times=False)
+    vars_in_file = set(ds0.variables)
+
+    keep = [v for v in keep_vars + TIME_HELPERS if v in vars_in_file]
+    drop = [v for v in vars_in_file if v not in keep]
+
+    print(f"Keeping variables: {keep}")
+    print(f"Dropping {len(drop)} variables")
+
     ds = xr.open_mfdataset(
-        files,
+        all_files,
         combine="by_coords",
-        decode_times=True,
+        drop_variables=drop,
         parallel=False,
-        use_cftime=False,
     )
 
-    if "time" in ds.coords:
-        ds = ds.sortby("time")
-
+    ds = fix_cam_time(ds, timetype="DatetimeNoLeap")
     return ds
