@@ -1,5 +1,5 @@
 # Save space on GutHub repository - save nc files just locally on nac
-#*/*/*/*.nc
+*.nc
 
 #Local machine files:
 
