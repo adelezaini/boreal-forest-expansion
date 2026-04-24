@@ -1,5 +1,5 @@
 # Save space on GutHub repository - save nc files just locally on nac
-*/*/*/*.nc
+#*/*/*/*.nc
 
 #Local machine files:
 
@@ -20,7 +20,7 @@ generate_env_yml.py
 #run_jupyter.sh
 
 # Private files
-data/LPJ-GUESS/*.txt
+data/raw/LPJ-GUESS/*.txt
 
 # Large data
 data/surfdatamap/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc
