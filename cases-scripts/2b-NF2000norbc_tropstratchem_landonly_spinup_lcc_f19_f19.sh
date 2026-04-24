@@ -1,67 +1,87 @@
 #!/bin/bash
 
-# NF2000 test case to see which surfdata file points to
+### Land-only spinup to equilibrate cells that can start from cold start after changing the land cover (even with initial_interp=.true. because the change is dramatic)
+# Free run, no nudging
+# Initial file:  NF2000norbc_tropstratchem_spinup_f19_f19 (0021-01-01)
+# Input: cplhist auxiliary files from the previous spinup NF2000norbc_tropstratchem_spinup_f19_f19
+# 100 years
+# No output needed, just clm_diagnostics to check if equilibrated
 
-# Simulation specifics:
-export CASENAME=NF2000norbc_f19_f19_test
-export PROJECT=nn9188k
-export NORESM_ROOT=/cluster/home/$USER/NorESM2.3_beta01
-export COMPSET=2000_CAM60%NORESM%NORBC_CLM50%BGC_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
-export RES=f19_f19
+# Exit if error, undefined variable...
+set -euo pipefail
+# Load common functions for case setup
+source cases-setup.sh
 
-CASEROOT=$HOME/cases/BRL_FRST_XPSN/$CASENAME
-rm -rf $CASEROOT #remove previous cases
+#––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+today=$(date +'%Y%m%d')
+CASENAME="I2000Clm50BgcCropCplHist_f19_f19-test_$today"
+COMPSET=2000_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_SGLC_SWAV
+set_project_noresm_res_vars
 
-cd $NORESM_ROOT/cime/scripts || exit 1
+# Restart files specifics:
+REFCASE="NF2000norbc_tropstratchem_spinup_f19_f19"
+REFDATE="0021-01-01"
 
-./create_newcase --case $CASEROOT --compset $COMPSET --res $RES --machine betzy --run-unsupported --project $PROJECT --handle-preexisting-dirs r
+REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/${REFCASE}/rest/${REFDATE}-00000"
+REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
+# I transfer restart files because in original folder are zipped. The unzipped files are all in one place
 
-cd $CASEROOT
+# Surface data file with modified land cover for boreal forest expansion
+SURFDATA_FILE="/cluster/projects/nn9188k/adelez/data/processed/surfdata_1.9x2.5_LPJGUESS_78pfts_SSP585.nc"
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+prepare_restart_files "$REST_SRC" "$REST_LOCAL"
 
-./xmlchange CAM_AEROCOM=TRUE #aerosol diagnostics
+BASE_CASE_DIR="$HOME/cases/BRL_FRST_XPSN/"
+CASEROOT="$BASE_CASE_DIR/$CASENAME"
 
+remove_case_if_exists "$CASEROOT" "$BASE_CASE_DIR"
+
+cd "$NORESM_ROOT/cime/scripts" || exit 1
+
+./create_newcase --case "$CASEROOT" --compset "$COMPSET" --res "$RES" --machine betzy --run-unsupported --project "$PROJECT" --handle-preexisting-dirs r
+
+echo "Case $CASENAME created with compset $COMPSET and resolution $RES"
+
+cd "$CASEROOT"
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+datm_forcing_from_cplhist_files 2000
+
+# Initial files from restart
+./xmlchange RUN_TYPE=hybrid
+./xmlchange RUN_REFCASE="$REFCASE"
+./xmlchange RUN_REFDATE="$REFDATE"
+./xmlchange RUN_REFDIR="$REST_LOCAL"
+./xmlchange GET_REFCASE=TRUE
+
+# Simulation length
+./xmlchange STOP_OPTION=nyears,STOP_N=1
+#./xmlchange STOP_OPTION=nyears,STOP_N=10
+#./xmlchange RESUBMIT=9 # 10 yrs + 9 x 10 yrs = 100 yrs
+#./xmlchange REST_OPTION=nyears,REST_N=10
+#./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
+./xmlchange RUN_STARTDATE=0001-01-01
+
+# You never know nowadays
+./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00
+./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=48:59:00
+
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 #./case.build --clean
 ./case.setup
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-# Diagnostics
-cat << EOF >> user_nl_cam
- mfilt = 1, 48
- nhtfrq = 0, 1
- avgflag_pertape='A','I' 
- history_aerosol=.true.
- fincl1 = 'NNAT_0','FSNT','FLNT','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FLNS','FSNS','FLNSC','FSNSC',
-'FSDSCDRF','FSDS_DRF','FSUTADRF','FLUTC','FSUS_DRF','FLUS','CLOUD','FCTL','FCTI','NUCLRATE','FORMRATE',
-'GRH2SO4','GRSOA','GR','COAGNUCL','H2SO4','SOA_LV','PS','LANDFRAC','SOA_NA','SO4_NA',
-
-'NCONC01','NCONC02','NCONC03','NCONC04','NCONC05','NCONC06','NCONC07','NCONC08','NCONC09','NCONC10','NCONC11','NCONC12','NCONC13','NCONC14',
-'SIGMA01','SIGMA02','SIGMA03','SIGMA04','SIGMA05','SIGMA06','SIGMA07','SIGMA08','SIGMA09','SIGMA10','SIGMA11','SIGMA12','SIGMA13','SIGMA14',
-'NMR01','NMR02','NMR03','NMR04','NMR05','NMR06','NMR07','NMR08','NMR09','NMR10','NMR11','NMR12','NMR13','NMR14',
-
-'CCN1','CCN2','CCN3','CCN4','CCN5','CCN6','CCN7','CCN_B','TGCLDCWP','cb_H2SO4','cb_SOA_LV','cb_SOA_NA','cb_SO4_NA',
-'CLDTOT','CDNUMC','SO2','isoprene','monoterp','SOA_SV','OH_vmr','AOD_VIS','CAODVIS','CLDFREE',
-'CDOD550','CDOD440','CDOD870','AEROD_v','CABS550','CABS550A',
-
-'SOA_SEC01','SOA_SEC02','SOA_SEC03','SOA_SEC04','SOA_SEC05',
-'SO4_SEC01','SO4_SEC02','SO4_SEC03','SO4_SEC04','SO4_SEC05',
-'nrSOA_SEC01','nrSOA_SEC02','nrSOA_SEC03','nrSOA_SEC04','nrSOA_SEC05',
-'nrSO4_SEC01','nrSO4_SEC02','nrSO4_SEC03','nrSO4_SEC04','nrSO4_SEC05',
-'cb_SOA_SEC01','cb_SOA_SEC02','cb_SOA_SEC03','cb_SOA_SEC04','cb_SOA_SEC05',
-'cb_SO4_SEC01','cb_SO4_SEC02','cb_SO4_SEC03','cb_SO4_SEC04','cb_SO4_SEC05',
-
-'SST','PRECC','PRECL','PRECT','ozone','O3','TROP_P','TROP_T','TROP_Z','VT100',
-'MEG_CH3COCH3','MEG_CH3CHO','MEG_CH2O','MEG_CO','MEG_C2H6','MEG_C3H8','MEG_C2H4','MEG_C3H6',
-'MEG_C2H5OH','MEG_C10H16','MEG_ISOP','MEG_CH3OH','MEG_isoprene','MEG_monoterp',
-'SFisoprene','SFmonoterp','cb_isoprene','cb_monoterp'
- fincl2 = 'SFisoprene','SFmonoterp', 'TROP_O3', 'TROP_NO', 'TROP_NO2', 'TROP_H2O2', 'TROP_HNO3', 'TROP_CO', 'TROP_SO2', 'TROP_NH3', 'TROP_HCHO', 'TROP_CH4', 'TROP_C2H6', 'TROP_C3H8', 'TROP_C2H4', 'TROP_C3H6', 'TROP_C2H5OH', 'TROP_C10H16', 'TROP_ISOP', 'TROP_CH3OH', 'TROP_isoprene', 'TROP_monoterp'
+# Land cover change - boreal forest expansion
+# Modified idealized surfdata file
+cat << EOF >> user_nl_clm
+fsurdat = '${SURFDATA_FILE}'
+use_init_interp = .true.
 EOF
 
-#cat << EOF >> user_nl_clm 
-# hist_fincl1 = 'LAISHA', 'LAISUN', 'TLAI', 'FSH', 'FLDS', 'FSDS', 'QSOIL', 'RAINRATE', 'SNOWRATE', 'TSA', 'TSOI', 'WIND', 'ZWT', 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol','MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
-#EOF
+# Diagnostics
+clm_long_spinup_diagnostics
 
-./xmlchange STOP_OPTION=nyears
-./xmlchange STOP_N=1
-./xmlchange JOB_WALLCLOCK_TIME=24:00:00
-
-#./case.build
-#./case.submit
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+./case.build
+./case.submit
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––

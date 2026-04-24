@@ -105,6 +105,47 @@ cat << EOF >> user_nl_cpl
 /
 EOF
 }
+
+datm_forcing_from_cplhist_files() {
+    # xmlchange to use the cplhist auxiliary files as forcing for the datm component in a land-only simulation (after a coupled/AMIP run)
+    # To add to the land-only run, after the coupled/AMIP run
+    # Source: https://noresm-docs.readthedocs.io/en/noresm2/configurations/clm.html#spin-up-of-clm5
+    # Source: https://docs.cesm.ucar.edu/models/cesm2/settings/2.1.1/datm_input.html
+    local year="${1:?Usage: datm_forcing_from_cplhist_files <2000|2100>}"
+
+    local cplhist_dir
+    local cplhist_case
+
+    case "$year" in
+        2000)
+            cplhist_case="NF2000norbc_tropstratchem_spinup_f19_f19"
+            cplhist_dir="/cluster/shared/noresm/inputdata/cplhist/NF2000norbc_tropstratchem_spinup_f19_f19_20260421_01-20"
+            ;;
+        2100)
+            cplhist_case="NF2100ssp585norbc_tropstratchem_spinup_f19_f19-3"
+            cplhist_dir="/cluster/shared/noresm/inputdata/cplhist/NF2100ssp585norbc_tropstratchem_spinup_f19_f19_20260422_01-20"
+            ;;
+        *)
+            echo "ERROR: unsupported CPLHIST forcing year"
+            echo "Usage: datm_forcing_from_cplhist_files <2000|2100>"
+            return 1
+            ;;
+    esac
+
+    ./xmlchange DATM_MODE=CPLHIST,DATM_PRESAERO=cplhist,DATM_TOPO=cplhist
+    ./xmlchange DATM_CPLHIST_DIR="$cplhist_dir"
+    ./xmlchange DATM_CPLHIST_CASE="$cplhist_case"
+
+    # Forcing year = model_year - ALIGN + START
+    ./xmlchange DATM_CPLHIST_YR_ALIGN=1
+    ./xmlchange DATM_CPLHIST_YR_START=11
+    ./xmlchange DATM_CPLHIST_YR_END=20
+    # With RUN_STARTDATE=0001-01-01, model year 1 uses CPLHIST year 11.
+    # Avoid using the first 10 years of the cplhist data, which are the spinup years, and loop over the last 10 years of the cplhist data (years 11-20).
+    # Example: if a simulation is 100 years long, it will loop 10 x over 11-20 of the cplhist data (1 -> 11, 2 -> 12, ..., 10 -> 20, 11 -> 11, ...,  100 -> 20).
+}
+
+
 ##----------------- nudging ------------------##
 cam_generate_nudging_data(){
 # Generate meteorological fields for nudging (NorESM2 / CAM)
@@ -180,7 +221,12 @@ EOF
 
 clm_diagnostics(){
 cat << EOF >> user_nl_clm 
-hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','RAIN','SNOW','RAINRATE','SNOWRATE','QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT','GPP','NPP','AR','HR','NEE','WIND', 'ZWT', 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol','MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
+hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
+'RAIN','SNOW','RAINRATE','SNOWRATE',
+'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI',
+'GPP','NPP','AR','HR','NEE','WIND', 'ZWT', 
+'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol',
+'MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
 EOF
 }
 
@@ -188,29 +234,96 @@ EOF
 cam_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 cat << EOF >> user_nl_cam
-mfilt = 12, 24
-nhtfrq = 0, 1
-avgflag_pertape = 'A','I'
-history_aerosol = .true.
+mfilt = 365
+nhtfrq = -24
+avgflag_pertape = 'A'
 
 fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC'
-
-fincl2 = 'NUCLRATE','FORMRATE','COAGNUCL','H2SO4','SOA_LV','SOA_NA','SO4_NA'
-
 EOF
 }
 
 clm_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 cat << EOF >> user_nl_clm
-hist_mfilt = 12, 24
-hist_nhtfrq = 0, -24
+hist_mfilt = 365
+hist_nhtfrq = -24
 
-hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','RAIN','SNOW','QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT','GPP','NPP','AR','HR','NEE'
-hist_fincl2 = 'TSA','TLAI','FSH','EFLX_LH_TOT','QSOIL','QVEGT','QOVER','QRUNOFF','RAIN','SNOW','ZWT'
+hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN',
+'TOTVEGC','TOTSOMC','TOTECOSYSC',
+'GPP','NPP','AR','HR','NEE',
+'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
+'RAIN','SNOW',
+'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
+'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
 
 EOF
 }
+
+clm_long_spinup_diagnostics(){
+# To check if reached equilibrium in the spinup
+cat << EOF >> user_nl_clm
+hist_mfilt  = 10
+hist_nhtfrq = -8760
+
+hist_fincl1 = 'TSA','TLAI','TOTVEGC','TOTSOMC','TOTECOSYSC',
+'GPP','NPP','AR','HR','NEE',
+'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
+'RAIN','SNOW',
+'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
+'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
+
+EOF
+}
+
+# Safely remove a case directory.
+# Asks for confirmation (y/[n], default = no)
+# Usage: remove_case_if_exists "$CASEROOT" "$BASE_CASE_DIR"
+# Example: 
+#   BASE_CASE_DIR="$HOME/cases/BRL_FRST_XPSN"
+#   CASEROOT="$BASE_CASE_DIR/$CASENAME"
+
+remove_case_if_exists() {
+    local caseroot="$1"   # full path to the case directory to delete
+    local base_dir="$2"   # only allow deletion inside this directory
+
+    # Resolve absolute paths (important for safety):
+    # removes "..", symbolic links, etc., so checks are reliable
+    local caseroot_abs
+    local base_dir_abs
+    caseroot_abs=$(realpath -m "$caseroot")
+    base_dir_abs=$(realpath "$base_dir")
+
+    # Fail if path resolution failed (unexpected → safer to stop)
+    if [[ -z "$caseroot_abs" || -z "$base_dir_abs" ]]; then
+        echo "ERROR: could not resolve paths. Only absolute paths are allowed."
+        exit 1
+    fi
+
+    # Only allow deletion if caseroot is INSIDE base_dir
+    if [[ "$caseroot_abs" == "$base_dir_abs" || "$caseroot_abs" != "$base_dir_abs/"* ]]; then
+        echo "ERROR: refusing to delete case directory, because it is outside base directory."
+        echo "       attempted – absolute path: $caseroot_abs"
+        exit 1
+    fi
+
+    # If directory does not exist, nothing to remove → exit function, continue script
+    [ -d "$caseroot_abs" ] || return 0
+
+    # Ask user confirmation (default = NO to avoid accidental Enter)
+    read -rp "Remove $caseroot_abs? y/[n]: " confirm
+    confirm=${confirm:-n}
+
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        rm -rf -- "$caseroot_abs"   # -- protects against weird path names
+        echo "Removed existing $caseroot_abs
+        "
+    else
+        echo "Aborted. Try again!"
+        exit 1
+    fi
+}
+
+
 
 
 ##----------------- -------------------------------------------------------- -----------------##
