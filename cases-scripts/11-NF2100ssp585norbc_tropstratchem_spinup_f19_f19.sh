@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# 2100 spinup for extra output cpl auxiliary files for land-only run
+# Note: CASENAME="NF2100ssp585norbc_tropstratchem_spinup_f19_f19-3" with final -3
+
+### 2100 Spinup for extra output cpl auxiliary files for land-only run
 # Free run, no nudging
 # Initial file: NSSP585frc2_f19_tn14_20191014 (2100-01-01)
 # 20/30 years

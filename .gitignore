@@ -19,6 +19,9 @@ generate_env_yml.py
 #brl-frst-env/
 #run_jupyter.sh
 
+# on Betzy, it's a symbolic link to the project folder not a real folder:
+data
+
 # Private files
 data/raw/LPJ-GUESS/*.txt
 

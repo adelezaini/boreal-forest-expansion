@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# Meteorology for winds (u,v) for nudging
+# Note: aerosol_cosp_diagnostics NOT NECESSARY, I forgot it
+
+### Meteorology for winds (u,v) for nudging
 # Free run, no nudging
-# Initial file: NF2000norbc_tropstratchem_spinup_f19_f19
-# 20/30 years
+# Initial file: NF2000norbc_tropstratchem_spinup_f19_f19 (0021-01-01)
+# 15 years to start
 # Output (u,v)
 
 # Exit if error, undefined variable...
@@ -40,7 +42,7 @@ echo "Case $CASENAME created with compset $COMPSET and resolution $RES"
 cd $CASEROOT
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-aerosol_cosp_diagnostics # In spinup no diagnostics necessary but I'm gonna run to chekc if it is everything that I need
+aerosol_cosp_diagnostics # NOT NECESSARY, I forgot it
 forcings_2000
 
 # Initial files from restart

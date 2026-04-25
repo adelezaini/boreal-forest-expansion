@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# 2000 Spinup for MET and CTRL_PD & for extra output cpl auxiliary files for land-only run
+# Note: # missing: clm diagnostics (created afterwards)
+# Note: ./xmlchange RUN_STARTDATE=0001-01-01 # I should have set 0000-01-01
+
+### 2000 Spinup for MET and CTRL_PD & for extra output cpl auxiliary files for land-only run
 # Free run, no nudging
 # Initial file: NHIST_f19_tn14_20190710 (2000-01-01)
 # 20/30 years
@@ -54,7 +57,7 @@ forcings_2000
 ./xmlchange RESUBMIT=3 # 5 yrs + 3 x 5 yrs = 20 yrs
 ./xmlchange REST_OPTION=nyears,REST_N=1
 ./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
-./xmlchange RUN_STARTDATE=0001-01-01
+./xmlchange RUN_STARTDATE=0001-01-01 # I should have set 0000-01-01
 
 ./xmlchange JOB_WALLCLOCK_TIME=24:00:00 # ok with ~7 simulated years/day for STOP_N = 5 years
 
