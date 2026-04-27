@@ -2,8 +2,11 @@
 
 module load NCO/5.2.9-foss-2024a
 
-CPLHIST_DIR=NF2000norbc_tropstratchem_spinup_f19_f19_20260421_01-20
-CASENAME=NF2000norbc_tropstratchem_spinup_f19_f19
+#CPLHIST_DIR=NF2000norbc_tropstratchem_spinup_f19_f19_20260421_01-20
+#CASENAME=NF2000norbc_tropstratchem_spinup_f19_f19
+
+CPLHIST_DIR=NF2100ssp585norbc_tropstratchem_spinup_f19_f19_20260422_01-20
+CASENAME=NF2100ssp585norbc_tropstratchem_spinup_f19_f19-3
 
 SRC_DIR=/cluster/home/adelez/work/archive/$CASENAME/cpl/hist
 CPLHIST_PATH=/cluster/shared/noresm/inputdata/cplhist
@@ -29,7 +32,7 @@ make_monthly_cplhist_from_daily () {
 
     # Streams that follow normal calendar grouping:
     # monthly file = all daily files within the same month
-    local normal_streams=("ha2x" "ha2x1h" "ha2x1hi" "ha2x3h") #"hl2x"
+    local normal_streams=("ha2x" "ha2x1h" "ha2x1hi" "ha2x3h" "hl2x")
 
     # Streams that are time-shifted (daily mean stamped at next day):
     # monthly file = YYYY-MM-02 ... next-month-01
