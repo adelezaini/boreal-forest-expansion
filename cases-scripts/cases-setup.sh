@@ -160,6 +160,31 @@ EOF
 
 }
 
+setup_nudging_data () {
+    local CASENAME=NF2000norbc_tropstratchem_met_f19_f19_20260422
+
+    local NUDGDIR="/cluster/shared/noresm/inputdata/noresm-only/inputForNudging/AZ/${CASENAME}_6h_2000-2015"
+    local FILELIST="${NUDGDIR}/${CASENAME}.cam.h1_filelist.txt"
+    local METFILE="${NUDGDIR}/${CASENAME}.cam.h1.2000-01-01-00000.nc"
+
+    ./xmlchange --append CAM_CONFIG_OPTS='-offline_dyn'
+
+    [[ -d "$NUDGDIR" ]] || { echo "ERROR: missing NUDGDIR: $NUDGDIR"; return 1; }
+    [[ -f "$FILELIST" ]] || { echo "ERROR: missing file list: $FILELIST"; return 1; }
+    [[ -f "$METFILE" ]] || { echo "ERROR: missing met_data_file: $METFILE"; return 1; }
+
+    cat >> user_nl_cam <<EOF
+
+&metdata_nl
+  met_nudge_only_uvps = .true.
+  met_data_file       = '${METFILE}'
+  met_filenames_list  = '${FILELIST}'
+  met_rlx_time        = 6
+/
+
+EOF
+}
+
 ##----------------- extra diagnostics -----------------##
 aerosol_cosp_diagnostics(){
 # Aerosol diagnostics
@@ -209,20 +234,27 @@ fincl1 = 'NNAT_0','FSNT','FLNT','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FLN
 'MEG_CH3COCH3','MEG_CH3CHO','MEG_CH2O','MEG_CO','MEG_C2H6','MEG_C3H8','MEG_C2H4','MEG_C3H6',
 'MEG_C2H5OH','MEG_C10H16','MEG_ISOP','MEG_CH3OH','MEG_isoprene','MEG_monoterp',
 'SFisoprene','SFmonoterp','cb_isoprene','cb_monoterp'
+EOF
 
-fincl2 = 'SFisoprene','SFmonoterp', 
-'TROP_O3', 'TROP_NO', 'TROP_NO2', 'TROP_H2O2', 'TROP_HNO3', 'TROP_CO', 
-'TROP_SO2', 'TROP_NH3', 'TROP_HCHO', 'TROP_CH4', 'TROP_C2H6', 'TROP_C3H8', 
-'TROP_C2H4', 'TROP_C3H6', 'TROP_C2H5OH', 'TROP_C10H16', 'TROP_ISOP', 
-'TROP_CH3OH', 'TROP_isoprene', 'TROP_monoterp'
+if [[ "$1" == "HR_BVOC" ]]; then # high resolution BVOC emissionS
+cat << EOF >> user_nl_cam
+
+fincl2 = 'SFisoprene','SFmonoterp'
+EOF
+fi
+cat << EOF >> user_nl_cam
 /
 EOF
 }
 
 clm_diagnostics(){
 cat << EOF >> user_nl_clm 
+hist_mfilt = 1
+hist_nhtfrq = 0
+hist_avgflag_pertape='A'
+
 hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
-'RAIN','SNOW','RAINRATE','SNOWRATE',
+'RAIN','SNOW',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI',
 'GPP','NPP','AR','HR','NEE','WIND', 'ZWT', 
 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol',
