@@ -12,7 +12,7 @@ source cases-setup.sh
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19-test_$today"
+CASENAME="NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19_$today"
 COMPSET=NF2100ssp585norbc_tropstratchem
 set_project_noresm_res_vars
 
@@ -54,11 +54,10 @@ dms_forcing_2100_to_2000
 ./xmlchange GET_REFCASE=TRUE
 
 # Simulation length
-./xmlchange STOP_OPTION=ndays,STOP_N=1
-# ./xmlchange STOP_OPTION=nyears,STOP_N=5
-#./xmlchange RESUBMIT=3 # 5 yrs + 3 x 5 yrs = 20 yrs
-#./xmlchange REST_OPTION=nyears,REST_N=1
-#./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
+./xmlchange STOP_OPTION=nyears,STOP_N=5
+./xmlchange RESUBMIT=3 # 5 yrs + 3 x 5 yrs = 20 yrs
+./xmlchange REST_OPTION=nyears,REST_N=1
+./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
 ./xmlchange RUN_STARTDATE=0001-01-01 # I should have set 0000-01-01
 
 ./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00

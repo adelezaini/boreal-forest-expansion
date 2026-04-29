@@ -61,12 +61,12 @@ datm_forcing_from_cplhist_files 2000
 ./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
 ./xmlchange RUN_STARTDATE=0001-01-01
 
-#./xmlchange JOB_WALLCLOCK_TIME=24:00:00 # ok with ~7 simulated years/day for STOP_N = 5 years
+./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=09:59:00
+./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=09:59:00
 
-#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-#./case.build --clean
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 ./case.setup
-#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 # Land cover change - boreal forest expansion
 # Modified idealized surfdata file
