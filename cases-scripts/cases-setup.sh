@@ -208,8 +208,8 @@ cam_diagnostics(){
 cat << EOF >> user_nl_cam
 mfilt = 1, 48
 nhtfrq = 0, 1
-avgflag_pertape='A','I' 
-history_aerosol=.true.
+avgflag_pertape = 'A','I'
+history_aerosol = .true.
 
 fincl1 = 'NNAT_0','FSNT','FLNT','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FLNS','FSNS','FLNSC','FSNSC',
 'FSDSCDRF','FSDS_DRF','FSUTADRF','FLUTC','FSUS_DRF','FLUS','CLOUD','FCTL','FCTI','NUCLRATE','FORMRATE',
@@ -220,7 +220,7 @@ fincl1 = 'NNAT_0','FSNT','FLNT','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FLN
 'NMR01','NMR02','NMR03','NMR04','NMR05','NMR06','NMR07','NMR08','NMR09','NMR10','NMR11','NMR12','NMR13','NMR14',
 
 'CCN1','CCN2','CCN3','CCN4','CCN5','CCN6','CCN7','CCN_B','TGCLDCWP','cb_H2SO4','cb_SOA_LV','cb_SOA_NA','cb_SO4_NA',
-'CLDTOT','CDNUMC','SO2','isoprene','monoterp','SOA_SV','OH_vmr','AOD_VIS','CAODVIS','CLDFREE',
+'CLDTOT','CDNUMC','SO2','ISOP','MTERP','SOA_SV','OH_vmr','AOD_VIS','CAODVIS','CLDFREE',
 'CDOD550','CDOD440','CDOD870','AEROD_v','CABS550','CABS550A',
 
 'SOA_SEC01','SOA_SEC02','SOA_SEC03','SOA_SEC04','SOA_SEC05',
@@ -232,16 +232,17 @@ fincl1 = 'NNAT_0','FSNT','FLNT','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FLN
 
 'SST','PRECC','PRECL','PRECT','ozone','O3','TROP_P','TROP_T','TROP_Z','VT100',
 'MEG_CH3COCH3','MEG_CH3CHO','MEG_CH2O','MEG_CO','MEG_C2H6','MEG_C3H8','MEG_C2H4','MEG_C3H6',
-'MEG_C2H5OH','MEG_C10H16','MEG_ISOP','MEG_CH3OH','MEG_isoprene','MEG_monoterp',
-'SFisoprene','SFmonoterp','cb_isoprene','cb_monoterp'
+'MEG_C2H5OH','MEG_MTERP','MEG_ISOP','MEG_CH3OH',
+'SFISOP','SFMTERP','emis_ISOP','emis_MTERP','cb_ISOP','cb_MTERP'
 EOF
 
-if [[ "$1" == "HR_BVOC" ]]; then # high resolution BVOC emissionS
+if [[ "$1" == "HR_BVOC" ]]; then # hourly BVOC surface fluxes/emissions
 cat << EOF >> user_nl_cam
 
-fincl2 = 'SFisoprene','SFmonoterp'
+fincl2 = 'SFISOP','SFMTERP'
 EOF
 fi
+
 cat << EOF >> user_nl_cam
 /
 EOF
@@ -259,6 +260,7 @@ hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','F
 'GPP','NPP','AR','HR','NEE','WIND', 'ZWT', 
 'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol',
 'MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
+/
 EOF
 }
 
@@ -271,6 +273,7 @@ nhtfrq = -24
 avgflag_pertape = 'A'
 
 fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC'
+/
 EOF
 }
 
@@ -287,7 +290,7 @@ hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN',
 'RAIN','SNOW',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
 'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
-
+/
 EOF
 }
 
@@ -303,7 +306,7 @@ hist_fincl1 = 'TSA','TLAI','TOTVEGC','TOTSOMC','TOTECOSYSC',
 'RAIN','SNOW',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
 'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
-
+/
 EOF
 }
 
