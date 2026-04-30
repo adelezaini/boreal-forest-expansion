@@ -21,12 +21,14 @@ It uses NCO commands rather than loading the full NetCDF data into Python -> qui
 
 Usage:
     python create_bvoc_emissions_climatology.py NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test_20260428-diagnostics-3yr \
-     2007 2013 SFisoprene \
+     2000 2002 SFISOP \
      --calendar noleap \
      --history-field h1 \
      --postfix _test \
      --path /cluster/work/users/adelez/archive \
-     --output-path /cluster/projects/nn9188k/adelez/noresm-inputdata/bvoc-emissions  
+     --output-path /cluster/projects/nn9188k/adelez/noresm-inputdata/processed/bvoc-emissions  
+
+     NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test_20260429-diagnostics-3yr
 
 The calendar must be specified explicitly:
 --calendar noleap: assumes all years have 365 days. 
@@ -36,7 +38,7 @@ The calendar must be specified explicitly:
     After averaging, a synthetic Feb 29 is added by duplicating Feb 28.
 """
 
-
+from glob import glob
 from pathlib import Path
 from subprocess import run
 import argparse
@@ -49,7 +51,7 @@ import shlex
 # =============================================================================
 
 DEFAULT_NORESM_ARCHIVE = "/cluster/work/users/adelez/archive"
-DEFAULT_OUTPUT_PATH = "/cluster/projects/nn9188k/adelez/noresm-inputdata/bvoc-emissions"
+DEFAULT_OUTPUT_PATH = "/cluster/projects/nn9188k/adelez/noresm-inputdata/processed/bvoc-emissions"
 
 LOAD_NCO_STRING = "module load NCO/5.2.9-foss-2024a"
 
@@ -60,13 +62,13 @@ LOAD_NCO_STRING = "module load NCO/5.2.9-foss-2024a"
 AVOGADRO = 6.022e23  # molecules / mol
 
 MOLAR_MASS = {
-    "SFisoprene": 68.114200e-3,   # kg / mol
-    "SFmonoterp": 136.228400e-3,  # kg / mol
+    "SFISOP": 68.114200e-3,   # kg / mol
+    "SFMTERP": 136.228400e-3,  # kg / mol
 }
 
 OUTPUT_VAR_NAME = {
-    "SFisoprene": "ISOP",
-    "SFmonoterp": "H10H16",
+    "SFISOP": "ISOP",
+    "SFMTERP": "H10H16",
 }
 
 
@@ -85,14 +87,18 @@ OUTPUT_VAR_NAME = {
 
 TIMESTEPS_PER_DAY = 48
 
+# Jan 1 through Feb 28 = 59 days
 FEB_28_END = 59 * TIMESTEPS_PER_DAY                  # 2832
-FEB_28_START = FEB_28_END + 1                        # 2833
-
+# Feb 28 itself in a no-leap 365-day file
+FEB_28_DAY_START = (31 + 27) * TIMESTEPS_PER_DAY + 1 # 2785
+FEB_28_DAY_END = FEB_28_END                          # 2832
+# March 1 in a no-leap 365-day file
+MAR_1_START_NOLEAP = FEB_28_END + 1                  # 2833
+# March 1 in a leap-year 366-day file
 MAR_1_START_LEAP = 60 * TIMESTEPS_PER_DAY + 1        # 2881
+
 LEAP_YEAR_END = 366 * TIMESTEPS_PER_DAY              # 17568
 NOLEAP_YEAR_END = 365 * TIMESTEPS_PER_DAY            # 17520
-
-FEB_29_END = FEB_28_START + TIMESTEPS_PER_DAY - 1    # 2880
 
 
 # =============================================================================
@@ -106,14 +112,14 @@ def quote(value):
     return shlex.quote(str(value))
 
 
-def run_command(command):
-    """
-    Run one shell command.
-
-    check=True makes the script stop immediately if an NCO command fails.
-    """
+def run_command(command, verbose=False):
     full_command = f"{LOAD_NCO_STRING} && {command}"
-    print(full_command)
+
+    if verbose:
+        print(full_command)
+    else:
+        print(command_summary(command))
+
     run(full_command, shell=True, check=True)
 
 
@@ -154,6 +160,21 @@ def leap_years_in_range(startyear, endyear):
         if calendar.isleap(year)
     ]
 
+def command_summary(command):
+    if command.startswith("ncrcat"):
+        return "Concatenating yearly files"
+    if command.startswith("ncks"):
+        return "Extracting variables/slicing file"
+    if command.startswith("ncea"):
+        return "Averaging years"
+    if command.startswith("ncap2"):
+        return "Editing variable/time values"
+    if command.startswith("ncatted"):
+        return "Updating metadata"
+    if command.startswith("mv"):
+        return "Moving temporary file"
+    return command.split()[0]
+
 
 # =============================================================================
 # NCO workflow steps
@@ -171,19 +192,26 @@ def concatenate_yearly_files(
     """
     Concatenate monthly NorESM history files into one temporary file per year.
 
-    Input files are expected to follow the pattern:
-        <case_name>.cam.<history_field>.<year>*.nc
+    Uses Python globbing instead of shell globbing, so missing files are caught
+    before calling ncrcat.
     """
     commands = []
 
     for year in range(startyear, endyear + 1):
         pattern = input_path / f"{case_name}.cam.{history_field}.{year:04d}*.nc"
+        files = sorted(glob(str(pattern)))
+
+        if not files:
+            raise FileNotFoundError(f"No files found for pattern: {pattern}")
+
         outfile = output_path / f"tmp_{case_name}_{year:04d}_{var}.nc"
+
+        file_list = " ".join(quote(f) for f in files)
 
         commands.append(
             f"ncrcat -O "
             f"-v date,datesec,{var} "
-            f"{quote(pattern)} "
+            f"{file_list} "
             f"{quote(outfile)}"
         )
 
@@ -249,14 +277,22 @@ def remove_feb29_from_leap_years(
 def average_yearly_files(case_name, startyear, endyear, var, output_path):
     """
     Average all yearly temporary files into one multi-year climatology file.
+
+    The expected temporary yearly filenames are constructed explicitly, instead
+    of using glob(), because this function is called before the commands that
+    create those files are executed.
     """
-    infiles = output_path / f"tmp_{case_name}_*_{var}.nc"
+    files = [
+        output_path / f"tmp_{case_name}_{year:04d}_{var}.nc"
+        for year in range(startyear, endyear + 1)
+    ]
+
     avg_file = output_path / f"avg_{case_name}_{startyear}-{endyear}_{var}.nc"
 
-    commands = [
-        f"ncea -O {quote(infiles)} {quote(avg_file)}",
+    file_list = " ".join(quote(f) for f in files)
 
-        # Keep original behavior: convert to NetCDF3.
+    commands = [
+        f"ncea -O {file_list} {quote(avg_file)}",
         f"ncks -3 -O {quote(avg_file)} {quote(avg_file)}",
     ]
 
@@ -383,21 +419,20 @@ def add_synthetic_feb29(
         f"ncks -O -F -d time,1,{FEB_28_END} "
         f"{quote(infile)} {quote(before_feb29)}",
 
-        # Keep the rest of the no-leap climatology.
-        f"ncks -O -F -d time,{FEB_28_START},{NOLEAP_YEAR_END} "
+        # Keep Mar 1 through Dec 31 from the no-leap climatology.
+        f"ncks -O -F -d time,{MAR_1_START_NOLEAP},{NOLEAP_YEAR_END} "
         f"{quote(infile)} {quote(after_feb29)}",
 
-        # Shift the rest of the year forward by one day.
+        # Shift Mar 1-Dec 31 forward by one day to make room for Feb 29.
         f'ncap2 -O -s "time=time+1." '
         f"{quote(after_feb29)} {quote(after_feb29)}",
 
         # Copy Feb 28 to use as synthetic Feb 29.
-        f"ncks -O -F -d time,{FEB_28_START},{FEB_29_END} "
+        f"ncks -O -F -d time,{FEB_28_DAY_START},{FEB_28_DAY_END} "
         f"{quote(infile)} {quote(synthetic_feb29)}",
 
         # Change copied Feb 28 date values into Feb 29.
-        # This follows the original script logic.
-        f'ncap2 -O -s "date=date-301+229" '
+        f'ncap2 -O -s "date=date+1" '
         f"{quote(synthetic_feb29)} {quote(synthetic_feb29)}",
 
         # Concatenate:
