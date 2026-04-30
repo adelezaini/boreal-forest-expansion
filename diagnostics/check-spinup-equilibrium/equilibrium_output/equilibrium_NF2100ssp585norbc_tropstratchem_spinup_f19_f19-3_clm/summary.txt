@@ -1,0 +1,18 @@
+var first last drift slope_per_year
+TOTSOMN ; ; 0 0
+TOTECOSYSN ; ; 0 0
+TOTVEGC ; ; 0 0
+TOTECOSYSC ; ; 0 0
+TOTSOMC ; ; 0 0
+TOTLITC ; ; 0 0
+NPP ; ; 0 0
+GPP ; ; 0 0
+HR ; ; 0 0
+NEE ; ; 0 0
+NBP ; ; 0 0
+TWS ; ; 0 0
+H2OSOI ;  0 0
+SOILLIQ ;  0 0
+SOILICE ;  0 0
+H2OSNO ; ; 0 0
+TSOI ;  0 0

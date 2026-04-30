@@ -1,0 +1,13 @@
+var first last drift slope_per_year
+TREFHT ; ; 0 0
+PRECT ; ; 0 0
+FSNT ; ; 0 0
+FLNT ; ; 0 0
+PSL ; ; 0 0
+CLDTOT ; ; 0 0
+TS ; ; 0 0
+FSNS ; ; 0 0
+FLNS ; ; 0 0
+LHFLX ; ; 0 0
+SHFLX ; ; 0 0
+RESTOM ; ; 0 0

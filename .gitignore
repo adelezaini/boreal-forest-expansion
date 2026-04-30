@@ -27,3 +27,4 @@ data/raw/LPJ-GUESS/*.txt
 
 # Large data
 # data/surfdatamap/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/diagnostics/check-spinup-equilibrium/equilibrium_output/*
