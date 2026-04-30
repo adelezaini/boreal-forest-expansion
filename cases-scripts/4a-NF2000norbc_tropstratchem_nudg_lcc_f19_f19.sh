@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# I forgot cosp_diagnostics
-
-### CTRL RUN
+### LC_PD RUN
 # Nudging
-# Initial file: NF2000norbc_tropstratchem_spinup_f19_f19 (0021-01-01)
+# Initial file: NF2000norbc_tropstratchem_spinup_lcc_f19_f19 (XXXX-XX-XX)
 # 15 years to start
 
 # Exit if error, undefined variable...
@@ -13,17 +11,20 @@ set -euo pipefail
 source cases-setup.sh
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-$today"
+CASENAME="NF2000norbc_tropstratchem_nudg_lcc_f19_f19-$today"
 COMPSET=NF2000norbc_tropstratchem
 set_project_noresm_res_vars
 
 # Restart files specifics:
-REFCASE="NF2000norbc_tropstratchem_spinup_f19_f19"
-REFDATE="0021-01-01"
+REFCASE="NF2000norbc_tropstratchem_quick_spinup_lcc_f19_f19"
+REFDATE="XXXX-01-01"
 
 REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/${REFCASE}/rest/${REFDATE}-00000"
 REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 # I transfer restart files because in original folder are zipped. The unzipped files are all in one place
+
+# Surface data file with modified land cover for boreal forest expansion
+SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_78pfts_LPJGUESS_SSP585.nc"
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
@@ -70,11 +71,14 @@ forcings_2000
 setup_nudging_data 
 
 cat << EOF >> user_nl_clm
+fsurdat = '${SURFDATA_FILE}'
 use_init_interp = .true.
 EOF
 
-cam_diagnostics HR_BVOC
+cosp_diagnostics
+cam_diagnostics #HR_BVOC
 clm_diagnostics
 
 ./case.build
 ./case.submit
+
