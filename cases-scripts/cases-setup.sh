@@ -185,6 +185,21 @@ setup_nudging_data () {
 EOF
 }
 
+##----------------- BVOC emissions -----------------##
+prescribed_bvoc_emissions(){
+cat << EOF >> user_nl_cam
+&megan_emis_nl
+ megan_specifier = ''
+/
+
+&chem_inparm
+ srf_emis_specifier =
+  'ISOP  -> /cluster/home/adelez/noresm-inputdata/processed/bvoc-emissions/XXX'
+  'MTERP -> /cluster/home/adelez/noresm-inputdata/processed/bvoc-emissions/XXX.nc'
+/
+EOF
+}
+
 ##----------------- extra diagnostics -----------------##
 aerosol_cosp_diagnostics(){
 # Aerosol diagnostics
