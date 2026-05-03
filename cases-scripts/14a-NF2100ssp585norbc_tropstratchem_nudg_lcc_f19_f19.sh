@@ -2,8 +2,8 @@
 
 ### LC_FUT RUN
 # Nudging
-# Initial file: NF2000norbc_tropstratchem_spinup_lcc_f19_f19 (XXXX-XX-XX)
-# 15 years to start
+# Initial state: NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19_20260428 at 0020-01-01
+# 10 years to start
 
 # Exit if error, undefined variable...
 set -euo pipefail
@@ -16,18 +16,15 @@ COMPSET=NF2100ssp585norbc_tropstratchem
 set_project_noresm_res_vars
 
 # Restart files specifics:
-REFCASE="NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19"
-REFDATE="XXXX-01-01"
-
-REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/${REFCASE}/rest/${REFDATE}-00000"
+REFCASE="NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19_20260428"
+REFDATE="0020-01-01"
 REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
-# I transfer restart files because in original folder are zipped. The unzipped files are all in one place
 
 # Surface data file with modified land cover for boreal forest expansion
 SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_78pfts_LPJGUESS_SSP585.nc"
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-prepare_restart_files "$REST_SRC" "$REST_LOCAL"
+#prepare_restart_files "$REST_SRC" "$REST_LOCAL"
 
 BASE_CASE_DIR="$HOME/cases/BRL_FRST_XPSN/"
 CASEROOT="$BASE_CASE_DIR/$CASENAME"

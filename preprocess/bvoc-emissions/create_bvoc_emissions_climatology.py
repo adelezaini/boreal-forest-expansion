@@ -28,8 +28,6 @@ Usage:
      --path /cluster/work/users/adelez/archive \
      --output-path /cluster/projects/nn9188k/adelez/noresm-inputdata/processed/bvoc-emissions  
 
-     NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test_20260429-diagnostics-3yr
-
 The calendar must be specified explicitly:
 --calendar noleap: assumes all years have 365 days. 
     Feb 29 is never removed or added.
