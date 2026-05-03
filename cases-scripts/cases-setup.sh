@@ -437,8 +437,8 @@ EOF
 cam_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 cat << EOF >> user_nl_cam
-mfilt = 365
-nhtfrq = -24
+mfilt = 1
+nhtfrq = 0
 avgflag_pertape = 'A'
 
 fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC'
@@ -449,8 +449,8 @@ EOF
 clm_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 cat << EOF >> user_nl_clm
-hist_mfilt = 365
-hist_nhtfrq = -24
+hist_mfilt = 1
+hist_nhtfrq = 0
 
 hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN',
 'TOTVEGC','TOTSOMC','TOTECOSYSC',
