@@ -24,9 +24,7 @@ set -euo pipefail
 #   ./select_concat_cam_raw_output.sh CASE_NAME VARLIST_FILE [START_YM] [END_YM] [STREAM]
 #
 # Example:
-#   ./select_concat_cam_raw_output.sh \
-#     NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260429 \
-#     aggregated_keep_variables_present_only_ncks_with_depletion.txt
+#   ./select_concat_cam_raw_output.sh NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20260503 selected_cam_variables.txt
 #
 # Optional arguments:
 #   START_YM defaults to 2000-01
@@ -34,11 +32,16 @@ set -euo pipefail
 #   STREAM   defaults to h0
 # ============================================================
 
+# Avoid HDF5 file-locking problems on shared HPC filesystems
+export HDF5_USE_FILE_LOCKING=FALSE
+
+module load NCO/5.2.9-foss-2024a
+
 # -----------------------------
 # Fixed project paths
 # -----------------------------
 
-ARCHIVE_ROOT="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive"
+ARCHIVE_ROOT="/cluster/work/users/adelez/archive" #/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive"
 OUT_DIR="/cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/selected-model-output"
 
 # Compression level. 1 is light and usually a good compromise.
