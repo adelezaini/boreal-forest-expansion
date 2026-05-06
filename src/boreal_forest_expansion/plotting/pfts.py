@@ -12,7 +12,7 @@ from matplotlib import transforms
 from matplotlib.colors import ListedColormap
 import matplotlib.path as mpath
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import proplot as pplt
+#import proplot as pplt
 import cartopy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -191,7 +191,7 @@ def plot_boreal_pfts_CLM(boreal_pfts, col_wrap=2, contourf = True):
     plt.show()
     
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
-def plot_boreal_pfts(boreal_pfts, figsize=None, col_wrap=2, title=None, titles=None, cmap='Greens', auto_aspect=False, cbar_label=None, perc_label=True, extra_cbar_axis=False, lat=None, contourf = False, robust=False, show=True, cbar_kwargs={}, **kwargs):
+#def plot_boreal_pfts(boreal_pfts, figsize=None, col_wrap=2, title=None, titles=None, cmap='Greens', auto_aspect=False, cbar_label=None, perc_label=True, extra_cbar_axis=False, lat=None, contourf = False, robust=False, show=True, cbar_kwargs={}, **kwargs):
     """ Orthographic projection plot of boreal PFTs.
         Args:
         - boreal_pfts (DataArray): DataArray of the boreal pfts with (lat, lon, natpft) as coordinates
@@ -208,95 +208,142 @@ def plot_boreal_pfts(boreal_pfts, figsize=None, col_wrap=2, title=None, titles=N
         - cbar_kwargs (dict): colorbar arguments (ex: shrink, aspect, orientation...)
         - **kwargs (Any): keyword-arguments to pass to xr.DataArray.plot().
     """
-    
-    rows = math.ceil(len(boreal_pfts.natpft.values)/col_wrap)
-    # If 'figsize' is not given: set it automatically considering the total number of PFTs
-    if not figsize: figsize = [col_wrap*3.5, rows*3.5]
+def plot_boreal_pfts(
+    boreal_pfts,
+    figsize=None,
+    col_wrap=2,
+    title=None,
+    titles=None,
+    cmap='Greens',
+    auto_aspect=False,
+    cbar_label=None,
+    perc_label=True,
+    extra_cbar_axis=True,
+    lat=None,
+    contourf=False,
+    robust=False,
+    show=True,
+    cbar_kwargs=None,
+    **kwargs
+):
+    """
+    Orthographic projection plot of boreal PFTs with robust manual layout.
+    """
 
-        
-    # Just for a nicer plot: extra_cbar_axis=True move the (eventual) big colorbar from the side to an extra axis
-    # If the number of PFTs fits a multiple of 'col_wrap', then xarray.DataArray.plot() will automatically add a side colorbar, rearranging the axes position and width ('add_colorbar=True')
-    # Else, we silence the automatic colorbar ('add_colorbar=False') to add an extra axis on the last available from the arrange of subplots
-    if extra_cbar_axis or len(boreal_pfts.natpft.values)%col_wrap and not robust:
-        add_colorbar=False
-    else:
-        add_colorbar=True
-        
-    # Gather all the arguments of the plot
-    if not cbar_kwargs:
-        if rows<2: cbar_kwargs=dict(shrink=0.6)
-        else: cbar_kwargs=dict(orientation='horizontal', shrink=0.6)
-            
-    # If vmin and vmax are not assigned -> 'ceiling tens' are choosen for extremes (-91->-100, 84->100)
-    if not robust: # in contrast with robust
-        if not any(x=='vmin' for x in kwargs.keys()):
-            if boreal_pfts.min().values:
-                kwargs['vmin'] = 10**(math.ceil(math.log(abs(boreal_pfts.min().values), 10)))*np.sign(boreal_pfts.min().values)
-            else: #in case it's 0.
-                kwargs['vmin'] = boreal_pfts.min().values
-        if not any(x=='vmax' for x in kwargs.keys()):
-            if boreal_pfts.max().values:
-                kwargs['vmax'] = 10**(math.ceil(math.log(abs(boreal_pfts.max().values), 10)))*np.sign(boreal_pfts.max().values)
-            else: #in case it's 0.
-                kwargs['vmax'] = boreal_pfts.min().values
-            
-    plot_args = dict(x='lon', y='lat', col='natpft', col_wrap=col_wrap,
-                     cmap=cmap, transform=ccrs.PlateCarree(), robust=robust,
-                     subplot_kws={'projection': ccrs.Orthographic(0, 90)},
-                     add_colorbar=add_colorbar,figsize=figsize, **kwargs,
-                     cbar_kwargs=cbar_kwargs)
-    # If not plot.contourf -> plot.pcolormesh
-    if not contourf: p = boreal_pfts.plot.pcolormesh(**plot_args)
-    else: p = boreal_pfts.plot.contourf(**plot_args)
-        
+    npft = len(boreal_pfts.natpft.values)
+    ncols = col_wrap
+    nrows = math.ceil(npft / ncols)
 
-    for i, ax in enumerate(p.axes.flat):
+    if figsize is None:
+        figsize = (ncols * 3.5, nrows * 3.6 + 0.8)
+
+    if cbar_kwargs is None:
+        cbar_kwargs = {}
+
+    # Set default vmin/vmax if not robust and not provided
+    if not robust:
+        if 'vmin' not in kwargs:
+            vmin_data = float(boreal_pfts.min().values)
+            if vmin_data != 0:
+                kwargs['vmin'] = 10 ** math.ceil(math.log(abs(vmin_data), 10)) * np.sign(vmin_data)
+            else:
+                kwargs['vmin'] = 0
+
+        if 'vmax' not in kwargs:
+            vmax_data = float(boreal_pfts.max().values)
+            if vmax_data != 0:
+                kwargs['vmax'] = 10 ** math.ceil(math.log(abs(vmax_data), 10)) * np.sign(vmax_data)
+            else:
+                kwargs['vmax'] = 0
+
+    fig, axes = plt.subplots(
+        nrows=nrows,
+        ncols=ncols,
+        figsize=figsize,
+        subplot_kw={'projection': ccrs.Orthographic(0, 90)}
+    )
+
+    axes = np.atleast_1d(axes).ravel()
+
+    mappable = None
+
+    for i, ax in enumerate(axes):
+
+        if i >= npft:
+            ax.remove()
+            continue
+
+        da = boreal_pfts.isel(natpft=i)
+
+        plot_args = dict(
+            ax=ax,
+            x='lon',
+            y='lat',
+            cmap=cmap,
+            transform=ccrs.PlateCarree(),
+            add_colorbar=False,
+            robust=robust,
+            **kwargs
+        )
+
+        if contourf:
+            mappable = da.plot.contourf(**plot_args)
+        else:
+            mappable = da.plot.pcolormesh(**plot_args)
+
         ax_map_properties(ax, borders=False, rivers=False)
-        if auto_aspect: ax.set_aspect('auto')
-        if lat:
-            #cut_extent_Orthographic(ax, lat=lat) # it doesn't work with FacedGrid: https://github.com/pydata/xarray/issues/4137
-            ax.set_extent([-180,180, lat,90], crs = ccrs.PlateCarree())
-        if titles and i<len(titles): ax.set_title(titles[i])
 
-    # If automatic colorbar is silenced (see above), add colorbar in the last axis
-    if not add_colorbar:
-        # If there is no "last axis", add an extra one
-        if extra_cbar_axis:
-            nrows = int(len(boreal_pfts.natpft.values)/col_wrap) #number of rows in the subplots
-            n = len(p.fig.axes) #number of axis
-            # Change geometry to fit an extra line of axes
-            for i in range(n):
-                p.fig.axes[i].change_geometry(nrows+1, col_wrap, i+1)
-            # Add extra axis and remove all the "decorations" (facecolor, grid, axes, ...)
-            ax = p.fig.add_subplot(nrows+1, 1, nrows+1)
-            ax.remove() #ax.grid(False) #ax.set_facecolor('none')
-            # Adjust the figsize (height) with the new extra row of subplots
-            p.fig.set_figheight(figsize[1]/nrows*(nrows+1))
-            
-        #plt.subplots_adjust(bottom=0.1, top=0.9, left=0.1, right=0.9, wspace=0.1, hspace=0.1)
-        #Get last axis position
-        l,b,w,h = ax.get_position().bounds
-        #Create a rectangle for the colorbar (horizontal stripe, narrower than the total original axis size)
-          # if an extra row is added for the colorbar, shrink the axis containining the colorbar and center it
-        if extra_cbar_axis: sec = w/6.; w = sec*4.; l = l + sec
-        rect = [l,b+h*0.5,w,h*0.05]
-        cbar_ax = p.fig.add_axes(rect)
-        #cbar_ax.set_aspect(w/h)
-        # Create a colormap within [vmin, vmax] in 'Greens'
-        # If levels: create colorbar with levels
-        if any(x=='levels' for x in kwargs.keys()): cmap = mpl.cm.get_cmap(cmap,kwargs['levels'])
-        cs=mpl.cm.ScalarMappable(mpl.colors.Normalize(vmin=kwargs['vmin'], vmax=kwargs['vmax']), cmap=cmap)
-        #Add colorbar and title
-        cbar=p.fig.colorbar(cs,cax=cbar_ax , extend='both', orientation='horizontal')
-        if cbar_label: cbar.set_label(cbar_label)
-        else: cbar.set_label("\n".join(wrap(boreal_pfts.long_name, 30))) #, size = 14 )
-        if perc_label: cbar_ax.set_xticklabels(['{0:g}%'.format(x) for x in cbar_ax.get_xticks()])
-        
-    #Set title
-    if title : plt.suptitle(title, y = 0.97, fontweight = 'bold') #size=13,
-    else: plt.suptitle(boreal_pfts.name, y = 0.97, fontweight = 'bold') #size=13,
-    plt.tight_layout()
-    if show: plt.show()
+        if auto_aspect:
+            ax.set_aspect('auto')
+
+        if lat:
+            ax.set_extent([-180, 180, lat, 90], crs=ccrs.PlateCarree())
+
+        if titles and i < len(titles):
+            ax.set_title(titles[i])
+        else:
+            ax.set_title(str(da.natpft.values))
+
+    # Leave clear space for title and colorbar
+    fig.subplots_adjust(
+        left=0.03,
+        right=0.97,
+        bottom=0.16,
+        top=0.88,
+        wspace=0.10,
+        hspace=0.22
+    )
+
+    # Shared horizontal colorbar, safely below the maps
+    cbar_ax = fig.add_axes([0.25, 0.07, 0.50, 0.025])
+
+    cbar = fig.colorbar(
+        mappable,
+        cax=cbar_ax,
+        orientation='horizontal',
+        extend='both',
+        **cbar_kwargs
+    )
+
+    if cbar_label:
+        cbar.set_label(cbar_label)
+    else:
+        cbar.set_label("\n".join(wrap(boreal_pfts.long_name, 45)))
+
+    if perc_label:
+        ticks = cbar.get_ticks()
+        cbar.set_ticks(ticks)
+        cbar.set_ticklabels(['{0:g}%'.format(x) for x in ticks])
+
+    if title:
+        fig.suptitle(title, y=0.96, fontweight='bold')
+    else:
+        fig.suptitle(boreal_pfts.name, y=0.96, fontweight='bold')
+
+    if show:
+        plt.show()
+
+    return fig, axes
 
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
 def basic_line_plot(ds, title, alpha=None, colors=None, legend = {15:'15 - Boreal trees', 11:'11 - Boreal schrubs', 12:'12 - arctic C3 grass'}, ytick_perc=True, show=True):
@@ -316,10 +363,12 @@ def basic_line_plot(ds, title, alpha=None, colors=None, legend = {15:'15 - Borea
     ax.set_xlim(40,90)
     plt.legend()
     plt.title(title)
-    plt.tight_layout()
+    if not extra_cbar_axis:
+        plt.tight_layout()
     if show: plt.show()
     
-#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
+#–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
 def plot_individual_cumulative(ds_x, ds_y, col, title=None, legend=None, figname=None):
     """Distribution plots – 1. individual curves 2. cumulative contribution"""
     

@@ -521,7 +521,7 @@ def plot_single_boreal_panel(
     cbar_label: str | None = None,
     mean_lat_min: float | None = 45.0,
     shade_ocean: bool = True,
-    ocean_alpha: float = 0.95,
+    ocean_alpha: float = 0.5,
 ):
     if vmax is None:
         vmax = symmetric_vmax(da)
@@ -679,7 +679,7 @@ def make_forcing_summary_figure(
             extent_lat=extent_lat,
             mean_lat_min=mean_lat_min,
             cbar_label=f"{label}\n[{panel.units}]",
-            shade_ocean=False,
+            shade_ocean=True,
         )
 
     fig.suptitle(
