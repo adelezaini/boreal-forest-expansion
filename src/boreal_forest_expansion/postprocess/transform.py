@@ -227,10 +227,12 @@ def add_display_unit_variables(ds: xr.Dataset) -> xr.Dataset:
         ds_["CLDLIQ_mgkg"].attrs["long_name"] = ds_["CLDLIQ"].attrs.get("long_name", "cloud liquid water")
         ds_["CLDLIQ_mgkg"].attrs["units"] = "mg/kg"
 
-    if "TGCLDLWP" in ds_:
-        ds_["TGCLDLWP_gm2"] = ds_["TGCLDLWP"] * 1.0e3
-        ds_["TGCLDLWP_gm2"].attrs["long_name"] = ds_["TGCLDLWP"].attrs.get("long_name", "total grid-box cloud liquid water path")
-        ds_["TGCLDLWP_gm2"].attrs["units"] = "g/m2"
+    for var in ["TGCLDLWP", "TGCLDIWP", "TGCLDCWP"]:
+        if var in ds_:
+            out = f"{var}_gm2"
+            ds_[out] = ds_[var] * 1.0e3
+            ds_[out].attrs["long_name"] = ds_[var].attrs.get("long_name", var)
+            ds_[out].attrs["units"] = "g/m2"
 
     # Aerosol/SOA display variables.
     for var in ["SOA_A1", "SOA_NA"]:
@@ -289,6 +291,33 @@ def add_general_derived_variables(ds: xr.Dataset) -> xr.Dataset:
         ds_["ACTREL_incld"] = (ds_["ACTREL"] / ds_["FCTL"]).where(ds_["FCTL"] != 0)
         ds_["ACTREL_incld"].attrs["long_name"] = "in-cloud activated effective radius"
         ds_["ACTREL_incld"].attrs["units"] = ds_["ACTREL"].attrs.get("units", "")
+
+    # Total SOA column burden
+    soa_burden_terms = [var for var in ["cb_SOA_LV", "cb_SOA_NA", "cb_SOA_SV"] if var in ds_]
+    if soa_burden_terms:
+        ds_["cb_SOA_TOT"] = sum(ds_[var] for var in soa_burden_terms)
+        ds_["cb_SOA_TOT"].attrs["long_name"] = "total SOA column burden"
+        ds_["cb_SOA_TOT"].attrs["units"] = ds_[soa_burden_terms[0]].attrs.get("units", "kg/m2")
+
+        ds_["cb_SOA_TOT_mgm2"] = ds_["cb_SOA_TOT"] * 1.0e6
+        ds_["cb_SOA_TOT_mgm2"].attrs["long_name"] = "total SOA column burden"
+        ds_["cb_SOA_TOT_mgm2"].attrs["units"] = "mg/m2"
+
+
+    # Total aerosol number concentration from modal number concentrations
+    nconc_terms = [f"NCONC{i:02d}" for i in range(1, 15) if f"NCONC{i:02d}" in ds_]
+    if nconc_terms:
+        ds_["N_AER"] = sum(ds_[var] for var in nconc_terms)
+        ds_["N_AER"].attrs["long_name"] = "total aerosol number concentration from NCONC01-NCONC14"
+        ds_["N_AER"].attrs["units"] = ds_[nconc_terms[0]].attrs.get("units", "")
+
+
+    # ET from QFLX
+    if "QFLX" in ds_:
+        # CAM QFLX is usually kg/m2/s, numerically equivalent to mm/s for water.
+        ds_["QFLX_mmday"] = ds_["QFLX"] * 86400.0
+        ds_["QFLX_mmday"].attrs["long_name"] = "evapotranspiration / surface water flux"
+        ds_["QFLX_mmday"].attrs["units"] = "mm/day"
 
     return ds_
 

@@ -38,7 +38,10 @@ from boreal_forest_expansion.postprocess.chemistry_postprocess import (
     make_map_diagnostics,
     paired_comparison,
 )
-
+from boreal_forest_expansion.postprocess.variable_catalog import (
+    VARIABLE_CLASSES,
+    catalog_variable_union,
+)
 
 # =============================================================================
 # User configuration
@@ -58,10 +61,19 @@ END_YEAR = 2009
 START_YM = f"{START_YEAR}-01"
 END_YM = f"{END_YEAR}-12"
 
-FIX_TIMESTAMP = "datetime64"
+CLIM_START_YEAR = 2001
+CLIM_END_YEAR = 2009
+
+FIX_TIMESTAMP = "DatetimeNoLeap"
 CHUNKS = {"time": 12}
 
 WRITE_MAPS = True
+
+OUTPUT_VARIABLE_CLASSES = [
+    "METEOROLOGY",
+    "CLOUDPROP",
+    "SOA"
+]
 
 
 @dataclass(frozen=True)
@@ -110,68 +122,6 @@ COMPARISONS: list[tuple[str, str, str]] = [
     ("LCC-FUT", "LCC-PD", "LCC-FUT_minus_LCC-PD"),
     ("LCC-FUT-fBVOC", "LCC-FUT", "LCC-FUT-fBVOC_minus_LCC-FUT"),
 ]
-
-
-# =============================================================================
-# Temporary variable catalog
-# =============================================================================
-# In the next step, move this to:
-# src/boreal_forest_expansion/postprocess/variable_catalog.py
-# and import it here.
-
-VARIABLE_CLASSES: dict[str, list[str]] = {
-    "CH4": [
-        "CH4", "CH4_SRF", "CH4_burden_kg", "CH4_burden_Tg", "CH4_burden_trop_kg",
-        "CH4_burden_trop_Tg", "CH4_OH_loss_kg_s", "CH4_OH_loss_Tg_yr",
-        "CH4_lifetime_OH_yr", "CH4_SRF_global_mean",
-    ],
-    "BVOC": [
-        "MEG_ISOP", "MEG_MTERP", "SFISOP", "SFMTERP", "emis_ISOP", "emis_MTERP",
-        "MEG_ISOP_Tg_yr", "MEG_MTERP_Tg_yr", "SFISOP_Tg_yr", "SFMTERP_Tg_yr",
-        "emis_ISOP_Tg_yr", "emis_MTERP_Tg_yr", "ISOP", "MTERP", "ISOP_trop_massmean",
-        "MTERP_trop_massmean", "CH2O", "CH2O_trop_massmean", "CH2O_SRF",
-    ],
-    "OZONE": [
-        "O3", "O3_SRF", "O3_burden_kg", "O3_burden_Tg", "O3_trop_massmean",
-        "O3_SRF_global_mean",
-    ],
-    "CHEMISTRY": [
-        "OH", "OH_SRF", "OH_trop_massmean", "HO2", "HO2_trop_massmean",
-        "H2O2", "H2O2_trop_massmean", "CO", "CO_SRF", "CO_trop_massmean",
-        "NO", "NO2", "NOx", "NO_trop_massmean", "NO2_trop_massmean",
-        "NOx_trop_massmean", "NO3", "NO3_trop_massmean", "HNO3", "HNO3_trop_massmean",
-        "PAN", "PAN_trop_massmean", "T", "T_C", "T_trop_massmean", "Q", "Q_trop_massmean",
-        "FSDS", "FSDS_global_mean", "SOLIN", "SOLIN_global_mean", "CLDTOT",
-        "CLDTOT_pct", "CLDTOT_global_mean", "TREFHT", "TREFHT_C", "TREFHT_global_mean",
-        "QREFHT", "QREFHT_global_mean",
-    ],
-    "RADIATIVE": [
-        "FSNT", "FLNT", "FSNT_DRF", "FLNT_DRF", "FSNTCDRF", "FLNTCDRF",
-        "FTOT_Ghan", "SWTOT_Ghan", "LWTOT_Ghan", "SWDIR_Ghan", "LWDIR_Ghan",
-        "DIR_Ghan", "SWCF_Ghan", "LWCF_Ghan", "NCFT_Ghan", "FREST_Ghan",
-        "SW_rest_Ghan", "LW_rest_Ghan",
-    ],
-    "CLOUDPROP": [
-        "CLDTOT", "CLDTOT_pct", "CLDLOW", "CLDLOW_pct", "CLDMED", "CLDMED_pct",
-        "CLDHGH", "CLDHGH_pct", "CLDLIQ", "CLDLIQ_mgkg", "CLDICE", "TGCLDLWP",
-        "TGCLDLWP_gm2", "TGCLDIWP", "TGCLDCWP", "CDNUMC", "CDNUMC_1e6cm2",
-    ],
-    "SOA": [
-        "SOA_A1", "SOA_A1_ugkg", "SOA_NA", "SOA_NA_ugkg", "SOA_LV", "SOA_SV",
-        "cb_SOA_LV", "cb_SOA_NA", "cb_SOA_NA_mgm2", "cb_SOA_SV", "cb_SOA_dry",
-    ],
-    "MAPS": [
-        "CH4_OH_loss_column_Tg_yr", "OH_trop_massmean_column", "O3_trop_massmean_column",
-        "CO_trop_massmean_column", "NO_trop_massmean_column", "NO2_trop_massmean_column",
-        "CH2O_trop_massmean_column", "MEG_ISOP", "MEG_MTERP", "SFISOP", "SFMTERP",
-    ],
-}
-
-def catalog_variable_union() -> list[str]:
-    variables = []
-    for class_vars in VARIABLE_CLASSES.values():
-        variables.extend(class_vars)
-    return sorted(set(variables))
 
 # =============================================================================
 # Output helpers
@@ -233,11 +183,19 @@ def build_monthly_postprocessed_dataset(ds: xr.Dataset) -> xr.Dataset:
 
 def save_case_outputs(case: CaseConfig, monthly_all: xr.Dataset) -> xr.Dataset:
     annual_all = annual_mean(monthly_all)
-    clim_all = climatology(annual_all, start_year=case.start_year, end_year=case.end_year)
+    clim_all = climatology(
+        annual_all,
+        start_year=CLIM_START_YEAR,
+        end_year=CLIM_END_YEAR,
+    )
 
-    for variable_class in VARIABLE_CLASSES:
+    for variable_class in OUTPUT_VARIABLE_CLASSES:
+        print(f"Preparing {case.alias}_{variable_class}...", flush=True)
         out = select_class(clim_all, variable_class)
-        write_if_nonempty(out, output_path(case.alias, variable_class, case.start_year, case.end_year))
+        write_if_nonempty(
+            out,
+            output_path(case.alias, variable_class, CLIM_START_YEAR, CLIM_END_YEAR),
+        )
 
     print_sanity_checks(case, clim_all)
     return clim_all
@@ -275,12 +233,14 @@ def save_comparison_outputs(climatologies: dict[str, xr.Dataset], cases_by_alias
         comp = paired_comparison(climatologies[pert_alias], climatologies[ctrl_alias])
         case = cases_by_alias[pert_alias]
 
-        for variable_class in VARIABLE_CLASSES:
+        for variable_class in OUTPUT_VARIABLE_CLASSES:
             variables = VARIABLE_CLASSES[variable_class]
             selected = [var for var in comp.data_vars if any(var.startswith(base) for base in variables)]
             out = comp[selected] if selected else xr.Dataset(coords=comp.coords)
-            write_if_nonempty(out, output_path(out_alias, variable_class, case.start_year, case.end_year))
-
+            write_if_nonempty(
+                out,
+                output_path(out_alias, variable_class, CLIM_START_YEAR, CLIM_END_YEAR),
+            )
 
 # =============================================================================
 # CLI
