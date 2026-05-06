@@ -1,271 +1,306 @@
+"""
+General postprocessing utilities for selected NorESM/CAM output.
+
+This module is intentionally general. It should not contain CH4-specific
+chemistry diagnostics or Ghan-specific radiative decomposition.
+
+Responsibilities:
+- open selected concatenated files
+- fix CAM/CLM monthly timestamps
+- safe variable selection
+- weighted annual/climatological means
+- general display/derived variables
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Iterable, Mapping
 
 import numpy as np
 import xarray as xr
-from boreal_forest_expansion.datasets.datavariables_catalog import Ghan_vars
 
-def fix_units(ds):
-    """ Convert some units to have a more meaningful representation """
-    
-    ds_ = ds.copy(deep=True)
-    
-    for var in list(ds_.keys()):
-        
-        if var == "SFisoprene" or var == "SFmonoterp":
-            ds_[var].values = ds_[var].values*(1e+6*(60.*60.*24.*365.)) # Change unit from kg/m2/s to mg/m2/y
-            #Note: this unit makes sense when a yearly value is shown, remember the output is monthly -> mean over the year or convert into month/day (/12, /365)
-            ds_[var].attrs["units"] = "mg/m$^2$/y"
-            
-        elif var == "SOA_A1" or var == "SOA_NA":
-            ds_[var].values = ds_[var].values*1e+9 # Change unit from kg/kg to $\mu$g/kg
-            ds_[var].attrs["units"] = "$\mu$g/kg"
-            
-        elif var == "cb_SOA_A1" or var == "cb_SOA_NA" or var == "cb_SOA_A1_OCW" or var == "cb_SOA_NA_OCW":
-            ds_[var].values = ds_[var].values*1e+6 # Change unit from kg/m2 to mg/m2
-            ds_[var].attrs["units"] = "mg/m$^2$"
-            
-        elif var == "ACTNL":
-            ds_[var].values = ds_[var].values*1e-6 # Change unit from m-3 to cm-3
-            ds_[var].attrs["units"] = "cm$^{-3}$"
-            
-        elif var == "N_AER":
-            ds_[var].attrs["units"] = "cm$^{-3}$" # Set unit to cm-3
-            
-        elif var == "CDNUMC":
-            ds_[var].values = ds_[var].values*1e-10 # Change unit from 1/m2 to 1e6 cm-2
-            ds_[var].attrs["units"] = "1e6 cm$^{-2}$"
-            
-        elif var == "CLDHGH" or var == "CLDLOW" or var == "CLDMED" or var == "CLDMED":
-            ds_[var].values = ds_[var].values*1e+3 # Change unit from fraction to g/kg
-            ds_[var].attrs["units"] = "g/kg"
-            
-        elif var == "CLDLIQ":
-            ds_[var].values = ds_[var].values*1e+6 # Change unit from kg/kg to mg/kg
-            ds_[var].attrs["units"] = "mg/kg"
-            
-        elif var == "TGCLDLWP":
-            ds_[var].values = ds_[var].values*1e+3 # Change unit from kg/m2 to g/m2
-            ds_[var].attrs["units"] = "g/m$^2$"
-            
-        elif var == "QFLX_EVAP_TOT":
-            ds_[var].values = ds_[var].values*60*60*24 # Change unit from mm H2O/s to mm H2O/day
-            ds_[var].attrs["units"] = "mm/day"
-            
-        elif var == "FLNT" or var == "FSNT" or var == "FLNT_DRF" or var == "FLNTCDRF" or var == "FSNT_DRF" or var == "FSNTCDRF" or var =="LHFLX" or var =="SHFLX":
-            ds_[var].attrs["units"] = "W/m$^2$" # Change unit from W/m^2 to W/m2, like the other radiative fluxes
-         
-        else:
-            continue
-            
-        #print(var, "-", ds_[var].attrs["long_name"], ":")
-        #print(ds_[var].attrs["units"])
-    print("Fix units completed")
-            
+
+# -----------------------------------------------------------------------------
+# Opening and time handling
+# -----------------------------------------------------------------------------
+
+def fix_cam_time(ds: xr.Dataset, timetype: str = "datetime64") -> xr.Dataset:
+    """
+    Fix monthly CAM/CLM timestamps using time bounds.
+
+    NorESM/CAM monthly history files often store time at the end of the
+    averaging interval. This function moves the timestamp to the 15th day
+    of the corresponding month, which makes annual/seasonal grouping safer.
+
+    Parameters
+    ----------
+    ds
+        Input dataset with `time_bnds` or `time_bounds`.
+    timetype
+        "datetime64" or "DatetimeNoLeap".
+
+    Returns
+    -------
+    xr.Dataset
+        Dataset with corrected `time` coordinate. If no time bounds are found,
+        the dataset is returned unchanged.
+    """
+    ds_ = ds.copy(deep=False)
+
+    if "time_bounds" in ds_.data_vars:
+        ds_ = ds_.rename_vars({"time_bounds": "time_bnds"})
+    if "hist_interval" in ds_.dims:
+        ds_ = ds_.rename_dims({"hist_interval": "nbnd"})
+
+    if "time_bnds" not in ds_.variables:
+        return ds_
+
+    if timetype == "DatetimeNoLeap":
+        from cftime import DatetimeNoLeap
+
+        months = ds_.time_bnds.isel(nbnd=0).dt.month.values
+        years = ds_.time_bnds.isel(nbnd=0).dt.year.values
+        dates = [DatetimeNoLeap(int(year), int(month), 15) for year, month in zip(years, months)]
+    elif timetype == "datetime64":
+        dates = list(ds_.time_bnds.isel(nbnd=0).values + np.timedelta64(14, "D"))
+    else:
+        raise ValueError("timetype must be 'datetime64', 'DatetimeNoLeap', or None")
+
+    return ds_.assign_coords({"time": ("time", dates, ds_.time.attrs)})
+
+
+def open_selected_dataset(
+    path: str | Path,
+    fix_timestamp: str | None = "datetime64",
+    chunks: Mapping[str, int] | None = None,
+) -> xr.Dataset:
+    """
+    Open one selected/concatenated NetCDF file produced by
+    select_concat_cam_raw_output.sh.
+    """
+    path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(f"Selected output file not found: {path}")
+
+    if chunks is None:
+        chunks = {"time": 12}
+
+    ds = xr.open_dataset(path, chunks=chunks)
+
+    if fix_timestamp is not None:
+        ds = fix_cam_time(ds, timetype=fix_timestamp)
+
+    return ds
+
+
+# -----------------------------------------------------------------------------
+# Safe selection and averaging
+# -----------------------------------------------------------------------------
+
+def present_vars(ds: xr.Dataset, variables: Iterable[str]) -> list[str]:
+    """Return variables from `variables` that are present in `ds`."""
+    return [var for var in variables if var in ds.data_vars]
+
+
+def missing_vars(ds: xr.Dataset, variables: Iterable[str]) -> list[str]:
+    """Return variables from `variables` that are absent from `ds`."""
+    return [var for var in variables if var not in ds.data_vars]
+
+
+def select_present(ds: xr.Dataset, variables: Iterable[str], warn: bool = True) -> xr.Dataset:
+    """Select only variables that exist in a dataset."""
+    variables = list(variables)
+    present = present_vars(ds, variables)
+    missing = missing_vars(ds, variables)
+
+    if warn and missing:
+        print(f"Warning: {len(missing)} requested variables missing: {missing}")
+
+    if not present:
+        return xr.Dataset(coords={coord: ds[coord] for coord in ds.coords})
+
+    return ds[present]
+
+
+def month_length_weights(ds: xr.Dataset) -> xr.DataArray:
+    """Normalized month-length weights within each year."""
+    if "time" not in ds.coords:
+        raise ValueError("Dataset has no time coordinate; cannot compute month-length weights.")
+
+    month_length = ds.time.dt.days_in_month
+    return month_length.groupby("time.year") / month_length.groupby("time.year").sum()
+
+
+def annual_mean(ds: xr.Dataset) -> xr.Dataset:
+    """
+    Month-length weighted annual mean for monthly output.
+
+    Variables without a `time` dimension are preserved unchanged.
+    """
+    time_vars = [var for var in ds.data_vars if "time" in ds[var].dims]
+    static_vars = [var for var in ds.data_vars if "time" not in ds[var].dims]
+
+    pieces = []
+
+    if time_vars:
+        weights = month_length_weights(ds)
+        annual = (ds[time_vars] * weights).groupby("time.year").sum(dim="time")
+        pieces.append(annual)
+
+    if static_vars:
+        pieces.append(ds[static_vars])
+
+    if not pieces:
+        return xr.Dataset(coords=ds.coords)
+
+    return xr.merge(pieces, compat="override")
+
+
+def climatology(ds: xr.Dataset, start_year: int | None = None, end_year: int | None = None) -> xr.Dataset:
+    """
+    Mean over annual diagnostics.
+
+    Variables without a `year` dimension are preserved unchanged.
+    """
+    ds_ = ds
+    if "year" in ds_.coords:
+        if start_year is not None or end_year is not None:
+            ds_ = ds_.sel(year=slice(start_year, end_year))
+
+    year_vars = [var for var in ds_.data_vars if "year" in ds_[var].dims]
+    static_vars = [var for var in ds_.data_vars if "year" not in ds_[var].dims]
+
+    pieces = []
+    if year_vars:
+        pieces.append(ds_[year_vars].mean("year", keep_attrs=True))
+    if static_vars:
+        pieces.append(ds_[static_vars])
+
+    if not pieces:
+        return xr.Dataset(coords={coord: ds_[coord] for coord in ds_.coords if coord != "year"})
+
+    return xr.merge(pieces, compat="override")
+
+
+# -----------------------------------------------------------------------------
+# General transformations
+# -----------------------------------------------------------------------------
+
+def add_display_unit_variables(ds: xr.Dataset) -> xr.Dataset:
+    """
+    Add display-oriented variables without overwriting native model variables.
+
+    This function is safe for plotting products. Budget diagnostics should use
+    native variables unless explicitly documented otherwise.
+    """
+    ds_ = ds.copy(deep=False)
+
+    # Temperature
+    if "T" in ds_:
+        ds_["T_C"] = ds_["T"] - 273.15
+        ds_["T_C"].attrs["long_name"] = "air temperature"
+        ds_["T_C"].attrs["units"] = "degC"
+
+    if "TREFHT" in ds_:
+        ds_["TREFHT_C"] = ds_["TREFHT"] - 273.15
+        ds_["TREFHT_C"].attrs["long_name"] = "2 m air temperature"
+        ds_["TREFHT_C"].attrs["units"] = "degC"
+
+    # Wind speed
+    if {"U", "V"}.issubset(ds_.data_vars):
+        ds_["WIND_SPEED"] = np.sqrt(ds_["U"] ** 2 + ds_["V"] ** 2)
+        ds_["WIND_SPEED"].attrs["long_name"] = "wind speed"
+        ds_["WIND_SPEED"].attrs["units"] = ds_["U"].attrs.get("units", "m/s")
+
+    # Cloud fractions to percent, without overwriting original fractions.
+    for var in ["CLDTOT", "CLDLOW", "CLDMED", "CLDHGH"]:
+        if var in ds_:
+            out = f"{var}_pct"
+            ds_[out] = ds_[var] * 100.0
+            ds_[out].attrs["long_name"] = f"{ds_[var].attrs.get('long_name', var)}"
+            ds_[out].attrs["units"] = "%"
+
+    # Liquid water variables for display.
+    if "CLDLIQ" in ds_:
+        ds_["CLDLIQ_mgkg"] = ds_["CLDLIQ"] * 1.0e6
+        ds_["CLDLIQ_mgkg"].attrs["long_name"] = ds_["CLDLIQ"].attrs.get("long_name", "cloud liquid water")
+        ds_["CLDLIQ_mgkg"].attrs["units"] = "mg/kg"
+
+    if "TGCLDLWP" in ds_:
+        ds_["TGCLDLWP_gm2"] = ds_["TGCLDLWP"] * 1.0e3
+        ds_["TGCLDLWP_gm2"].attrs["long_name"] = ds_["TGCLDLWP"].attrs.get("long_name", "total grid-box cloud liquid water path")
+        ds_["TGCLDLWP_gm2"].attrs["units"] = "g/m2"
+
+    # Aerosol/SOA display variables.
+    for var in ["SOA_A1", "SOA_NA"]:
+        if var in ds_:
+            out = f"{var}_ugkg"
+            ds_[out] = ds_[var] * 1.0e9
+            ds_[out].attrs["long_name"] = ds_[var].attrs.get("long_name", var)
+            ds_[out].attrs["units"] = "ug/kg"
+
+    for var in ["cb_SOA_A1", "cb_SOA_NA", "cb_SOA_A1_OCW", "cb_SOA_NA_OCW"]:
+        if var in ds_:
+            out = f"{var}_mgm2"
+            ds_[out] = ds_[var] * 1.0e6
+            ds_[out].attrs["long_name"] = ds_[var].attrs.get("long_name", var)
+            ds_[out].attrs["units"] = "mg/m2"
+
+    # CDNC display conversion.
+    if "CDNUMC" in ds_:
+        ds_["CDNUMC_1e6cm2"] = ds_["CDNUMC"] * 1.0e-10
+        ds_["CDNUMC_1e6cm2"].attrs["long_name"] = ds_["CDNUMC"].attrs.get("long_name", "column cloud droplet number")
+        ds_["CDNUMC_1e6cm2"].attrs["units"] = "1e6 cm-2"
+
     return ds_
-#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-def fix_ds(ds):
-    """Assign clearer and more meaningful names"""
-    
-    ds_ = ds.copy(deep=True)
-    
-    for var in list(ds_.keys()):
-        
-        """
-        if var == "SOA_A1":
-            ds_[var].attrs["long_name"] = "SOA_A1 concentration - SOA condensate on existing particles from SOAGSV (gas)"
-        elif var == "SOA_NA":
-            ds_[var].attrs["long_name"] = "SOA_NA concentration - SOA formed by co-nucleation with SO4"
-        elif var == "cb_SOA_A1":
-            ds_[var].attrs["long_name"] = "SOA_A1 burden column - SOA condensate on existing particles from SOAGSV (gas)"
-        elif var == "cb_SOA_NA":
-            ds_[var].attrs["long_name"] = "SOA_NA burden column - SOA formed by co-nucleation with SO4"
-        elif var == "cb_SOA_A1_OCW":
-            ds_[var].attrs["long_name"] = "SOA_A1 burden column in cloud water - SOA condensate on existing particles from SOAGSV (gas)"
-        elif var == "cb_SOA_NA_OCW":
-            ds_[var].attrs["long_name"] = "SOA_NA burden column in cloud water - SOA formed by co-nucleation with SO4"
-    
-        elif var == "TGCLDLWP":
-            ds_[var] = ds_[var].rename('LWP')
-            ds_[var].attrs["CLM5_name"] = 'TGCLDLWP'
-            
-        elif var == "TGCLDCWP":
-            ds_[var] = ds_[var].rename('CWP')
-            ds_[var].attrs["CLM5_name"] = 'TGCLDCWP'
-            
-        elif var == "TGCLDIWP":
-            ds_[var] = ds_[var].rename('IWP')
-            ds_[var].attrs["CLM5_name"] = 'TGCLDIWP'
-            
-        elif var == "QFLX_EVAP_TOT":
-            ds_[var] = ds_[var].rename('ET')
-            ds_[var].attrs["CLM5_name"] = 'QFLX_EVAP_TOT'
-            
-        else:
-            continue
-            
-        #print(var, "-", ds_[var].attrs["long_name"])
-        """
-        """
-        if var == "FSNT":
-            ds_[var].rename('SWTOT')
-            ds_[var].assign_attrs["CLM5_name"] = "FSNT"
-        if var == "FLNT":
-            ds_[var].rename('LWTOT')
-            ds_[var].assign_attrs["CLM5_name"] = "FLNT"
-        if var == "FSNT_DRF":
-            ds_[var].rename('SW_clean')
-            ds_[var].assign_attrs["CLM5_name"] = "FSNT_DRF"
-        if var == "FSNTCDRF":
-            ds_[var].rename('SW_clean_clear')
-            ds_[var].assign_attrs["CLM5_name"] = "FSNTCDRF"
-        if var == "FLNT_DRF":
-            ds_[var].rename('LW_clean')
-            ds_[var].assign_attrs["CLM5_name"] = "FLNT_DRF"
-        if var == "FLNTCDRF":
-            ds_[var].rename('LW_clean_clear')
-            ds_[var].assign_attrs["CLM5_name"] = "FLNTCDRF"
-        """
-    for var in ['cb_SOA_dry', 'AREL_incld', 'AWNC_incld', 'ACTNL_incld', 'ACTREL_incld']:
-        ## Author: Sara M. Blichner
-        if var == 'cb_SOA_dry':
-            ds_[var] = ds_['cb_SOA_NA'] + ds_['cb_SOA_A1']
-            ds_[var].attrs['long_name'] = "dry SOA burden column (cb_SOA_NA+cb_SOA_A1)"
-            ds_[var].attrs['units'] = ds_['cb_SOA_NA'].attrs['units']
-        if var == 'AREL_incld':
-            ds_[var] = ds_['AREL'] / ds_['FREQL']
-            ds_[var] = ds_[var].where((ds_['FREQL'] != 0))
-            ds_[var].attrs['units'] = ds_['AREL'].attrs['units']
-        if var == 'AWNC_incld':
-            ds_[var] = ds_['AWNC'] / ds_['FREQL'] * 1.e-6
-            ds_[var] = ds_[var].where((ds_['FREQL'] != 0))
-            ds_[var].attrs['units'] = '#/cm$^3$'
-        if var == 'ACTNL_incld':
-            ds_[var] = ds_['ACTNL'] / ds_['FCTL'] * 1.e-6
-            ds_[var] = ds_[var].where((ds_['FCTL'] != 0))
-            ds_[var].attrs['units'] = '#/cm$^3$'
-        if var == 'ACTREL_incld':
-            ds_[var] = ds_['ACTREL'] / ds_['FCTL']  # *1.e-6
-            ds_[var] = ds_[var].where((ds_['FCTL'] != 0))
-            ds_[var].attrs['units'] = ds_['ACTREL'].attrs['units']
-            
-    for var in ['T_C', 'WIND_SPEED']:
-        if var == 'T_C':
-            ds_[var] = ds_['T']-273.15
-            ds_[var].attrs['long_name'] = ds_['T'].attrs['long_name']
-            ds_[var] = ds_[var].assign_attrs({'units': '$^\circ$C'})
-        if var == 'WIND_SPEED':
-            ds_[var] = np.sqrt(ds_['V']**2 + ds_['U']**2)
-            ds_.attrs['long_name'] = 'Wind speed'
-            ds_.attrs['units'] = 'm/s'
-        
-        
-    print("Fix names and variables completed")
+
+def add_general_derived_variables(ds: xr.Dataset) -> xr.Dataset:
+    """Add general derived variables, conditionally and safely."""
+    ds_ = ds.copy(deep=False)
+
+    if {"NO", "NO2"}.issubset(ds_.data_vars):
+        ds_["NOx"] = ds_["NO"] + ds_["NO2"]
+        ds_["NOx"].attrs["long_name"] = "NO + NO2"
+        ds_["NOx"].attrs["units"] = ds_["NO"].attrs.get("units", "")
+
+    if {"cb_SOA_NA", "cb_SOA_A1"}.issubset(ds_.data_vars):
+        ds_["cb_SOA_dry"] = ds_["cb_SOA_NA"] + ds_["cb_SOA_A1"]
+        ds_["cb_SOA_dry"].attrs["long_name"] = "dry SOA burden column (cb_SOA_NA + cb_SOA_A1)"
+        ds_["cb_SOA_dry"].attrs["units"] = ds_["cb_SOA_NA"].attrs.get("units", "")
+
+    if {"AREL", "FREQL"}.issubset(ds_.data_vars):
+        ds_["AREL_incld"] = (ds_["AREL"] / ds_["FREQL"]).where(ds_["FREQL"] != 0)
+        ds_["AREL_incld"].attrs["long_name"] = "in-cloud liquid effective radius"
+        ds_["AREL_incld"].attrs["units"] = ds_["AREL"].attrs.get("units", "")
+
+    if {"AWNC", "FREQL"}.issubset(ds_.data_vars):
+        ds_["AWNC_incld"] = (ds_["AWNC"] / ds_["FREQL"] * 1.0e-6).where(ds_["FREQL"] != 0)
+        ds_["AWNC_incld"].attrs["long_name"] = "in-cloud cloud water number concentration"
+        ds_["AWNC_incld"].attrs["units"] = "#/cm3"
+
+    if {"ACTNL", "FCTL"}.issubset(ds_.data_vars):
+        ds_["ACTNL_incld"] = (ds_["ACTNL"] / ds_["FCTL"] * 1.0e-6).where(ds_["FCTL"] != 0)
+        ds_["ACTNL_incld"].attrs["long_name"] = "in-cloud activated droplet number concentration"
+        ds_["ACTNL_incld"].attrs["units"] = "#/cm3"
+
+    if {"ACTREL", "FCTL"}.issubset(ds_.data_vars):
+        ds_["ACTREL_incld"] = (ds_["ACTREL"] / ds_["FCTL"]).where(ds_["FCTL"] != 0)
+        ds_["ACTREL_incld"].attrs["long_name"] = "in-cloud activated effective radius"
+        ds_["ACTREL_incld"].attrs["units"] = ds_["ACTREL"].attrs.get("units", "")
+
     return ds_
 
-#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-def aerosol_cloud_forcing_scomposition_Ghan(ds):
-    # Author: Sara Marie Blichner
-    
-    """Apply Ghan's scomposition of the aerosol-cloud radiative forcing:
-    https://acp.copernicus.org/articles/13/9971/2013/acp-13-9971-2013.pdf"""
-    
-    ds_ = ds.copy(deep=True)
+def transform_dataset(ds: xr.Dataset, add_display_units: bool = True) -> xr.Dataset:
+    """
+    Apply general transformations in a consistent order.
 
-    # If the dataset is provided of the exential variables to perfom the Ghan's scomposition...
-    if all(elem in list(ds.data_vars) for elem in ['FLNT', 'FSNT', 'FLNT_DRF', 'FLNTCDRF', 'FSNTCDRF', 'FSNT_DRF']):
-        
-        for var in Ghan_vars:
-            
-        
-            if 'SWDIR' == var:
-                ds_[var] = ds_['FSNT'] - ds_['FSNT_DRF']
-                ds_[var].attrs['units'] = ds_['FSNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Shortwave aerosol direct radiative flux - Ghan's scomposition"
-
-            if 'LWDIR' == var:
-                ds_[var] = -(ds_['FLNT'] - ds_['FLNT_DRF'])
-                ds_[var].attrs['units'] = ds_['FLNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Longwave aerosol direct radiative flux - Ghan's scomposition"
-
-
-            if 'DIR' == var:
-                ds_[var] = ds_['LWDIR'] + ds_['SWDIR']
-                ds_[var].attrs['units'] = ds_['LWDIR'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net aerosol direct radiative flux - Ghan's scomposition"
-
-
-            if 'SWCF' == var: # this will overwrite the existing one
-                ds_[var] = ds_['FSNT_DRF'] - ds_['FSNTCDRF']
-                ds_[var].attrs['units'] = ds_['FSNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Shortwave cloud radiative flux - Ghan's scomposition"
-
-
-            if 'LWCF' == var: # this will overwrite the existing one
-                ds_[var] = -(ds_['FLNT_DRF'] - ds_['FLNTCDRF'])
-                ds_[var].attrs['units'] = ds_['FLNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Longwave cloud radiative flux - Ghan's scomposition"
-
-
-            if 'NCFT' == var:
-                ds_[var] = ds_['FSNT_DRF'] - ds_['FSNTCDRF'] - (ds_['FLNT_DRF'] - ds_['FLNTCDRF'])
-                ds_[var].attrs['units'] = ds_['FLNT_DRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net cloud radiative flux - Ghan's scomposition"
-
-
-            if 'SW_rest' == var:
-                ds_[var] = ds_['FSNTCDRF']
-                ds_[var].attrs['long_name'] = "Shortwave surface change radiative flux - Ghan's scomposition"
-
-
-            if 'LW_rest' == var:
-                ds_[var] = -ds_['FLNTCDRF']
-                ds_[var].attrs['long_name'] = "Longwave surface change radiative flux - Ghan's scomposition"#Clear sky total column longwave flux - Ghan's scomposition"
-                
-            if 'FREST' == var:
-                ds_[var] = ds_['FSNTCDRF'] - ds_['FLNTCDRF']
-                ds_[var].attrs['units'] = ds_['FSNTCDRF'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net surface change radiative flux - Ghan's scomposition"
-                
-            if 'FTOT' == var:
-                ds_[var] = ds_['FSNT'] - ds_['FLNT']
-                ds_[var].attrs['units'] = ds_['FLNT'].attrs['units']
-                ds_[var].attrs['long_name'] = "Net radiative flux at top of the model"
-                
-            if 'SWTOT' == var:
-                ds_[var] = ds_['FSNT']
-
-            if 'LWTOT' == var:
-                ds_[var] = -(ds_['FLNT'])
-                
-            #print(var, "-", ds_[var].attrs["long_name"])
-                
-        # Add attributes based on Ghan scomposition
-        
-        for var in list(ds_.keys()):
-            
-            if var == "FSNT":
-                ds_[var].attrs["Ghan_name"] = 'SWTOT'
-                ds_[var].attrs["Ghan_long_name"] = 'Shortwave total forcing at TOA'
-            elif var == "FLNT":
-                ds_[var].attrs["Ghan_name"] = 'LWTOT'
-                ds_[var].attrs["Ghan_long_name"] = 'Longwave total forcing at TOA'
-            elif var == "FSNT_DRF":
-                ds_[var].attrs["Ghan_name"] = 'SW_clean'
-                ds_[var].attrs["Ghan_long_name"] = 'Shortwave without direct aerosol forcing (scattering, absorbing)'
-            elif var == "FSNTCDRF":
-                ds_[var].attrs["Ghan_name"] = 'SW_clean_clear'
-                ds_[var].attrs["Ghan_long_name"] = 'Shortwave without direct aerosol and cloud forcing'
-            elif var == "FLNT_DRF":
-                ds_[var].attrs["Ghan_name"] = 'LW_clean'
-                ds_[var].attrs["Ghan_long_name"] = 'Longwave without direct aerosol forcing (scattering, absorbing)'
-            elif var == "FLNTCDRF":
-                ds_[var].attrs["Ghan_name"] = 'LW_clean_clear'
-                ds_[var].attrs["Ghan_long_name"] = 'Longwave without direct aerosol and cloud forcing'
-            else:
-                continue
-            #print(var, "->", ds_[var].attrs["Ghan_name"], "-", ds_[var].attrs["Ghan_long_name"])
-            
-        print("Ghan's scomposition completed")
-
+    Native model variables are preserved. New variables are added with explicit
+    names and units.
+    """
+    ds_ = add_general_derived_variables(ds)
+    if add_display_units:
+        ds_ = add_display_unit_variables(ds_)
     return ds_

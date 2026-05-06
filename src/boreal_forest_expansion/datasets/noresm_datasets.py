@@ -1,4 +1,5 @@
 
+import sys
 import numpy as np
 import xarray as xr
 import glob #return all file paths that match a specific pattern
@@ -27,7 +28,7 @@ def fix_cam_time(ds, timetype = 'datetime64'):
     """
 
     # Make compatible variable names for CAM and CLM (CLM names converted to CAM)
-    ds_ = ds.copy(deep=True)
+    ds_ = ds.copy(deep=False) # for large files, this can become expensive
     if 'time_bounds' in list(ds_.data_vars): 
         ds_ = ds_.rename_vars(dict(time_bounds='time_bnds'))
         ds_ = ds_.rename_dims(dict(hist_interval='nbnd'))
@@ -78,6 +79,11 @@ def create_dataset(raw_path, casename, comp, history_field='h0', vars=None, full
     fp = raw_path+casename+'/'+comp+'/hist/'+casename+'.'+model+'.'+history_field+'.*.nc'
 
     all_files = glob.glob(fp)
+
+    if len(all_files) == 0:
+        print(f"No files found matching: {fp}", file=sys.stderr)
+        sys.exit(1)
+    
     all_files.sort()
     print("Files found")
 
@@ -107,5 +113,12 @@ def create_dataset(raw_path, casename, comp, history_field='h0', vars=None, full
         if not vars: variables = variables + sum([*variables_by_component(comp, bvoc).values()], []) # from dict to flat list
         else: variables = variables + variables_by_component(comp, bvoc)[vars]
         
-        return ds[variables]
+        present = [v for v in variables if v in ds.variables]
+        missing = sorted(set(variables) - set(present))
+
+        if missing:
+            print(f"Warning: {len(missing)} requested variables missing:")
+            print(missing)
+
+        return ds[present]
     
