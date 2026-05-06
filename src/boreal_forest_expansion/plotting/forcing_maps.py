@@ -92,7 +92,7 @@ FORCING_PANELS = [
         key="albedo",
         title="ALBEDO / SW CLEAR-SKY FORCING",
         variable_class="RADIATIVE",
-        variable="SFC_ALBEDO_FORCING_CLEAR",#"SW_rest_Ghan",
+        variable="SW_rest_Ghan", #"SFC_ALBEDO_FORCING_CLEAR",
         case1_role="lcc",
         case2_role="ctrl",
         long_label="Shortwave clean clear-sky residual forcing",
@@ -172,7 +172,7 @@ CONTEXT_PANELS = [
         case2_role="fbvoc",
         units="kg m$^{-2}$ s$^{-1}$",
         long_label="Surface monoterpene flux",
-        vmax=1e-11,
+        vmax=1e-1,
     ),
     MapPanel(
         key="soa_tot",
@@ -520,10 +520,20 @@ def plot_single_boreal_panel(
     add_cbar: bool = True,
     cbar_label: str | None = None,
     mean_lat_min: float | None = 45.0,
-    ocean_alpha: float = 0.45,
+    shade_ocean: bool = True,
+    ocean_alpha: float = 0.95,
 ):
     if vmax is None:
         vmax = symmetric_vmax(da)
+
+    if shade_ocean:
+        ax.add_feature(
+            cfeature.OCEAN,
+            facecolor="white",
+            edgecolor="none",
+            alpha=ocean_alpha,
+            zorder=2,
+        )
 
     norm = mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax)
 
@@ -669,6 +679,7 @@ def make_forcing_summary_figure(
             extent_lat=extent_lat,
             mean_lat_min=mean_lat_min,
             cbar_label=f"{label}\n[{panel.units}]",
+            shade_ocean=False,
         )
 
     fig.suptitle(
