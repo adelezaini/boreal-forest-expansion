@@ -5,17 +5,10 @@ set -euo pipefail
 # Select variables from CAM/NetCDF history files and concatenate
 # them into one time-series file using NCO.
 #
-# What this script does:
-#   1. Takes the CAM case name as an external argument.
-#   2. Reads a variable keep-list from a txt file.
-#   3. Finds CAM history files for the selected case and stream.
-#   4. Restricts files to a YYYY-MM date range.
-#   5. For each file, keeps only variables that are both:
-#        - requested in the keep-list
-#        - actually present in that file
-#   6. Writes temporary filtered files.
-#   7. Concatenates them with ncrcat.
-#   8. Writes simple logs for reproducibility.
+# Automatically resumable:
+#   - If a temporary .selected.nc file already exists and is valid,
+#     it is reused.
+#   - If it is missing, empty, or invalid, it is rewritten.
 #
 # Requires:
 #   NCO: ncks, ncrcat
@@ -25,14 +18,8 @@ set -euo pipefail
 #
 # Example:
 #   ./select_concat_cam_raw_output.sh NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20260503 selected_cam_variables.txt
-#
-# Optional arguments:
-#   START_YM defaults to 2000-01
-#   END_YM   defaults to 2009-12
-#   STREAM   defaults to h0
 # ============================================================
 
-# Avoid HDF5 file-locking problems on shared HPC filesystems
 export HDF5_USE_FILE_LOCKING=FALSE
 
 module load NCO/5.2.9-foss-2024a
@@ -41,14 +28,13 @@ module load NCO/5.2.9-foss-2024a
 # Fixed project paths
 # -----------------------------
 
-ARCHIVE_ROOT="/cluster/work/users/adelez/archive" #/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive"
+ARCHIVE_ROOT="/cluster/work/users/adelez/archive"
 OUT_DIR="/cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/selected-model-output"
 
-# Compression level. 1 is light and usually a good compromise.
-# Increase to 2-4 if you need smaller files and can accept slower processing.
 COMPRESSION_LEVEL=1
 
-# Set to true if you want to keep temporary filtered monthly files after concatenation.
+# If false, temporary filtered files are removed after successful concatenation.
+# If the script crashes before the end, they remain and are reused automatically.
 KEEP_TMP=false
 
 # -----------------------------
@@ -75,7 +61,6 @@ FILE_GLOB="${CASE_NAME}.cam.${STREAM}.*.nc"
 OUT_FILE="${OUT_DIR}/${CASE_NAME}.cam.${STREAM}.${START_YM}_${END_YM}.nc"
 TMP_DIR="${OUT_DIR}/tmp_selected_${CASE_NAME}_${STREAM}_${START_YM}_${END_YM}"
 
-# Logs
 LOG_DIR="${OUT_DIR}/logs/${CASE_NAME}"
 mkdir -p "$LOG_DIR"
 
@@ -118,8 +103,6 @@ mkdir -p "$OUT_DIR" "$TMP_DIR"
 # -----------------------------
 # Normalize keep-list
 # -----------------------------
-# Accepts one variable per line, comma-separated, whitespace-separated,
-# and quoted lists such as 'VAR1','VAR2'.
 
 WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR"' EXIT
@@ -144,14 +127,25 @@ echo "Period:      $START_YM to $END_YM"
 echo "Input:       ${IN_DIR}/${FILE_GLOB}"
 echo "Varlist:     $VARLIST_FILE ($N_MASTER requested variables)"
 echo "Output:      $OUT_FILE"
+echo "Tmp dir:     $TMP_DIR"
+echo "Resume:      automatic"
 echo
 
 # -----------------------------
-# Helper for YYYY-MM comparison
+# Helpers
 # -----------------------------
 
 date_to_number() {
   echo "${1//-/}"
+}
+
+selected_file_is_valid() {
+  local f="$1"
+
+  [[ -s "$f" ]] || return 1
+  ncks -m "$f" >/dev/null 2>&1 || return 1
+
+  return 0
 }
 
 # -----------------------------
@@ -174,9 +168,6 @@ SELECTED_FILES=()
 for f in "${ALL_FILES[@]}"; do
   base=$(basename "$f")
 
-  # Extract first date in the filename, e.g. 2000-01 from:
-  # case.cam.h0.2000-01.nc
-  # case.cam.h0.2000-01-01-00000.nc
   ym=$(echo "$base" | grep -oE '[0-9]{4}-[0-9]{2}' | head -n 1 || true)
 
   if [[ -z "$ym" ]]; then
@@ -203,7 +194,7 @@ echo "File list: $FILE_LIST"
 echo
 
 # -----------------------------
-# Filter files
+# Filter files, automatically resuming
 # -----------------------------
 
 FILTERED_LIST="${TMP_DIR}/filtered_files_to_concat.txt"
@@ -217,10 +208,27 @@ while IFS= read -r infile; do
   KEEP_VARS="${WORK_DIR}/${base}.keep.txt"
   MISSING_VARS="${WORK_DIR}/${base}.missing.txt"
 
+  # ------------------------------------------------------------
+  # Resume check.
+  #
+  # If the expected temporary selected file already exists and is
+  # non-empty, reuse it directly. This avoids rerunning ncks.
+  #
+  # This is intentionally simple: for a crash-restart workflow,
+  # existence + non-zero size is usually the most useful test.
+  # ------------------------------------------------------------
+
+  if [[ -s "$outfile" ]]; then
+    echo "Reusing existing selected file for $base"
+    echo "  reused: $outfile"
+    echo
+
+    echo "$outfile" >> "$FILTERED_LIST"
+    continue
+  fi
+
   echo "Filtering $base"
 
-  # Extract variable names from file metadata.
-  # This avoids failure when a requested variable is missing from a file.
   ncks -m "$infile" \
     | awk '/^[[:space:]]*(byte|char|short|int|int64|float|double|ubyte|ushort|uint|uint64|string)[[:space:]]+[A-Za-z_][A-Za-z0-9_]*[[:space:]]*\(/ {gsub(/\(.*/,"",$2); print $2}' \
     | sort -u > "$FILE_VARS"
@@ -259,9 +267,6 @@ while IFS= read -r infile; do
     echo
   } >> "$MISSING_LOG"
 
-  # Main selection command.
-  # Do NOT use -C: without -C, NCO keeps associated coordinate variables
-  # such as time, lat, lon, lev, ilev, hyam, hybm, and P0 when needed.
   ncks -O -L "$COMPRESSION_LEVEL" -v "$VARS_CSV" "$infile" "$outfile"
 
   echo "$outfile" >> "$FILTERED_LIST"
@@ -277,7 +282,7 @@ done < "$FILE_LIST"
 N_FILTERED=$(wc -l < "$FILTERED_LIST" | tr -d ' ')
 
 if [[ "$N_FILTERED" -eq 0 ]]; then
-  echo "ERROR: no filtered files were created." >&2
+  echo "ERROR: no filtered files were created or reused." >&2
   exit 1
 fi
 
@@ -289,7 +294,6 @@ sort -u "$FINAL_VAR_LOG" -o "$FINAL_VAR_LOG"
 
 echo "Concatenating $N_FILTERED filtered files with ncrcat..."
 
-# xargs avoids problems with very long command lines.
 xargs ncrcat -O -L "$COMPRESSION_LEVEL" -o "$OUT_FILE" < "$FILTERED_LIST"
 
 echo
