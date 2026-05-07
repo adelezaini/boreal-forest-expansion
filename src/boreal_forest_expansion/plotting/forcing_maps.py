@@ -713,12 +713,13 @@ def make_forcing_summary_figure(
     figsize: tuple[float, float] = (19, 5.2),
     save: bool = True,
     figdir: Path = FIGURE_DIR,
-    dpi: int = 300,
+    dpi: int = 1000,
     cmap: str = "RdBu_r",
     add_cbar: bool = True,
     shade_ocean: bool = True,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
+    transparent_background: bool = True,
 ):
     """
     Create six-panel forcing decomposition figure.
@@ -787,7 +788,7 @@ def make_forcing_summary_figure(
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
         path = figdir / f"{experiment}_forcing_decomposition_{start_year}_{end_year}.png"
-        fig.savefig(path, dpi=dpi, bbox_inches="tight")
+        fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=transparent_background)
         print(f"Saved {path}")
 
     return fig, axes
