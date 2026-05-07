@@ -92,7 +92,7 @@ FORCING_PANELS = [
         key="albedo",
         title="ALBEDO / SW CLEAR-SKY FORCING",
         variable_class="RADIATIVE",
-        variable="SW_rest_Ghan", #"SFC_ALBEDO_FORCING_CLEAR",
+        variable="SFC_ALBEDO_FORCING_CLEAR", #"SW_rest_Ghan" - incouding other things (eg chemistry), but the other is more a proxy
         case1_role="lcc",
         case2_role="ctrl",
         long_label="Shortwave clean clear-sky residual forcing",
@@ -509,6 +509,26 @@ def symmetric_vmax(da: xr.DataArray, q: float = 0.98, fallback: float = 1.0) -> 
     return vmax
 
 
+def format_forcing_mean(value: float) -> str:
+    """
+    Cleaner mean formatting for figure annotations.
+
+    Examples:
+        11.123 -> +11.1
+        1.734  -> +1.7
+        -0.593 -> -0.59
+        -0.024 -> -0.02
+    """
+    value = float(value)
+
+    if abs(value) >= 10:
+        return f"{value:+.1f}"
+    elif abs(value) >= 1:
+        return f"{value:+.1f}"
+    else:
+        return f"{value:+.2f}"
+
+
 def plot_single_boreal_panel(
     ax,
     da: xr.DataArray,
@@ -521,25 +541,32 @@ def plot_single_boreal_panel(
     cbar_label: str | None = None,
     mean_lat_min: float | None = 45.0,
     shade_ocean: bool = True,
-    ocean_alpha: float = 0.5,
+    ocean_alpha: float = 0.75,
+    ocean_facecolor: str = "white",
+    ocean_zorder: int = 2,
 ):
+    """
+    Plot one polar boreal map panel.
+
+    Parameters
+    ----------
+    shade_ocean:
+        If True, overlay an ocean mask above the data.
+    ocean_alpha:
+        Transparency of the ocean mask.
+        0 = no visible ocean shading, 1 = fully opaque.
+    ocean_facecolor:
+        Colour used for ocean shading.
+    add_cbar:
+        If True, add an individual colourbar for this panel.
+    """
     if vmax is None:
         vmax = symmetric_vmax(da)
-
-    if shade_ocean:
-        ax.add_feature(
-            cfeature.OCEAN,
-            facecolor="white",
-            edgecolor="none",
-            alpha=ocean_alpha,
-            zorder=2,
-        )
 
     norm = mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax)
 
     cut_extent_Orthographic(ax, lat=extent_lat)
 
-    # Background land/coast setup, below the data
     ax_map_properties(
         ax,
         alpha=0.25,
@@ -551,7 +578,6 @@ def plot_single_boreal_panel(
         rivers=False,
     )
 
-    # Plot the actual data
     p = da.plot.pcolormesh(
         ax=ax,
         x="lon",
@@ -563,43 +589,49 @@ def plot_single_boreal_panel(
         zorder=1,
     )
 
-    # Semi-transparent ocean overlay ABOVE the data
-    ax.add_feature(
-        cfeature.OCEAN,
-        facecolor="white",
-        edgecolor="none",
-        alpha=ocean_alpha,
-        zorder=2,
+    if shade_ocean:
+        ax.add_feature(
+            cfeature.OCEAN,
+            facecolor=ocean_facecolor,
+            edgecolor="none",
+            alpha=ocean_alpha,
+            zorder=ocean_zorder,
+        )
+
+    ax.coastlines(linewidth=0.6, zorder=ocean_zorder + 1)
+
+    ax.set_title(
+        title,
+        fontsize=9.5,
+        fontweight="semibold",
+        pad=5,
     )
-
-    # Coastlines above both data and ocean shading
-    ax.coastlines(linewidth=0.6, zorder=3)
-
-    ax.set_title(title, fontsize=10, fontweight="bold", pad=4)
 
     mean_val = area_weighted_mean(da, lat_min=mean_lat_min)
     unit_text = units or da.attrs.get("units", "")
 
     ax.text(
         0.5,
-        -0.18,
-        f"{mean_val:+.3g} {unit_text}",
+        -0.12,
+        f"mean: {format_forcing_mean(mean_val)} {unit_text}",
         transform=ax.transAxes,
         ha="center",
         va="top",
-        fontsize=9,
-        fontweight="bold",
-        color="dimgray",
+        fontsize=7.8,
+        fontweight="semibold",
+        color="black",
     )
+
+    cb = None
 
     if add_cbar:
         cb = plt.colorbar(
             p,
             ax=ax,
             orientation="horizontal",
-            pad=0.04,
-            shrink=0.86,
-            aspect=28,
+            pad=0.085,
+            shrink=0.88,
+            aspect=24,
             extend="both",
         )
 
@@ -617,14 +649,60 @@ def plot_single_boreal_panel(
 
         if cbar_label is None:
             cbar_label = unit_text
-        cb.set_label(cbar_label, fontsize=7)
 
-    return p
+        cb.set_label(cbar_label, fontsize=7, labelpad=3)
+
+    return p, norm, cb
 
 
 # =============================================================================
 # Composite figures
 # =============================================================================
+
+def add_grouped_horizontal_colorbar(
+    fig,
+    axes_group,
+    cmap,
+    vmax,
+    label,
+    ticks=None,
+    pad=0.075,
+    height=0.035,
+    extend="both",
+    tick_labelsize=7,
+    labelsize=8,
+):
+    """
+    Add one horizontal colorbar spanning a group of axes.
+
+    axes_group can be one axis or a list/array of axes.
+    """
+    axes_group = np.atleast_1d(axes_group)
+
+    boxes = [ax.get_position() for ax in axes_group]
+
+    x0 = min(box.x0 for box in boxes)
+    x1 = max(box.x1 for box in boxes)
+    y0 = min(box.y0 for box in boxes)
+
+    cax = fig.add_axes([x0, y0 - pad, x1 - x0, height])
+
+    norm = mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax)
+    sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+    sm.set_array([])
+
+    cb = fig.colorbar(
+        sm,
+        cax=cax,
+        orientation="horizontal",
+        extend=extend,
+        ticks=ticks,
+    )
+
+    cb.ax.tick_params(labelsize=tick_labelsize, pad=2)
+    cb.set_label(label, fontsize=labelsize, labelpad=3)
+
+    return cb
 
 def make_forcing_summary_figure(
     experiment: str,
@@ -632,16 +710,28 @@ def make_forcing_summary_figure(
     end_year: int,
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
-    figsize: tuple[float, float] = (18, 4.2),
+    figsize: tuple[float, float] = (19, 5.2),
     save: bool = True,
     figdir: Path = FIGURE_DIR,
     dpi: int = 300,
+    cmap: str = "RdBu_r",
+    add_cbar: bool = True,
+    shade_ocean: bool = True,
+    ocean_alpha: float = 0.75,
+    ocean_facecolor: str = "white",
 ):
     """
     Create six-panel forcing decomposition figure.
 
     experiment:
         "PD" or "FUT"
+
+    Ocean shading can be regulated with:
+        shade_ocean=True/False
+        ocean_alpha=0.0 to 1.0
+        ocean_facecolor="white", "lightgrey", etc.
+
+    Each panel gets its own individual colourbar when add_cbar=True.
     """
     if experiment not in BVOC_PAIRS:
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
@@ -670,23 +760,28 @@ def make_forcing_summary_figure(
         )
 
         label = panel.long_label or panel.variable
+
         plot_single_boreal_panel(
             ax=ax,
             da=da,
             title=panel.title,
             units=panel.units,
             vmax=panel.vmax,
+            cmap=cmap,
             extent_lat=extent_lat,
             mean_lat_min=mean_lat_min,
+            add_cbar=add_cbar,
             cbar_label=f"{label}\n[{panel.units}]",
-            shade_ocean=True,
+            shade_ocean=shade_ocean,
+            ocean_alpha=ocean_alpha,
+            ocean_facecolor=ocean_facecolor,
         )
 
     fig.suptitle(
         f"{experiment}: radiative forcing decomposition ({start_year}–{end_year})",
         fontsize=14,
         fontweight="bold",
-        y=1.05,
+        y=1.03,
     )
 
     if save:
@@ -705,14 +800,22 @@ def make_context_maps_figure(
     panels: Iterable[MapPanel] = CONTEXT_PANELS,
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
-    figsize: tuple[float, float] = (13, 12),
+    figsize: tuple[float, float] = (13, 13),
     ncols: int = 3,
     save: bool = True,
     figdir: Path = FIGURE_DIR,
     dpi: int = 300,
+    cmap: str = "RdBu_r",
+    add_cbar: bool = True,
+    shade_ocean: bool = True,
+    ocean_alpha: float = 0.75,
+    ocean_facecolor: str = "white",
 ):
     """
     Create BVOC/SOA/cloud/context map figure for LCC-X - LCC-X-fBVOC.
+
+    Each panel gets its own colourbar when add_cbar=True.
+    Ocean shading is controlled by shade_ocean, ocean_alpha, and ocean_facecolor.
     """
     if experiment not in BVOC_PAIRS:
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
@@ -728,6 +831,7 @@ def make_context_maps_figure(
         subplot_kw={"projection": ccrs.Orthographic(0, 90)},
         constrained_layout=True,
     )
+
     axes = np.asarray(axes).ravel()
 
     for ax, panel in zip(axes, panels):
@@ -735,7 +839,7 @@ def make_context_maps_figure(
         case2 = pairs[panel.case2_role]
 
         try:
-            da = difference_map(
+            da = panel_difference_map(
                 case1=case1,
                 case2=case2,
                 variable_class=panel.variable_class,
@@ -757,9 +861,14 @@ def make_context_maps_figure(
             title=panel.title,
             units=panel.units,
             vmax=vmax,
+            cmap=cmap,
             extent_lat=extent_lat,
             mean_lat_min=mean_lat_min,
+            add_cbar=add_cbar,
             cbar_label=f"{panel.long_label or panel.variable}\n[{panel.units}]",
+            shade_ocean=shade_ocean,
+            ocean_alpha=ocean_alpha,
+            ocean_facecolor=ocean_facecolor,
         )
 
     for ax in axes[len(panels):]:
