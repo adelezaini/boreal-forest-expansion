@@ -1,0 +1,13 @@
+# Candidate CAM variables for atmosphere monthly/annual means
+# based on Dirk's advice -> look at global mean vertical porfiles of the gases and global column burden
+
+RESTOM     #
+TREFHT     # 2 m air temperature
+FSNT       # net solar flux at TOA
+FLNT       # net longwave flux at TOA
+TS         # surface temperature
+SF6
+CFC115
+N2O
+CH4
+CO2

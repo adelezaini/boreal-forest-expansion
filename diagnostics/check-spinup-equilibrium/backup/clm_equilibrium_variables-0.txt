@@ -1,0 +1,22 @@
+# Candidate CLM variables for land monthly/annual means
+TOTSOMN     # total soil organic matter nitrogen
+TOTECOSYSN  # total ecosystem nitrogen
+
+TOTVEGC     # total vegetation carbon
+TOTECOSYSC  # total ecosystem carbon
+TOTSOMC     # total soil organic matter carbon
+TOTLITC     # total litter carbon
+
+NPP         # net primary productivity
+GPP         # gross primary productivity
+HR          # heterotrophic respiration
+NEE         # net ecosystem exchange
+NBP         # net biome production
+
+TWS         # total water storage
+H2OSOI      # soil water
+SOILLIQ     # soil liquid water
+SOILICE     # soil ice
+H2OSNO      # snow water
+
+TSOI        # soil temperature

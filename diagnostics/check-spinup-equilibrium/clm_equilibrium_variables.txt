@@ -1,0 +1,10 @@
+# Candidate CLM variables for land monthly means
+# based on Matvey advice -> look at 1m depth, derevative of 20year rolling mean should be close to 0
+
+GPP         # gross primary productivity
+TOTVEGC     # total vegetation carbon
+TOTVEGN     # total vegetation nitrogen
+
+TWS         # total water storage
+H2OSOI      # soil water
+TSOI        # soil temperature

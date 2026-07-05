@@ -1,0 +1,12 @@
+# Candidate CAM variables for atmosphere monthly/annual means
+TREFHT     # 2 m air temperature
+PRECT      # total precipitation
+FSNT       # net solar flux at TOA
+FLNT       # net longwave flux at TOA
+PSL        # sea-level pressure
+CLDTOT     # total cloud fraction
+TS         # surface temperature
+FSNS       # net solar flux at surface
+FLNS       # net longwave flux at surface
+LHFLX      # latent heat flux
+SHFLX      # sensible heat flux
