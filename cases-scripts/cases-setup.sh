@@ -31,6 +31,51 @@ set_project_noresm_res_vars() {
     RES="f19_f19"
 }
 
+##------ safely remove a case directory
+# Asks for confirmation (y/[n], default = no)
+# Usage: remove_case_if_exists "$CASEROOT" "$BASE_CASE_DIR"
+
+remove_case_if_exists() {
+    local caseroot="$1"   # full path to the case directory to delete
+    local base_dir="$2"   # only allow deletion inside this directory
+
+    # Resolve absolute paths (important for safety):
+    # removes "..", symbolic links, etc., so checks are reliable
+    local caseroot_abs
+    local base_dir_abs
+    caseroot_abs=$(realpath -m "$caseroot")
+    base_dir_abs=$(realpath "$base_dir")
+
+    # Fail if path resolution failed (unexpected → safer to stop)
+    if [[ -z "$caseroot_abs" || -z "$base_dir_abs" ]]; then
+        echo "ERROR: could not resolve paths. Only absolute paths are allowed."
+        exit 1
+    fi
+
+    # Only allow deletion if caseroot is INSIDE base_dir
+    if [[ "$caseroot_abs" == "$base_dir_abs" || "$caseroot_abs" != "$base_dir_abs/"* ]]; then
+        echo "ERROR: refusing to delete case directory, because it is outside base directory."
+        echo "       attempted – absolute path: $caseroot_abs"
+        exit 1
+    fi
+
+    # If directory does not exist, nothing to remove → exit function, continue script
+    [ -d "$caseroot_abs" ] || return 0
+
+    # Ask user confirmation (default = NO to avoid accidental Enter)
+    read -rp "Remove $caseroot_abs? y/[n]: " confirm
+    confirm=${confirm:-n}
+
+    if [[ "$confirm" =~ ^[Yy]$ ]]; then
+        rm -rf -- "$caseroot_abs"   # -- protects against weird path names
+        echo "Removed existing $caseroot_abs
+        "
+    else
+        echo "Aborted. Try again!"
+        exit 1
+    fi
+}
+
 ##----------------- restart file handling -----------------##
 prepare_restart_files() {
     # Synchronizes restart files from a source directory to a local directory.
@@ -340,7 +385,7 @@ cat << EOF >> user_nl_cam
 EOF
 }
 
-##----------------- extra diagnostics -----------------##
+##----------------- diagnostics -----------------##
 aerosol_cosp_diagnostics(){
 # Aerosol diagnostics
 ./xmlchange CAM_AEROCOM=TRUE
@@ -448,6 +493,7 @@ EOF
 
 clm_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
+# Monthly average output, each file has 1 month
 cat << EOF >> user_nl_clm
 hist_mfilt = 1
 hist_nhtfrq = 0
@@ -464,7 +510,14 @@ EOF
 }
 
 clm_long_spinup_diagnostics(){
-# To check if reached equilibrium in the spinup
+# Yearly average output, everyfile have 10 years
+
+# For an equilibrium check, I care about long-term drift in slow pools 
+#like TOTSOMC (soil carbon can take decades to centuries to equilibrate) and TOTECOSYSC, 
+# plus whether flux balance (NEE → 0, GPP ≈ AR+HR) stabilizes over time. 
+# Seasonal/monthly detail is irrelevant noise for that question
+# I'm looking at trend, not seasonality.
+
 cat << EOF >> user_nl_clm
 hist_mfilt  = 10
 hist_nhtfrq = -8760
@@ -477,54 +530,6 @@ hist_fincl1 = 'TSA','TLAI','TOTVEGC','TOTSOMC','TOTECOSYSC',
 'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
 /
 EOF
-}
-
-# Safely remove a case directory.
-# Asks for confirmation (y/[n], default = no)
-# Usage: remove_case_if_exists "$CASEROOT" "$BASE_CASE_DIR"
-# Example: 
-#   BASE_CASE_DIR="$HOME/cases/BRL_FRST_XPSN"
-#   CASEROOT="$BASE_CASE_DIR/$CASENAME"
-
-remove_case_if_exists() {
-    local caseroot="$1"   # full path to the case directory to delete
-    local base_dir="$2"   # only allow deletion inside this directory
-
-    # Resolve absolute paths (important for safety):
-    # removes "..", symbolic links, etc., so checks are reliable
-    local caseroot_abs
-    local base_dir_abs
-    caseroot_abs=$(realpath -m "$caseroot")
-    base_dir_abs=$(realpath "$base_dir")
-
-    # Fail if path resolution failed (unexpected → safer to stop)
-    if [[ -z "$caseroot_abs" || -z "$base_dir_abs" ]]; then
-        echo "ERROR: could not resolve paths. Only absolute paths are allowed."
-        exit 1
-    fi
-
-    # Only allow deletion if caseroot is INSIDE base_dir
-    if [[ "$caseroot_abs" == "$base_dir_abs" || "$caseroot_abs" != "$base_dir_abs/"* ]]; then
-        echo "ERROR: refusing to delete case directory, because it is outside base directory."
-        echo "       attempted – absolute path: $caseroot_abs"
-        exit 1
-    fi
-
-    # If directory does not exist, nothing to remove → exit function, continue script
-    [ -d "$caseroot_abs" ] || return 0
-
-    # Ask user confirmation (default = NO to avoid accidental Enter)
-    read -rp "Remove $caseroot_abs? y/[n]: " confirm
-    confirm=${confirm:-n}
-
-    if [[ "$confirm" =~ ^[Yy]$ ]]; then
-        rm -rf -- "$caseroot_abs"   # -- protects against weird path names
-        echo "Removed existing $caseroot_abs
-        "
-    else
-        echo "Aborted. Try again!"
-        exit 1
-    fi
 }
 
 
