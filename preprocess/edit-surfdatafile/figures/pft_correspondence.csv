@@ -1,0 +1,24 @@
+LPJ index,LPJ abbrev,LPJ name,veg group,-> CLM (this study)
+0,BNE,Boreal needle-leaved evergreen tree,tree,2 (BoNET)
+1,BINE,Boreal shade-intolerant needle-leaved evergreen tree,tree,2 (BoNET)
+2,BNS,Boreal needle-leaved summergreen tree,tree,3 (BoNDT)
+3,TeNE,Temperate needle-leaved evergreen tree,tree,1 (TeNET)
+4,TeBE,Temperate broad-leaved evergreen tree,tree,5 (TeBET)
+5,IBS,Shade-intolerant broad-leaved summergreen tree,tree,8 (BoBDT)
+6,TeBS,Temperate broad-leaved summergreen tree,tree,7 (TeBDT)
+7,C3G,Cold C3 grass,grass,12 (arcticC3)
+8,HSE,High shrub evergreen,shrub,11 (BoBDS)
+9,HSS,High shrub summergreen,shrub,11 (BoBDS)
+10,LSE,Low shrub evergreen,shrub,11 (BoBDS)
+11,LSS,Low shrub summergreen,shrub,11 (BoBDS)
+12,GRT,Graminoid and forb tundra,grass,12 (arcticC3)
+13,EPDS,Evergreen prostrate dwarf shrub (needleleaved),shrub,11 (BoBDS)
+14,SPDS,Summergreen prostrate dwarf shrub (broadleaved),shrub,11 (BoBDS)
+15,CLM,"Cushion forb, lichen and moss",non-vascular,bare (omitted)
+16,pLSE,peatland low shrub evergreen,peatland (excluded),peatland — excluded
+17,pLSS,peatland low shrub summergreen,peatland (excluded),peatland — excluded
+18,pCLM,peatland cushion/forb,peatland (excluded),peatland — excluded
+19,WetGRS,Flood-tolerant grass/graminoid,peatland (excluded),peatland — excluded
+20,pmoss,Peatland moss,peatland (excluded),peatland — excluded
+21,C3G_wet,peatland C3 grass,peatland (excluded),peatland — excluded
+22,C4G_wet,peatland C4 grass,peatland (excluded),peatland — excluded

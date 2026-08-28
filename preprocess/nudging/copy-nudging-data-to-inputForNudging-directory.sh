@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# not tested
+# NB: not tested
+
+# Prepare CAM meteorological output for use as NorESM nudging input.
+#
+# Copies the 6-hourly CAM h1 history files from the archived meteorology
+# simulation to the shared inputForNudging directory, then creates an
+# ordered file list containing all nudging input files.
 
 CASENAME=NF2000norbc_tropstratchem_met_f19_f19_20260422
 TIME_RANGE=2000-2015

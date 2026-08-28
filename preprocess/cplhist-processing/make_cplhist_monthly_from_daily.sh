@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Convert daily NorESM coupler-history (CPLHIST) files into monthly files
+# for use as forcing in offline CLM simulations with DATM/CPLHIST.
+#
+# NOTE: 
+# The ha2x1d and hr2x streams have daily output dated one day later than the period it represents.
+# Therefore, for each month, the script combines day 02 of that month through day 01 of the following month.
+# For most streams, all daily files belonging to the same calendar month are concatenated together.
+#
+# Monthly files are saved with the filename format required by DATM/CPLHIST
+# (e.g., NF2100ssp585norbc_tropstratchem_spinup_f19_f19-3.cpl.ha2x.0001-01.nc)
+
 module load NCO/5.2.9-foss-2024a
 
 #CPLHIST_DIR=NF2000norbc_tropstratchem_spinup_f19_f19_20260421_01-20
