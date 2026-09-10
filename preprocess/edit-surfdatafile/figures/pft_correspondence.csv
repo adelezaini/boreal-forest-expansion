@@ -14,11 +14,11 @@ LPJ index,LPJ abbrev,LPJ name,veg group,-> CLM (this study)
 12,GRT,Graminoid and forb tundra,grass,12 (arcticC3)
 13,EPDS,Evergreen prostrate dwarf shrub (needleleaved),shrub,11 (BoBDS)
 14,SPDS,Summergreen prostrate dwarf shrub (broadleaved),shrub,11 (BoBDS)
-15,CLM,"Cushion forb, lichen and moss",non-vascular,bare (omitted)
-16,pLSE,peatland low shrub evergreen,peatland (excluded),peatland — excluded
-17,pLSS,peatland low shrub summergreen,peatland (excluded),peatland — excluded
-18,pCLM,peatland cushion/forb,peatland (excluded),peatland — excluded
-19,WetGRS,Flood-tolerant grass/graminoid,peatland (excluded),peatland — excluded
-20,pmoss,Peatland moss,peatland (excluded),peatland — excluded
-21,C3G_wet,peatland C3 grass,peatland (excluded),peatland — excluded
-22,C4G_wet,peatland C4 grass,peatland (excluded),peatland — excluded
+15,CLM,"Cushion forb, lichen and moss",non-vascular,0 (bareground)
+16,pLSE,peatland low shrub evergreen,peatland,peatland — excluded
+17,pLSS,peatland low shrub summergreen,peatland,peatland — excluded
+18,pCLM,peatland cushion/forb,peatland,peatland — excluded
+19,WetGRS,Flood-tolerant grass/graminoid,peatland,peatland — excluded
+20,pmoss,Peatland moss,peatland,peatland — excluded
+21,C3G_wet,peatland C3 grass,peatland,peatland — excluded
+22,C4G_wet,peatland C4 grass,peatland,peatland — excluded
