@@ -637,13 +637,15 @@ improve_performance() {
 # Determine empirically which variables are written to CAM's primary history
 # tape (h0). Each test runs for one model day and writes one daily-mean h0 file.
 #
-#   T0  defaults                              baseline h0 fields
-#   T1  empty_htapes + PS                     clean-tape test (does it contain just 'PS'?)
-#   T2  defaults + history_aerosol            T2-T0: aerosol-history fields
-#   T3  defaults + CAM_AEROCOM                T3-T0: AEROCOM fields
-#   T4  empty_htapes + history_aerosol + PS   Tests the interaction between empty_htapes and history_aerosol:
-#                                               If T4 == T1, empty_htapes overrides history_aerosol defaults.
-#                                               If T4 ~= T2, history_aerosol repopulates the tape.
+#   T0  defaults                                    baseline h0 fields
+#   T1  empty_htapes + PS                           clean-tape test (does it contain just 'PS'?)
+#   T2  defaults + history_aerosol                  T2-T0: aerosol-history fields
+#   T3  defaults + CAM_AEROCOM                      T3-T0: AEROCOM fields
+#   T4  empty_htapes + history_aerosol + PS         Tests the interaction between empty_htapes and history_aerosol:
+#                                                       If T4 == T1, empty_htapes overrides history_aerosol defaults.
+#                                                       If T4 ~= T2, history_aerosol repopulates the tape.
+#   T5  defaults + NO history_aerosol               T5-T2: disables aerosol history
+#   T6  defaults – history_aerosol – modal_strat_sulfate      T6-T5: disables modal_strat_sulfate
 # After the test runs, use the file BOREAL-FOREST-EXPANSION/diagnostics/reduce-history-file-size/compare_diagnostics_tests_for_h0_size.ipynb
 # to compare the resulting h0 fields (run in Betzy).
 #
@@ -656,15 +658,16 @@ improve_performance() {
 #
 # If namelist generation succeeds and the fields appear in h0, they can be
 # explicitly requested with empty_htapes and history_aerosol enabled.
+#modal_strat_sulfate		= .true.
 
 test_diagnostics() {
-    local test_name="${1:?Usage: test_diagnostics <T0|T1|T2|T3|T4>}"
+    local test_name="${1:?Usage: test_diagnostics <T0|T1|T2|T3|T4|T5|T6>}"
 
     # AEROCOM is a build-time flag: TRUE only for T3, explicitly FALSE otherwise
     case "$test_name" in
         T3)          ./xmlchange CAM_AEROCOM=TRUE  ;;
-        T0|T1|T2|T4) ;;
-        *) echo "ERROR: unknown test '$test_name' (use T0|T1|T2|T3|T4)"; return 1 ;;
+        T0|T1|T2|T4|T5|T6) ;;
+        *) echo "ERROR: unknown test '$test_name' (use T0|T1|T2|T3|T4|T5|T6)"; return 1 ;;
     esac
 
     # test-specific history flags
@@ -686,6 +689,15 @@ history_aerosol = .true.
 fincl1 = 'PS'
 EOF
             ;;
+        T5) cat << 'EOF' >> user_nl_cam
+history_aerosol = .false.
+EOF
+            ;;                             
+        T6) cat << 'EOF' >> user_nl_cam
+history_aerosol = .false.
+modal_strat_sulfate		= .false.
+EOF
+            ;;                              
     esac
 
     # common: daily-mean, 1 sample/file, so a 1-day run writes one clean h0

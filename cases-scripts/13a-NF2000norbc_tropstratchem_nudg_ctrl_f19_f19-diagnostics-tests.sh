@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### Test T0/T1/T2/T3/T4 to check h0 field size
-TEST_NAME="T0"
+TEST_NAME="T6"
 
 ### CTRL RUN
 # Nudging
