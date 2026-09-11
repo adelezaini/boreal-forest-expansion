@@ -629,3 +629,77 @@ improve_performance() {
         echo "PE layout updated (case=$CASE_NAME)"
     fi
 }
+
+# ---------------- CAM output-size diagnostic tests ----------------
+#
+# Usage: test_diagnostics <T0|T1|T2|T3|T4>
+#
+# Determine empirically which variables are written to CAM's primary history
+# tape (h0). Each test runs for one model day and writes one daily-mean h0 file.
+#
+#   T0  defaults                              baseline h0 fields
+#   T1  empty_htapes + PS                     clean-tape test (does it contain just 'PS'?)
+#   T2  defaults + history_aerosol            T2-T0: aerosol-history fields
+#   T3  defaults + CAM_AEROCOM                T3-T0: AEROCOM fields
+#   T4  empty_htapes + history_aerosol + PS   Tests the interaction between empty_htapes and history_aerosol:
+#                                               If T4 == T1, empty_htapes overrides history_aerosol defaults.
+#                                               If T4 ~= T2, history_aerosol repopulates the tape.
+# After the test runs, use the file postprocess/prep/compare_diagnostics_tests.ipynb 
+# to compare the resulting h0 fields (run in Betzy).
+#
+# OPTIONAL AVAILABILITY PROBE
+# ---------------------------
+# After obtaining the T2 - T0 variable list, replace the T4 fincl1 line with
+# one or two selected aerosol fields, for example:
+#
+#   fincl1 = 'PS','<field_from_T2_minus_T0>','<another_field>'
+#
+# If namelist generation succeeds and the fields appear in h0, they can be
+# explicitly requested with empty_htapes and history_aerosol enabled.
+
+test_diagnostics() {
+    local test_name="${1:?Usage: test_diagnostics <T0|T1|T2|T3|T4>}"
+
+    # AEROCOM is a build-time flag: TRUE only for T3, explicitly FALSE otherwise
+    case "$test_name" in
+        T3)          ./xmlchange CAM_AEROCOM=TRUE  ;;
+        T0|T1|T2|T4) ;;
+        *) echo "ERROR: unknown test '$test_name' (use T0|T1|T2|T3|T4)"; return 1 ;;
+    esac
+
+    # test-specific history flags
+    case "$test_name" in
+        T0) : ;;                              # pure defaults, nothing extra
+        T1) cat << 'EOF' >> user_nl_cam
+empty_htapes = .true.
+fincl1 = 'PS'
+EOF
+            ;;
+        T2) cat << 'EOF' >> user_nl_cam
+history_aerosol = .true.
+EOF
+            ;;
+        T3) : ;;                              # AEROCOM set via xmlchange above
+        T4) cat << 'EOF' >> user_nl_cam
+empty_htapes = .true.
+history_aerosol = .true.
+fincl1 = 'PS'
+EOF
+            ;;
+    esac
+
+    # common: daily-mean, 1 sample/file, so a 1-day run writes one clean h0
+    cat << 'EOF' >> user_nl_cam
+mfilt = 1
+nhtfrq = -24
+avgflag_pertape = 'A'
+EOF
+
+    # Run each diagnostic case for exactly one model day.
+    ./xmlchange STOP_OPTION=ndays,STOP_N=1
+    ./xmlchange RESUBMIT=0
+    ./xmlchange REST_OPTION=ndays,REST_N=1
+    ./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE
+
+    echo "test_diagnostics: configured ${test_name} for a one-day run"
+}
