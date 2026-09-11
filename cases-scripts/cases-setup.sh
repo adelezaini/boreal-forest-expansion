@@ -644,7 +644,7 @@ improve_performance() {
 #   T4  empty_htapes + history_aerosol + PS   Tests the interaction between empty_htapes and history_aerosol:
 #                                               If T4 == T1, empty_htapes overrides history_aerosol defaults.
 #                                               If T4 ~= T2, history_aerosol repopulates the tape.
-# After the test runs, use the file postprocess/prep/compare_diagnostics_tests.ipynb 
+# After the test runs, use the file BOREAL-FOREST-EXPANSION/diagnostics/reduce-history-file-size/compare_diagnostics_tests_for_h0_size.ipynb
 # to compare the resulting h0 fields (run in Betzy).
 #
 # OPTIONAL AVAILABILITY PROBE
