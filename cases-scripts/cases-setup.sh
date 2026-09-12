@@ -644,7 +644,7 @@ improve_performance() {
 #   T4  empty_htapes + history_aerosol + PS         Tests the interaction between empty_htapes and history_aerosol:
 #                                                       If T4 == T1, empty_htapes overrides history_aerosol defaults.
 #                                                       If T4 ~= T2, history_aerosol repopulates the tape.
-#   T5  defaults – history_aerosol               T5-T2: disables aerosol history
+#   T5  defaults – history_aerosol                  T5-T2: disables aerosol history
 #   T6  defaults – history_aerosol – modal_strat_sulfate      T6-T5: disables modal_strat_sulfate
 # After the test runs, use the file BOREAL-FOREST-EXPANSION/diagnostics/reduce-history-file-size/compare_diagnostics_tests_for_h0_size.ipynb
 # to compare the resulting h0 fields (run in Betzy).

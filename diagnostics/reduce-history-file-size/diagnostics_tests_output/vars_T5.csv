@@ -1,0 +1,1471 @@
+test,variable,dims,ndim,is_3d,vertical,dtype,shape,bytes_per_step,mib_per_step,units,long_name,cell_methods
+T5,ABSVIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,unitless,Aerosol absorptive optical depth at 0.442-0.625um,time: mean
+T5,ACBZO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ACBZO2 concentration,time: mean
+T5,ACBZO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ACBZO2 in bottom layer,time: mean
+T5,ACTNI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m-3,Average Cloud Top ice number,time: mean
+T5,ACTNL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m-3,Average Cloud Top droplet number,time: mean
+T5,ACTNL_B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m-3,Average Cloud Top   droplet number (Bennartz),time: mean
+T5,ACTREI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Micron,Average Cloud Top ice effective radius,time: mean
+T5,ACTREL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Micron,Average Cloud Top droplet effective radius,time: mean
+T5,ADRAIN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,Micron,Average rain effective Diameter,time: mean
+T5,ADSNOW,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,Micron,Average snow effective Diameter,time: mean
+T5,AEROD_v,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,Total Aerosol Optical Depth in visible band,time: mean
+T5,ALKNIT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ALKNIT concentration,time: mean
+T5,ALKNIT_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ALKNIT in bottom layer,time: mean
+T5,ALKO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ALKO2 concentration,time: mean
+T5,ALKO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ALKO2 in bottom layer,time: mean
+T5,ALKOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ALKOOH concentration,time: mean
+T5,ALKOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ALKOOH in bottom layer,time: mean
+T5,ANRAIN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m-3,Average rain number conc,time: mean
+T5,ANSNOW,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m-3,Average snow number conc,time: mean
+T5,AOA_NH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,AOA_NH concentration,time: mean
+T5,AOA_NH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,AOA_NH in bottom layer,time: mean
+T5,AOD_VIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,unitless,Aerosol optical depth at 0.442-0.625um,time: mean
+T5,AQRAIN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Average rain mixing ratio,time: mean
+T5,AQSNOW,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Average snow mixing ratio,time: mean
+T5,AREI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,Micron,Average ice effective radius,time: mean
+T5,AREL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,Micron,Average droplet effective radius,time: mean
+T5,AWNC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m-3,Average cloud water number conc,time: mean
+T5,AWNI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m-3,Average cloud ice number conc,time: mean
+T5,BCARY,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BCARY concentration,time: mean
+T5,BCARY_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BCARY in bottom layer,time: mean
+T5,BC_A,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,BC_A concentration,time: mean
+T5,BC_AC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,BC_AC concentration,time: mean
+T5,BC_AC_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,BC_AC in bottom layer,time: mean
+T5,BC_AI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,BC_AI concentration,time: mean
+T5,BC_AI_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,BC_AI in bottom layer,time: mean
+T5,BC_AX,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,BC_AX concentration,time: mean
+T5,BC_AX_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for BC_AX,time: mean
+T5,BC_AX_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for BC_AX,time: mean
+T5,BC_AX_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,BC_AX in bottom layer,time: mean
+T5,BC_A_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,BC_A in bottom layer,time: mean
+T5,BC_N,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,BC_N concentration,time: mean
+T5,BC_NI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,BC_NI concentration,time: mean
+T5,BC_NI_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for BC_NI,time: mean
+T5,BC_NI_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for BC_NI,time: mean
+T5,BC_NI_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,BC_NI in bottom layer,time: mean
+T5,BC_N_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for BC_N,time: mean
+T5,BC_N_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for BC_N,time: mean
+T5,BC_N_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,BC_N in bottom layer,time: mean
+T5,BENZENE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BENZENE concentration,time: mean
+T5,BENZENE_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BENZENE in bottom layer,time: mean
+T5,BENZO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BENZO2 concentration,time: mean
+T5,BENZO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BENZO2 in bottom layer,time: mean
+T5,BENZOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BENZOOH concentration,time: mean
+T5,BENZOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BENZOOH in bottom layer,time: mean
+T5,BEPOMUC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BEPOMUC concentration,time: mean
+T5,BEPOMUC_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BEPOMUC in bottom layer,time: mean
+T5,BIGALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGALD concentration,time: mean
+T5,BIGALD1,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGALD1 concentration,time: mean
+T5,BIGALD1_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGALD1 in bottom layer,time: mean
+T5,BIGALD2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGALD2 concentration,time: mean
+T5,BIGALD2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGALD2 in bottom layer,time: mean
+T5,BIGALD3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGALD3 concentration,time: mean
+T5,BIGALD3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGALD3 in bottom layer,time: mean
+T5,BIGALD4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGALD4 concentration,time: mean
+T5,BIGALD4_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGALD4 in bottom layer,time: mean
+T5,BIGALD_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGALD in bottom layer,time: mean
+T5,BIGALK,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGALK concentration,time: mean
+T5,BIGALK_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGALK in bottom layer,time: mean
+T5,BIGENE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BIGENE concentration,time: mean
+T5,BIGENE_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BIGENE in bottom layer,time: mean
+T5,BR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BR concentration,time: mean
+T5,BRCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BRCL concentration,time: mean
+T5,BRCL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BRCL in bottom layer,time: mean
+T5,BRO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BRO concentration,time: mean
+T5,BRONO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BRONO2 concentration,time: mean
+T5,BRONO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BRONO2 in bottom layer,time: mean
+T5,BRO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BRO in bottom layer,time: mean
+T5,BR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BR in bottom layer,time: mean
+T5,BZALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BZALD concentration,time: mean
+T5,BZALD_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BZALD in bottom layer,time: mean
+T5,BZOO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BZOO concentration,time: mean
+T5,BZOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,BZOOH concentration,time: mean
+T5,BZOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BZOOH in bottom layer,time: mean
+T5,BZOO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,BZOO in bottom layer,time: mean
+T5,C2H2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C2H2 concentration,time: mean
+T5,C2H2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C2H2 in bottom layer,time: mean
+T5,C2H4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C2H4 concentration,time: mean
+T5,C2H4_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C2H4 in bottom layer,time: mean
+T5,C2H5O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C2H5O2 concentration,time: mean
+T5,C2H5O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C2H5O2 in bottom layer,time: mean
+T5,C2H5OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C2H5OH concentration,time: mean
+T5,C2H5OH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C2H5OH in bottom layer,time: mean
+T5,C2H5OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C2H5OOH concentration,time: mean
+T5,C2H5OOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C2H5OOH in bottom layer,time: mean
+T5,C2H6,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C2H6 concentration,time: mean
+T5,C2H6_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C2H6 in bottom layer,time: mean
+T5,C3H6,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C3H6 concentration,time: mean
+T5,C3H6_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C3H6 in bottom layer,time: mean
+T5,C3H7O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C3H7O2 concentration,time: mean
+T5,C3H7O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C3H7O2 in bottom layer,time: mean
+T5,C3H7OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C3H7OOH concentration,time: mean
+T5,C3H7OOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C3H7OOH in bottom layer,time: mean
+T5,C3H8,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C3H8 concentration,time: mean
+T5,C3H8_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C3H8 in bottom layer,time: mean
+T5,C6H5O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C6H5O2 concentration,time: mean
+T5,C6H5O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C6H5O2 in bottom layer,time: mean
+T5,C6H5OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,C6H5OOH concentration,time: mean
+T5,C6H5OOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,C6H5OOH in bottom layer,time: mean
+T5,CCL4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CCL4 concentration,time: mean
+T5,CCL4_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CCL4 in bottom layer,time: mean
+T5,CCN_B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m-3,Average Cloud Top liquid CCN (Bennartz),time: mean
+T5,CDNUMC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1/m2,Vertically-integrated droplet concentration,time: mean
+T5,CF2CLBR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CF2CLBR concentration,time: mean
+T5,CF2CLBR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CF2CLBR in bottom layer,time: mean
+T5,CF3BR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CF3BR concentration,time: mean
+T5,CF3BR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CF3BR in bottom layer,time: mean
+T5,CFAD_DBZE94_CS,"time,cosp_ht,cosp_dbze,lat,lon",5,False,,float32,"1,40,15,96,144",33177600,31.640625,fraction,Radar Reflectivity Factor CFAD (94 GHz),time: mean
+T5,CFAD_SR532_CAL,"time,cosp_ht,cosp_sr,lat,lon",5,False,,float32,"1,40,15,96,144",33177600,31.640625,fraction,Lidar Scattering Ratio CFAD (532 nm),time: mean
+T5,CFC11,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CFC11 concentration,time: mean
+T5,CFC113,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CFC113 concentration,time: mean
+T5,CFC113_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CFC113 in bottom layer,time: mean
+T5,CFC114,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CFC114 concentration,time: mean
+T5,CFC114_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CFC114 in bottom layer,time: mean
+T5,CFC115,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CFC115 concentration,time: mean
+T5,CFC115_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CFC115 in bottom layer,time: mean
+T5,CFC11_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CFC11 in bottom layer,time: mean
+T5,CFC12,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CFC12 concentration,time: mean
+T5,CFC12_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CFC12 in bottom layer,time: mean
+T5,CH2BR2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH2BR2 concentration,time: mean
+T5,CH2BR2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH2BR2 in bottom layer,time: mean
+T5,CH2O,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH2O concentration,time: mean
+T5,CH2O_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH2O in bottom layer,time: mean
+T5,CH3BR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3BR concentration,time: mean
+T5,CH3BR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3BR in bottom layer,time: mean
+T5,CH3CCL3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3CCL3 concentration,time: mean
+T5,CH3CCL3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3CCL3 in bottom layer,time: mean
+T5,CH3CHO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3CHO concentration,time: mean
+T5,CH3CHO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3CHO in bottom layer,time: mean
+T5,CH3CL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3CL concentration,time: mean
+T5,CH3CL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3CL in bottom layer,time: mean
+T5,CH3CN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3CN concentration,time: mean
+T5,CH3CN_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3CN in bottom layer,time: mean
+T5,CH3CO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3CO3 concentration,time: mean
+T5,CH3CO3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3CO3 in bottom layer,time: mean
+T5,CH3COCH3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3COCH3 concentration,time: mean
+T5,CH3COCH3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3COCH3 in bottom layer,time: mean
+T5,CH3COCHO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3COCHO concentration,time: mean
+T5,CH3COCHO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3COCHO in bottom layer,time: mean
+T5,CH3COOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3COOH concentration,time: mean
+T5,CH3COOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3COOH in bottom layer,time: mean
+T5,CH3COOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3COOOH concentration,time: mean
+T5,CH3COOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3COOOH in bottom layer,time: mean
+T5,CH3O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3O2 concentration,time: mean
+T5,CH3O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3O2 in bottom layer,time: mean
+T5,CH3OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3OH concentration,time: mean
+T5,CH3OH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3OH in bottom layer,time: mean
+T5,CH3OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH3OOH concentration,time: mean
+T5,CH3OOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH3OOH in bottom layer,time: mean
+T5,CH4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CH4 concentration,time: mean
+T5,CH4_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CH4 in bottom layer,time: mean
+T5,CHBR3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CHBR3 concentration,time: mean
+T5,CHBR3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CHBR3 in bottom layer,time: mean
+T5,CL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CL concentration,time: mean
+T5,CL2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CL2 concentration,time: mean
+T5,CL2O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CL2O2 concentration,time: mean
+T5,CL2O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CL2O2 in bottom layer,time: mean
+T5,CL2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CL2 in bottom layer,time: mean
+T5,CLDHGH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Vertically-integrated high cloud,time: mean
+T5,CLDHGH_CAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar High-level Cloud Fraction,time: mean
+T5,CLDHGH_CAL_ICE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar High-level Ice Cloud Fraction,time: mean
+T5,CLDHGH_CAL_LIQ,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar High-level Liquid Cloud Fraction,time: mean
+T5,CLDHGH_CAL_UN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar High-level Undefined-Phase Cloud Fraction,time: mean
+T5,CLDICE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Grid box averaged cloud ice amount,time: mean
+T5,CLDLIQ,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Grid box averaged cloud liquid amount,time: mean
+T5,CLDLOW,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Vertically-integrated low cloud,time: mean
+T5,CLDLOW_CAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Low-level Cloud Fraction,time: mean
+T5,CLDLOW_CAL_ICE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Low-level Ice Cloud Fraction,time: mean
+T5,CLDLOW_CAL_LIQ,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Low-level Liquid Cloud Fraction,time: mean
+T5,CLDLOW_CAL_UN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Low-level Undefined-Phase Cloud Fraction,time: mean
+T5,CLDMED,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Vertically-integrated mid-level cloud,time: mean
+T5,CLDMED_CAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Mid-level Cloud Fraction,time: mean
+T5,CLDMED_CAL_ICE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Mid-level Ice Cloud Fraction,time: mean
+T5,CLDMED_CAL_LIQ,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Mid-level Liquid Cloud Fraction,time: mean
+T5,CLDMED_CAL_UN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Mid-level Undefined-Phase Cloud Fraction,time: mean
+T5,CLDTOT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Vertically-integrated total cloud,time: mean
+T5,CLDTOT_CAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Total Cloud Fraction,time: mean
+T5,CLDTOT_CALCS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent, Lidar and Radar Total Cloud Fraction,time: mean
+T5,CLDTOT_CAL_ICE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Total Ice Cloud Fraction,time: mean
+T5,CLDTOT_CAL_LIQ,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Total Liquid Cloud Fraction,time: mean
+T5,CLDTOT_CAL_UN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Lidar Total Undefined-Phase Cloud Fraction,time: mean
+T5,CLDTOT_CS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent, Radar total cloud amount,time: mean
+T5,CLDTOT_CS2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent, Radar total cloud amount without the data for the first kilometer above surface,time: mean
+T5,CLDTOT_ISCCP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,percent,Total Cloud Fraction Calculated by the ISCCP Simulator,time: mean
+T5,CLD_CAL,"time,cosp_ht,lat,lon",4,False,,float32,"1,40,96,144",2211840,2.109375,percent,Lidar Cloud Fraction (532 nm),time: mean
+T5,CLD_CAL_ICE,"time,cosp_ht,lat,lon",4,False,,float32,"1,40,96,144",2211840,2.109375,percent,Lidar Ice Cloud Fraction,time: mean
+T5,CLD_CAL_LIQ,"time,cosp_ht,lat,lon",4,False,,float32,"1,40,96,144",2211840,2.109375,percent,Lidar Liquid Cloud Fraction,time: mean
+T5,CLD_CAL_NOTCS,"time,cosp_ht,lat,lon",4,False,,float32,"1,40,96,144",2211840,2.109375,percent,Cloud occurrence seen by CALIPSO but not CloudSat,time: mean
+T5,CLD_CAL_UN,"time,cosp_ht,lat,lon",4,False,,float32,"1,40,96,144",2211840,2.109375,percent,Lidar Undefined-Phase Cloud Fraction,time: mean
+T5,CLD_MISR,"time,cosp_htmisr,cosp_tau,lat,lon",5,False,,float32,"1,16,7,96,144",6193152,5.90625,percent,Cloud Fraction from MISR Simulator,time: mean
+T5,CLHMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,%,MODIS High Level Cloud Fraction,time: mean
+T5,CLIMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,%,MODIS Ice Cloud Fraction,time: mean
+T5,CLLMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,%,MODIS Low Level Cloud Fraction,time: mean
+T5,CLMMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,%,MODIS Mid Level Cloud Fraction,time: mean
+T5,CLMODIS,"time,cosp_prs,cosp_tau_modis,lat,lon",5,False,,float32,"1,7,7,96,144",2709504,2.583984375,%,MODIS Cloud Area Fraction,time: mean
+T5,CLO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CLO concentration,time: mean
+T5,CLONO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CLONO2 concentration,time: mean
+T5,CLONO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CLONO2 in bottom layer,time: mean
+T5,CLOUD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Cloud fraction,time: mean
+T5,CLOUDCOVER_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,fraction,Cloud Cover,time: mean
+T5,CLOUDFRAC_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Cloud Fraction,time: mean
+T5,CLO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CLO in bottom layer,time: mean
+T5,CLRIMODIS,"time,cosp_reffice,cosp_tau_modis,lat,lon",5,False,,float32,"1,6,7,96,144",2322432,2.21484375,%,MODIS Cloud Area Fraction,time: mean
+T5,CLRLMODIS,"time,cosp_reffliq,cosp_tau_modis,lat,lon",5,False,,float32,"1,6,7,96,144",2322432,2.21484375,%,MODIS Cloud Area Fraction,time: mean
+T5,CLTMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,%,MODIS Total Cloud Fraction,time: mean
+T5,CLWMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,%,MODIS Liquid Cloud Fraction,time: mean
+T5,CL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CL in bottom layer,time: mean
+T5,CO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CO concentration,time: mean
+T5,CO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CO2 concentration,time: mean
+T5,CO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CO2 in bottom layer,time: mean
+T5,COF2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,COF2 concentration,time: mean
+T5,COF2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,COF2 in bottom layer,time: mean
+T5,COFCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,COFCL concentration,time: mean
+T5,COFCL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,COFCL in bottom layer,time: mean
+T5,CONCLD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Convective cloud cover,time: mean
+T5,CO_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for CO,time: mean
+T5,CO_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for CO,time: mean
+T5,CO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CO in bottom layer,time: mean
+T5,CRESOL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,CRESOL concentration,time: mean
+T5,CRESOL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,CRESOL in bottom layer,time: mean
+T5,DAYFOC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,unitless,Daylight fraction,time: mean
+T5,DCQ,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,Q tendency due to moist processes,time: mean
+T5,DF_ALKNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ALKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_BENZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_BZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_C2H5OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_C2H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_C3H7OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_C6H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3CN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3COCH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3COCHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3COOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3COOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CH3OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_CO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_EOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_GLYALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_H2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_H2SO4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HCN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HCOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HO2NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HPALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HYAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_HYDRALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_IEPOX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ISOPNITA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ISOPNITB,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ISOPNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ISOPNOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ISOPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_MACROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_MEKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_MPAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NC4CH2OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NC4CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_NTERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_O3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_PAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_PHENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_POOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_ROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_SO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_TERP2OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_TERPNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_TERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_TERPROD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_TERPROD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_TOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_XOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_XYLENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DF_XYLOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,dry deposition flux,time: mean
+T5,DICARBO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,DICARBO2 concentration,time: mean
+T5,DICARBO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,DICARBO2 in bottom layer,time: mean
+T5,DMS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,DMS concentration,time: mean
+T5,DMS_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,DMS in bottom layer,time: mean
+T5,DST_A2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,DST_A2 concentration,time: mean
+T5,DST_A2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,DST_A2 in bottom layer,time: mean
+T5,DST_A3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,DST_A3 concentration,time: mean
+T5,DST_A3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,DST_A3 in bottom layer,time: mean
+T5,DTCOND,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K/s,T tendency - moist processes,time: mean
+T5,DTV,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K/s,T vertical diffusion,time: mean
+T5,DTWR_ALKNIT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ALKOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_BENZOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_BRONO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_BZOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_C2H5OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_C2H5OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_C3H7OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_C6H5OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH2O,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3CHO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3CN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3COCH3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3COCHO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3COOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3COOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CH3OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_CLONO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_COF2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_COFCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_EOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_GLYALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_H2O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_H2SO4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HBR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HCN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HCOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HF,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HNO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HO2NO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HOBR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HOCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HONITR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HPALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HYAC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_HYDRALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_IEPOX,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ISOPNITA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ISOPNITB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ISOPNO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ISOPNOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ISOPOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_MACR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_MACROOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_MEKOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_MVK,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NC4CH2OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NC4CHO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NDEP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NH3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NH4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NHDEP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NOA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_NTERPOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ONITR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_PHENOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_POOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_ROOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_SO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_TERP2OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_TERPNIT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_TERPOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_TERPROD1,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_TERPROD2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_TOLOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_XOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_XYLENOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,DTWR_XYLOLOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,wet removal Neu scheme tendency,time: mean
+T5,E90,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,E90 concentration,time: mean
+T5,E90_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,E90 in bottom layer,time: mean
+T5,ENEO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ENEO2 concentration,time: mean
+T5,ENEO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ENEO2 in bottom layer,time: mean
+T5,EO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,EO concentration,time: mean
+T5,EO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,EO2 concentration,time: mean
+T5,EO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,EO2 in bottom layer,time: mean
+T5,EOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,EOOH concentration,time: mean
+T5,EOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,EOOH in bottom layer,time: mean
+T5,EO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,EO in bottom layer,time: mean
+T5,F,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,F concentration,time: mean
+T5,FCTI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Fractional occurrence of cloud top ice,time: mean
+T5,FCTL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Fractional occurrence of cloud top liquid,time: mean
+T5,FCTL_B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Fractional occurrence of cloud top liquid (Bennartz),time: mean
+T5,FICE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Fractional ice content within cloud,time: mean
+T5,FISCCP1_COSP,"time,cosp_prs,cosp_tau,lat,lon",5,False,,float32,"1,7,7,96,144",2709504,2.583984375,percent,Grid-box fraction covered by each ISCCP D level cloud type,time: mean
+T5,FLDS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Downwelling longwave flux at surface,time: mean
+T5,FLNS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Net longwave flux at surface,time: mean
+T5,FLNSC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky net longwave flux at surface,time: mean
+T5,FLNT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Net longwave flux at top of model,time: mean
+T5,FLNTC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky net longwave flux at top of model,time: mean
+T5,FLNTCLR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky ONLY points net longwave flux at top of model,time: mean
+T5,FLUT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Upwelling longwave flux at top of model,time: mean
+T5,FLUTC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky upwelling longwave flux at top of model,time: mean
+T5,FREQCLR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Frac,Frequency of Occurrence of Clearsky,time: mean
+T5,FREQI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Fractional occurrence of ice,time: mean
+T5,FREQL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Fractional occurrence of liquid,time: mean
+T5,FREQR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Fractional occurrence of rain,time: mean
+T5,FREQS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,fraction,Fractional occurrence of snow,time: mean
+T5,FSDS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Downwelling solar flux at surface,time: mean
+T5,FSDSC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky downwelling solar flux at surface,time: mean
+T5,FSNS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Net solar flux at surface,time: mean
+T5,FSNSC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky net solar flux at surface,time: mean
+T5,FSNT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Net solar flux at top of model,time: mean
+T5,FSNTC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky net solar flux at top of model,time: mean
+T5,FSNTOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Net solar flux at top of atmosphere,time: mean
+T5,FSNTOAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Clearsky net solar flux at top of atmosphere,time: mean
+T5,FSUTOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Upwelling solar flux at top of atmosphere,time: mean
+T5,F_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,F in bottom layer,time: mean
+T5,GLYALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,GLYALD concentration,time: mean
+T5,GLYALD_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,GLYALD in bottom layer,time: mean
+T5,GLYOXAL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,GLYOXAL concentration,time: mean
+T5,GLYOXAL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,GLYOXAL in bottom layer,time: mean
+T5,H,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,H concentration,time: mean
+T5,H2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,H2 concentration,time: mean
+T5,H2402,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,H2402 concentration,time: mean
+T5,H2402_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,H2402 in bottom layer,time: mean
+T5,H2O,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,water vapor concentration,time: mean
+T5,H2O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,H2O2 concentration,time: mean
+T5,H2O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,H2O2 in bottom layer,time: mean
+T5,H2O_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,water vapor in bottom layer,time: mean
+T5,H2SO4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,H2SO4 concentration,time: mean
+T5,H2SO4M_C,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,ug/m3,chemical sulfate aerosol mass,time: mean
+T5,H2SO4_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,H2SO4 in bottom layer,time: mean
+T5,H2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,H2 in bottom layer,time: mean
+T5,HBR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HBR concentration,time: mean
+T5,HBR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HBR in bottom layer,time: mean
+T5,HCFC141B,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HCFC141B concentration,time: mean
+T5,HCFC141B_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HCFC141B in bottom layer,time: mean
+T5,HCFC142B,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HCFC142B concentration,time: mean
+T5,HCFC142B_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HCFC142B in bottom layer,time: mean
+T5,HCFC22,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HCFC22 concentration,time: mean
+T5,HCFC22_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HCFC22 in bottom layer,time: mean
+T5,HCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HCL concentration,time: mean
+T5,HCL_GAS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,gas-phase hcl,time: mean
+T5,HCL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HCL in bottom layer,time: mean
+T5,HCL_STS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,STS condensed HCL,time: mean
+T5,HCL_TOTAL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,total hcl,time: mean
+T5,HCN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HCN concentration,time: mean
+T5,HCN_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HCN in bottom layer,time: mean
+T5,HCOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HCOOH concentration,time: mean
+T5,HCOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HCOOH in bottom layer,time: mean
+T5,HF,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HF concentration,time: mean
+T5,HF_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HF in bottom layer,time: mean
+T5,HNO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HNO3 concentration,time: mean
+T5,HNO3_GAS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,gas-phase hno3,time: mean
+T5,HNO3_NAT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NAT condensed HNO3,time: mean
+T5,HNO3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HNO3 in bottom layer,time: mean
+T5,HNO3_STS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,STS condensed HNO3,time: mean
+T5,HO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HO2 concentration,time: mean
+T5,HO2NO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HO2NO2 concentration,time: mean
+T5,HO2NO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HO2NO2 in bottom layer,time: mean
+T5,HO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HO2 in bottom layer,time: mean
+T5,HOBR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HOBR concentration,time: mean
+T5,HOBR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HOBR in bottom layer,time: mean
+T5,HOCH2OO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HOCH2OO concentration,time: mean
+T5,HOCH2OO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HOCH2OO in bottom layer,time: mean
+T5,HOCL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HOCL concentration,time: mean
+T5,HOCL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HOCL in bottom layer,time: mean
+T5,HONITR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HONITR concentration,time: mean
+T5,HONITR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HONITR in bottom layer,time: mean
+T5,HPALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HPALD concentration,time: mean
+T5,HPALD_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HPALD in bottom layer,time: mean
+T5,HYAC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HYAC concentration,time: mean
+T5,HYAC_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HYAC in bottom layer,time: mean
+T5,HYDRALD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,HYDRALD concentration,time: mean
+T5,HYDRALD_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,HYDRALD in bottom layer,time: mean
+T5,H_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,H in bottom layer,time: mean
+T5,ICEFRAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Fraction of sfc area covered by sea-ice,time: mean
+T5,ICIMR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Prognostic in-cloud ice mixing ratio,time: mean
+T5,ICWMR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Prognostic in-cloud water mixing ratio,time: mean
+T5,IEPOX,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,IEPOX concentration,time: mean
+T5,IEPOX_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,IEPOX in bottom layer,time: mean
+T5,ISOP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOP concentration,time: mean
+T5,ISOPAO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPAO2 concentration,time: mean
+T5,ISOPAO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPAO2 in bottom layer,time: mean
+T5,ISOPBO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPBO2 concentration,time: mean
+T5,ISOPBO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPBO2 in bottom layer,time: mean
+T5,ISOPNITA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPNITA concentration,time: mean
+T5,ISOPNITA_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPNITA in bottom layer,time: mean
+T5,ISOPNITB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPNITB concentration,time: mean
+T5,ISOPNITB_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPNITB in bottom layer,time: mean
+T5,ISOPNO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPNO3 concentration,time: mean
+T5,ISOPNO3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPNO3 in bottom layer,time: mean
+T5,ISOPNOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPNOOH concentration,time: mean
+T5,ISOPNOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPNOOH in bottom layer,time: mean
+T5,ISOPOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ISOPOOH concentration,time: mean
+T5,ISOPOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOPOOH in bottom layer,time: mean
+T5,ISOP_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ISOP in bottom layer,time: mean
+T5,IWC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/m3,Grid box average ice water content,time: mean
+T5,IWPMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg m-2,MODIS Cloud Ice Water Path*CLIMODIS,time: mean
+T5,LANDFRAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Fraction of sfc area covered by land,time: mean
+T5,LHFLX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Surface latent heat flux,time: mean
+T5,LNO_COL_PROD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,TG N/YR,lighting column NO source,time: mean
+T5,LNO_PROD,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,/cm3/s,lighting insitu NO source,time: mean
+T5,LWCF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Longwave cloud forcing,time: mean
+T5,LWPMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg m-2,MODIS Cloud Liquid Water Path*CLWMODIS,time: mean
+T5,MACR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MACR concentration,time: mean
+T5,MACRO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MACRO2 concentration,time: mean
+T5,MACRO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MACRO2 in bottom layer,time: mean
+T5,MACROOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MACROOH concentration,time: mean
+T5,MACROOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MACROOH in bottom layer,time: mean
+T5,MACR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MACR in bottom layer,time: mean
+T5,MALO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MALO2 concentration,time: mean
+T5,MALO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MALO2 in bottom layer,time: mean
+T5,MCO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MCO3 concentration,time: mean
+T5,MCO3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MCO3 in bottom layer,time: mean
+T5,MDIALO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MDIALO2 concentration,time: mean
+T5,MDIALO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MDIALO2 in bottom layer,time: mean
+T5,MEANCLDALB_ISCCP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,Mean cloud albedo*CLDTOT_ISCCP,time: mean
+T5,MEANPTOP_ISCCP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Pa,Mean cloud top pressure*CLDTOT_ISCCP,time: mean
+T5,MEANTAU_ISCCP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,Mean optical thickness*CLDTOT_ISCCP,time: mean
+T5,MEANTBCLR_ISCCP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Mean Clear-sky Infrared Tb from ISCCP simulator,time: mean
+T5,MEANTB_ISCCP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Mean Infrared Tb from ISCCP simulator,time: mean
+T5,MEG_BCARY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,BCARY MEGAN emissions flux,time: mean
+T5,MEG_BIGALK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,BIGALK MEGAN emissions flux,time: mean
+T5,MEG_BIGENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,BIGENE MEGAN emissions flux,time: mean
+T5,MEG_C2H4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,C2H4 MEGAN emissions flux,time: mean
+T5,MEG_C2H5OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,C2H5OH MEGAN emissions flux,time: mean
+T5,MEG_C2H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,C2H6 MEGAN emissions flux,time: mean
+T5,MEG_C3H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,C3H6 MEGAN emissions flux,time: mean
+T5,MEG_C3H8,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,C3H8 MEGAN emissions flux,time: mean
+T5,MEG_CH2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,CH2O MEGAN emissions flux,time: mean
+T5,MEG_CH3CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,CH3CHO MEGAN emissions flux,time: mean
+T5,MEG_CH3COCH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,CH3COCH3 MEGAN emissions flux,time: mean
+T5,MEG_CH3COOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,CH3COOH MEGAN emissions flux,time: mean
+T5,MEG_CH3OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,CH3OH MEGAN emissions flux,time: mean
+T5,MEG_CO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,CO MEGAN emissions flux,time: mean
+T5,MEG_HCN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,HCN MEGAN emissions flux,time: mean
+T5,MEG_HCOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,HCOOH MEGAN emissions flux,time: mean
+T5,MEG_ISOP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,ISOP MEGAN emissions flux,time: mean
+T5,MEG_MTERP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,MTERP MEGAN emissions flux,time: mean
+T5,MEG_TOLUENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/sec,TOLUENE MEGAN emissions flux,time: mean
+T5,MEK,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MEK concentration,time: mean
+T5,MEKO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MEKO2 concentration,time: mean
+T5,MEKO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MEKO2 in bottom layer,time: mean
+T5,MEKOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MEKOOH concentration,time: mean
+T5,MEKOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MEKOOH in bottom layer,time: mean
+T5,MEK_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MEK in bottom layer,time: mean
+T5,MPAN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MPAN concentration,time: mean
+T5,MPAN_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MPAN in bottom layer,time: mean
+T5,MSKtem,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,TEM mask,time: mean
+T5,MTERP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MTERP concentration,time: mean
+T5,MTERP_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MTERP in bottom layer,time: mean
+T5,MVK,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,MVK concentration,time: mean
+T5,MVK_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,MVK in bottom layer,time: mean
+T5,N,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,N concentration,time: mean
+T5,N2O,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,N2O concentration,time: mean
+T5,N2O5,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,N2O5 concentration,time: mean
+T5,N2O5_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,N2O5 in bottom layer,time: mean
+T5,N2O_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,N2O in bottom layer,time: mean
+T5,NC4CH2OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NC4CH2OH concentration,time: mean
+T5,NC4CH2OH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NC4CH2OH in bottom layer,time: mean
+T5,NC4CHO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NC4CHO concentration,time: mean
+T5,NC4CHO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NC4CHO in bottom layer,time: mean
+T5,NDEP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NDEP concentration,time: mean
+T5,NDEP_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NDEP in bottom layer,time: mean
+T5,NH3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NH3 concentration,time: mean
+T5,NH3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NH3 in bottom layer,time: mean
+T5,NH4,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NH4 concentration,time: mean
+T5,NH4_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NH4 in bottom layer,time: mean
+T5,NHDEP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NHDEP concentration,time: mean
+T5,NHDEP_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NHDEP in bottom layer,time: mean
+T5,NH_5,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NH_5 concentration,time: mean
+T5,NH_50,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NH_50 concentration,time: mean
+T5,NH_50_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NH_50 in bottom layer,time: mean
+T5,NH_5_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NH_5 in bottom layer,time: mean
+T5,NO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NO concentration,time: mean
+T5,NO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NO2 concentration,time: mean
+T5,NO2_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for NO2,time: mean
+T5,NO2_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for NO2,time: mean
+T5,NO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NO2 in bottom layer,time: mean
+T5,NO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NO3 concentration,time: mean
+T5,NO3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NO3 in bottom layer,time: mean
+T5,NOA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NOA concentration,time: mean
+T5,NOA_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NOA in bottom layer,time: mean
+T5,NO_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for NO,time: mean
+T5,NO_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for NO,time: mean
+T5,NO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NO in bottom layer,time: mean
+T5,NTERPO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NTERPO2 concentration,time: mean
+T5,NTERPO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NTERPO2 in bottom layer,time: mean
+T5,NTERPOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,NTERPOOH concentration,time: mean
+T5,NTERPOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,NTERPOOH in bottom layer,time: mean
+T5,NUMICE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,1/kg,Grid box averaged cloud ice number,time: mean
+T5,NUMLIQ,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,1/kg,Grid box averaged cloud liquid number,time: mean
+T5,NUMRAI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,1/kg,Grid box averaged rain number,time: mean
+T5,NUMSNO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,1/kg,Grid box averaged snow number,time: mean
+T5,N_AER,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,unitless,Aerosol number concentration,time: mean
+T5,N_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,N in bottom layer,time: mean
+T5,O,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,O concentration,time: mean
+T5,O1D,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,O1D concentration,time: mean
+T5,O1D_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,O1D in bottom layer,time: mean
+T5,O3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,O3 concentration,time: mean
+T5,O3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,O3 in bottom layer,time: mean
+T5,OCLO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,OCLO concentration,time: mean
+T5,OCLO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,OCLO in bottom layer,time: mean
+T5,OCNFRAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,fraction,Fraction of sfc area covered by ocean,time: mean
+T5,OCS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,OCS concentration,time: mean
+T5,OCS_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,OCS in bottom layer,time: mean
+T5,OH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,OH concentration,time: mean
+T5,OH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,OH in bottom layer,time: mean
+T5,OMEGA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,Pa/s,Vertical velocity (pressure),time: mean
+T5,OMEGAT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K Pa/s,Vertical heat flux,time: mean
+T5,OM_AC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,OM_AC concentration,time: mean
+T5,OM_AC_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,OM_AC in bottom layer,time: mean
+T5,OM_AI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,OM_AI concentration,time: mean
+T5,OM_AI_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,OM_AI in bottom layer,time: mean
+T5,OM_NI,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,OM_NI concentration,time: mean
+T5,OM_NI_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for OM_NI,time: mean
+T5,OM_NI_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for OM_NI,time: mean
+T5,OM_NI_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,OM_NI in bottom layer,time: mean
+T5,ONITR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ONITR concentration,time: mean
+T5,ONITR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ONITR in bottom layer,time: mean
+T5,O_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,O in bottom layer,time: mean
+T5,P0,,0,False,,float64,,8,7.62939453125e-06,Pa,reference pressure,
+T5,PAN,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PAN concentration,time: mean
+T5,PAN_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PAN in bottom layer,time: mean
+T5,PBLH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m,PBL height,time: mean
+T5,PBZNIT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PBZNIT concentration,time: mean
+T5,PBZNIT_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PBZNIT in bottom layer,time: mean
+T5,PCTMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Pa,MODIS Cloud Top Pressure*CLTMODIS,time: mean
+T5,PHENO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PHENO concentration,time: mean
+T5,PHENO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PHENO2 concentration,time: mean
+T5,PHENO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PHENO2 in bottom layer,time: mean
+T5,PHENOL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PHENOL concentration,time: mean
+T5,PHENOL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PHENOL in bottom layer,time: mean
+T5,PHENOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PHENOOH concentration,time: mean
+T5,PHENOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PHENOOH in bottom layer,time: mean
+T5,PHENO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PHENO in bottom layer,time: mean
+T5,PHIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m2/s2,Surface geopotential,time: mean
+T5,PO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,PO2 concentration,time: mean
+T5,PO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,PO2 in bottom layer,time: mean
+T5,POOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,POOH concentration,time: mean
+T5,POOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,POOH in bottom layer,time: mean
+T5,PRECC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m/s,Convective precipitation rate (liq + ice),time: mean
+T5,PRECL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m/s,Large-scale (stable) precipitation rate (liq + ice),time: mean
+T5,PRECSC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m/s,Convective snow rate (water equivalent),time: mean
+T5,PRECSL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m/s,Large-scale (stable) snow rate (water equivalent),time: mean
+T5,PS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Pa,Surface pressure,time: mean
+T5,PSL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Pa,Sea level pressure,time: mean
+T5,Q,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Specific humidity,time: mean
+T5,QFLX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,Surface water flux,time: mean
+T5,QREFHT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,Reference height humidity,time: mean
+T5,QRL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K/s,Longwave heating rate,time: mean
+T5,QRS,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K/s,Solar heating rate,time: mean
+T5,QT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Total water mixing ratio,time: mean
+T5,RAD_ICE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm,sad ice,time: mean
+T5,RAD_LNAT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm,large nat radius,time: mean
+T5,RAD_SULFC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm,chemical sad sulfate,time: mean
+T5,RAINQM,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Grid box averaged rain amount,time: mean
+T5,RCMINLAYER_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,g/kg,Cloud Water in Layer,time: mean
+T5,RCMTEND_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,g/kg /s,Cloud Liquid Water Tendency,time: mean
+T5,RCM_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,g/kg,Cloud Water Mixing Ratio,time: mean
+T5,REFFCLIMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m,MODIS Ice Cloud Particle Size*CLIMODIS,time: mean
+T5,REFFCLWMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m,MODIS Liquid Cloud Particle Size*CLWMODIS,time: mean
+T5,REFF_AERO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm,aerosol effective radius,time: mean
+T5,RELHUM,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,percent,Relative humidity,time: mean
+T5,RELVAR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,-,Relative cloud water variance,time: mean
+T5,RFL_PARASOL,"time,cosp_sza,lat,lon",4,False,,float32,"1,5,96,144",276480,0.263671875,fraction,PARASOL-like mono-directional reflectance,time: mean
+T5,RHO_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,kg/m3,Air Density,time: mean
+T5,RHW,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,percent,Relative humidity with respect to liquid,time: mean
+T5,RIMTEND_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,g/kg /s,Cloud Ice Tendency,time: mean
+T5,RO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,RO2 concentration,time: mean
+T5,RO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,RO2 in bottom layer,time: mean
+T5,ROOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ROOH concentration,time: mean
+T5,ROOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ROOH in bottom layer,time: mean
+T5,RTP2_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,g^2/kg^2,Moisture Variance,time: mean
+T5,RTPTHLP_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,K g/kg,Temp. Moist. Covariance,time: mean
+T5,RVMTEND_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,g/kg /s,Water vapor tendency,time: mean
+T5,S,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,S concentration,time: mean
+T5,SAD_AERO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm2/cm3,aerosol surface area density,time: mean
+T5,SAD_ICE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm2/cm3,water-ice aerosol SAD,time: mean
+T5,SAD_LNAT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm2/cm3,large-mode NAT aerosol SAD,time: mean
+T5,SAD_SULFC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm2/cm3,chemical sulfate aerosol SAD,time: mean
+T5,SAD_TROP,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,cm2/cm3,tropospheric aerosol SAD,time: mean
+T5,SF6,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,SF6 concentration,time: mean
+T5,SF6_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,SF6 in bottom layer,time: mean
+T5,SFALKNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ALKNIT surface flux,time: mean
+T5,SFALKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ALKOOH surface flux,time: mean
+T5,SFAOA_NH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,AOA_NH surface flux,time: mean
+T5,SFBCARY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BCARY surface flux,time: mean
+T5,SFBC_A,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC_A surface flux,time: mean
+T5,SFBC_AC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC_AC surface flux,time: mean
+T5,SFBC_AI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC_AI surface flux,time: mean
+T5,SFBC_AX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC_AX surface flux,time: mean
+T5,SFBC_N,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC_N surface flux,time: mean
+T5,SFBC_NI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC_NI surface flux,time: mean
+T5,SFBENZENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BENZENE surface flux,time: mean
+T5,SFBENZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BENZOOH surface flux,time: mean
+T5,SFBEPOMUC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BEPOMUC surface flux,time: mean
+T5,SFBIGALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD surface flux,time: mean
+T5,SFBIGALD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD1 surface flux,time: mean
+T5,SFBIGALD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD2 surface flux,time: mean
+T5,SFBIGALD3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD3 surface flux,time: mean
+T5,SFBIGALD4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD4 surface flux,time: mean
+T5,SFBIGALK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALK surface flux,time: mean
+T5,SFBIGENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGENE surface flux,time: mean
+T5,SFBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BR surface flux,time: mean
+T5,SFBRCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRCL surface flux,time: mean
+T5,SFBRO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRO surface flux,time: mean
+T5,SFBRONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRONO2 surface flux,time: mean
+T5,SFBRY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRY surface flux,time: mean
+T5,SFBZALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BZALD surface flux,time: mean
+T5,SFBZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BZOOH surface flux,time: mean
+T5,SFC2H2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H2 surface flux,time: mean
+T5,SFC2H4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H4 surface flux,time: mean
+T5,SFC2H5OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H5OH surface flux,time: mean
+T5,SFC2H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H5OOH surface flux,time: mean
+T5,SFC2H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H6 surface flux,time: mean
+T5,SFC3H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C3H6 surface flux,time: mean
+T5,SFC3H7OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C3H7OOH surface flux,time: mean
+T5,SFC3H8,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C3H8 surface flux,time: mean
+T5,SFC6H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C6H5OOH surface flux,time: mean
+T5,SFCCL4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CCL4 surface flux,time: mean
+T5,SFCF2CLBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CF2CLBR surface flux,time: mean
+T5,SFCF3BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CF3BR surface flux,time: mean
+T5,SFCFC11,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC11 surface flux,time: mean
+T5,SFCFC113,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC113 surface flux,time: mean
+T5,SFCFC114,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC114 surface flux,time: mean
+T5,SFCFC115,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC115 surface flux,time: mean
+T5,SFCFC12,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC12 surface flux,time: mean
+T5,SFCH2BR2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH2BR2 surface flux,time: mean
+T5,SFCH2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH2O surface flux,time: mean
+T5,SFCH3BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3BR surface flux,time: mean
+T5,SFCH3CCL3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CCL3 surface flux,time: mean
+T5,SFCH3CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CHO surface flux,time: mean
+T5,SFCH3CL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CL surface flux,time: mean
+T5,SFCH3CN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CN surface flux,time: mean
+T5,SFCH3COCH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COCH3 surface flux,time: mean
+T5,SFCH3COCHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COCHO surface flux,time: mean
+T5,SFCH3COOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COOH surface flux,time: mean
+T5,SFCH3COOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COOOH surface flux,time: mean
+T5,SFCH3OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3OH surface flux,time: mean
+T5,SFCH3OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3OOH surface flux,time: mean
+T5,SFCH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH4 surface flux,time: mean
+T5,SFCHBR3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CHBR3 surface flux,time: mean
+T5,SFCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CL surface flux,time: mean
+T5,SFCL2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CL2 surface flux,time: mean
+T5,SFCL2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CL2O2 surface flux,time: mean
+T5,SFCLO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CLO surface flux,time: mean
+T5,SFCLONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CLONO2 surface flux,time: mean
+T5,SFCLY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CLY surface flux,time: mean
+T5,SFCO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CO surface flux,time: mean
+T5,SFCO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CO2 surface flux,time: mean
+T5,SFCOF2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,COF2 surface flux,time: mean
+T5,SFCOFCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,COFCL surface flux,time: mean
+T5,SFCRESOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CRESOL surface flux,time: mean
+T5,SFDMS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DMS surface flux,time: mean
+T5,SFDST_A2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DST_A2 surface flux,time: mean
+T5,SFDST_A3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DST_A3 surface flux,time: mean
+T5,SFE90,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,E90 surface flux,time: mean
+T5,SFEOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,EOOH surface flux,time: mean
+T5,SFF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,F surface flux,time: mean
+T5,SFGLYALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,GLYALD surface flux,time: mean
+T5,SFGLYOXAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,GLYOXAL surface flux,time: mean
+T5,SFH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H surface flux,time: mean
+T5,SFH2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2 surface flux,time: mean
+T5,SFH2402,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2402 surface flux,time: mean
+T5,SFH2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2O2 surface flux,time: mean
+T5,SFH2SO4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2SO4 surface flux,time: mean
+T5,SFHBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HBR surface flux,time: mean
+T5,SFHCFC141B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCFC141B surface flux,time: mean
+T5,SFHCFC142B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCFC142B surface flux,time: mean
+T5,SFHCFC22,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCFC22 surface flux,time: mean
+T5,SFHCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCL surface flux,time: mean
+T5,SFHCN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCN surface flux,time: mean
+T5,SFHCOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCOOH surface flux,time: mean
+T5,SFHF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HF surface flux,time: mean
+T5,SFHNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HNO3 surface flux,time: mean
+T5,SFHO2NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HO2NO2 surface flux,time: mean
+T5,SFHOBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HOBR surface flux,time: mean
+T5,SFHOCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HOCL surface flux,time: mean
+T5,SFHONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HONITR surface flux,time: mean
+T5,SFHPALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HPALD surface flux,time: mean
+T5,SFHYAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HYAC surface flux,time: mean
+T5,SFHYDRALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HYDRALD surface flux,time: mean
+T5,SFIEPOX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,IEPOX surface flux,time: mean
+T5,SFISOP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOP surface flux,time: mean
+T5,SFISOPNITA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNITA surface flux,time: mean
+T5,SFISOPNITB,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNITB surface flux,time: mean
+T5,SFISOPNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNO3 surface flux,time: mean
+T5,SFISOPNOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNOOH surface flux,time: mean
+T5,SFISOPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPOOH surface flux,time: mean
+T5,SFMACR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MACR surface flux,time: mean
+T5,SFMACROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MACROOH surface flux,time: mean
+T5,SFMEK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MEK surface flux,time: mean
+T5,SFMEKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MEKOOH surface flux,time: mean
+T5,SFMPAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MPAN surface flux,time: mean
+T5,SFMTERP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MTERP surface flux,time: mean
+T5,SFMVK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MVK surface flux,time: mean
+T5,SFN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,N surface flux,time: mean
+T5,SFN2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,N2O surface flux,time: mean
+T5,SFN2O5,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,N2O5 surface flux,time: mean
+T5,SFNC4CH2OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NC4CH2OH surface flux,time: mean
+T5,SFNC4CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NC4CHO surface flux,time: mean
+T5,SFNDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NDEP surface flux,time: mean
+T5,SFNH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH3 surface flux,time: mean
+T5,SFNH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH4 surface flux,time: mean
+T5,SFNHDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NHDEP surface flux,time: mean
+T5,SFNH_5,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH_5 surface flux,time: mean
+T5,SFNH_50,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH_50 surface flux,time: mean
+T5,SFNO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NO surface flux,time: mean
+T5,SFNO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NO2 surface flux,time: mean
+T5,SFNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NO3 surface flux,time: mean
+T5,SFNOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NOA surface flux,time: mean
+T5,SFNTERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NTERPOOH surface flux,time: mean
+T5,SFO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,O surface flux,time: mean
+T5,SFO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,O3 surface flux,time: mean
+T5,SFOCLO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OCLO surface flux,time: mean
+T5,SFOCS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OCS surface flux,time: mean
+T5,SFOM_AC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM_AC surface flux,time: mean
+T5,SFOM_AI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM_AI surface flux,time: mean
+T5,SFOM_NI,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM_NI surface flux,time: mean
+T5,SFONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ONITR surface flux,time: mean
+T5,SFPAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PAN surface flux,time: mean
+T5,SFPBZNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PBZNIT surface flux,time: mean
+T5,SFPHENO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PHENO surface flux,time: mean
+T5,SFPHENOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PHENOL surface flux,time: mean
+T5,SFPHENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PHENOOH surface flux,time: mean
+T5,SFPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,POOH surface flux,time: mean
+T5,SFROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ROOH surface flux,time: mean
+T5,SFS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,S surface flux,time: mean
+T5,SFSF6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SF6 surface flux,time: mean
+T5,SFSO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO surface flux,time: mean
+T5,SFSO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO2 surface flux,time: mean
+T5,SFSO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO3 surface flux,time: mean
+T5,SFSO4_A1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO4_A1 surface flux,time: mean
+T5,SFSO4_A2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO4_A2 surface flux,time: mean
+T5,SFSO4_AC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO4_AC surface flux,time: mean
+T5,SFSO4_NA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO4_NA surface flux,time: mean
+T5,SFSO4_PR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO4_PR surface flux,time: mean
+T5,SFSOA_A1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SOA_A1 surface flux,time: mean
+T5,SFSOA_LV,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SOA_LV surface flux,time: mean
+T5,SFSOA_NA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SOA_NA surface flux,time: mean
+T5,SFSOA_SV,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SOA_SV surface flux,time: mean
+T5,SFSS_A1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SS_A1 surface flux,time: mean
+T5,SFSS_A2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SS_A2 surface flux,time: mean
+T5,SFSS_A3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SS_A3 surface flux,time: mean
+T5,SFST80_25,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ST80_25 surface flux,time: mean
+T5,SFTEPOMUC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TEPOMUC surface flux,time: mean
+T5,SFTERP2OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERP2OOH surface flux,time: mean
+T5,SFTERPNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPNIT surface flux,time: mean
+T5,SFTERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPOOH surface flux,time: mean
+T5,SFTERPROD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPROD1 surface flux,time: mean
+T5,SFTERPROD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPROD2 surface flux,time: mean
+T5,SFTOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TOLOOH surface flux,time: mean
+T5,SFTOLUENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TOLUENE surface flux,time: mean
+T5,SFXOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XOOH surface flux,time: mean
+T5,SFXYLENES,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLENES surface flux,time: mean
+T5,SFXYLENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLENOOH surface flux,time: mean
+T5,SFXYLOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLOL surface flux,time: mean
+T5,SFXYLOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLOLOOH surface flux,time: mean
+T5,SHFLX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Surface sensible heat flux,time: mean
+T5,SL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,J/kg,Liquid water static energy,time: mean
+T5,SNOWHICE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m,Snow depth over ice,time: mean
+T5,SNOWHLND,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m,Water equivalent snow depth,time: mean
+T5,SNOWQM,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,Grid box averaged snow amount,time: mean
+T5,SO,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,SO concentration,time: mean
+T5,SO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,SO2 concentration,time: mean
+T5,SO2_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for SO2,time: mean
+T5,SO2_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for SO2,time: mean
+T5,SO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,SO2 in bottom layer,time: mean
+T5,SO3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,SO3 concentration,time: mean
+T5,SO3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,SO3 in bottom layer,time: mean
+T5,SO4_A1,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SO4_A1 concentration,time: mean
+T5,SO4_A1_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SO4_A1 in bottom layer,time: mean
+T5,SO4_A2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SO4_A2 concentration,time: mean
+T5,SO4_A2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SO4_A2 in bottom layer,time: mean
+T5,SO4_AC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SO4_AC concentration,time: mean
+T5,SO4_AC_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SO4_AC in bottom layer,time: mean
+T5,SO4_NA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SO4_NA concentration,time: mean
+T5,SO4_NA_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SO4_NA in bottom layer,time: mean
+T5,SO4_PR,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SO4_PR concentration,time: mean
+T5,SO4_PR_CLXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,molec/cm2/s,vertically intergrated external forcing for SO4_PR,time: mean
+T5,SO4_PR_CMXF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertically intergrated external forcing for SO4_PR,time: mean
+T5,SO4_PR_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SO4_PR in bottom layer,time: mean
+T5,SOA_A1,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SOA_A1 concentration,time: mean
+T5,SOA_A1_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SOA_A1 in bottom layer,time: mean
+T5,SOA_LV,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,SOA_LV concentration,time: mean
+T5,SOA_LV_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,SOA_LV in bottom layer,time: mean
+T5,SOA_NA,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SOA_NA concentration,time: mean
+T5,SOA_NA_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SOA_NA in bottom layer,time: mean
+T5,SOA_SV,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,SOA_SV concentration,time: mean
+T5,SOA_SV_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,SOA_SV in bottom layer,time: mean
+T5,SOLIN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Solar insolation,time: mean
+T5,SO_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,SO in bottom layer,time: mean
+T5,SS_A1,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SS_A1 concentration,time: mean
+T5,SS_A1_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SS_A1 in bottom layer,time: mean
+T5,SS_A2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SS_A2 concentration,time: mean
+T5,SS_A2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SS_A2 in bottom layer,time: mean
+T5,SS_A3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,SS_A3 concentration,time: mean
+T5,SS_A3_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/kg,SS_A3 in bottom layer,time: mean
+T5,ST80_25,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,ST80_25 concentration,time: mean
+T5,ST80_25_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,ST80_25 in bottom layer,time: mean
+T5,STEND_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,k/s,Temperature tendency,time: mean
+T5,SWCF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,W/m2,Shortwave cloud forcing,time: mean
+T5,S_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,S in bottom layer,time: mean
+T5,T,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K,Temperature,time: mean
+T5,TAUBLJX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,N/m2,Zonal      integrated drag from Beljaars SGO,time: mean
+T5,TAUBLJY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,N/m2,Meridional integrated drag from Beljaars SGO,time: mean
+T5,TAUGWX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,N/m2,Zonal gravity wave surface stress,time: mean
+T5,TAUGWY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,N/m2,Meridional gravity wave surface stress,time: mean
+T5,TAUILOGMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,MODIS Ice Cloud Optical Thickness (Log10 Mean)*CLIMODIS,time: mean
+T5,TAUIMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,MODIS Ice Cloud Optical Thickness*CLIMODIS,time: mean
+T5,TAUTLOGMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,MODIS Total Cloud Optical Thickness (Log10 Mean)*CLTMODIS,time: mean
+T5,TAUTMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,MODIS Total Cloud Optical Thickness*CLTMODIS,time: mean
+T5,TAUWLOGMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,MODIS Liquid Cloud Optical Thickness (Log10 Mean)*CLWMODIS,time: mean
+T5,TAUWMODIS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,1,MODIS Liquid Cloud Optical Thickness*CLWMODIS,time: mean
+T5,TAUX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,N/m2,Zonal surface stress,time: mean
+T5,TAUY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,N/m2,Meridional surface stress,time: mean
+T5,TEPOMUC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TEPOMUC concentration,time: mean
+T5,TEPOMUC_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TEPOMUC in bottom layer,time: mean
+T5,TERP2O2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERP2O2 concentration,time: mean
+T5,TERP2O2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERP2O2 in bottom layer,time: mean
+T5,TERP2OOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERP2OOH concentration,time: mean
+T5,TERP2OOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERP2OOH in bottom layer,time: mean
+T5,TERPNIT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERPNIT concentration,time: mean
+T5,TERPNIT_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERPNIT in bottom layer,time: mean
+T5,TERPO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERPO2 concentration,time: mean
+T5,TERPO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERPO2 in bottom layer,time: mean
+T5,TERPOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERPOOH concentration,time: mean
+T5,TERPOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERPOOH in bottom layer,time: mean
+T5,TERPROD1,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERPROD1 concentration,time: mean
+T5,TERPROD1_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERPROD1 in bottom layer,time: mean
+T5,TERPROD2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TERPROD2 concentration,time: mean
+T5,TERPROD2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TERPROD2 in bottom layer,time: mean
+T5,TGCLDCWP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,Total grid-box cloud water path (liquid and ice),time: mean
+T5,TGCLDIWP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,Total grid-box cloud ice water path,time: mean
+T5,TGCLDLWP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,Total grid-box cloud liquid water path,time: mean
+T5,TH,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,K,Potential Temperature,time: mean
+T5,THLP2_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,K^2,Temperature Variance,time: mean
+T5,THzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,K,Zonal-Mean potential temp - defined on ilev,zlon: mean time: mean
+T5,TMQ,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,Total (vertically integrated) precipitable water,time: mean
+T5,TOLO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TOLO2 concentration,time: mean
+T5,TOLO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TOLO2 in bottom layer,time: mean
+T5,TOLOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TOLOOH concentration,time: mean
+T5,TOLOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TOLOOH in bottom layer,time: mean
+T5,TOLUENE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,TOLUENE concentration,time: mean
+T5,TOLUENE_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,TOLUENE in bottom layer,time: mean
+T5,TREFHT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Reference height temperature,time: mean
+T5,TROP_P,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,Pa,Tropopause Pressure,time: mean
+T5,TROP_T,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Tropopause Temperature,time: mean
+T5,TROP_Z,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m,Tropopause Height,time: mean
+T5,TS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Surface temperature (radiative),time: mean
+T5,TSMN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Minimum surface temperature over output period,time: mean
+T5,TSMX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,K,Maximum surface temperature over output period,time: mean
+T5,U,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m/s,Zonal wind,time: mean
+T5,U10,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,m/s,10m wind speed,time: mean
+T5,UM_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m/s,Zonal Wind,time: mean
+T5,UP2_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m2/s2,Zonal Velocity Variance,time: mean
+T5,UPWP_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m2/s2,Zonal Momentum Flux,time: mean
+T5,UTEND_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m/s /s,U-wind Tendency,time: mean
+T5,UU,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m2/s2,Zonal velocity squared,time: mean
+T5,UVzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M2/S2,Meridional Flux of Zonal Momentum: 3D zon. mean,zlon: mean time: mean
+T5,UWzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M2/S2,Vertical Flux of Zonal Momentum: 3D zon. mean,zlon: mean time: mean
+T5,Uzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean zonal wind - defined on ilev,zlon: mean time: mean
+T5,V,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m/s,Meridional wind,time: mean
+T5,VD01,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg/s,Vertical diffusion of Q,time: mean
+T5,VM_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m/s,Meridional Wind,time: mean
+T5,VP2_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m2/s2,Meridional Velocity Variance,time: mean
+T5,VPWP_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m2/s2,Meridional Momentum Flux,time: mean
+T5,VQ,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m/skg/kg,Meridional water transport,time: mean
+T5,VT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K m/s,Meridional heat transport,time: mean
+T5,VTEND_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m/s /s,V-wind Tendency,time: mean
+T5,VTHzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,MK/S,Meridional Heat Flux: 3D zon. mean,zlon: mean time: mean
+T5,VU,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m2/s2,Meridional flux of zonal momentum,time: mean
+T5,VV,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m2/s2,Meridional velocity squared,time: mean
+T5,Vzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean meridional wind - defined on ilev,zlon: mean time: mean
+T5,WD_ALKNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ALKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_A_ALKNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ALKNIT           wet deposition,time: mean
+T5,WD_A_ALKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ALKOOH           wet deposition,time: mean
+T5,WD_A_AOA_NH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,AOA_NH           wet deposition,time: mean
+T5,WD_A_BCARY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BCARY            wet deposition,time: mean
+T5,WD_A_BENZENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BENZENE          wet deposition,time: mean
+T5,WD_A_BENZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BENZOOH          wet deposition,time: mean
+T5,WD_A_BEPOMUC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BEPOMUC          wet deposition,time: mean
+T5,WD_A_BIGALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD           wet deposition,time: mean
+T5,WD_A_BIGALD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD1          wet deposition,time: mean
+T5,WD_A_BIGALD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD2          wet deposition,time: mean
+T5,WD_A_BIGALD3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD3          wet deposition,time: mean
+T5,WD_A_BIGALD4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALD4          wet deposition,time: mean
+T5,WD_A_BIGALK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGALK           wet deposition,time: mean
+T5,WD_A_BIGENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BIGENE           wet deposition,time: mean
+T5,WD_A_BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BR               wet deposition,time: mean
+T5,WD_A_BRCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRCL             wet deposition,time: mean
+T5,WD_A_BRO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRO              wet deposition,time: mean
+T5,WD_A_BRONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRONO2           wet deposition,time: mean
+T5,WD_A_BRY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BRY              wet deposition,time: mean
+T5,WD_A_BZALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BZALD            wet deposition,time: mean
+T5,WD_A_BZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BZOOH            wet deposition,time: mean
+T5,WD_A_C2H2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H2             wet deposition,time: mean
+T5,WD_A_C2H4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H4             wet deposition,time: mean
+T5,WD_A_C2H5OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H5OH           wet deposition,time: mean
+T5,WD_A_C2H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H5OOH          wet deposition,time: mean
+T5,WD_A_C2H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C2H6             wet deposition,time: mean
+T5,WD_A_C3H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C3H6             wet deposition,time: mean
+T5,WD_A_C3H7OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C3H7OOH          wet deposition,time: mean
+T5,WD_A_C3H8,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C3H8             wet deposition,time: mean
+T5,WD_A_C6H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,C6H5OOH          wet deposition,time: mean
+T5,WD_A_CCL4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CCL4             wet deposition,time: mean
+T5,WD_A_CF2CLBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CF2CLBR          wet deposition,time: mean
+T5,WD_A_CF3BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CF3BR            wet deposition,time: mean
+T5,WD_A_CFC11,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC11            wet deposition,time: mean
+T5,WD_A_CFC113,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC113           wet deposition,time: mean
+T5,WD_A_CFC114,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC114           wet deposition,time: mean
+T5,WD_A_CFC115,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC115           wet deposition,time: mean
+T5,WD_A_CFC12,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CFC12            wet deposition,time: mean
+T5,WD_A_CH2BR2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH2BR2           wet deposition,time: mean
+T5,WD_A_CH2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH2O             wet deposition,time: mean
+T5,WD_A_CH3BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3BR            wet deposition,time: mean
+T5,WD_A_CH3CCL3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CCL3          wet deposition,time: mean
+T5,WD_A_CH3CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CHO           wet deposition,time: mean
+T5,WD_A_CH3CL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CL            wet deposition,time: mean
+T5,WD_A_CH3CN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3CN            wet deposition,time: mean
+T5,WD_A_CH3COCH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COCH3         wet deposition,time: mean
+T5,WD_A_CH3COCHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COCHO         wet deposition,time: mean
+T5,WD_A_CH3COOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COOH          wet deposition,time: mean
+T5,WD_A_CH3COOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3COOOH         wet deposition,time: mean
+T5,WD_A_CH3OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3OH            wet deposition,time: mean
+T5,WD_A_CH3OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH3OOH           wet deposition,time: mean
+T5,WD_A_CH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CH4              wet deposition,time: mean
+T5,WD_A_CHBR3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CHBR3            wet deposition,time: mean
+T5,WD_A_CL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CL               wet deposition,time: mean
+T5,WD_A_CL2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CL2              wet deposition,time: mean
+T5,WD_A_CL2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CL2O2            wet deposition,time: mean
+T5,WD_A_CLO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CLO              wet deposition,time: mean
+T5,WD_A_CLONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CLONO2           wet deposition,time: mean
+T5,WD_A_CLY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CLY              wet deposition,time: mean
+T5,WD_A_CO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CO               wet deposition,time: mean
+T5,WD_A_CO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CO2              wet deposition,time: mean
+T5,WD_A_COF2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,COF2             wet deposition,time: mean
+T5,WD_A_COFCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,COFCL            wet deposition,time: mean
+T5,WD_A_CRESOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,CRESOL           wet deposition,time: mean
+T5,WD_A_DMS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DMS              wet deposition,time: mean
+T5,WD_A_E90,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,E90              wet deposition,time: mean
+T5,WD_A_EOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,EOOH             wet deposition,time: mean
+T5,WD_A_F,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,F                wet deposition,time: mean
+T5,WD_A_GLYALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,GLYALD           wet deposition,time: mean
+T5,WD_A_GLYOXAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,GLYOXAL          wet deposition,time: mean
+T5,WD_A_H,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H                wet deposition,time: mean
+T5,WD_A_H2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2               wet deposition,time: mean
+T5,WD_A_H2402,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2402            wet deposition,time: mean
+T5,WD_A_H2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2O2             wet deposition,time: mean
+T5,WD_A_H2SO4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,H2SO4            wet deposition,time: mean
+T5,WD_A_HBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HBR              wet deposition,time: mean
+T5,WD_A_HCFC141B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCFC141B         wet deposition,time: mean
+T5,WD_A_HCFC142B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCFC142B         wet deposition,time: mean
+T5,WD_A_HCFC22,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCFC22           wet deposition,time: mean
+T5,WD_A_HCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCL              wet deposition,time: mean
+T5,WD_A_HCN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCN              wet deposition,time: mean
+T5,WD_A_HCOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HCOOH            wet deposition,time: mean
+T5,WD_A_HF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HF               wet deposition,time: mean
+T5,WD_A_HNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HNO3             wet deposition,time: mean
+T5,WD_A_HO2NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HO2NO2           wet deposition,time: mean
+T5,WD_A_HOBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HOBR             wet deposition,time: mean
+T5,WD_A_HOCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HOCL             wet deposition,time: mean
+T5,WD_A_HONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HONITR           wet deposition,time: mean
+T5,WD_A_HPALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HPALD            wet deposition,time: mean
+T5,WD_A_HYAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HYAC             wet deposition,time: mean
+T5,WD_A_HYDRALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,HYDRALD          wet deposition,time: mean
+T5,WD_A_IEPOX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,IEPOX            wet deposition,time: mean
+T5,WD_A_ISOP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOP             wet deposition,time: mean
+T5,WD_A_ISOPNITA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNITA         wet deposition,time: mean
+T5,WD_A_ISOPNITB,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNITB         wet deposition,time: mean
+T5,WD_A_ISOPNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNO3          wet deposition,time: mean
+T5,WD_A_ISOPNOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPNOOH         wet deposition,time: mean
+T5,WD_A_ISOPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOPOOH          wet deposition,time: mean
+T5,WD_A_MACR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MACR             wet deposition,time: mean
+T5,WD_A_MACROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MACROOH          wet deposition,time: mean
+T5,WD_A_MEK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MEK              wet deposition,time: mean
+T5,WD_A_MEKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MEKOOH           wet deposition,time: mean
+T5,WD_A_MPAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MPAN             wet deposition,time: mean
+T5,WD_A_MTERP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MTERP            wet deposition,time: mean
+T5,WD_A_MVK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MVK              wet deposition,time: mean
+T5,WD_A_N,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,N                wet deposition,time: mean
+T5,WD_A_N2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,N2O              wet deposition,time: mean
+T5,WD_A_N2O5,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,N2O5             wet deposition,time: mean
+T5,WD_A_NC4CH2OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NC4CH2OH         wet deposition,time: mean
+T5,WD_A_NC4CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NC4CHO           wet deposition,time: mean
+T5,WD_A_NDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NDEP             wet deposition,time: mean
+T5,WD_A_NH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH3              wet deposition,time: mean
+T5,WD_A_NH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH4              wet deposition,time: mean
+T5,WD_A_NHDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NHDEP            wet deposition,time: mean
+T5,WD_A_NH_5,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH_5             wet deposition,time: mean
+T5,WD_A_NH_50,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NH_50            wet deposition,time: mean
+T5,WD_A_NO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NO               wet deposition,time: mean
+T5,WD_A_NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NO2              wet deposition,time: mean
+T5,WD_A_NO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NO3              wet deposition,time: mean
+T5,WD_A_NOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NOA              wet deposition,time: mean
+T5,WD_A_NTERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,NTERPOOH         wet deposition,time: mean
+T5,WD_A_O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,O                wet deposition,time: mean
+T5,WD_A_O3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,O3               wet deposition,time: mean
+T5,WD_A_OCLO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OCLO             wet deposition,time: mean
+T5,WD_A_OCS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OCS              wet deposition,time: mean
+T5,WD_A_ONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ONITR            wet deposition,time: mean
+T5,WD_A_PAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PAN              wet deposition,time: mean
+T5,WD_A_PBZNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PBZNIT           wet deposition,time: mean
+T5,WD_A_PHENO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PHENO            wet deposition,time: mean
+T5,WD_A_PHENOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PHENOL           wet deposition,time: mean
+T5,WD_A_PHENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,PHENOOH          wet deposition,time: mean
+T5,WD_A_POOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,POOH             wet deposition,time: mean
+T5,WD_A_ROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ROOH             wet deposition,time: mean
+T5,WD_A_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,S                wet deposition,time: mean
+T5,WD_A_SF6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SF6              wet deposition,time: mean
+T5,WD_A_SO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO               wet deposition,time: mean
+T5,WD_A_SO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO2              wet deposition,time: mean
+T5,WD_A_SO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO3              wet deposition,time: mean
+T5,WD_A_SOA_LV,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SOA_LV           wet deposition,time: mean
+T5,WD_A_SOA_SV,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SOA_SV           wet deposition,time: mean
+T5,WD_A_ST80_25,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ST80_25          wet deposition,time: mean
+T5,WD_A_TEPOMUC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TEPOMUC          wet deposition,time: mean
+T5,WD_A_TERP2OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERP2OOH         wet deposition,time: mean
+T5,WD_A_TERPNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPNIT          wet deposition,time: mean
+T5,WD_A_TERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPOOH          wet deposition,time: mean
+T5,WD_A_TERPROD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPROD1         wet deposition,time: mean
+T5,WD_A_TERPROD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TERPROD2         wet deposition,time: mean
+T5,WD_A_TOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TOLOOH           wet deposition,time: mean
+T5,WD_A_TOLUENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,TOLUENE          wet deposition,time: mean
+T5,WD_A_XOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XOOH             wet deposition,time: mean
+T5,WD_A_XYLENES,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLENES          wet deposition,time: mean
+T5,WD_A_XYLENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLENOOH         wet deposition,time: mean
+T5,WD_A_XYLOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLOL            wet deposition,time: mean
+T5,WD_A_XYLOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,XYLOLOOH         wet deposition,time: mean
+T5,WD_BENZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_BRONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_BZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_C2H5OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_C2H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_C3H7OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_C6H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3CN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3COCH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3COCHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3COOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3COOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CH3OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_CLONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_COF2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_COFCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_EOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_GLYALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_H2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_H2SO4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HCN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HCOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HO2NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HOBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HOCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HPALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HYAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_HYDRALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_IEPOX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ISOPNITA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ISOPNITB,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ISOPNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ISOPNOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ISOPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_MACR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_MACROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_MEKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_MVK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NC4CH2OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NC4CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NHDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_NTERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_PHENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_POOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_ROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_SO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_TERP2OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_TERPNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_TERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_TERPROD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_TERPROD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_TOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_XOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_XYLENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WD_XYLOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,vertical integrated wet deposition flux,time: mean
+T5,WP2_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m2/s2,Vertical Velocity Variance,time: mean
+T5,WP3_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m3/s3,Third Moment Vertical Velocity,time: mean
+T5,WPRCP_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,W/m2,Liquid Water Flux,time: mean
+T5,WPRTP_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,W/m2,Moisture Flux,time: mean
+T5,WPTHLP_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,W/m2,Heat Flux,time: mean
+T5,WPTHVP_CLUBB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,W/m2,Buoyancy Flux,time: mean
+T5,WSUB,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m/s,Diagnostic sub-grid vertical velocity,time: mean
+T5,WTHzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,MK/S,Vertical Heat Flux: 3D zon. mean,zlon: mean time: mean
+T5,Wzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean vertical wind - defined on ilev,zlon: mean time: mean
+T5,XO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XO2 concentration,time: mean
+T5,XO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XO2 in bottom layer,time: mean
+T5,XOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XOOH concentration,time: mean
+T5,XOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XOOH in bottom layer,time: mean
+T5,XYLENES,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XYLENES concentration,time: mean
+T5,XYLENES_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XYLENES in bottom layer,time: mean
+T5,XYLENO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XYLENO2 concentration,time: mean
+T5,XYLENO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XYLENO2 in bottom layer,time: mean
+T5,XYLENOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XYLENOOH concentration,time: mean
+T5,XYLENOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XYLENOOH in bottom layer,time: mean
+T5,XYLOL,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XYLOL concentration,time: mean
+T5,XYLOLO2,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XYLOLO2 concentration,time: mean
+T5,XYLOLO2_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XYLOLO2 in bottom layer,time: mean
+T5,XYLOLOOH,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,mol/mol,XYLOLOOH concentration,time: mean
+T5,XYLOLOOH_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XYLOLOOH in bottom layer,time: mean
+T5,XYLOL_SRF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,mol/mol,XYLOL in bottom layer,time: mean
+T5,Z3,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,m,Geopotential Height (above sea level),time: mean
+T5,ZM_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m,Momentum Heights,time: mean
+T5,ZT_CLUBB,"time,ilev,lat,lon",4,True,ilev,float32,"1,33,96,144",1824768,1.740234375,m,Thermodynamic Heights,time: mean
+T5,cb_ALKNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ALKNIT in column,time: mean
+T5,cb_ALKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ALKOOH in column,time: mean
+T5,cb_AOA_NH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_AOA_NH in column,time: mean
+T5,cb_BC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BC column of aerosol type,time: mean
+T5,cb_BCARY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BCARY in column,time: mean
+T5,cb_BENZENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BENZENE in column,time: mean
+T5,cb_BENZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BENZOOH in column,time: mean
+T5,cb_BEPOMUC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BEPOMUC in column,time: mean
+T5,cb_BIGALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGALD in column,time: mean
+T5,cb_BIGALD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGALD1 in column,time: mean
+T5,cb_BIGALD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGALD2 in column,time: mean
+T5,cb_BIGALD3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGALD3 in column,time: mean
+T5,cb_BIGALD4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGALD4 in column,time: mean
+T5,cb_BIGALK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGALK in column,time: mean
+T5,cb_BIGENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BIGENE in column,time: mean
+T5,cb_BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BR in column,time: mean
+T5,cb_BRCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BRCL in column,time: mean
+T5,cb_BRO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BRO in column,time: mean
+T5,cb_BRONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BRONO2 in column,time: mean
+T5,cb_BRY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BRY in column,time: mean
+T5,cb_BZALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BZALD in column,time: mean
+T5,cb_BZOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_BZOOH in column,time: mean
+T5,cb_C2H2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C2H2 in column,time: mean
+T5,cb_C2H4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C2H4 in column,time: mean
+T5,cb_C2H5OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C2H5OH in column,time: mean
+T5,cb_C2H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C2H5OOH in column,time: mean
+T5,cb_C2H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C2H6 in column,time: mean
+T5,cb_C3H6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C3H6 in column,time: mean
+T5,cb_C3H7OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C3H7OOH in column,time: mean
+T5,cb_C3H8,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C3H8 in column,time: mean
+T5,cb_C6H5OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_C6H5OOH in column,time: mean
+T5,cb_CCL4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CCL4 in column,time: mean
+T5,cb_CF2CLBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CF2CLBR in column,time: mean
+T5,cb_CF3BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CF3BR in column,time: mean
+T5,cb_CFC11,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CFC11 in column,time: mean
+T5,cb_CFC113,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CFC113 in column,time: mean
+T5,cb_CFC114,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CFC114 in column,time: mean
+T5,cb_CFC115,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CFC115 in column,time: mean
+T5,cb_CFC12,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CFC12 in column,time: mean
+T5,cb_CH2BR2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH2BR2 in column,time: mean
+T5,cb_CH2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH2O in column,time: mean
+T5,cb_CH3BR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3BR in column,time: mean
+T5,cb_CH3CCL3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3CCL3 in column,time: mean
+T5,cb_CH3CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3CHO in column,time: mean
+T5,cb_CH3CL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3CL in column,time: mean
+T5,cb_CH3CN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3CN in column,time: mean
+T5,cb_CH3COCH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3COCH3 in column,time: mean
+T5,cb_CH3COCHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3COCHO in column,time: mean
+T5,cb_CH3COOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3COOH in column,time: mean
+T5,cb_CH3COOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3COOOH in column,time: mean
+T5,cb_CH3OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3OH in column,time: mean
+T5,cb_CH3OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH3OOH in column,time: mean
+T5,cb_CH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CH4 in column,time: mean
+T5,cb_CHBR3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CHBR3 in column,time: mean
+T5,cb_CL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CL in column,time: mean
+T5,cb_CL2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CL2 in column,time: mean
+T5,cb_CL2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CL2O2 in column,time: mean
+T5,cb_CLO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CLO in column,time: mean
+T5,cb_CLONO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CLONO2 in column,time: mean
+T5,cb_CLY,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CLY in column,time: mean
+T5,cb_CO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CO in column,time: mean
+T5,cb_CO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CO2 in column,time: mean
+T5,cb_COF2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_COF2 in column,time: mean
+T5,cb_COFCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_COFCL in column,time: mean
+T5,cb_CRESOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_CRESOL in column,time: mean
+T5,cb_DMS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_DMS in column,time: mean
+T5,cb_DMS_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2,"cb_DMS column, sulfur mass only",time: mean
+T5,cb_DUST,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_DUST column of aerosol type,time: mean
+T5,cb_E90,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_E90 in column,time: mean
+T5,cb_EOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_EOOH in column,time: mean
+T5,cb_F,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_F in column,time: mean
+T5,cb_GLYALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_GLYALD in column,time: mean
+T5,cb_GLYOXAL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_GLYOXAL in column,time: mean
+T5,cb_H,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_H in column,time: mean
+T5,cb_H2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_H2 in column,time: mean
+T5,cb_H2402,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_H2402 in column,time: mean
+T5,cb_H2O2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_H2O2 in column,time: mean
+T5,cb_H2SO4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_H2SO4 in column,time: mean
+T5,cb_HBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HBR in column,time: mean
+T5,cb_HCFC141B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HCFC141B in column,time: mean
+T5,cb_HCFC142B,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HCFC142B in column,time: mean
+T5,cb_HCFC22,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HCFC22 in column,time: mean
+T5,cb_HCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HCL in column,time: mean
+T5,cb_HCN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HCN in column,time: mean
+T5,cb_HCOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HCOOH in column,time: mean
+T5,cb_HF,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HF in column,time: mean
+T5,cb_HNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HNO3 in column,time: mean
+T5,cb_HO2NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HO2NO2 in column,time: mean
+T5,cb_HOBR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HOBR in column,time: mean
+T5,cb_HOCL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HOCL in column,time: mean
+T5,cb_HONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HONITR in column,time: mean
+T5,cb_HPALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HPALD in column,time: mean
+T5,cb_HYAC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HYAC in column,time: mean
+T5,cb_HYDRALD,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_HYDRALD in column,time: mean
+T5,cb_IEPOX,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_IEPOX in column,time: mean
+T5,cb_ISOP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ISOP in column,time: mean
+T5,cb_ISOPNITA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ISOPNITA in column,time: mean
+T5,cb_ISOPNITB,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ISOPNITB in column,time: mean
+T5,cb_ISOPNO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ISOPNO3 in column,time: mean
+T5,cb_ISOPNOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ISOPNOOH in column,time: mean
+T5,cb_ISOPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ISOPOOH in column,time: mean
+T5,cb_MACR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MACR in column,time: mean
+T5,cb_MACROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MACROOH in column,time: mean
+T5,cb_MEK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MEK in column,time: mean
+T5,cb_MEKOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MEKOOH in column,time: mean
+T5,cb_MPAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MPAN in column,time: mean
+T5,cb_MTERP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MTERP in column,time: mean
+T5,cb_MVK,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_MVK in column,time: mean
+T5,cb_N,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_N in column,time: mean
+T5,cb_N2O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_N2O in column,time: mean
+T5,cb_N2O5,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_N2O5 in column,time: mean
+T5,cb_NC4CH2OH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NC4CH2OH in column,time: mean
+T5,cb_NC4CHO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NC4CHO in column,time: mean
+T5,cb_NDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NDEP in column,time: mean
+T5,cb_NH3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NH3 in column,time: mean
+T5,cb_NH4,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NH4 in column,time: mean
+T5,cb_NHDEP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NHDEP in column,time: mean
+T5,cb_NH_5,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NH_5 in column,time: mean
+T5,cb_NH_50,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NH_50 in column,time: mean
+T5,cb_NO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NO in column,time: mean
+T5,cb_NO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NO2 in column,time: mean
+T5,cb_NO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NO3 in column,time: mean
+T5,cb_NOA,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NOA in column,time: mean
+T5,cb_NTERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_NTERPOOH in column,time: mean
+T5,cb_O,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_O in column,time: mean
+T5,cb_O3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_O3 in column,time: mean
+T5,cb_OCLO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_OCLO in column,time: mean
+T5,cb_OCS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_OCS in column,time: mean
+T5,cb_OM,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_OM column of aerosol type,time: mean
+T5,cb_ONITR,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ONITR in column,time: mean
+T5,cb_PAN,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_PAN in column,time: mean
+T5,cb_PBZNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_PBZNIT in column,time: mean
+T5,cb_PHENO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_PHENO in column,time: mean
+T5,cb_PHENOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_PHENOL in column,time: mean
+T5,cb_PHENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_PHENOOH in column,time: mean
+T5,cb_POOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_POOH in column,time: mean
+T5,cb_ROOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ROOH in column,time: mean
+T5,cb_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_S in column,time: mean
+T5,cb_SALT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SALT column of aerosol type,time: mean
+T5,cb_SF6,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SF6 in column,time: mean
+T5,cb_SO,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SO in column,time: mean
+T5,cb_SO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SO2 in column,time: mean
+T5,cb_SO2_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2,"cb_SO2 column, sulfur mass only",time: mean
+T5,cb_SO3,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SO3 in column,time: mean
+T5,cb_SOA_LV,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SOA_LV in column,time: mean
+T5,cb_SOA_SV,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SOA_SV in column,time: mean
+T5,cb_ST80_25,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_ST80_25 in column,time: mean
+T5,cb_SULFATE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_SULFATE column of aerosol type,time: mean
+T5,cb_SULFATE_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2,"cb_SULFATE column of aerosol, sulfur mass only",time: mean
+T5,cb_TEPOMUC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TEPOMUC in column,time: mean
+T5,cb_TERP2OOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TERP2OOH in column,time: mean
+T5,cb_TERPNIT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TERPNIT in column,time: mean
+T5,cb_TERPOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TERPOOH in column,time: mean
+T5,cb_TERPROD1,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TERPROD1 in column,time: mean
+T5,cb_TERPROD2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TERPROD2 in column,time: mean
+T5,cb_TOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TOLOOH in column,time: mean
+T5,cb_TOLUENE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_TOLUENE in column,time: mean
+T5,cb_XOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_XOOH in column,time: mean
+T5,cb_XYLENES,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_XYLENES in column,time: mean
+T5,cb_XYLENOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_XYLENOOH in column,time: mean
+T5,cb_XYLOL,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_XYLOL in column,time: mean
+T5,cb_XYLOLOOH,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2,cb_XYLOLOOH in column,time: mean
+T5,ch4vmr,time,1,False,,float64,1,8,7.62939453125e-06,,ch4 volume mixing ratio,
+T5,co2vmr,time,1,False,,float64,1,8,7.62939453125e-06,,co2 volume mixing ratio,
+T5,cosp_dbze_bnds,"cosp_dbze,nbnd",2,False,,float64,"15,2",240,0.0002288818359375,,,
+T5,cosp_ht_bnds,"cosp_ht,nbnd",2,False,,float64,"40,2",640,0.0006103515625,,,
+T5,cosp_htmisr_bnds,"cosp_htmisr,nbnd",2,False,,float64,"16,2",256,0.000244140625,,,
+T5,cosp_prs_bnds,"cosp_prs,nbnd",2,False,,float64,"7,2",112,0.0001068115234375,,,
+T5,cosp_reffice_bnds,"cosp_reffice,nbnd",2,False,,float64,"6,2",96,9.1552734375e-05,,,
+T5,cosp_reffliq_bnds,"cosp_reffliq,nbnd",2,False,,float64,"6,2",96,9.1552734375e-05,,,
+T5,cosp_sr_bnds,"cosp_sr,nbnd",2,False,,float64,"15,2",240,0.0002288818359375,,,
+T5,cosp_tau_bnds,"cosp_tau,nbnd",2,False,,float64,"7,2",112,0.0001068115234375,,,
+T5,cosp_tau_modis_bnds,"cosp_tau_modis,nbnd",2,False,,float64,"7,2",112,0.0001068115234375,,,
+T5,dU,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K,U dyn increm,time: mean
+T5,dUa,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K,U adv increm,time: mean
+T5,dUazm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean U adv increm - defined on ilev,zlon: mean time: mean
+T5,dUf,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K,U fixer incr,time: mean
+T5,dUfzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean U fixer incr - defined on ilev,zlon: mean time: mean
+T5,dUzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean U dyn increm - defined on ilev,zlon: mean time: mean
+T5,dV,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K,V dyn increm,time: mean
+T5,dVa,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,K,V adv increm,time: mean
+T5,dVazm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean V adv increm - defined on ilev,zlon: mean time: mean
+T5,dVzm,"time,ilev,lat,zlon",4,True,ilev,float32,"1,33,96,1",12672,0.0120849609375,M/S,Zonal-Mean V dyn increm - defined on ilev,zlon: mean time: mean
+T5,date,time,1,False,,int32,1,4,3.814697265625e-06,,current date (YYYYMMDD),
+T5,date_written,time,1,False,,|S8,1,8,7.62939453125e-06,,,
+T5,datesec,time,1,False,,int32,1,4,3.814697265625e-06,,current seconds of current date,
+T5,dry_BC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC dry deposition flux at bottom (grav + turb),time: mean
+T5,dry_DUST,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DUST dry deposition flux at bottom (grav + turb),time: mean
+T5,dry_OM,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM dry deposition flux at bottom (grav + turb),time: mean
+T5,dry_SALT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SALT dry deposition flux at bottom (grav + turb),time: mean
+T5,dry_SULFATE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SULFATE dry deposition flux at bottom (grav + turb),time: mean
+T5,dry_SULFATE_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SULFATE dry deposition flux at bottom (grav + turb), sulfur mass only",time: mean
+T5,emis_BC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC emission.,time: mean
+T5,emis_DMS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DMS emissions,time: mean
+T5,emis_DMS_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"DMS emissions, sulfur mass only",time: mean
+T5,emis_DUST,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DUST emission,time: mean
+T5,emis_ISOP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOP emissions,time: mean
+T5,emis_MTERP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MTERP emissions,time: mean
+T5,emis_OM,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM emission.,time: mean
+T5,emis_SALT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SALT emission,time: mean
+T5,emis_SO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO2 emission.,time: mean
+T5,emis_SO2_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SO2 emission, sulfur mass only.",time: mean
+T5,emis_SULFATE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SULFATE emission.,time: mean
+T5,emis_SULFATE_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SULFATE emission, sulfur mass only.",time: mean
+T5,f11vmr,time,1,False,,float64,1,8,7.62939453125e-06,,f11 volume mixing ratio,
+T5,f12vmr,time,1,False,,float64,1,8,7.62939453125e-06,,f12 volume mixing ratio,
+T5,gw,lat,1,False,,float64,96,768,0.000732421875,,latitude weights,
+T5,hyai,ilev,1,True,ilev,float64,33,264,0.00025177001953125,,hybrid A coefficient at layer interfaces,
+T5,hyam,lev,1,True,lev,float64,32,256,0.000244140625,,hybrid A coefficient at layer midpoints,
+T5,hybi,ilev,1,True,ilev,float64,33,264,0.00025177001953125,,hybrid B coefficient at layer interfaces,
+T5,hybm,lev,1,True,lev,float64,32,256,0.000244140625,,hybrid B coefficient at layer midpoints,
+T5,mdt,,0,False,,int32,,4,3.814697265625e-06,s,timestep,
+T5,mmr_BC,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,mmr_BC mmr of aerosol type,time: mean
+T5,mmr_DUST,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,mmr_DUST mmr of aerosol type,time: mean
+T5,mmr_OM,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,mmr_OM mmr of aerosol type,time: mean
+T5,mmr_SALT,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,mmr_SALT mmr of aerosol type,time: mean
+T5,mmr_SULFATE,"time,lev,lat,lon",4,True,lev,float32,"1,32,96,144",1769472,1.6875,kg/kg,mmr_SULFATE mmr of aerosol type,time: mean
+T5,n2ovmr,time,1,False,,float64,1,8,7.62939453125e-06,,n2o volume mixing ratio,
+T5,nbdate,,0,False,,int32,,4,3.814697265625e-06,,base date (YYYYMMDD),
+T5,nbsec,,0,False,,int32,,4,3.814697265625e-06,,seconds of base date,
+T5,ndbase,,0,False,,int32,,4,3.814697265625e-06,,base day,
+T5,ndcur,time,1,False,,int32,1,4,3.814697265625e-06,,current day (from base day),
+T5,nsbase,,0,False,,int32,,4,3.814697265625e-06,,seconds of base day,
+T5,nscur,time,1,False,,int32,1,4,3.814697265625e-06,,current seconds of current day,
+T5,nsteph,time,1,False,,int32,1,4,3.814697265625e-06,,current timestep,
+T5,sink_DMS,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DMS sink,time: mean
+T5,sink_DMS_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"DMS sink, sulfur mass only",time: mean
+T5,sink_ISOP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,ISOP sink,time: mean
+T5,sink_MTERP,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,MTERP sink,time: mean
+T5,sink_SO2_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SO2 sink, sulfur mass only.",time: mean
+T5,sol_tsi,time,1,False,,float64,1,8,7.62939453125e-06,W/m2,total solar irradiance,
+T5,sour_OM,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM source.,time: mean
+T5,sour_SO2_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SO2 source, sulfur mass only.",time: mean
+T5,sour_SULFATE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SULFATE source.,time: mean
+T5,sour_SULFATE_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SULFATE source, sulfur mass only.",time: mean
+T5,time_bnds,"time,nbnd",2,False,,float64,"1,2",16,1.52587890625e-05,,time interval endpoints,
+T5,time_written,time,1,False,,|S8,1,8,7.62939453125e-06,,,
+T5,wet_BC,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,BC wet deposition flux at surface,time: mean
+T5,wet_DUST,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,DUST wet deposition flux at surface,time: mean
+T5,wet_OM,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,OM wet deposition flux at surface,time: mean
+T5,wet_SALT,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SALT wet deposition flux at surface,time: mean
+T5,wet_SO2,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SO2 wet deposition flux at surface.,time: mean
+T5,wet_SO2_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SO2 wet deposition flux at surface, sulfur mass only.",time: mean
+T5,wet_SULFATE,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg/m2/s,SULFATE wet deposition flux at surface,time: mean
+T5,wet_SULFATE_S,"time,lat,lon",3,False,,float32,"1,96,144",55296,0.052734375,kg*S/m2/s,"SULFATE wet deposition flux at surface, sulfur mass only",time: mean
+T5,zlon_bnds,"zlon,nbnd",2,False,,float64,"1,2",16,1.52587890625e-05,degrees_east,zlon bounds,
