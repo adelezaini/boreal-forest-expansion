@@ -46,8 +46,6 @@ echo "Case $CASENAME created with compset $COMPSET and resolution $RES"
 cd $CASEROOT
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-aerosol_cosp_diagnostics
-
 forcings_2100
 dms_forcing_2100_to_2000
 
@@ -82,8 +80,7 @@ fsurdat = '${SURFDATA_FILE}'
 use_init_interp = .true.
 EOF
 
-cosp_diagnostics
-cam_diagnostics HR_BVOC
+cam_diagnostics
 clm_diagnostics
 
 ./case.build
