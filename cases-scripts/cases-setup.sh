@@ -29,6 +29,10 @@ set_project_noresm_res_vars() {
     PROJECT="nn9188k"
     NORESM_ROOT="/cluster/home/$USER/NorESM2.3_beta01"
     RES="f19_f19"
+
+    # Set other important paths
+    SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)" 
+    REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 }
 
 ##------ safely remove a case directory
@@ -475,36 +479,117 @@ EOF
 EOF
 }
 
-clm_diagnostics(){
-cat << EOF >> user_nl_clm 
-hist_mfilt = 1
-hist_nhtfrq = 0
-hist_avgflag_pertape='A'
+#-------------------------------------------------------------------------------
+# Install CLM SourceMods
+#
+# Copies the repository version of VOCEmissionMod.F90 into the current CIME
+# case. This modified module adds compound-specific MEGAN diagnostics:
+# EPS_<compound>,GAMMA_<compound>,GAMMAP_<compound>,GAMMAT_<compound>,GAMMAA_<compound>
+# It also provides GAMMAL, GAMMAS, and GAMMAC_isoprene.
+#
+# Call this function after create_newcase and before case.build. It can be
+# called either before or after case.setup.
+#-------------------------------------------------------------------------------
+install_clm_sourcemods() {
 
-hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
-'RAIN','SNOW',
-'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI',
-'GPP','NPP','AR','HR','NEE','WIND', 'ZWT', 
-'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_carene_3', 'MEG_ethanol',
-'MEG_formaldehyde','MEG_isoprene','MEG_methanol', 'MEG_pinene_a','MEG_thujene_a'
-/
+    local source_file="$REPO_ROOT/model/SourceMods/src.clm/VOCEmissionMod.F90"
+    local destination_dir="$CASEROOT/SourceMods/src.clm"
+
+    if [[ ! -f "$source_file" ]]; then
+        echo "ERROR: SourceMod not found: $source_file" >&2
+        return 1
+    fi
+
+    mkdir -p "$destination_dir"
+
+    cp "$source_file" \
+       "$destination_dir/VOCEmissionMod.F90"
+
+    echo "Installed CLM SourceMod:"
+    echo "  $destination_dir/VOCEmissionMod.F90"
+}
+
+#-------------------------------------------------------------------------------
+# Configure CLM history diagnostics
+#
+# Installs the modified VOCEmissionMod.F90 required for the compound-specific
+# EPS_* and GAMMA_* history fields, then configures the CLM h0 history stream.
+#
+# With hist_dov2xy(1)=.true., diagnostics registered at patch level are
+# aggregated by the CLM history system and written on the model grid. These
+# GAMMA_* fields should be interpreted as area-weighted diagnostics over the
+# contributing patches, not necessarily as emission-weighted effective gamma.
+
+# Require: install_clm_sourcemods should be called before
+#-------------------------------------------------------------------------------
+_clm_diagnostics_base() {
+
+    cat << 'EOF' >> user_nl_clm
+hist_mfilt        = 1
+hist_nhtfrq       = 0
+hist_avgflag_pertape = 'A'
+hist_dov2xy            = .true.
+hist_fincl1 = 'FSA','FSR','FIRA','FIRE','FSH','EFLX_LH_TOT',
+       'FGR','FSDS','FLDS','FSDSVD','FSDSVI','FSDSND',
+       'FSDSNI','FSRVD','FSRND','H2OSNO','SNOWDP','FSNO',
+       'SNOWLIQ','SNOWICE','TSA','TV','TG','TSKIN',
+       'TSOI','TLAI','ELAI','LAISUN','LAISHA','TSAI',
+       'HTOP','PARVEGLN','BTRANMN','QFLX_EVAP_TOT','QSOIL','QVEGE',
+       'QVEGT','QINTR','QOVER','QRUNOFF','RAIN','SNOW',
+       'H2OSOI','SOILLIQ','SOILICE','ZWT','GPP','NPP',
+       'AR','HR','NEE','WIND','PCT_NAT_PFT',
+
 EOF
 }
 
-clm_diagnostics_fBVOC(){
-cat << EOF >> user_nl_clm 
-hist_mfilt = 1
-hist_nhtfrq = 0
-hist_avgflag_pertape='A'
+#-------------------------------------------------------------------------------
+# Configure CLM history diagnostics
+#
+# Usage:
+#   clm_diagnostics         Std run with extended MEGAN diagnostics
+#   clm_diagnostics fBVOC   Fixed-BVOC run with base CLM diagnostics only
+#
+# Both configurations install the same CLM SourceMod so that paired experiments
+# are compiled from identical CLM source, even if the fixed-BVOC configuration does not
+# request EPS_*, GAMMA_*, or MEG_* history fields.
+#-------------------------------------------------------------------------------
+clm_diagnostics() {
+    local configuration="${1:-std}"
 
-hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
-'RAIN','SNOW',
-'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF','H2OSOI','SOILLIQ','SOILICE','TSOI',
-'GPP','NPP','AR','HR','NEE','WIND', 'ZWT'
-/
+    case "$configuration" in
+        std|fBVOC)
+            ;;
+        *)
+            echo "ERROR: unknown CLM diagnostics configuration: $configuration" >&2
+            echo "Expected: std or fBVOC" >&2
+            return 1
+            ;;
+    esac
+
+    # Add the common surface, hydrology and carbon-cycle fields.
+    _clm_diagnostics_base
+
+    # Fixed-BVOC runs do not need the extended MEGAN history fields.
+    if [[ "$configuration" == "fBVOC" ]]; then
+        return 0
+    fi
+
+    cat <<'EOF' >> user_nl_clm
+
+hist_fincl1 += 'MEG_isoprene','MEG_carene_3','MEG_limonene','MEG_myrcene',
+    'MEG_pinene_a','MEG_pinene_b',     
+    'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone', 'MEG_ethanol',
+    'MEG_formaldehyde','MEG_methanol',
+    'GAMMAL','GAMMAS','GAMMAC_isoprene',
+    'EPS_isoprene','GAMMA_isoprene','GAMMAP_isoprene','GAMMAT_isoprene','GAMMAA_isoprene',
+    'EPS_pinene_a','GAMMA_pinene_a','GAMMAP_pinene_a','GAMMAT_pinene_a','GAMMAA_pinene_a',
+    'EPS_carene_3','GAMMA_carene_3','GAMMAP_carene_3','GAMMAT_carene_3','GAMMAA_carene_3',
+    'EPS_pinene_b','GAMMA_pinene_b','GAMMAP_pinene_b','GAMMAT_pinene_b','GAMMAA_pinene_b',
+    'EPS_myrcene','GAMMA_myrcene','GAMMAP_myrcene','GAMMAT_myrcene','GAMMAA_myrcene',
+    'EPS_limonene','GAMMA_limonene','GAMMAP_limonene','GAMMAT_limonene','GAMMAA_limonene'
+
 EOF
 }
-
 
 cam_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
