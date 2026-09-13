@@ -1,0 +1,189 @@
+variable,dims,multilevel,level_dim,dtype,shape,mib_per_rec,units,long_name,branch
+A550_BC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,BC abs. aerosol optical depth 550nm,optics
+A550_DU,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,mineral abs. aerosol optical depth 550nm,optics
+A550_POM,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,OC abs. aerosol optical depth 550nm,optics
+A550_SO4,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,SO4 aerosol abs. optical depth 550nm,optics
+A550_SS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,sea-salt abs aerosol optical depth 550nm,optics
+AB550DRY,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Dry aerosol absorptive optical depth at 550nm,optics
+ABS550,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Aerosol absorptive optical depth at 550nm,optics
+ABS550_A,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,m-1,aerosol absorption coefficient,optics
+ACTNL,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m-3,Average Cloud Top droplet number,cloud
+ACTREI,"time,lat,lon",False,,float32,"1,96,144",0.052734375,Micron,Average Cloud Top ice effective radius,cloud
+ACTREL,"time,lat,lon",False,,float32,"1,96,144",0.052734375,Micron,Average Cloud Top droplet effective radius,cloud
+AEROD_v,"time,lat,lon",False,,float32,"1,96,144",0.052734375,1,Total Aerosol Optical Depth in visible band,optics
+AOD_VIS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Aerosol optical depth at 0.442-0.625um,optics
+AREI,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,Micron,Average ice effective radius,cloud
+AREL,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,Micron,Average droplet effective radius,cloud
+AWNC,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,m-3,Average cloud water number conc,cloud
+BCARY,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,BCARY concentration,bvoc
+CABS550,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Clear air Aerosol abs optical depth at 550nm,optics
+CCN1,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=0.02%,ccn
+CCN2,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=0.05%,ccn
+CCN3,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=0.1%,ccn
+CCN4,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=0.15%,ccn
+CCN5,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=0.2%,ccn
+CCN6,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=0.5%,ccn
+CCN7,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3,CCN concentration at S=1.0%,ccn
+CCN_B,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m-3,Average Cloud Top liquid CCN (Bennartz),ccn
+CDNUMC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,1/m2,Vertically-integrated droplet concentration,cloud
+CH4,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,CH4 concentration,ch4_ozone
+CLDHGH,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Vertically-integrated high cloud,cloud
+CLDICE,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,Grid box averaged cloud ice amount,cloud
+CLDLIQ,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,Grid box averaged cloud liquid amount,cloud
+CLDLOW,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Vertically-integrated low cloud,cloud
+CLDMED,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Vertically-integrated mid-level cloud,cloud
+CLDTOT,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Vertically-integrated total cloud,cloud
+CLOUD,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,fraction,Cloud fraction,cloud
+CO,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,CO concentration,ch4_ozone
+COAGNUCL,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,/s,Coagulation sink for nucleating particles,npf
+DF_H2SO4,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,dry deposition flux,deposition
+DOD440,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Aerosol optical depth at 440nm,optics
+DOD550,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Aerosol optical depth at 550nm,optics
+DOD870,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Aerosol optical depth at 870nm,optics
+FCTI,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Fractional occurrence of cloud top ice,cloud
+FCTL,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Fractional occurrence of cloud top liquid,cloud
+FLDS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Downwelling longwave flux at surface,radiative
+FLNS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Net longwave flux at surface,radiative
+FLNSC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky net longwave flux at surface,radiative
+FLNT,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Net longwave flux at top of model,radiative
+FLNTC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky net longwave flux at top of model,radiative
+FLNTCDRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,Clear sky total column longwave flux (DIRind),ghan_drf
+FLNT_DRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,Total column longwave flux (DIRind),ghan_drf
+FLUS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,LW surface upwelling flux,ghan_drf
+FLUT,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Upwelling longwave flux at top of model,radiative
+FLUTC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky upwelling longwave flux at top of model,radiative
+FORMRATE,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3/s,Formation rate of 12nm particles,npf
+FREQI,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,fraction,Fractional occurrence of ice,cloud
+FREQL,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,fraction,Fractional occurrence of liquid,cloud
+FSDS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Downwelling solar flux at surface,radiative
+FSDSC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky downwelling solar flux at surface,radiative
+FSDSCDRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,SW downwelling clear sky flux at surface,ghan_drf
+FSDS_DRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,SW downelling flux at surface,ghan_drf
+FSNS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Net solar flux at surface,radiative
+FSNSC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky net solar flux at surface,radiative
+FSNT,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Net solar flux at top of model,radiative
+FSNTC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky net solar flux at top of model,radiative
+FSNTCDRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,Clear sky total column absorbed solar flux (DIRind),ghan_drf
+FSNTOA,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Net solar flux at top of atmosphere,radiative
+FSNTOAC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Clearsky net solar flux at top of atmosphere,radiative
+FSNT_DRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,Total column absorbed solar flux (DIRind),ghan_drf
+FSUS_DRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,SW upwelling flux at surface,ghan_drf
+FSUTADRF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m^2,SW upwelling flux at TOA,ghan_drf
+GR,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,nm/hour,"Growth rate, H2SO4+SOA",npf
+GRH2SO4,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,nm/hour,Growth rate H2SO4,npf
+GRSOA,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,nm/hour,Growth rate SOA,npf
+H2SO4,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,H2SO4 concentration,soa_core
+HO2,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,HO2 concentration,ch4_ozone
+ICEFRAC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Fraction of sfc area covered by sea-ice,biogeophysical
+ISOP,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,ISOP concentration,bvoc
+LANDFRAC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Fraction of sfc area covered by land,biogeophysical
+LHFLX,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Surface latent heat flux,biogeophysical
+LWCF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Longwave cloud forcing,radiative
+MEG_BCARY,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/sec,BCARY MEGAN emissions flux,bvoc
+MEG_ISOP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/sec,ISOP MEGAN emissions flux,bvoc
+MEG_MTERP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/sec,MTERP MEGAN emissions flux,bvoc
+MTERP,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,MTERP concentration,bvoc
+NO,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,NO concentration,ch4_ozone
+NO2,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,NO2 concentration,ch4_ozone
+NUCLRATE,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,#/cm3/s,Nucleation rate,npf
+NUCLSOA,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,SOA nucleate,npf
+NUMICE,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,1/kg,Grid box averaged cloud ice number,cloud
+NUMLIQ,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,1/kg,Grid box averaged cloud liquid number,cloud
+N_AER,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,unitless,Aerosol number concentration,soa_core
+O3,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,O3 concentration,ch4_ozone
+OCNFRAC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,fraction,Fraction of sfc area covered by ocean,biogeophysical
+OD550DRY,"time,lat,lon",False,,float32,"1,96,144",0.052734375,unitless,Dry aerosol optical depth at 550nm,optics
+OH,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,OH concentration,ch4_ozone
+OMEGA,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,Pa/s,Vertical velocity (pressure),meteorology
+ORGNUCL,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,Organic gas available for nucleation,npf
+P0,,False,,float64,,7.62939453125e-06,Pa,reference pressure,(unexpected)
+PRECC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m/s,Convective precipitation rate (liq + ice),biogeophysical
+PRECL,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m/s,Large-scale (stable) precipitation rate (liq + ice),biogeophysical
+PRECSC,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m/s,Convective snow rate (water equivalent),biogeophysical
+PRECSL,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m/s,Large-scale (stable) snow rate (water equivalent),biogeophysical
+PS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,Pa,Surface pressure,meteorology
+PSL,"time,lat,lon",False,,float32,"1,96,144",0.052734375,Pa,Sea level pressure,biogeophysical
+Q,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,Specific humidity,meteorology
+QREFHT,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/kg,Reference height humidity,biogeophysical
+SFBCARY,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,BCARY surface flux,bvoc
+SFISOP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,ISOP surface flux,bvoc
+SFMTERP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,MTERP surface flux,bvoc
+SHFLX,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Surface sensible heat flux,biogeophysical
+SNOWHLND,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m,Water equivalent snow depth,biogeophysical
+SO4_A1,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,SO4_A1 concentration,soa_core
+SO4_A1DDF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SO4_A1 dry deposition flux at bottom (grav + turb),deposition
+SO4_A1SFWET,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,Wet deposition flux at surface,deposition
+SO4_A1_mixnuc1,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SO4_A1_mixnuc1 dropmixnuc column tendency,tendencies
+SO4_A1coagTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,coagulation tendency,tendencies
+SO4_A1condTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,condensation tendency,tendencies
+SO4_NA,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,SO4_NA concentration,soa_core
+SO4_NADDF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SO4_NA dry deposition flux at bottom (grav + turb),deposition
+SO4_NASFWET,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,Wet deposition flux at surface,deposition
+SO4_NA_mixnuc1,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SO4_NA_mixnuc1 dropmixnuc column tendency,tendencies
+SO4_NAcoagTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,coagulation tendency,tendencies
+SO4_NAcondTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,condensation tendency,tendencies
+SOA_A1,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,SOA_A1 concentration,soa_core
+SOA_A1DDF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SOA_A1 dry deposition flux at bottom (grav + turb),deposition
+SOA_A1SFWET,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,Wet deposition flux at surface,deposition
+SOA_A1_mixnuc1,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SOA_A1_mixnuc1 dropmixnuc column tendency,tendencies
+SOA_A1coagTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,coagulation tendency,tendencies
+SOA_A1condTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,condensation tendency,tendencies
+SOA_LV,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,SOA_LV concentration,soa_core
+SOA_NA,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,kg/kg,SOA_NA concentration,soa_core
+SOA_NADDF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SOA_NA dry deposition flux at bottom (grav + turb),deposition
+SOA_NASFWET,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,Wet deposition flux at surface,deposition
+SOA_NA_mixnuc1,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,SOA_NA_mixnuc1 dropmixnuc column tendency,tendencies
+SOA_NAcoagTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,coagulation tendency,tendencies
+SOA_NAcondTend,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,condensation tendency,tendencies
+SOA_SV,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,mol/mol,SOA_SV concentration,soa_core
+SOLIN,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Solar insolation,radiative
+SWCF,"time,lat,lon",False,,float32,"1,96,144",0.052734375,W/m2,Shortwave cloud forcing,radiative
+T,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,K,Temperature,meteorology
+TAUX,"time,lat,lon",False,,float32,"1,96,144",0.052734375,N/m2,Zonal surface stress,biogeophysical
+TAUY,"time,lat,lon",False,,float32,"1,96,144",0.052734375,N/m2,Meridional surface stress,biogeophysical
+TGCLDCWP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,Total grid-box cloud water path (liquid and ice),cloud
+TGCLDIWP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,Total grid-box cloud ice water path,cloud
+TGCLDLWP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,Total grid-box cloud liquid water path,cloud
+TREFHT,"time,lat,lon",False,,float32,"1,96,144",0.052734375,K,Reference height temperature,biogeophysical
+TROP_P,"time,lat,lon",False,,float32,"1,96,144",0.052734375,Pa,Tropopause Pressure,ch4_ozone
+TROP_T,"time,lat,lon",False,,float32,"1,96,144",0.052734375,K,Tropopause Temperature,ch4_ozone
+TROP_Z,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m,Tropopause Height,ch4_ozone
+TS,"time,lat,lon",False,,float32,"1,96,144",0.052734375,K,Surface temperature (radiative),biogeophysical
+U,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,m/s,Zonal wind,meteorology
+U10,"time,lat,lon",False,,float32,"1,96,144",0.052734375,m/s,10m wind speed,biogeophysical
+V,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,m/s,Meridional wind,meteorology
+WD_A_H2SO4,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,H2SO4            wet deposition,deposition
+WD_H2SO4,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,vertical integrated wet deposition flux,deposition
+Z3,"time,lev,lat,lon",True,lev,float32,"1,32,96,144",1.6875,m,Geopotential Height (above sea level),meteorology
+cb_BCARY,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,cb_BCARY in column,bvoc
+cb_H2SO4,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,cb_H2SO4 in column,soa_core
+cb_ISOP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,cb_ISOP in column,bvoc
+cb_MTERP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,cb_MTERP in column,bvoc
+cb_SOA_LV,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,cb_SOA_LV in column,soa_core
+cb_SOA_SV,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2,cb_SOA_SV in column,soa_core
+ch4vmr,time,False,,float64,1,7.62939453125e-06,,ch4 volume mixing ratio,(unexpected)
+co2vmr,time,False,,float64,1,7.62939453125e-06,,co2 volume mixing ratio,(unexpected)
+date,time,False,,int32,1,3.814697265625e-06,,current date (YYYYMMDD),(unexpected)
+date_written,"time,chars",False,,|S1,"1,8",7.62939453125e-06,,,(unexpected)
+datesec,time,False,,int32,1,3.814697265625e-06,,current seconds of current date,(unexpected)
+emis_ISOP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,ISOP emissions,bvoc
+emis_MTERP,"time,lat,lon",False,,float32,"1,96,144",0.052734375,kg/m2/s,MTERP emissions,bvoc
+f11vmr,time,False,,float64,1,7.62939453125e-06,,f11 volume mixing ratio,(unexpected)
+f12vmr,time,False,,float64,1,7.62939453125e-06,,f12 volume mixing ratio,(unexpected)
+gw,lat,False,,float64,96,0.000732421875,,latitude weights,(unexpected)
+hyai,ilev,True,ilev,float64,33,0.00025177001953125,,hybrid A coefficient at layer interfaces,(unexpected)
+hyam,lev,True,lev,float64,32,0.000244140625,,hybrid A coefficient at layer midpoints,(unexpected)
+hybi,ilev,True,ilev,float64,33,0.00025177001953125,,hybrid B coefficient at layer interfaces,(unexpected)
+hybm,lev,True,lev,float64,32,0.000244140625,,hybrid B coefficient at layer midpoints,(unexpected)
+mdt,,False,,int32,,3.814697265625e-06,s,timestep,(unexpected)
+n2ovmr,time,False,,float64,1,7.62939453125e-06,,n2o volume mixing ratio,(unexpected)
+nbdate,,False,,int32,,3.814697265625e-06,,base date (YYYYMMDD),(unexpected)
+nbsec,,False,,int32,,3.814697265625e-06,,seconds of base date,(unexpected)
+ndbase,,False,,int32,,3.814697265625e-06,,base day,(unexpected)
+ndcur,time,False,,int32,1,3.814697265625e-06,,current day (from base day),(unexpected)
+nsbase,,False,,int32,,3.814697265625e-06,,seconds of base day,(unexpected)
+nscur,time,False,,int32,1,3.814697265625e-06,,current seconds of current day,(unexpected)
+nsteph,time,False,,int32,1,3.814697265625e-06,,current timestep,(unexpected)
+sol_tsi,time,False,,float64,1,7.62939453125e-06,W/m2,total solar irradiance,(unexpected)
+time_bnds,"time,nbnd",False,,float64,"1,2",1.52587890625e-05,,time interval endpoints,(unexpected)
+time_written,"time,chars",False,,|S1,"1,8",7.62939453125e-06,,,(unexpected)

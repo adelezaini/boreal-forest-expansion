@@ -429,6 +429,7 @@ cam_diagnostics(){
         cat << 'EOF' >> user_nl_cam
 empty_htapes    = .true.
 history_aerosol = .true.
+docosp          = .false.
 mfilt           = 1, 48
 nhtfrq          = 0, 1
 avgflag_pertape = 'A', 'I'
@@ -437,6 +438,7 @@ EOF
         cat << 'EOF' >> user_nl_cam
 empty_htapes    = .true.
 history_aerosol = .true.
+docosp          = .false.
 mfilt           = 1
 nhtfrq          = 0
 avgflag_pertape = 'A'
