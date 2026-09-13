@@ -386,15 +386,15 @@ EOF
 }
 
 ##----------------- diagnostics -----------------##
-aerosol_cosp_diagnostics(){
-# Aerosol diagnostics
+aerosol_diagnostics(){
 ./xmlchange CAM_AEROCOM=TRUE
+}
 
-# COSP diagnostics
+cosp_diagnostics_presetup(){
 ./xmlchange --append CAM_CONFIG_OPTS='-cosp'
 }
 
-cosp_diagnostics(){
+cosp_diagnostics_postsetup(){
 # COSP diagnostics
 cat << EOF >> user_nl_cam
 &cospsimulator_nl
@@ -405,45 +405,72 @@ EOF
 }
 
 cam_diagnostics(){
-cat << EOF >> user_nl_cam
-mfilt = 1, 48
-nhtfrq = 0, 1
-avgflag_pertape = 'A','I'
+    # optional arg "HR_BVOC" -> add an h1 tape of 30-min BVOC surface fluxes (CTRL only),
+    ./xmlchange CAM_AEROCOM=TRUE
+
+    if [[ "${1:-}" == "HR_BVOC" ]]; then
+        cat << 'EOF' >> user_nl_cam
+empty_htapes    = .true.
 history_aerosol = .true.
+mfilt           = 1, 48
+nhtfrq          = 0, 1
+avgflag_pertape = 'A', 'I'
+EOF
+    else
+        cat << 'EOF' >> user_nl_cam
+empty_htapes    = .true.
+history_aerosol = .true.
+mfilt           = 1
+nhtfrq          = 0
+avgflag_pertape = 'A'
+EOF
+    fi
 
-fincl1 = 'NNAT_0','FSNT','FLNT','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FLNS','FSNS','FLNSC','FSNSC',
-'FSDSCDRF','FSDS_DRF','FSUTADRF','FLUTC','FSUS_DRF','FLUS','CLOUD','FCTL','FCTI','NUCLRATE','FORMRATE',
-'GRH2SO4','GRSOA','GR','COAGNUCL','H2SO4','SOA_LV','PS','LANDFRAC','SOA_NA','SO4_NA',
-
-'NCONC01','NCONC02','NCONC03','NCONC04','NCONC05','NCONC06','NCONC07','NCONC08','NCONC09','NCONC10','NCONC11','NCONC12','NCONC13','NCONC14',
-'SIGMA01','SIGMA02','SIGMA03','SIGMA04','SIGMA05','SIGMA06','SIGMA07','SIGMA08','SIGMA09','SIGMA10','SIGMA11','SIGMA12','SIGMA13','SIGMA14',
-'NMR01','NMR02','NMR03','NMR04','NMR05','NMR06','NMR07','NMR08','NMR09','NMR10','NMR11','NMR12','NMR13','NMR14',
-
-'CCN1','CCN2','CCN3','CCN4','CCN5','CCN6','CCN7','CCN_B','TGCLDCWP','cb_H2SO4','cb_SOA_LV','cb_SOA_NA','cb_SO4_NA',
-'CLDTOT','CDNUMC','SO2','ISOP','MTERP','SOA_SV','OH_vmr','AOD_VIS','CAODVIS','CLDFREE',
-'CDOD550','CDOD440','CDOD870','AEROD_v','CABS550','CABS550A',
-
-'SOA_SEC01','SOA_SEC02','SOA_SEC03','SOA_SEC04','SOA_SEC05',
-'SO4_SEC01','SO4_SEC02','SO4_SEC03','SO4_SEC04','SO4_SEC05',
-'nrSOA_SEC01','nrSOA_SEC02','nrSOA_SEC03','nrSOA_SEC04','nrSOA_SEC05',
-'nrSO4_SEC01','nrSO4_SEC02','nrSO4_SEC03','nrSO4_SEC04','nrSO4_SEC05',
-'cb_SOA_SEC01','cb_SOA_SEC02','cb_SOA_SEC03','cb_SOA_SEC04','cb_SOA_SEC05',
-'cb_SO4_SEC01','cb_SO4_SEC02','cb_SO4_SEC03','cb_SO4_SEC04','cb_SO4_SEC05',
-
-'SST','PRECC','PRECL','PRECT','ozone','O3','TROP_P','TROP_T','TROP_Z','VT100',
-'MEG_CH3COCH3','MEG_CH3CHO','MEG_CH2O','MEG_CO','MEG_C2H6','MEG_C3H8','MEG_C2H4','MEG_C3H6',
-'MEG_C2H5OH','MEG_MTERP','MEG_ISOP','MEG_CH3OH',
-'SFISOP','SFMTERP','emis_ISOP','emis_MTERP','cb_ISOP','cb_MTERP'
+    # --- h0 whitelist (fincl1): identical for every member ---
+    cat << 'EOF' >> user_nl_cam
+fincl1 = 'FSNT','FSNTC','FLNT','FLNTC','FLUT','FLUTC',
+       'FSNTOA','FSNTOAC','SOLIN','FSNS','FSNSC','FLNS',
+       'FLNSC','FSDS','FSDSC','FLDS','SWCF','LWCF',
+       'FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','FSDS_DRF','FSDSCDRF',
+       'FSUTADRF','FSUS_DRF','FLUS',
+       'SFISOP','SFMTERP','SFBCARY','cb_ISOP','cb_MTERP','cb_BCARY',
+       'MEG_ISOP','MEG_MTERP','MEG_BCARY','emis_ISOP','emis_MTERP','ISOP',
+       'MTERP','BCARY',
+       'SOA_LV','SOA_SV','H2SO4','SOA_NA','SOA_A1','SO4_NA',
+       'SO4_A1','N_AER','cb_SOA_LV','cb_SOA_SV','cb_H2SO4',
+       'NUCLRATE','FORMRATE','COAGNUCL','GR','GRH2SO4','GRSOA',
+       'ORGNUCL','NUCLSOA',
+       'SOA_NAcondTend','SOA_A1condTend','SOA_NAcoagTend','SOA_A1coagTend','SOA_NA_mixnuc1','SOA_A1_mixnuc1',
+       'SO4_NAcondTend','SO4_A1condTend','SO4_NAcoagTend','SO4_A1coagTend','SO4_NA_mixnuc1','SO4_A1_mixnuc1',
+       'SOA_NADDF','SOA_A1DDF','SO4_NADDF','SO4_A1DDF','DF_H2SO4','SOA_NASFWET',
+       'SOA_A1SFWET','SO4_NASFWET','SO4_A1SFWET','WD_A_H2SO4','WD_H2SO4',
+       'CCN1','CCN2','CCN3','CCN4','CCN5','CCN6',
+       'CCN7','CCN_B',
+       'AOD_VIS','AEROD_v','DOD550','DOD440','DOD870','ABS550',
+       'ABS550_A','OD550DRY','AB550DRY','CABS550','A550_BC','A550_POM',
+       'A550_SO4','A550_SS','A550_DU',
+       'CDNUMC','TGCLDLWP','TGCLDIWP','TGCLDCWP','CLDTOT','CLDLOW',
+       'CLDMED','CLDHGH','ACTREL','ACTREI','ACTNL','FCTL',
+       'FCTI',
+       'CLOUD','CLDLIQ','CLDICE','AREL','AREI','AWNC',
+       'FREQL','FREQI','NUMLIQ','NUMICE',
+       'TS','TREFHT','SHFLX','LHFLX','PRECC','PRECL',
+       'PRECSC','PRECSL','TAUX','TAUY','PSL','U10',
+       'QREFHT','LANDFRAC','OCNFRAC','ICEFRAC','SNOWHLND',
+       'O3','OH','CH4','NO','NO2','CO',
+       'HO2','TROP_P','TROP_T','TROP_Z',
+       'T','Q','U','V','OMEGA','Z3',
+       'PS'
 EOF
 
-if [[ "${1:-}" == "HR_BVOC" ]]; then # hourly BVOC surface fluxes/emissions
-cat << EOF >> user_nl_cam
-
+    # --- h1 hourly-BVOC tape (CTRL only), feeds the emission-climatology script ---
+    if [[ "${1:-}" == "HR_BVOC" ]]; then
+        cat << 'EOF' >> user_nl_cam
 fincl2 = 'SFISOP','SFMTERP'
 EOF
-fi
+    fi
 
-cat << EOF >> user_nl_cam
+    cat << 'EOF' >> user_nl_cam
 /
 EOF
 }
@@ -645,31 +672,14 @@ improve_performance() {
 #                                                       T4 == T1  -> empty_htapes overrides history_aerosol defaults
 #                                                       T4 ~= T2  -> history_aerosol repopulates the tape
 #   T5  defaults - history_aerosol                   T0-T5: fields added by history_aerosol
-#   T6  empty_htapes + history_aerosol + CAM_AEROCOM + PS,_DRF/CDRF
-#                                                    SHIPPING-CONFIG CHECK. Confirms two things at once:
+#   T6  empty_htapes + history_aerosol + CAM_AEROCOM + PS,_DRF/CDRF     Confirms two things at once:
 #                                                       (a) empty_htapes yields a clean tape with all flags ON, and
-#                                                       (b) the Ghan _DRF/CDRF forcing fields are requestable.
-#                                                    Expected h0 = {PS, FSNT_DRF, FLNT_DRF, FSNTCDRF, FLNTCDRF} + auto coords.
-#                                                    Keep -cosp in the build to match production (leave
-#                                                    aerosol_cosp_diagnostics active, or append CAM_CONFIG_OPTS='-cosp').
-#                                                    If _DRF appears WITHOUT -cosp, even better: it doesn't depend on COSP.
-#                                                    If namelist generation ABORTS ("fincl field not found"), _DRF needs
-#                                                    something beyond this build -> stop and diagnose before committing.
+#                                                       (b) the Ghan _DRF/CDRF forcing fields are requestable.                 
 #
 # After the test runs, use
 #   BOREAL-FOREST-EXPANSION/diagnostics/reduce-history-file-size/compare_diagnostics_tests_for_h0_size.ipynb
 # to compare the resulting h0 fields (run on Betzy).
 #
-# OPTIONAL AVAILABILITY PROBE
-# ---------------------------
-# After obtaining the T2 - T0 variable list, replace the T4 fincl1 line with
-# one or two selected aerosol fields, for example:
-#
-#   fincl1 = 'PS','<field_from_T2_minus_T0>','<another_field>'
-#
-# If namelist generation succeeds and the fields appear in h0, they can be
-# explicitly requested with empty_htapes and history_aerosol enabled.
-# (T6 above is a concrete instance of this probe, targeting the _DRF/CDRF fields.)
 
 test_diagnostics() {
     local test_name="${1:?Usage: test_diagnostics <T0|T1|T2|T3|T4|T5|T6>}"
