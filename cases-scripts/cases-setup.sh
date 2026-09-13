@@ -422,6 +422,7 @@ EOF
 
 cam_diagnostics(){
     # optional arg "HR_BVOC" -> add an h1 tape of 30-min BVOC surface fluxes (CTRL only),
+    # for tests: set nhtfrq = -24
     ./xmlchange CAM_AEROCOM=TRUE
 
     if [[ "${1:-}" == "HR_BVOC" ]]; then
@@ -535,6 +536,7 @@ install_clm_sourcemods() {
 # Require: install_clm_sourcemods should be called before
 #-------------------------------------------------------------------------------
 _clm_diagnostics_base() {
+# if test: hist_nhtfrq = -24   # daily instead of 0 (monthly)
 
     cat << 'EOF' >> user_nl_clm
 hist_mfilt        = 1

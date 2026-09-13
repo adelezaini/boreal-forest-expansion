@@ -12,7 +12,7 @@ source cases-setup.sh
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
 
-CASENAME="NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test-new-diagnostics-gammas"
+CASENAME="NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test-new-diagnostics"
 COMPSET=NF2000norbc_tropstratchem
 set_project_noresm_res_vars
 
