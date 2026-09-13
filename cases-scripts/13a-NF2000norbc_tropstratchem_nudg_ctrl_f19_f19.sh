@@ -57,17 +57,10 @@ forcings_2000
 #./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
 ./xmlchange RUN_STARTDATE=2000-01-01
 
-# Run each diagnostic case for exactly one model day.
-./xmlchange STOP_OPTION=ndays,STOP_N=1
-./xmlchange RESUBMIT=0
-./xmlchange REST_OPTION=ndays,REST_N=1
-./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE
-
 ./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00
 ./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=47:59:00
 
-./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=01:00:00
-./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=00:30:00
+xmlchange_test_1day
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 #./case.build --clean
