@@ -1,0 +1,5 @@
+metric,value
+cells with a clipped loss,396.0
+cells with scaled gains,827.0
+gain cells with zero capacity,17.0
+minimum gain scale,0.0

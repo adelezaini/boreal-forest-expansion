@@ -1,0 +1,12 @@
+- `01a-create_historical_monthly_climatologies.sh`: for the historical dataset we received the raw data -> this script calculates monthly climatology for FPC and LAI (1970-2000)
+- `01b-verify_historical_monthly_mean.ipynb`: verify that the mean are well calculated
+- `02-explore_monthly_lpjguess_fpc.ipynb`: explaration of dataset to identify which the "max FPC" is per LPJGUESS PFTs
+- `03-interpolate_monthly_fpc_lai_nearest.py`: we found out that the grids do not match (see `data/edit-surfdata/LPJ-GUESS/coords-analysis/gridcells-figures/missing_gridcells_against_reference.pdf`) -> we apply 'nearest neighbor' interpolation 
+- `04-explore_monthly_lpjguess_fpc_CLM_grouping.ipynb`: after filling the gridcells we replicate `02-explore_monthly_lpjguess_fpc.ipynb`, but with CLM PFT grouping. Identify which "maximum" we choose to represent FPC 
+- `05-july_august_mean_as_max_fpc.py`: calculate the "summer" mean and consider it "max FPC"
+- `06-annual_vs_max_fpc_difference_maps.ipynb`:
+- `07-compare_GFDL_ESM4_FPC_2071_2100_mean.ipynb`:
+- `lai_fpc_area_expansion_vs_densification.ipynb`: analysis to check the area expansion vs leaf densification using LAI vs FPC (FPC has both information)
+- `Methods-reasoning-recap.md`: some recap from Claude of the reasoning
+- `monthly-lpjguess-fpc-exploration-figures/`
+- `monthly-mean-verification/`

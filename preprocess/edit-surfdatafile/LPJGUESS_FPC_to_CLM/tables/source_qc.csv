@@ -1,0 +1,6 @@
+metric,value
+source cells,16750.0
+historical sum of mapped per-PFT FPC > 1,0.0
+future sum of mapped per-PFT FPC > 1,144.0
+largest historical mapped-max sum,0.968
+largest future mapped-max sum,1.119

@@ -1,0 +1,24 @@
+lpj_index,lpj_abbrev,lpj_name,vegetation_group,clm_natpft,clm_abbrev,treatment,note
+0,BNE,Boreal needle-leaved evergreen tree,tree,2,BoNET,mapped,
+1,BINE,Boreal shade-intolerant needle-leaved evergreen tree,tree,2,BoNET,mapped,
+2,BNS,Boreal needle-leaved summergreen tree,tree,3,BoNDT,mapped,
+3,TeNE,Temperate needle-leaved evergreen tree,tree,1,TeNET,mapped,
+4,TeBE,Temperate broad-leaved evergreen tree,tree,5,TeBET,mapped,
+5,IBS,Shade-intolerant broad-leaved summergreen tree,tree,8,BoBDT,mapped,
+6,TeBS,Temperate broad-leaved summergreen tree,tree,7,TeBDT,mapped,
+7,C3G,Cold C3 grass,grass,12,arcticC3,mapped,
+8,HSE,High shrub evergreen,shrub,11,BoBDS,mapped,
+9,HSS,High shrub summergreen,shrub,11,BoBDS,mapped,
+10,LSE,Low shrub evergreen,shrub,11,BoBDS,mapped,
+11,LSS,Low shrub summergreen,shrub,11,BoBDS,mapped,
+12,GRT,Graminoid and forb tundra,grass,12,arcticC3,mapped,
+13,EPDS,Evergreen prostrate dwarf shrub (needleleaved),shrub,11,BoBDS,mapped,
+14,SPDS,Summergreen prostrate dwarf shrub (broadleaved),shrub,11,BoBDS,mapped,
+15,CLM,"Cushion forb, lichen and moss",non-vascular,0,BG,mapped_to_bare,No corresponding natural CLM PFT is used in this conversion.
+16,pLSE,Peatland low shrub evergreen,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.
+17,pLSS,Peatland low shrub summergreen,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.
+18,pCLM,Peatland cushion/forb,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.
+19,WetGRS,Flood-tolerant grass/graminoid,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.
+20,pmoss,Peatland moss,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.
+21,C3G_wet,Peatland C3 grass,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.
+22,C4G_wet,Peatland C4 grass,peatland,,,excluded,Peatland PFT; excluded from the natural-PFT conversion.

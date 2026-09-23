@@ -1,0 +1,3 @@
+variable,raw rows,grid-cell/month groups,minimum records per mean,maximum records per mean,elapsed seconds,generated rows,compared fields,maximum absolute residual,values outside tolerance,tolerance,exact transformation check passed
+FPC,6017040,200568,30,30,18.078927755355835,200568,24,3.333333334909483e-07,0,5.1e-07,True
+LAI,6017040,200568,30,30,17.782514095306396,200568,24,3.333333342681044e-07,0,5.1e-07,True

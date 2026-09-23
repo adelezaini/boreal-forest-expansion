@@ -1,0 +1,5 @@
+variable,period,monthly cells,annual cells,matched cells,annual-only cells,monthly-only cells
+FPC,historical,16714,16750,16714,36,0
+FPC,future,16619,16750,16619,131,0
+LAI,historical,16714,16750,16714,36,0
+LAI,future,16619,16750,16619,131,0

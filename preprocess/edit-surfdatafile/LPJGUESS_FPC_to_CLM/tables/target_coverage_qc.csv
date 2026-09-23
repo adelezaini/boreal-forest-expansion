@@ -1,0 +1,7 @@
+metric,value
+valid CLM cells,4914.0
+cells with finite anomaly,1309.0
+standard cells with coverage >= 25%,1033.0
+additional coastal cells below 25%,149.0
+cells selected for modification,1182.0
+minimum retained source coverage,0.052742536383936035
