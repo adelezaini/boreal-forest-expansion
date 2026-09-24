@@ -12,7 +12,7 @@ source cases-setup.sh
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
 
-CASENAME="NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test-new-diagnostics"
+CASENAME="NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-$today"
 COMPSET=NF2000norbc_tropstratchem
 set_project_noresm_res_vars
 
@@ -59,8 +59,6 @@ forcings_2000
 
 ./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=23:59:00
 ./xmlchange --subgroup case.run        JOB_WALLCLOCK_TIME=47:59:00
-
-xmlchange_test_1day
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 #./case.build --clean

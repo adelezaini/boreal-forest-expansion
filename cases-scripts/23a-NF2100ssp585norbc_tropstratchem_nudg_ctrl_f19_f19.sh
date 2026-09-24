@@ -26,9 +26,6 @@ REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/${REFCASE}/rest/${
 REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 # I transfer restart files because in original folder are zipped. The unzipped files are all in one place
 
-# Surface data file with modified land cover for boreal forest expansion
-SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_78pfts_LPJGUESS_SSP585.nc"
-
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
 
@@ -73,10 +70,7 @@ dms_forcing_2100_to_2000
 
 setup_nudging_data 
 
-# Land cover change - boreal forest expansion
-# Modified idealized surfdata file
 cat << EOF >> user_nl_clm
-fsurdat = '${SURFDATA_FILE}'
 use_init_interp = .true.
 EOF
 

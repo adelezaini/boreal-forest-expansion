@@ -582,6 +582,20 @@ clm_diagnostics() {
             ;;
     esac
 
+    # Both configurations require the SourceMod, so that paired experiments
+    # are compiled from identical CLM source.
+    local sourcemod="$CASEROOT/SourceMods/src.clm/VOCEmissionMod.F90"
+    if [[ ! -f "$sourcemod" ]]; then
+        echo "ERROR: CLM SourceMod not installed: $sourcemod" >&2
+        echo "Call install_clm_sourcemods before clm_diagnostics." >&2
+        return 1
+    fi
+    # Catch a stale copy (repo version edited after installation)
+    if ! cmp -s "$sourcemod" "$REPO_ROOT/model/SourceMods/src.clm/VOCEmissionMod.F90"; then
+        echo "ERROR: installed SourceMod differs from repo version — re-run install_clm_sourcemods" >&2
+        return 1
+    fi
+
     # Add the common surface, hydrology and carbon-cycle fields.
     _clm_diagnostics_base
 
@@ -593,8 +607,8 @@ clm_diagnostics() {
     cat <<'EOF' >> user_nl_clm
 
 hist_fincl1 += 'MEG_isoprene','MEG_carene_3','MEG_limonene','MEG_myrcene',
-    'MEG_pinene_a','MEG_pinene_b',     
-    'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone', 'MEG_ethanol',
+    'MEG_pinene_a','MEG_pinene_b','MEG_ocimene_t_b','MEG_sabinene',
+    'MEG_acetaldehyde','MEG_acetic_acid','MEG_acetone','MEG_ethanol',
     'MEG_formaldehyde','MEG_methanol',
     'GAMMAL','GAMMAS','GAMMAC_isoprene',
     'EPS_isoprene','GAMMA_isoprene','GAMMAP_isoprene','GAMMAT_isoprene','GAMMAA_isoprene',
@@ -602,7 +616,11 @@ hist_fincl1 += 'MEG_isoprene','MEG_carene_3','MEG_limonene','MEG_myrcene',
     'EPS_carene_3','GAMMA_carene_3','GAMMAP_carene_3','GAMMAT_carene_3','GAMMAA_carene_3',
     'EPS_pinene_b','GAMMA_pinene_b','GAMMAP_pinene_b','GAMMAT_pinene_b','GAMMAA_pinene_b',
     'EPS_myrcene','GAMMA_myrcene','GAMMAP_myrcene','GAMMAT_myrcene','GAMMAA_myrcene',
-    'EPS_limonene','GAMMA_limonene','GAMMAP_limonene','GAMMAT_limonene','GAMMAA_limonene'
+    'EPS_limonene','GAMMA_limonene','GAMMAP_limonene','GAMMAT_limonene','GAMMAA_limonene',
+    'EPS_ocimene_t_b','GAMMA_ocimene_t_b','GAMMAP_ocimene_t_b','GAMMAT_ocimene_t_b','GAMMAA_ocimene_t_b',
+    'EPS_sabinene','GAMMA_sabinene','GAMMAP_sabinene','GAMMAT_sabinene','GAMMAA_sabinene',
+    'EPS_methanol','GAMMA_methanol','GAMMAP_methanol','GAMMAT_methanol','GAMMAA_methanol',
+    'EPS_acetone','GAMMA_acetone','GAMMAP_acetone','GAMMAT_acetone','GAMMAA_acetone'
 
 EOF
 }
@@ -610,11 +628,12 @@ EOF
 cam_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 cat << EOF >> user_nl_cam
+empty_htapes = .true.
 mfilt = 1
 nhtfrq = 0
 avgflag_pertape = 'A'
 
-fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC'
+fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC', 'TS', 'FLUT'
 /
 EOF
 }
@@ -623,17 +642,17 @@ clm_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 # Monthly average output, each file has 1 month
 cat << EOF >> user_nl_clm
+hist_empty_htapes = .true.
 hist_mfilt = 1
 hist_nhtfrq = 0
 
 hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN',
 'TOTVEGC','TOTSOMC','TOTECOSYSC',
 'GPP','NPP','AR','HR','NEE',
-'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
-'RAIN','SNOW',
+'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS', 'FSR','FGR',
+'RAIN','SNOW', 'H2OSNO',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
 'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
-/
 EOF
 }
 
@@ -647,16 +666,16 @@ clm_long_spinup_diagnostics(){
 # I'm looking at trend, not seasonality.
 
 cat << EOF >> user_nl_clm
+hist_empty_htapes = .true.
 hist_mfilt  = 10
 hist_nhtfrq = -8760
 
 hist_fincl1 = 'TSA','TLAI','TOTVEGC','TOTSOMC','TOTECOSYSC',
 'GPP','NPP','AR','HR','NEE',
-'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS',
-'RAIN','SNOW',
+'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','FSR','FGR',
+'RAIN','SNOW', 'H2OSNO',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
 'H2OSOI','SOILLIQ','SOILICE','TSOI','ZWT'
-/
 EOF
 }
 

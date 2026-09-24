@@ -15,7 +15,7 @@ source cases-setup.sh
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="I2000Clm50BgcCropCplHist_f19_f19-$today"
+CASENAME="I2000Clm50BgcCropCplHist_f19_f19-test-1day" #$today"
 COMPSET=2000_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_SGLC_SWAV
 set_project_noresm_res_vars
 
@@ -28,7 +28,7 @@ REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 # I transfer restart files because in original folder are zipped. The unzipped files are all in one place
 
 # Surface data file with modified land cover for boreal forest expansion
-SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_78pfts_LPJGUESS_SSP585.nc"
+SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_SSP5-8.5_2100_78pfts_LPJGUESS.nc"
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
 
@@ -87,6 +87,8 @@ EOF
 
 # Diagnostics
 clm_long_spinup_diagnostics
+
+xmlchange_test_1day
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 ./case.build
