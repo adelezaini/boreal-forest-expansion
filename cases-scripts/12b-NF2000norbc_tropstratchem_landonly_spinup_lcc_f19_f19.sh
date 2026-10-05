@@ -6,7 +6,9 @@
 # Initial file:  NF2000norbc_tropstratchem_spinup_f19_f19 (0021-01-01)
 # Input: cplhist auxiliary files from the previous spinup NF2000norbc_tropstratchem_spinup_f19_f19
 # 100 years
-# No output needed, just clm_diagnostics to check if equilibrated
+# No output needed, just clm_long_spinup_diagnostics to check if equilibrated
+
+# NB: 'TOTVEGN', 'TWS' were added later than the simulations run
 
 # Exit if error, undefined variable...
 set -euo pipefail
@@ -15,7 +17,7 @@ source cases-setup.sh
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="I2000Clm50BgcCropCplHist_f19_f19-test-1day" #$today"
+CASENAME="I2000Clm50BgcCropCplHist_f19_f19-$today"
 COMPSET=2000_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_SGLC_SWAV
 set_project_noresm_res_vars
 
@@ -65,7 +67,7 @@ datm_forcing_from_cplhist_files 2000
 ########################### !!! #########################
 # it was automatically set the JOB_QUEUE=devel, which allows up to 01:00:00
 ./xmlchange --subgroup case.run JOB_QUEUE=normal
-./xmlchange --subgroup case.run JOB_WALLCLOCK_TIME=24:00:00
+./xmlchange --subgroup case.run JOB_WALLCLOCK_TIME=7:00:00
 
 ./xmlchange --subgroup case.st_archive JOB_QUEUE=preproc
 ./xmlchange --subgroup case.st_archive JOB_WALLCLOCK_TIME=01:00:00
@@ -79,7 +81,6 @@ datm_forcing_from_cplhist_files 2000
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 # Land cover change - boreal forest expansion
-# Modified idealized surfdata file
 cat << EOF >> user_nl_clm
 fsurdat = '${SURFDATA_FILE}'
 use_init_interp = .true.
@@ -87,8 +88,6 @@ EOF
 
 # Diagnostics
 clm_long_spinup_diagnostics
-
-xmlchange_test_1day
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 ./case.build

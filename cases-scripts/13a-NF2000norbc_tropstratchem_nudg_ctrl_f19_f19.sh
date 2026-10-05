@@ -24,6 +24,7 @@ REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/${REFCASE}/rest/${
 REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 # I transfer restart files because in original folder are zipped. The unzipped files are all in one place
 
+SURFDATA_FILE='/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/release-clm5.0.18/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc'
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
 
@@ -67,10 +68,11 @@ forcings_2000
 
 setup_nudging_data 
 
+# Be sure it's the same PD land cover
 cat << EOF >> user_nl_clm
+fsurdat = '${SURFDATA_FILE}'
 use_init_interp = .true.
 EOF
-
 cam_diagnostics HR_BVOC
 
 install_clm_sourcemods

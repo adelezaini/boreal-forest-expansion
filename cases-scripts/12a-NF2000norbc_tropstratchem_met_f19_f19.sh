@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Note: aerosol_cosp_diagnostics NOT NECESSARY, I forgot it
+# Note: This is a completed run, source of nudging data. There has been updates after having run it.
+# For a new run, replace aerosol_cosp_diagnostics and cosp_diagnostics with the current pre/post setup calls.
 
 ### Meteorology for winds (u,v) for nudging
 # Free run, no nudging

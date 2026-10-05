@@ -659,11 +659,7 @@ EOF
 clm_long_spinup_diagnostics(){
 # Yearly average output, everyfile have 10 years
 
-# For an equilibrium check, I care about long-term drift in slow pools 
-#like TOTSOMC (soil carbon can take decades to centuries to equilibrate) and TOTECOSYSC, 
-# plus whether flux balance (NEE → 0, GPP ≈ AR+HR) stabilizes over time. 
-# Seasonal/monthly detail is irrelevant noise for that question
-# I'm looking at trend, not seasonality.
+# NB: 'TOTVEGN', 'TWS' were added later than the simulations run
 
 cat << EOF >> user_nl_clm
 hist_empty_htapes = .true.
@@ -672,6 +668,7 @@ hist_nhtfrq = -8760
 
 hist_fincl1 = 'TSA','TLAI','TOTVEGC','TOTSOMC','TOTECOSYSC',
 'GPP','NPP','AR','HR','NEE',
+'TOTVEGN', 'TWS',
 'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','FSR','FGR',
 'RAIN','SNOW', 'H2OSNO',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',

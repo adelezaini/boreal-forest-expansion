@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Note: # missing: clm diagnostics (created afterwards)
-# Note: ./xmlchange RUN_STARTDATE=0001-01-01 # I should have set 0000-01-01
+# Note: ./xmlchange RUN_STARTDATE=0001-01-01. I should have set 0000-01-01
+# Note: This is a completed run, source of restarts and CPLHIST. There has been updates after having run it.
+# For a new run, replace aerosol_cosp_diagnostics and cosp_diagnostics with the current pre/post setup calls; 
+# use the spinup diagnostics functions if desired.
 
 ### 2000 Spinup for MET and CTRL_PD & for extra output cpl auxiliary files for land-only run
 # Free run, no nudging
