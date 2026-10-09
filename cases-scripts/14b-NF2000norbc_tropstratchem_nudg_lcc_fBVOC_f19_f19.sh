@@ -80,13 +80,11 @@ cam_diagnostics
 install_clm_sourcemods
 clm_diagnostics fBVOC
 
-# The current helper disables interactive MEGAN and prescribes PD CTRL ISOP/MTERP.
+# Disable all interactive MEGAN and prescribe PD ISOP/MTERP.
 prescribed_bvoc_emissions
-mapfile -t bvoc_files < <(grep -oE "/[^']+_SF(ISOP|MTERP)\.nc" user_nl_cam | sort -u)
-[[ ${#bvoc_files[@]} -eq 2 ]] || { echo 'Expected two prescribed BVOC files (SFISOP and SFMTERP)' >&2; exit 1; }
-for bvoc_file in "${bvoc_files[@]}"; do
-    [[ -f "$bvoc_file" ]] || { echo "Missing prescribed BVOC file: $bvoc_file" >&2; exit 1; }
-done
+
+# The prescribed ISOP already contains its diurnal cycle.
+bypass_isoprene_diurnal_adjustment
 
 ./case.build
 ./case.submit

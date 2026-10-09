@@ -235,6 +235,27 @@ EOF
 }
 
 ##----------------- BVOC emissions -----------------##
+bypass_isoprene_diurnal_adjustment() {
+    # Disable CAM's extra isoprene diurnal adjustment in fBVOC cases because the
+    # prescribed half-hourly total ISOP climatology already includes that cycle.
+    # Call before case.build.
+    local src="${NORESM_ROOT}/components/cam/src/chemistry/oslo_aero/src_cam/mo_srf_emissions.F90"
+    local dst="SourceMods/src.cam/mo_srf_emissions.F90"
+
+    [[ -f env_case.xml ]] || {
+        echo "ERROR: run this function from the case directory." >&2
+        return 1
+    }
+
+    mkdir -p SourceMods/src.cam || return 1
+
+    if [[ ! -f "$dst" ]]; then
+        cp "$src" "$dst" || return 1
+    fi
+
+    python3 "$HOME/BOREAL-FOREST-EXPANSION/cases-scripts/bypass_isoprene_diurnal_adjustment.py" "$dst"
+}
+
 prescribed_bvoc_emissions(){
 cat << EOF >> user_nl_cam
 &megan_emis_nl
@@ -286,10 +307,8 @@ cat << EOF >> user_nl_cam
          'HCN -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_HCN_bbsurfALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'HCOOH -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_HCOOH_anthrosurfgasALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'HCOOH -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_HCOOH_bbsurfALL_surface_1849-2015_1.9x2.5_version20211124.nc',
-         'ISOP -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_ISOP_bbsurfALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'MEK -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_MEK_anthrosurfgasALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'MEK -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_MEK_bbsurfALL_surface_1849-2015_1.9x2.5_version20211124.nc',
-         'MTERP -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_MTERP_bbsurfALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'NH3 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_NH3_anthrosurfgasALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'NH3 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_NH3_bbsurfALL_surface_1849-2015_1.9x2.5_version20211124.nc',
          'NO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20211124/emissions_cmip6_noresm2_NO_anthrosurfgasALL_surface_1849-2015_1.9x2.5_version20211124.nc',
@@ -306,8 +325,8 @@ cat << EOF >> user_nl_cam
          'CO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/CMIP6_emissions_1750_2015_2deg/emissions-cmip6_CO_other_surface_1750-2015_1.9x2.5_c20170322.nc',
          'NH3 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/CMIP6_emissions_1750_2015_2deg/emissions-cmip6_NH3_other_surface_1750-2015_1.9x2.5_c20170322.nc',
          'NO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/CMIP6_emissions_1750_2015_2deg/emissions-cmip6_NO_other_surface_1750-2015_1.9x2.5_c20170322.nc',
-         'ISOP  -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260429_2002-2011_SFISOP.nc',
-         'MTERP -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260429_2002-2011_SFMTERP.nc'
+         'ISOP -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925_2001-2009_SFISOP.nc',
+         'MTERP -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925_2001-2009_SFMTERP.nc'
 /
 EOF
 }
@@ -363,10 +382,8 @@ cat << EOF >> user_nl_cam
          'HCN -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_HCN_bbsurfALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'HCOOH -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_HCOOH_anthrosurfgasALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'HCOOH -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_HCOOH_bbsurfALL_surface_2014-2301_1.9x2.5_version20230630.nc',
-         'ISOP -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_ISOP_bbsurfALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'MEK -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_MEK_anthrosurfgasALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'MEK -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_MEK_bbsurfALL_surface_2014-2301_1.9x2.5_version20230630.nc',
-         'MTERP -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_MTERP_bbsurfALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'NH3 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_NH3_anthrosurfgasALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'NH3 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_NH3_bbsurfALL_surface_2014-2301_1.9x2.5_version20230630.nc',
          'NO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/cmip6_emissions_version20230630/emissions_cmip6_noresm2_ScenarioMIP_IAMC-REMIND-MAGPIE-ssp585-1-1_NO_anthrosurfgasALL_surface_2014-2301_1.9x2.5_version20230630.nc',
@@ -382,9 +399,9 @@ cat << EOF >> user_nl_cam
          'C3H8 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/emissions_ssp585_2deg/emissions-cmip6_C3H8_other_surface_1750-2015-2101_1.9x2.5_c20170322.nc',
          'CO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/emissions_ssp585_2deg/emissions-cmip6_CO_other_surface_1750-2015-2101_1.9x2.5_c20170322.nc',
          'NH3 -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/emissions_ssp585_2deg/emissions-cmip6_NH3_other_surface_1750-2015-2101_1.9x2.5_c20170322.nc',
-         'NO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/emissions_ssp585_2deg/emissions-cmip6_NO_other_surface_1750-2015-2101_1.9x2.5_c20170322.nc'
-         'ISOP  -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260429_2002-2011_on_yr2100_SFISOP.nc',
-         'MTERP -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260429_2002-2011_on_yr2100_SFMTERP.nc'
+         'NO -> /cluster/shared/noresm/inputdata/atm/cam/chem/emis/emissions_ssp585_2deg/emissions-cmip6_NO_other_surface_1750-2015-2101_1.9x2.5_c20170322.nc',
+         'ISOP -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925_2001-2009_on_yr2100_SFISOP.nc',
+         'MTERP -> /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925_2001-2009_on_yr2100_SFMTERP.nc'
 /
 EOF
 }

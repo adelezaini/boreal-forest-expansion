@@ -14,7 +14,7 @@ set -euo pipefail
 source cases-setup.sh
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-$today"
+CASENAME="NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-$today"
 COMPSET=NF2100ssp585norbc_tropstratchem
 set_project_noresm_res_vars
 
@@ -85,13 +85,11 @@ cam_diagnostics
 install_clm_sourcemods
 clm_diagnostics fBVOC
 
-# The current helper disables interactive MEGAN and prescribes PD CTRL ISOP/MTERP.
-prescribed_bvoc_emissions
-mapfile -t bvoc_files < <(grep -oE "/[^']+_SF(ISOP|MTERP)\.nc" user_nl_cam | sort -u)
-[[ ${#bvoc_files[@]} -eq 2 ]] || { echo 'Expected two prescribed BVOC files (SFISOP and SFMTERP)' >&2; exit 1; }
-for bvoc_file in "${bvoc_files[@]}"; do
-    [[ -f "$bvoc_file" ]] || { echo "Missing prescribed BVOC file: $bvoc_file" >&2; exit 1; }
-done
+# Disable all interactive MEGAN and prescribe PD ISOP/MTERP.
+prescribed_bvoc_emissions_2100
+
+# The prescribed ISOP already contains its diurnal cycle.
+bypass_isoprene_diurnal_adjustment
 
 ./case.build
 ./case.submit
