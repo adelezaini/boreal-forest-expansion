@@ -496,7 +496,8 @@ fincl1 = 'FSNT','FSNTC','FLNT','FLNTC','FLUT','FLUTC',
        'O3','OH','CH4','NO','NO2','CO',
        'HO2','TROP_P','TROP_T','TROP_Z',
        'T','Q','U','V','OMEGA','Z3',
-       'PS'
+       'PS',
+       'SF6', 'CFC115', 'N2O', 'CO2'
 EOF
 
     # --- h1 hourly-BVOC tape (CTRL only), feeds the emission-climatology script ---
@@ -571,6 +572,7 @@ hist_fincl1 = 'FSA','FSR','FIRA','FIRE','FSH','EFLX_LH_TOT',
        'QVEGT','QINTR','QOVER','QRUNOFF','RAIN','SNOW',
        'H2OSOI','SOILLIQ','SOILICE','ZWT','GPP','NPP',
        'AR','HR','NEE','WIND','PCT_NAT_PFT',
+       'TOTVEGC', 'TOTVEGN', 'TWS'
 
 EOF
 }
@@ -644,13 +646,16 @@ EOF
 
 cam_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
+# NB: Added GASES = 'SF6', 'CFC115', 'N2O', 'CO2', 'CH4' after running the simulations (for equilibrium check)
 cat << EOF >> user_nl_cam
 empty_htapes = .true.
 mfilt = 1
 nhtfrq = 0
 avgflag_pertape = 'A'
 
-fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC','FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC', 'TS', 'FLUT'
+fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC',
+    'FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC', 'TS', 'FLUT',
+    'SF6', 'CFC115', 'N2O', 'CO2', 'CH4'
 /
 EOF
 }
@@ -658,6 +663,7 @@ EOF
 clm_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 # Monthly average output, each file has 1 month
+# NB: Added CLM_VARS = ('TOTVEGN', 'TWS') after running the simulations (for equilibrium check)
 cat << EOF >> user_nl_clm
 hist_empty_htapes = .true.
 hist_mfilt = 1
@@ -665,6 +671,7 @@ hist_nhtfrq = 0
 
 hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN',
 'TOTVEGC','TOTSOMC','TOTECOSYSC',
+'TOTVEGN', 'TWS',
 'GPP','NPP','AR','HR','NEE',
 'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS', 'FSR','FGR',
 'RAIN','SNOW', 'H2OSNO',
@@ -675,8 +682,7 @@ EOF
 
 clm_long_spinup_diagnostics(){
 # Yearly average output, everyfile have 10 years
-
-# NB: 'TOTVEGN', 'TWS' were added later than the simulations run
+# NB: Added CLM_VARS = ('TOTVEGN', 'TWS') after running the simulations (for equilibrium check)
 
 cat << EOF >> user_nl_clm
 hist_empty_htapes = .true.
