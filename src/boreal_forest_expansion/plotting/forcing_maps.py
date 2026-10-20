@@ -1,21 +1,19 @@
 """
 Forcing and BVOC-context map plotting utilities.
 
-This module assumes postprocessed files are saved as:
+Reads the monthly files written by the postprocess package (postprocess/run_all_parallel.sh):
 
-    [casealias]_[variableclass]_[startyr]_[endyr].nc
+    [alias]_[component]_[category]_[startyr]-[endyr].nc
 
-in:
+in data/processed-data/postprocessing, e.g. LCC_PD_atm_RADIATIVE_2001-2009.nc.
+Each file holds monthly means (time = midpoint of the time bounds, spin-up dropped).
 
-    /cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/postprocessed-diagnostics
-
-It is designed to work after postprocess/postprocess.py has created files like:
-
-    CTRL_RADIATIVE_2000_2009.nc
-    LCC-PD_RADIATIVE_2000_2009.nc
-    LCC-PD-fBVOC_RADIATIVE_2000_2009.nc
-    LCC-FUT_RADIATIVE_2000_2009.nc
-    LCC-FUT-fBVOC_RADIATIVE_2000_2009.nc
+Maps show the mean over years of paired yearly differences (case1 - case2). The members
+are nudged to the same winds, so year y of case1 is compared with year y of case2.
+Stippling marks cells where the paired t-test passes the Benjamini-Hochberg false
+discovery rate (alpha_FDR = 0.10, Wilks 2016), counted over the cells drawn on the map.
+The text under each panel is the area-weighted mean north of `mean_lat_min`, with a 95%
+t-interval across the yearly regional means.
 """
 
 from __future__ import annotations
@@ -26,50 +24,45 @@ from typing import Iterable
 
 import numpy as np
 import xarray as xr
+from scipy import stats
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+from cartopy.util import add_cyclic_point
 
 from boreal_forest_expansion.plotting.common import (
     ax_map_properties,
     cut_extent_Orthographic,
 )
+from boreal_forest_expansion.postprocess.averaging import record_days
+from boreal_forest_expansion.analysis.stats import cellwise_pvalue, fdr_mask
 
 
-POSTPROCESSED_DIR = Path(
-    "/cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/postprocessed-diagnostics"
-)
+REPO_DIR = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 
-FIGURE_DIR = Path(
-    "/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/figures"
-)
+POSTPROCESSED_DIR = REPO_DIR / "data" / "processed-data" / "postprocessing"
+
+FIGURE_DIR = REPO_DIR / "results" / "figures"
 
 
 # =============================================================================
 # Case and plot definitions
 # =============================================================================
 
-ALIASES = {
-    "CTRL": "CTRL",
-    "LCC-PD": "LCC-PD",
-    "LCC-PD-fBVOC": "LCC-PD-fBVOC",
-    "LCC-FUT": "LCC-FUT",
-    "LCC-FUT-fBVOC": "LCC-FUT-fBVOC",
-}
-
-
+# Total = lcc - ctrl, BVOC = lcc - fbvoc. Each period uses its own CTRL, so the FUT
+# total does not contain the 2100 background (SST, GHG, emissions) change.
 BVOC_PAIRS = {
     "PD": {
-        "lcc": "LCC-PD",
-        "fbvoc": "LCC-PD-fBVOC",
-        "ctrl": "CTRL",
+        "lcc": "LCC_PD",
+        "fbvoc": "LCC_PD_fBVOC",
+        "ctrl": "CTRL_PD",
     },
     "FUT": {
-        "lcc": "LCC-FUT",
-        "fbvoc": "LCC-FUT-fBVOC",
-        "ctrl": "CTRL",
+        "lcc": "LCC_FUT",
+        "fbvoc": "LCC_FUT_fBVOC",
+        "ctrl": "CTRL_FUT",
     },
 }
 
@@ -85,70 +78,79 @@ class MapPanel:
     units: str = "W m$^{-2}$"
     long_label: str | None = None
     vmax: float | None = None
+    component: str = "atm"
 
 
-FORCING_PANELS = [
-    MapPanel(
-        key="albedo",
-        title="ALBEDO / SW CLEAR-SKY FORCING",
-        variable_class="RADIATIVE",
-        variable="SFC_ALBEDO_FORCING_CLEAR", #"SW_rest_Ghan" - incouding other things (eg chemistry), but the other is more a proxy
-        case1_role="lcc",
-        case2_role="ctrl",
-        long_label="Shortwave clean clear-sky residual forcing",
-        vmax=10.0,
-    ),
-    MapPanel(
-        key="total",
-        title="TOTAL RADIATIVE FORCING",
-        variable_class="RADIATIVE",
-        variable="FTOT_Ghan",
-        case1_role="lcc",
-        case2_role="ctrl",
-        long_label="Net TOA radiative forcing",
-        vmax=6.0,
-    ),
-    MapPanel(
-        key="bvoc_total",
-        title="BVOC-RELATED FORCING",
-        variable_class="RADIATIVE",
-        variable="FTOT_Ghan",
-        case1_role="lcc",
-        case2_role="fbvoc",
-        long_label="Net BVOC-related radiative forcing",
-        vmax=2.0,
-    ),
-    MapPanel(
-        key="bvoc_cloud",
-        title="BVOC-SOA-CLOUD FORCING",
-        variable_class="RADIATIVE",
-        variable="NCFT_Ghan",
-        case1_role="lcc",
-        case2_role="fbvoc",
-        long_label="Net cloud-mediated BVOC/SOA forcing",
-        vmax=2.0,
-    ),
-    MapPanel(
-        key="bvoc_direct",
-        title="BVOC-DIRECT SOA FORCING",
-        variable_class="RADIATIVE",
-        variable="DIR_Ghan",
-        case1_role="lcc",
-        case2_role="fbvoc",
-        long_label="Net direct aerosol/SOA forcing",
-        vmax=2.0,
-    ),
-    MapPanel(
-        key="bvoc_residual",
-        title="BVOC CHEMISTRY / RESIDUAL FORCING",
-        variable_class="RADIATIVE",
-        variable="FREST_Ghan",
-        case1_role="lcc",
-        case2_role="fbvoc",
-        long_label="Clean clear-sky residual forcing",
-        vmax=2.0,
-    ),
-]
+def forcing_panels(band: str = "NET") -> list[MapPanel]:
+    """Six-panel forcing layout; `band` = "NET", "SW" or "LW" selects the Ghan terms."""
+    if band not in ("NET", "SW", "LW"):
+        raise ValueError("band must be 'NET', 'SW' or 'LW'")
+    b = band
+    return [
+        MapPanel(
+            key="albedo",
+            title="ALBEDO / SW CLEAR-SKY FORCING",
+            variable_class="RADIATIVE",
+            variable="SFC_ALBEDO_FORCING_CLEAR",  # f"SW_clearclean" also holds other clear-sky changes (e.g. chemistry)
+            case1_role="lcc",
+            case2_role="ctrl",
+            long_label="Clear-sky surface albedo forcing (proxy)",
+            vmax=10.0,
+        ),
+        MapPanel(
+            key="total",
+            title=f"TOTAL RADIATIVE FORCING ({b})",
+            variable_class="RADIATIVE",
+            variable=f"{b}_toa",
+            case1_role="lcc",
+            case2_role="ctrl",
+            long_label=f"{b} TOA radiative forcing",
+            vmax=6.0,
+        ),
+        MapPanel(
+            key="bvoc_total",
+            title=f"BVOC-RELATED FORCING ({b})",
+            variable_class="RADIATIVE",
+            variable=f"{b}_toa",
+            case1_role="lcc",
+            case2_role="fbvoc",
+            long_label=f"{b} BVOC-related radiative forcing",
+            vmax=2.0,
+        ),
+        MapPanel(
+            key="bvoc_cloud",
+            title=f"BVOC-SOA-CLOUD FORCING ({b})",
+            variable_class="RADIATIVE",
+            variable=f"{b}_cre_clean",
+            case1_role="lcc",
+            case2_role="fbvoc",
+            long_label=f"{b} cloud-mediated BVOC/SOA forcing",
+            vmax=2.0,
+        ),
+        MapPanel(
+            key="bvoc_direct",
+            title=f"BVOC-DIRECT SOA FORCING ({b})",
+            variable_class="RADIATIVE",
+            variable=f"{b}_dir",
+            case1_role="lcc",
+            case2_role="fbvoc",
+            long_label=f"{b} direct aerosol/SOA forcing",
+            vmax=2.0,
+        ),
+        MapPanel(
+            key="bvoc_residual",
+            title=f"BVOC CHEMISTRY / RESIDUAL FORCING ({b})",
+            variable_class="RADIATIVE",
+            variable=f"{b}_clearclean",
+            case1_role="lcc",
+            case2_role="fbvoc",
+            long_label=f"{b} clean clear-sky residual forcing",
+            vmax=2.0,
+        ),
+    ]
+
+
+FORCING_PANELS = forcing_panels("NET")
 
 
 CONTEXT_PANELS = [
@@ -156,43 +158,41 @@ CONTEXT_PANELS = [
         key="sfisop",
         title="ISOPRENE EMISSIONS",
         variable_class="BVOC",
-        variable="SFISOP",
+        variable="SFISOP_mgm2d",
         case1_role="lcc",
         case2_role="fbvoc",
-        units="kg m$^{-2}$ s$^{-1}$",
+        units="mg m$^{-2}$ d$^{-1}$",
         long_label="Surface isoprene flux",
-        vmax=1e-11,
     ),
     MapPanel(
         key="sfmterp",
         title="MONOTERPENE EMISSIONS",
         variable_class="BVOC",
-        variable="SFMTERP",
+        variable="SFMTERP_mgm2d",
         case1_role="lcc",
         case2_role="fbvoc",
-        units="kg m$^{-2}$ s$^{-1}$",
+        units="mg m$^{-2}$ d$^{-1}$",
         long_label="Surface monoterpene flux",
-        vmax=1e-1,
     ),
     MapPanel(
         key="soa_tot",
         title="TOTAL SOA BURDEN",
         variable_class="SOA",
-        variable="cb_SOA_TOT_mgm2",
+        variable="SOA_cb_mgm2",
         case1_role="lcc",
         case2_role="fbvoc",
         units="mg m$^{-2}$",
-        long_label="Total SOA column burden",
+        long_label="SOA column burden (A1 + NA, interstitial)",
     ),
     MapPanel(
         key="n_aer",
         title="AEROSOL NUMBER",
-        variable_class="AEROSOL",
+        variable_class="SOA",
         variable="N_AER",
         case1_role="lcc",
         case2_role="fbvoc",
-        units="",
-        long_label="Total aerosol number",
+        units="cm$^{-3}$",
+        long_label="Aerosol number, lowest model level",
     ),
     MapPanel(
         key="fctl",
@@ -202,7 +202,7 @@ CONTEXT_PANELS = [
         case1_role="lcc",
         case2_role="fbvoc",
         units="fraction",
-        long_label="Liquid cloud fraction",
+        long_label="Fractional occurrence of cloud-top liquid",
     ),
     MapPanel(
         key="actrel",
@@ -211,8 +211,8 @@ CONTEXT_PANELS = [
         variable="ACTREL_incld",
         case1_role="lcc",
         case2_role="fbvoc",
-        units="",
-        long_label="In-cloud activated effective radius",
+        units="µm",
+        long_label="In-cloud cloud-top droplet effective radius",
     ),
     MapPanel(
         key="actnl",
@@ -221,8 +221,8 @@ CONTEXT_PANELS = [
         variable="ACTNL_incld",
         case1_role="lcc",
         case2_role="fbvoc",
-        units="# cm$^{-3}$",
-        long_label="In-cloud activated droplet number",
+        units="cm$^{-3}$",
+        long_label="In-cloud cloud-top droplet number",
     ),
     MapPanel(
         key="lwp",
@@ -232,252 +232,158 @@ CONTEXT_PANELS = [
         case1_role="lcc",
         case2_role="fbvoc",
         units="g m$^{-2}$",
-        long_label="Cloud liquid water path",
+        long_label="Grid-box cloud liquid water path",
     ),
     MapPanel(
         key="et",
-        title="ET / SURFACE WATER FLUX",
-        variable_class="METEOROLOGY",
+        title="EVAPOTRANSPIRATION",
+        variable_class="ET",
         variable="QFLX_mmday",
         case1_role="lcc",
         case2_role="fbvoc",
         units="mm day$^{-1}$",
-        long_label="Evapotranspiration / surface water flux",
+        long_label="Evapotranspiration (land)",
+        component="lnd",
     ),
 ]
 
+INCLOUD_MIN_FRAC = 0.01   # same default as postprocess.derived.incloud
+
+
 # =============================================================================
-# Loading and differencing
+# Loading
 # =============================================================================
 
-def filename(alias: str, variable_class: str, start_year: int, end_year: int) -> Path:
-    return POSTPROCESSED_DIR / f"{alias}_{variable_class}_{start_year}_{end_year}.nc"
+def filename(alias: str, variable_class: str, start_year: int, end_year: int,
+             component: str = "atm") -> Path:
+    return POSTPROCESSED_DIR / f"{alias}_{component}_{variable_class}_{start_year}-{end_year}.nc"
 
 
-def open_class(alias: str, variable_class: str, start_year: int, end_year: int) -> xr.Dataset:
-    path = filename(alias, variable_class, start_year, end_year)
+def open_class(alias: str, variable_class: str, start_year: int, end_year: int,
+               component: str = "atm") -> xr.Dataset:
+    path = filename(alias, variable_class, start_year, end_year, component)
     if not path.exists():
         raise FileNotFoundError(f"Missing postprocessed file: {path}")
     return xr.open_dataset(path)
 
 
-def squeeze_to_map(da: xr.DataArray) -> xr.DataArray:
-    """
-    Convert a DataArray to lat-lon if possible.
-
-    If a variable still has lev, use the lowest model level as a pragmatic
-    near-surface map. For true column diagnostics, prefer postprocessed
-    column variables.
-    """
-    da_ = da
-
-    for dim in ["time", "year"]:
-        if dim in da_.dims:
-            da_ = da_.mean(dim)
-
-    if "lev" in da_.dims:
-        da_ = da_.isel(lev=-1)
-
-    drop_dims = [dim for dim in da_.dims if dim not in ["lat", "lon"]]
-    if drop_dims:
-        da_ = da_.squeeze(drop=True)
-
-    if not {"lat", "lon"}.issubset(da_.dims):
+def to_map(da: xr.DataArray) -> xr.DataArray:
+    """Keep (time, lat, lon). 3-D fields use the lowest model level (near-surface)."""
+    if "lev" in da.dims:
+        da = da.isel(lev=-1)
+    extra = [d for d in da.dims if d not in ("time", "lat", "lon")]
+    if extra:
         raise ValueError(f"Cannot make map from {da.name}; dimensions are {da.dims}")
+    return da
 
-    return da_
+
+def annual_mean(da: xr.DataArray, ds: xr.Dataset) -> xr.DataArray:
+    """Calendar-year means weighted by record length (days); only complete years."""
+    days = record_days(ds)
+    year = ds["time"].dt.year
+    n = days.groupby(year).count()
+    if not (n == 12).all():
+        raise ValueError(f"Incomplete years in {ds.attrs.get('alias', '?')}: {dict(zip(n.year.values, n.values))}")
+    return (da * days).groupby(year).sum("time") / days.groupby(year).sum("time")
 
 
-def difference_map(
+def _require(ds: xr.Dataset, names: Iterable[str], what: str):
+    missing = [v for v in names if v not in ds]
+    if missing:
+        raise KeyError(f"{what}: missing {missing} in {ds.attrs.get('alias', '?')} {ds.attrs.get('category', '')}")
+
+
+def _incloud(ds: xr.Dataset, var: str, scale: float = 1.0) -> xr.DataArray:
+    """Yearly in-cloud value: annual_mean(var) / annual_mean(FCTL), as derived.incloud(dim='time')."""
+    _require(ds, [var, "FCTL"], f"{var}_incld")
+    num, frac = annual_mean(ds[var], ds), annual_mean(ds["FCTL"], ds)
+    return (num / frac).where(frac >= INCLOUD_MIN_FRAC) * scale
+
+
+# Yearly (year, lat, lon) fields derived from one run. Values are converted to plot units.
+YEARLY_DERIVED = {
+    "SW_toa": lambda ds: annual_mean(ds["FSNT"], ds),
+    "LW_toa": lambda ds: annual_mean(-ds["FLNT"], ds),
+    "SFISOP_mgm2d": lambda ds: annual_mean(ds["SFISOP"], ds) * 1e6 * 86400,
+    "SFMTERP_mgm2d": lambda ds: annual_mean(ds["SFMTERP"], ds) * 1e6 * 86400,
+    "SOA_cb_mgm2": lambda ds: annual_mean(ds["SOA_cb"], ds) * 1e6,
+    "TGCLDLWP_gm2": lambda ds: annual_mean(ds["TGCLDLWP"], ds) * 1e3,
+    "QFLX_mmday": lambda ds: annual_mean(ds["QFLX_EVAP_TOT"], ds) * 86400,
+    "ACTREL_incld": lambda ds: _incloud(ds, "ACTREL"),
+    "ACTNL_incld": lambda ds: _incloud(ds, "ACTNL", scale=1e-6),          # m-3 -> cm-3
+}
+
+
+def yearly_field(ds: xr.Dataset, variable: str) -> xr.DataArray:
+    if variable in YEARLY_DERIVED:
+        return YEARLY_DERIVED[variable](ds)
+    _require(ds, [variable], variable)
+    return annual_mean(to_map(ds[variable]), ds)
+
+
+def surface_albedo_forcing_proxy(ds1: xr.Dataset, ds2: xr.Dataset) -> xr.DataArray:
+    """
+    Monthly clear-sky surface albedo forcing proxy for case1 - case2:
+
+        dF = - FSDSC_case2 * (alpha_case1 - alpha_case2),   alpha = (FSDSC - FSNSC) / FSDSC
+
+    Positive = lower albedo, more absorbed shortwave (warming). Computed month by month,
+    so the albedo change is weighted by the insolation of that month (snow masking in
+    spring counts more than in winter). Surface proxy, not a TOA forcing.
+    """
+    for ds in (ds1, ds2):
+        _require(ds, ["FSDSC", "FSNSC"], "clear-sky surface albedo")
+
+    def alpha(ds):
+        return ((ds["FSDSC"] - ds["FSNSC"]) / ds["FSDSC"]).where(ds["FSDSC"] > 1.0)
+
+    # Months without sunlight give NaN albedo but carry no forcing: set them to 0
+    return (-ds2["FSDSC"] * (alpha(ds1) - alpha(ds2))).fillna(0.0).where(ds2["FSDSC"].notnull())
+
+
+def yearly_difference(
     case1: str,
     case2: str,
     variable_class: str,
     variable: str,
     start_year: int,
     end_year: int,
+    component: str = "atm",
 ) -> xr.DataArray:
-    ds1 = open_class(case1, variable_class, start_year, end_year)
-    ds2 = open_class(case2, variable_class, start_year, end_year)
+    """Paired yearly differences case1 - case2, dims (year, lat, lon)."""
+    ds1 = open_class(case1, variable_class, start_year, end_year, component)
+    ds2 = open_class(case2, variable_class, start_year, end_year, component)
+    if not np.array_equal(ds1["time"].values, ds2["time"].values):
+        raise ValueError(f"{case1} and {case2} have different time axes")
 
-    if variable not in ds1:
-        raise KeyError(f"{variable} not found in {filename(case1, variable_class, start_year, end_year)}")
-    if variable not in ds2:
-        raise KeyError(f"{variable} not found in {filename(case2, variable_class, start_year, end_year)}")
+    if variable == "SFC_ALBEDO_FORCING_CLEAR":
+        diff = annual_mean(surface_albedo_forcing_proxy(ds1, ds2), ds2)
+        units = "W m-2"
+    else:
+        diff = yearly_field(ds1, variable) - yearly_field(ds2, variable)
+        units = ds1[variable].attrs.get("units", "") if variable in ds1 else ""
 
-    da1 = squeeze_to_map(ds1[variable])
-    da2 = squeeze_to_map(ds2[variable])
-
-    diff = da1 - da2
     diff.name = f"{variable}_{case1}_minus_{case2}"
-    diff.attrs["units"] = da1.attrs.get("units", "")
-    diff.attrs["long_name"] = f"{variable}: {case1} - {case2}"
-
+    diff.attrs.update(units=units, long_name=f"{variable}: {case1} - {case2}")
     return diff
 
-def clear_sky_surface_albedo(ds: xr.Dataset) -> xr.DataArray:
-    """
-    Compute clear-sky surface albedo from surface shortwave fluxes.
 
-    alpha_clear = FSUSC / FSDSC
-                = (FSDSC - FSNSC) / FSDSC
+def difference_map(*args, **kwargs) -> xr.DataArray:
+    """Mean over years of yearly_difference (same arguments)."""
+    d = yearly_difference(*args, **kwargs)
+    return d.mean("year").assign_attrs(d.attrs).rename(d.name)
 
-    Requires:
-        FSDSC: clear-sky downwelling SW at surface
-        FSNSC: clear-sky net SW at surface
-
-    Returns
-    -------
-    xr.DataArray
-        Clear-sky surface albedo, unitless.
-    """
-    required = ["FSDSC", "FSNSC"]
-    missing = [v for v in required if v not in ds]
-    if missing:
-        raise KeyError(f"Missing variables for clear-sky surface albedo: {missing}")
-
-    fsdsc = squeeze_to_map(ds["FSDSC"])
-    fsnsc = squeeze_to_map(ds["FSNSC"])
-
-    fsusc = fsdsc - fsnsc
-    alpha = (fsusc / fsdsc).where(fsdsc > 1.0)
-
-    alpha.name = "ALBEDO_SFC_CLEAR"
-    alpha.attrs["long_name"] = "clear-sky surface albedo"
-    alpha.attrs["units"] = "1"
-
-    return alpha
 
 # =============================================================================
-# Temporary evaluating albedo here
+# Statistics
 # =============================================================================
 
-def surface_albedo_forcing_proxy_difference(
-    case1: str,
-    case2: str,
-    variable_class: str,
-    start_year: int,
-    end_year: int,
-) -> xr.DataArray:
-    """
-    Approximate clear-sky surface albedo forcing.
+# Cell-wise t-test and FDR: boreal_forest_expansion.analysis.stats (cellwise_pvalue, fdr_mask)
 
-    For case1 - case2:
-
-        dF = - FSDSC_case2 * (alpha_case1 - alpha_case2)
-
-    Positive values mean lower albedo / more absorbed shortwave / warming.
-
-    This is a surface shortwave forcing proxy, not a full TOA forcing.
-    """
-    ds1 = open_class(case1, variable_class, start_year, end_year)
-    ds2 = open_class(case2, variable_class, start_year, end_year)
-
-    alpha1 = clear_sky_surface_albedo(ds1)
-    alpha2 = clear_sky_surface_albedo(ds2)
-
-    fsdsc_ref = squeeze_to_map(ds2["FSDSC"])
-
-    dalpha = alpha1 - alpha2
-    forcing = -fsdsc_ref * dalpha
-
-    forcing.name = f"SFC_ALBEDO_FORCING_CLEAR_{case1}_minus_{case2}"
-    forcing.attrs["long_name"] = (
-        f"clear-sky surface albedo forcing proxy: {case1} - {case2}"
-    )
-    forcing.attrs["units"] = "W m-2"
-
-    return forcing
-
-def panel_difference_map(
-    case1: str,
-    case2: str,
-    variable_class: str,
-    variable: str,
-    start_year: int,
-    end_year: int,
-) -> xr.DataArray:
-    """
-    Return the map for a panel.
-
-    Most panels are simple case1 - case2 differences.
-    Some panels are derived on the fly, such as the temporary
-    surface albedo forcing proxy.
-    """
-    if variable == "SFC_ALBEDO_FORCING_CLEAR":
-        return surface_albedo_forcing_proxy_difference(
-            case1=case1,
-            case2=case2,
-            variable_class=variable_class,
-            start_year=start_year,
-            end_year=end_year,
-        )
-
-    return difference_map(
-        case1=case1,
-        case2=case2,
-        variable_class=variable_class,
-        variable=variable,
-        start_year=start_year,
-        end_year=end_year,
-    )
-
-# =============================================================================
-# Averaging and plotting helpers
-# =============================================================================
-"""
-def spatial_weights_for_mean(ds_or_da, lat_min=None, lat_max=None):
-    
-    Return safe latitude weights for spatial means.
-
-    Uses gw if available, otherwise reconstructs cos(lat) weights.
-    
-    obj = ds_or_da
-
-    if "gw" in obj:
-        weights = obj["gw"]
-    else:
-        weights = xr.DataArray(
-            np.cos(np.deg2rad(obj["lat"])),
-            coords={"lat": obj["lat"]},
-            dims=("lat",),
-            name="lat_weights",
-        )
-
-    if lat_min is not None:
-        weights = weights.where(weights["lat"] >= lat_min, drop=True)
-
-    if lat_max is not None:
-        weights = weights.where(weights["lat"] <= lat_max, drop=True)
-
-    if "time" in weights.dims:
-        weights = weights.isel(time=0, drop=True)
-
-    if "year" in weights.dims:
-        weights = weights.isel(year=0, drop=True)
-
-    return weights.fillna(0)
-
-def weighted_spatial_mean(da, lat_min=None, lat_max=None):
-    da_sub = da
-
-    if lat_min is not None:
-        da_sub = da_sub.where(da_sub["lat"] >= lat_min, drop=True)
-
-    if lat_max is not None:
-        da_sub = da_sub.where(da_sub["lat"] <= lat_max, drop=True)
-
-    weights = spatial_weights_for_mean(da_sub, lat_min=None, lat_max=None)
-
-    spatial_dims = [dim for dim in ("lat", "lon") if dim in da_sub.dims]
-
-    return da_sub.weighted(weights).mean(spatial_dims)
-"""
 def area_weighted_mean(da, lat_min=None, lat_max=None, dims=("lat", "lon")):
     """
-    Area-weighted mean for regular lat-lon data.
-
-    Uses cos(lat) weights. This works when postprocessed files have lat/lon
-    but no gw or GRIDAREA.
+    Area-weighted mean for regular lat-lon data (cos-lat weights; NaN cells skipped,
+    so land-only fields give a land mean).
     """
     da_sub = da
 
@@ -497,6 +403,19 @@ def area_weighted_mean(da, lat_min=None, lat_max=None, dims=("lat", "lon")):
     mean_dims = [dim for dim in dims if dim in da_sub.dims]
 
     return da_sub.weighted(weights).mean(mean_dims)
+
+
+def regional_mean_interval(d: xr.DataArray, lat_min=None, conf: float = 0.95):
+    """Mean and t-interval half-width of the yearly regional means of `d` (year, lat, lon)."""
+    r = area_weighted_mean(d, lat_min=lat_min).values
+    n = r.size
+    half = stats.t.ppf(0.5 + conf / 2, n - 1) * r.std(ddof=1) / np.sqrt(n)
+    return float(r.mean()), float(half)
+
+
+# =============================================================================
+# Plotting helpers
+# =============================================================================
 
 def symmetric_vmax(da: xr.DataArray, q: float = 0.98, fallback: float = 1.0) -> float:
     values = np.asarray(da.values)
@@ -521,12 +440,34 @@ def format_forcing_mean(value: float) -> str:
     """
     value = float(value)
 
-    if abs(value) >= 10:
+    if abs(value) >= 1:
         return f"{value:+.1f}"
-    elif abs(value) >= 1:
-        return f"{value:+.1f}"
-    else:
+    elif abs(value) >= 0.01 or value == 0:
         return f"{value:+.2f}"
+    else:
+        return f"{value:+.1e}"
+
+
+def _format_interval(mean: float, half: float) -> str:
+    if abs(mean) >= 1 or half >= 1:
+        return f"{mean:+.1f} ± {half:.1f}"
+    if abs(mean) >= 0.01 or half >= 0.01:
+        return f"{mean:+.2f} ± {half:.2f}"
+    return f"{mean:+.1e} ± {half:.0e}"
+
+
+def add_stippling(ax, sig: xr.DataArray, color="black", hatch="....", zorder=4):
+    """Hatch the cells where `sig` is True."""
+    field = sig.astype(float).where(sig)
+    data, lon = add_cyclic_point(field.values, coord=field["lon"].values)
+    ax.contourf(
+        lon, field["lat"].values, data,
+        levels=[0.5, 1.5], colors="none", hatches=[hatch],
+        transform=ccrs.PlateCarree(), zorder=zorder,
+    )
+    for c in ax.collections[-1:]:
+        c.set_edgecolor(color)
+        c.set_linewidth(0.0)
 
 
 def plot_single_boreal_panel(
@@ -544,6 +485,8 @@ def plot_single_boreal_panel(
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
     ocean_zorder: int = 2,
+    sig: xr.DataArray | None = None,
+    mean_text: str | None = None,
 ):
     """
     Plot one polar boreal map panel.
@@ -559,6 +502,10 @@ def plot_single_boreal_panel(
         Colour used for ocean shading.
     add_cbar:
         If True, add an individual colourbar for this panel.
+    sig:
+        Boolean map; True cells are stippled (drawn above the ocean shading).
+    mean_text:
+        Text under the panel; default is the area-weighted mean of `da`.
     """
     if vmax is None:
         vmax = symmetric_vmax(da)
@@ -600,6 +547,9 @@ def plot_single_boreal_panel(
 
     ax.coastlines(linewidth=0.6, zorder=ocean_zorder + 1)
 
+    if sig is not None and bool(sig.any()):
+        add_stippling(ax, sig, zorder=ocean_zorder + 2)
+
     ax.set_title(
         title,
         fontsize=9.5,
@@ -607,13 +557,14 @@ def plot_single_boreal_panel(
         pad=5,
     )
 
-    mean_val = area_weighted_mean(da, lat_min=mean_lat_min)
     unit_text = units or da.attrs.get("units", "")
+    if mean_text is None:
+        mean_text = f"mean: {format_forcing_mean(area_weighted_mean(da, lat_min=mean_lat_min))}"
 
     ax.text(
         0.5,
         -0.12,
-        f"mean: {format_forcing_mean(mean_val)} {unit_text}",
+        f"{mean_text} {unit_text}",
         transform=ax.transAxes,
         ha="center",
         va="top",
@@ -654,10 +605,6 @@ def plot_single_boreal_panel(
 
     return p, norm, cb
 
-
-# =============================================================================
-# Composite figures
-# =============================================================================
 
 def add_grouped_horizontal_colorbar(
     fig,
@@ -704,28 +651,68 @@ def add_grouped_horizontal_colorbar(
 
     return cb
 
+
+def _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
+                stipple, fdr_alpha, vmax=None, **kwargs):
+    """Compute and draw one panel; returns the yearly differences."""
+    case1, case2 = pairs[panel.case1_role], pairs[panel.case2_role]
+    d = yearly_difference(case1, case2, panel.variable_class, panel.variable,
+                          start_year, end_year, panel.component)
+    da = d.mean("year")
+
+    sig = None
+    if stipple:
+        sig = fdr_mask(cellwise_pvalue(d), alpha=fdr_alpha, within=d["lat"] >= extent_lat)
+
+    m, half = regional_mean_interval(d, lat_min=mean_lat_min)
+    region = f"≥{mean_lat_min:g}°N" if mean_lat_min is not None else "global"
+    plot_single_boreal_panel(
+        ax=ax,
+        da=da,
+        title=panel.title,
+        units=panel.units,
+        vmax=vmax or panel.vmax or symmetric_vmax(da),
+        extent_lat=extent_lat,
+        mean_lat_min=mean_lat_min,
+        cbar_label=f"{panel.long_label or panel.variable}\n[{panel.units}]",
+        sig=sig,
+        mean_text=f"mean {region}: {_format_interval(m, half)}",
+        **kwargs,
+    )
+    return d
+
+
+# =============================================================================
+# Composite figures
+# =============================================================================
+
 def make_forcing_summary_figure(
     experiment: str,
     start_year: int,
     end_year: int,
+    band: str = "NET",
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
     figsize: tuple[float, float] = (19, 5.2),
     save: bool = True,
     figdir: Path = FIGURE_DIR,
-    dpi: int = 1000,
+    dpi: int = 300,
     cmap: str = "RdBu_r",
     add_cbar: bool = True,
     shade_ocean: bool = True,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
     transparent_background: bool = True,
+    stipple: bool = True,
+    fdr_alpha: float = 0.10,
 ):
     """
     Create six-panel forcing decomposition figure.
 
     experiment:
         "PD" or "FUT"
+    band:
+        "NET", "SW" or "LW" for the five Ghan panels (the albedo proxy is always SW).
 
     Ocean shading can be regulated with:
         shade_ocean=True/False
@@ -738,48 +725,29 @@ def make_forcing_summary_figure(
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
 
     pairs = BVOC_PAIRS[experiment]
+    panels = forcing_panels(band)
 
     fig, axes = plt.subplots(
         1,
-        len(FORCING_PANELS),
+        len(panels),
         figsize=figsize,
         subplot_kw={"projection": ccrs.Orthographic(0, 90)},
         constrained_layout=True,
     )
 
-    for ax, panel in zip(axes, FORCING_PANELS):
-        case1 = pairs[panel.case1_role]
-        case2 = pairs[panel.case2_role]
-
-        da = panel_difference_map(
-            case1=case1,
-            case2=case2,
-            variable_class=panel.variable_class,
-            variable=panel.variable,
-            start_year=start_year,
-            end_year=end_year,
-        )
-
-        label = panel.long_label or panel.variable
-
-        plot_single_boreal_panel(
-            ax=ax,
-            da=da,
-            title=panel.title,
-            units=panel.units,
-            vmax=panel.vmax,
+    for ax, panel in zip(axes, panels):
+        _plot_panel(
+            ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
+            stipple, fdr_alpha,
             cmap=cmap,
-            extent_lat=extent_lat,
-            mean_lat_min=mean_lat_min,
             add_cbar=add_cbar,
-            cbar_label=f"{label}\n[{panel.units}]",
             shade_ocean=shade_ocean,
             ocean_alpha=ocean_alpha,
             ocean_facecolor=ocean_facecolor,
         )
 
     fig.suptitle(
-        f"{experiment}: radiative forcing decomposition ({start_year}–{end_year})",
+        f"{experiment}: radiative forcing decomposition, {band} ({start_year}–{end_year})",
         fontsize=14,
         fontweight="bold",
         y=1.03,
@@ -787,7 +755,7 @@ def make_forcing_summary_figure(
 
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
-        path = figdir / f"{experiment}_forcing_decomposition_{start_year}_{end_year}.png"
+        path = figdir / f"{experiment}_forcing_decomposition_{band}_{start_year}_{end_year}.png"
         fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=transparent_background)
         print(f"Saved {path}")
 
@@ -811,6 +779,8 @@ def make_context_maps_figure(
     shade_ocean: bool = True,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
+    stipple: bool = True,
+    fdr_alpha: float = 0.10,
 ):
     """
     Create BVOC/SOA/cloud/context map figure for LCC-X - LCC-X-fBVOC.
@@ -836,47 +806,27 @@ def make_context_maps_figure(
     axes = np.asarray(axes).ravel()
 
     for ax, panel in zip(axes, panels):
-        case1 = pairs[panel.case1_role]
-        case2 = pairs[panel.case2_role]
-
         try:
-            da = panel_difference_map(
-                case1=case1,
-                case2=case2,
-                variable_class=panel.variable_class,
-                variable=panel.variable,
-                start_year=start_year,
-                end_year=end_year,
+            _plot_panel(
+                ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
+                stipple, fdr_alpha,
+                cmap=cmap,
+                add_cbar=add_cbar,
+                shade_ocean=shade_ocean,
+                ocean_alpha=ocean_alpha,
+                ocean_facecolor=ocean_facecolor,
             )
-        except Exception as exc:
+        except (FileNotFoundError, KeyError) as exc:
             ax.set_axis_off()
             ax.set_title(f"{panel.title}\nmissing", fontsize=9)
             print(f"Skipping {panel.key}: {exc}")
             continue
 
-        vmax = panel.vmax or symmetric_vmax(da)
-
-        plot_single_boreal_panel(
-            ax=ax,
-            da=da,
-            title=panel.title,
-            units=panel.units,
-            vmax=vmax,
-            cmap=cmap,
-            extent_lat=extent_lat,
-            mean_lat_min=mean_lat_min,
-            add_cbar=add_cbar,
-            cbar_label=f"{panel.long_label or panel.variable}\n[{panel.units}]",
-            shade_ocean=shade_ocean,
-            ocean_alpha=ocean_alpha,
-            ocean_facecolor=ocean_facecolor,
-        )
-
     for ax in axes[len(panels):]:
         ax.set_axis_off()
 
     fig.suptitle(
-        f"{experiment}: BVOC/SOA/cloud context maps ({start_year}–{end_year})",
+        f"{experiment}: BVOC/SOA/cloud context maps, LCC − LCC_fBVOC ({start_year}–{end_year})",
         fontsize=14,
         fontweight="bold",
         y=1.02,

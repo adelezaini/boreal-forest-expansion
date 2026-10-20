@@ -1,0 +1,6 @@
+--- cell 1 ok (39s)
+--- cell 3 ok (0s)
+INFO boreal_forest_expansion.analysis.loading: NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.regions: Modified cells: 1161 from modified_cells.nc
+INFO boreal_forest_expansion.analysis.loading: NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20260925: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005: 120 files, 108 months after spin-up

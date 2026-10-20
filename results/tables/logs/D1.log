@@ -1,0 +1,67 @@
+--- cell 1 ok (34s)
+--- cell 3 ok (0s)
+INFO boreal_forest_expansion.analysis.loading: NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.regions: Modified cells: 1161 from modified_cells.nc
+INFO boreal_forest_expansion.analysis.loading: NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.loading: NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20260925: 120 files, 108 months after spin-up
+INFO boreal_forest_expansion.analysis.regions: Modified cells: 1161 from modified_cells.nc
+{'weights_source': 'gw', 'n_modified': 1161, 'spinup_months': 12, 'ratio_threshold': 0.2}
+BVOC_PD: LCC_PD − LCC_PD_fBVOC  |  NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005 − NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008  |  years 2001–2009 (n=9)
+BVOC_FUT: LCC_FUT − LCC_FUT_fBVOC  |  NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005 − NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009  |  years 2001–2009 (n=9)
+Total_PD: LCC_PD − CTRL_PD  |  NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005 − NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925  |  years 2001–2009 (n=9)
+Total_FUT: LCC_FUT − CTRL_FUT  |  NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005 − NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20260925  |  years 2001–2009 (n=9)
+--- cell 5 ok (492s)
+--- cell 7 ok (0s)
+--- cell 9 ok (0s)
+--- cell 11 ok (3s)
+--- cell 13 ok (24s)
+--- cell 15 ok (0s)
+--- cell 17 ok (0s)
+--- cell 18 ok (22s)
+
+##### res.verdict[res.verdict.band.eq("net")][cols]
+     contrast       term  tropics_mean  tropics_ci_lo  tropics_ci_hi     tropics_p  tropics_contrib  modified_cells_contrib       ratio            verdict
+2    BVOC_PD    ari_net     -0.004447      -0.023714       0.014821  6.090402e-01        -0.002245               -0.000017  129.655369      none detected
+5    BVOC_PD  cloud_net      0.046059      -0.003575       0.095692  6.478509e-02         0.023249                0.004776    4.867611      none detected
+8    BVOC_PD  clear_net      0.051810       0.029977       0.073643  6.507273e-04         0.026152                0.002551   10.250595  detected, MATTERS
+11   BVOC_PD  total_net      0.093422       0.039029       0.147814  4.172980e-03         0.047156                0.007310    6.450754  detected, MATTERS
+14  BVOC_FUT    ari_net     -0.280383      -0.313867      -0.246899  1.181962e-06        -0.141528               -0.002637   53.676124  detected, MATTERS
+17  BVOC_FUT  cloud_net     -0.710620      -0.767110      -0.654130  3.399840e-08        -0.358696               -0.050888    7.048784  detected, MATTERS
+20  BVOC_FUT  clear_net      0.116159       0.084150       0.148169  2.064923e-04         0.058633                0.005438   10.781659  detected, MATTERS
+23  BVOC_FUT  total_net     -0.874843      -0.956887      -0.792800  1.079916e-07        -0.441591               -0.048086    9.183327  detected, MATTERS
+
+##### res_tot.verdict[res_tot.verdict.band.eq("net")][cols]
+      contrast       term  tropics_mean  tropics_ci_lo  tropics_ci_hi     tropics_p  tropics_contrib  modified_cells_contrib      ratio            verdict
+2    Total_PD    ari_net      0.010182      -0.005790       0.026154  1.797308e-01         0.005140               -0.001699   3.025180      none detected
+5    Total_PD  cloud_net      0.027978      -0.085614       0.141571  4.722469e-01         0.014123               -0.016710   0.845163      none detected
+8    Total_PD  clear_net     -0.014411      -0.031762       0.002940  9.178094e-02        -0.007274                0.051451   0.141381      none detected
+11   Total_PD  total_net      0.023750      -0.038680       0.086179  3.941506e-01         0.011988                0.033042   0.362816      none detected
+14  Total_FUT    ari_net      0.091214       0.077844       0.104585  3.426950e-07         0.046042               -0.004296  10.717517  detected, MATTERS
+17  Total_FUT  cloud_net      0.436558       0.395826       0.477290  7.675876e-09         0.220359                0.010500  20.985856  detected, MATTERS
+20  Total_FUT  clear_net     -0.029155      -0.038980      -0.019330  3.834352e-04        -0.014717                0.032381   0.454486  detected, MATTERS
+23  Total_FUT  total_net      0.498617       0.453091       0.544143  6.468126e-09         0.251685                0.038585   6.522829  detected, MATTERS
+
+##### pd.concat([res.table,res_tot.table]).query("band==\"net\"").pivot_table(index=["contrast","component"],columns="region",values="contrib").round(4)
+ region               NH_45_90_rest  SH_extratropics  global  modified_cells  tropics
+contrast  component                                                                 
+BVOC_FUT  ari              -0.0005          -0.0032 -0.1542         -0.0026  -0.1415
+          clear             0.0161           0.0460  0.1532          0.0054   0.0586
+          cloud            -0.0676          -0.0480 -0.5704         -0.0509  -0.3587
+          total            -0.0520          -0.0052 -0.5715         -0.0481  -0.4416
+BVOC_PD   ari              -0.0000           0.0001 -0.0013         -0.0000  -0.0022
+          clear             0.0052           0.0162  0.0563          0.0026   0.0262
+          cloud             0.0055           0.0070  0.0451          0.0048   0.0232
+          total             0.0107           0.0232  0.1001          0.0073   0.0472
+Total_FUT ari              -0.0057           0.0030  0.0223         -0.0043   0.0460
+          clear            -0.0162          -0.0101 -0.0325          0.0324  -0.0147
+          cloud             0.0224           0.0284  0.3029          0.0105   0.2204
+          total             0.0004           0.0213  0.2928          0.0386   0.2517
+Total_PD  ari               0.0004           0.0000  0.0060         -0.0017   0.0051
+          clear             0.0009          -0.0032  0.0412          0.0515  -0.0073
+          cloud             0.0004           0.0019 -0.0009         -0.0167   0.0141
+          total             0.0017          -0.0013  0.0463          0.0330   0.0120
