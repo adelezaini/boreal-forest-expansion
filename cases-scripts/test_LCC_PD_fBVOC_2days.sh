@@ -28,7 +28,7 @@ BVOC_DIR="/cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emission
 CTRL="NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925"
 ISOP_FILE="$BVOC_DIR/ems_${CTRL}_2001-2009_SFISOP.nc"
 MTERP_FILE="$BVOC_DIR/ems_${CTRL}_2001-2009_SFMTERP.nc"
-STARTDATE="2000-07-01"  # Requires nudging data covering July 1-3.
+STARTDATE="2000-01-01"
 
 BASE_CASE_DIR="$HOME/cases/BRL_FRST_XPSN"
 CASEROOT="$BASE_CASE_DIR/$CASENAME"
