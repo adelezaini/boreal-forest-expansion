@@ -39,6 +39,7 @@ import logging
 import os
 from datetime import datetime
 
+import netCDF4
 import numpy as np
 import xarray as xr
 
@@ -68,7 +69,7 @@ def scan_files(files, variables):
     """
     lacking = {v: [] for v in variables}
     for f in files:
-        with xr.open_dataset(f, decode_cf=False) as d:
+        with netCDF4.Dataset(f) as d:      # header only; much faster than xr.open_dataset
             names = set(d.variables)
         for v in variables:
             if v not in names:
@@ -142,7 +143,10 @@ def validate_monthly_means(ds, min_days=28, max_days=31):
     start, end = bnds.isel({bnd_dim: 0}), bnds.isel({bnd_dim: 1})
     days = ((end - start) / np.timedelta64(1, "D")).values
 
-    bad = np.flatnonzero((days < min_days) | (days > max_days))
+    # 1 h tolerance: CLM's first record starts one model timestep early
+    # (e.g. 1999-12-31 23:30 -> 31.02 days); that record falls in the spin-up anyway.
+    tol = 1 / 24
+    bad = np.flatnonzero((days < min_days - tol) | (days > max_days + tol))
     if bad.size:
         examples = ", ".join(f"{start.values[i]} ({days[i]:g} days)" for i in bad[:3])
         raise ValueError(f"{bad.size} records are not monthly ({min_days}-{max_days} days), "
@@ -211,6 +215,12 @@ def processed_filename(alias, component, category, span):
     return f"{alias}_{component}_{category}_{span}.nc"
 
 
+def processed_exists(out_path, alias, component, category):
+    """True if an output file for this alias/component/category exists (any year span)."""
+    pattern = os.path.join(out_path, processed_filename(alias, component, category, "*"))
+    return bool(glob.glob(pattern))
+
+
 def save_category(ds, variables, out_path, alias, component, category, provenance):
     """Write the present `variables` of `ds` (+ time bounds) to one netCDF file."""
     keep = [v for v in variables if v in ds] + [b for b in BOUNDS_NAMES if b in ds]
@@ -219,7 +229,9 @@ def save_category(ds, variables, out_path, alias, component, category, provenanc
                      created=datetime.now().isoformat(timespec="seconds"))
     os.makedirs(out_path, exist_ok=True)
     fname = os.path.join(out_path, processed_filename(alias, component, category, year_span(ds)))
-    out.to_netcdf(fname)
+    tmp = fname + ".part"          # rename when complete: a killed run leaves no valid-looking file
+    out.to_netcdf(tmp)
+    os.replace(tmp, fname)
     log.info("Saved %s", fname)
     return fname
 

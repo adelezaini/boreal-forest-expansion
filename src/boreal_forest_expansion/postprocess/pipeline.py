@@ -33,9 +33,19 @@ log = logging.getLogger(__name__)
 
 
 def run(casename, alias, component, raw_path, out_path,
-        tape="h0", categories=None, spinup_months=12):
-    """Postprocess one case and component. Returns the list of written files."""
+        tape="h0", categories=None, spinup_months=12, skip_existing=False):
+    """Postprocess one case and component. Returns the list of written files.
+
+    skip_existing : skip categories whose output file already exists in `out_path`.
+    """
     categories = categories or list(variables.CATEGORIES[component])
+    if skip_existing:
+        done = [c for c in categories if fileio.processed_exists(out_path, alias, component, c)]
+        if done:
+            log.info("Already processed, skipped: %s", ", ".join(done))
+        categories = [c for c in categories if c not in done]
+        if not categories:
+            return []
     wanted = variables.variables_for(component, categories)
 
     files = fileio.find_history_files(raw_path, casename, component, tape)
@@ -43,6 +53,9 @@ def run(casename, alias, component, raw_path, out_path,
     ds = fileio.validate_monthly_means(ds)
     ds = fileio.fix_time(ds)
     ds = fileio.drop_spinup(ds, spinup_months)
+    # Read everything once into memory: otherwise every category (and every derived
+    # variable) re-reads the history files lazily through dask, which is very slow.
+    ds = ds.load()
     ds = fileio.fix_unit_labels(ds, variables.UNIT_LABEL_FIXES[component])
     ds, added = derived.add_derived(ds, component, categories)
 

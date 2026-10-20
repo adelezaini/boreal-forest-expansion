@@ -63,11 +63,14 @@ def main():
     parser.add_argument("--raw-path", default=RAW_PATH)
     parser.add_argument("--out-path", default=OUT_PATH)
     parser.add_argument("--spinup-months", type=int, default=SPINUP_MONTHS)
+    parser.add_argument("--skip-existing", action="store_true",
+                        help="skip categories whose output file already exists")
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     files = run(args.casename, args.alias, args.component, args.raw_path, args.out_path,
-                tape=args.tape, categories=args.categories, spinup_months=args.spinup_months)
+                tape=args.tape, categories=args.categories, spinup_months=args.spinup_months,
+                skip_existing=args.skip_existing)
     print("\n".join(files))
 
 
