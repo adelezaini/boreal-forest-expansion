@@ -1,6 +1,6 @@
 """Generates D1_farfield_check.ipynb (kept as a script so the notebook is easy to regenerate).
 
-Run from analysis/:  python make_D1_notebook.py
+Run from diagnostics/other-BVOC-emission-magnitude/:  python make_D1_notebook.py
 """
 
 import json
@@ -39,9 +39,9 @@ import logging
 import pandas as pd
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, str(Path.cwd().parent / "src"))   # repo src/, no pip install needed
-from boreal_forest_expansion.analysis import farfield as ff
-from boreal_forest_expansion.analysis import farfield_plots as fp
+sys.path.insert(0, str(Path.cwd().parents[1] / "src"))   # repo src/, no pip install needed
+from boreal_forest_expansion.diagnostics import farfield as ff
+from boreal_forest_expansion.diagnostics import farfield_plots as fp
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 pd.set_option("display.width", 200, "display.max_columns", 30)"""),

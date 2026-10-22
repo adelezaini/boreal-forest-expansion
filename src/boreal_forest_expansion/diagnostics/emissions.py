@@ -41,9 +41,9 @@ import pandas as pd
 import xarray as xr
 
 from . import megan
-from .loading import annual_mean, open_cam_monthly
-from .regions import band_mask, load_modified_cells
-from .stats import paired_summary
+from boreal_forest_expansion.analysis.loading import annual_mean, open_cam_monthly
+from boreal_forest_expansion.analysis.regions import band_mask, load_modified_cells
+from boreal_forest_expansion.analysis.stats import paired_summary
 
 log = logging.getLogger(__name__)
 
@@ -297,7 +297,7 @@ def cam_clm_crosscheck(clm_pattern: str, cam_pattern: str, spinup_months: int = 
     ISOP: same molecule on both sides, totals should agree within regridding/coupling
     differences (b). MTERP: CAM mass uses the MTERP molar mass, so compare in moles.
     """
-    from .regions import area_weights
+    from boreal_forest_expansion.analysis.regions import area_weights
     R_EARTH = 6.37122e6
     clm = open_cam_monthly(clm_pattern, meg_variables(), spinup_months, strict=False)
     cam = open_cam_monthly(cam_pattern, ["MEG_ISOP", "MEG_MTERP"], spinup_months)

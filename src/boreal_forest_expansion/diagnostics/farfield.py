@@ -34,10 +34,10 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from .ghan import BANDS, COMPONENTS, GHAN_INPUTS, ghan_terms, term_name
-from .loading import annual_mean, open_cam_monthly
-from .regions import area_fraction, area_weights, default_regions, load_modified_cells, regional_mean
-from .stats import cellwise_pvalue, fdr_mask, paired_summary
+from boreal_forest_expansion.analysis.ghan import BANDS, COMPONENTS, GHAN_INPUTS, ghan_terms, term_name
+from boreal_forest_expansion.analysis.loading import annual_mean, open_cam_monthly
+from boreal_forest_expansion.analysis.regions import area_fraction, area_weights, default_regions, load_modified_cells, regional_mean
+from boreal_forest_expansion.analysis.stats import cellwise_pvalue, fdr_mask, paired_summary
 
 log = logging.getLogger(__name__)
 

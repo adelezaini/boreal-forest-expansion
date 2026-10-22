@@ -14,7 +14,7 @@ import xarray as xr
 import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 
-from .ghan import COMPONENT_LABELS, COMPONENTS
+from boreal_forest_expansion.analysis.ghan import COMPONENT_LABELS, COMPONENTS
 
 try:
     import cartopy.crs as ccrs
@@ -162,8 +162,8 @@ def plot_yearly(diffs: dict[str, xr.Dataset], weights: xr.DataArray, mask: xr.Da
                 terms=("total_net", "cloud_SW", "clear_SW", "clear_LW"), region_label="30S-30N",
                 periods: dict[str, str] | None = None) -> plt.Figure:
     """Year-by-year regional means of the contrast. Shaded band: 95% interval of the mean."""
-    from .regions import regional_mean
-    from .stats import paired_summary
+    from boreal_forest_expansion.analysis.regions import regional_mean
+    from boreal_forest_expansion.analysis.stats import paired_summary
 
     fig, axes = plt.subplots(1, len(terms), figsize=(3.2 * len(terms), 2.6), constrained_layout=True,
                              squeeze=False)

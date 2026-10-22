@@ -1,6 +1,6 @@
 """Generates D2_megan_budget.ipynb (kept as a script so the notebook is easy to regenerate).
 
-Run from analysis/:  python make_D2_notebook.py
+Run from diagnostics/other-BVOC-emission-magnitude/:  python make_D2_notebook.py
 """
 
 import json
@@ -48,10 +48,10 @@ from pathlib import Path
 import logging
 import pandas as pd
 
-sys.path.insert(0, str(Path.cwd().parent / "src"))   # repo src/, no pip install needed
-from boreal_forest_expansion.analysis import emissions as em
-from boreal_forest_expansion.analysis import emissions_plots as ep
-from boreal_forest_expansion.analysis import megan
+sys.path.insert(0, str(Path.cwd().parents[1] / "src"))   # repo src/, no pip install needed
+from boreal_forest_expansion.diagnostics import emissions as em
+from boreal_forest_expansion.diagnostics import emissions_plots as ep
+from boreal_forest_expansion.diagnostics import megan
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 pd.set_option("display.width", 200, "display.max_columns", 30, "display.float_format", "{:.4g}".format)"""),

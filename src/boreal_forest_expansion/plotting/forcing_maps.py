@@ -456,18 +456,36 @@ def _format_interval(mean: float, half: float) -> str:
     return f"{mean:+.1e} ± {half:.0e}"
 
 
-def add_stippling(ax, sig: xr.DataArray, color="black", hatch="....", zorder=4):
-    """Hatch the cells where `sig` is True."""
-    field = sig.astype(float).where(sig)
-    data, lon = add_cyclic_point(field.values, coord=field["lon"].values)
-    ax.contourf(
-        lon, field["lat"].values, data,
-        levels=[0.5, 1.5], colors="none", hatches=[hatch],
-        transform=ccrs.PlateCarree(), zorder=zorder,
-    )
-    for c in ax.collections[-1:]:
-        c.set_edgecolor(color)
-        c.set_linewidth(0.0)
+def add_stippling(ax, sig: xr.DataArray, style: str = "dots", color="black", size: float = 0.6,
+                  zorder=4):
+    """Mark the cells where `sig` is True.
+
+    style:
+        "dots"    small dot at each significant cell centre; longitudes are thinned with
+                  1/cos(lat) so the dot spacing stays roughly even towards the pole
+        "contour" thin outline around significant areas
+        "hatch"   dense hatching of significant areas (old look)
+    """
+    lat, lon = sig["lat"].values, sig["lon"].values
+    if style == "dots":
+        stride = np.maximum(1, np.round(1 / np.cos(np.deg2rad(np.clip(np.abs(lat), 0, 87)))).astype(int))
+        keep = (np.arange(lon.size)[None, :] % stride[:, None]) == 0
+        yy, xx = np.nonzero(sig.values & keep)
+        ax.scatter(lon[xx], lat[yy], s=size, c=color, linewidths=0, alpha=0.7,
+                   transform=ccrs.PlateCarree(), zorder=zorder)
+        return
+    data, lon_c = add_cyclic_point(sig.astype(float).values, coord=lon)
+    if style == "contour":
+        ax.contour(lon_c, lat, data, levels=[0.5], colors=color, linewidths=0.5,
+                   transform=ccrs.PlateCarree(), zorder=zorder)
+    elif style == "hatch":
+        ax.contourf(lon_c, lat, np.where(data > 0.5, 1.0, np.nan), levels=[0.5, 1.5],
+                    colors="none", hatches=["...."], transform=ccrs.PlateCarree(), zorder=zorder)
+        for c in ax.collections[-1:]:
+            c.set_edgecolor(color)
+            c.set_linewidth(0.0)
+    else:
+        raise ValueError(f"unknown stippling style {style!r}")
 
 
 def plot_single_boreal_panel(
@@ -486,6 +504,7 @@ def plot_single_boreal_panel(
     ocean_facecolor: str = "white",
     ocean_zorder: int = 2,
     sig: xr.DataArray | None = None,
+    sig_style: str = "dots",
     mean_text: str | None = None,
 ):
     """
@@ -503,7 +522,9 @@ def plot_single_boreal_panel(
     add_cbar:
         If True, add an individual colourbar for this panel.
     sig:
-        Boolean map; True cells are stippled (drawn above the ocean shading).
+        Boolean map; True cells are marked (drawn above the ocean shading).
+    sig_style:
+        "dots", "contour" or "hatch", see add_stippling.
     mean_text:
         Text under the panel; default is the area-weighted mean of `da`.
     """
@@ -548,7 +569,7 @@ def plot_single_boreal_panel(
     ax.coastlines(linewidth=0.6, zorder=ocean_zorder + 1)
 
     if sig is not None and bool(sig.any()):
-        add_stippling(ax, sig, zorder=ocean_zorder + 2)
+        add_stippling(ax, sig, style=sig_style, zorder=ocean_zorder + 2)
 
     ax.set_title(
         title,
@@ -661,8 +682,9 @@ def _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min
     da = d.mean("year")
 
     sig = None
-    if stipple:
+    if stipple:   # True or a style name: "dots" (default), "contour", "hatch"
         sig = fdr_mask(cellwise_pvalue(d), alpha=fdr_alpha, within=d["lat"] >= extent_lat)
+        kwargs["sig_style"] = "dots" if stipple is True else stipple
 
     m, half = regional_mean_interval(d, lat_min=mean_lat_min)
     region = f"≥{mean_lat_min:g}°N" if mean_lat_min is not None else "global"
@@ -703,7 +725,7 @@ def make_forcing_summary_figure(
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
     transparent_background: bool = True,
-    stipple: bool = True,
+    stipple: bool | str = True,
     fdr_alpha: float = 0.10,
 ):
     """
@@ -779,7 +801,7 @@ def make_context_maps_figure(
     shade_ocean: bool = True,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
-    stipple: bool = True,
+    stipple: bool | str = True,
     fdr_alpha: float = 0.10,
 ):
     """
