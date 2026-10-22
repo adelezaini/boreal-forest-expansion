@@ -53,15 +53,18 @@ FIGURE_DIR = REPO_DIR / "results" / "figures"
 
 # Total = lcc - ctrl, BVOC = lcc - fbvoc. Each period uses its own CTRL, so the FUT
 # total does not contain the 2100 background (SST, GHG, emissions) change.
+# fbvoc alias suffix = run the prescribed emissions come from; _IM = ISOP and MTERP only.
+# LCC_FUT_fBVOC_PD_IM is fixed at CTRL_PD, so BVOC_FUT = LCC + climate change. Switch to
+# LCC_PD_fBVOC_PD / LCC_FUT_fBVOC_FUT (all 19 MEGAN species) once those runs exist.
 BVOC_PAIRS = {
     "PD": {
         "lcc": "LCC_PD",
-        "fbvoc": "LCC_PD_fBVOC",
+        "fbvoc": "LCC_PD_fBVOC_PD_IM",
         "ctrl": "CTRL_PD",
     },
     "FUT": {
         "lcc": "LCC_FUT",
-        "fbvoc": "LCC_FUT_fBVOC",
+        "fbvoc": "LCC_FUT_fBVOC_PD_IM",
         "ctrl": "CTRL_FUT",
     },
 }
