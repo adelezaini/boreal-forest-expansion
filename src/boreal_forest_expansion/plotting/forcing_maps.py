@@ -56,15 +56,17 @@ FIGURE_DIR = REPO_DIR / "results" / "figures"
 # fbvoc alias suffix = run the prescribed emissions come from; _IM = ISOP and MTERP only.
 # LCC_FUT_fBVOC_PD_IM is fixed at CTRL_PD, so BVOC_FUT = LCC + climate change. Switch to
 # LCC_PD_fBVOC_PD / LCC_FUT_fBVOC_FUT (all 19 MEGAN species) once those runs exist.
+# The processed files still carry the old aliases LCC_{PD,FUT}_fBVOC (= the _PD_IM runs);
+# switch to the _PD_IM names once the files are renamed.
 BVOC_PAIRS = {
     "PD": {
         "lcc": "LCC_PD",
-        "fbvoc": "LCC_PD_fBVOC_PD_IM",
+        "fbvoc": "LCC_PD_fBVOC",
         "ctrl": "CTRL_PD",
     },
     "FUT": {
         "lcc": "LCC_FUT",
-        "fbvoc": "LCC_FUT_fBVOC_PD_IM",
+        "fbvoc": "LCC_FUT_fBVOC",
         "ctrl": "CTRL_FUT",
     },
 }
@@ -464,10 +466,12 @@ def add_stippling(ax, sig: xr.DataArray, style: str = "dots", color="black", siz
     """Mark the cells where `sig` is True.
 
     style:
-        "dots"    small dot at each significant cell centre; longitudes are thinned with
+        "dots"    small dot at each marked cell centre; longitudes are thinned with
                   1/cos(lat) so the dot spacing stays roughly even towards the pole
-        "contour" thin outline around significant areas
-        "hatch"   dense hatching of significant areas (old look)
+        "contour" thin outline around marked areas
+        "hatch"   dense dotted hatching of marked areas (old look)
+        "lines"   thin dense diagonal lines (/////, line width 0.3); default colour dim grey.
+                  The forcing maps use it on the NON-significant cells (IPCC AR6 look).
     """
     lat, lon = sig["lat"].values, sig["lon"].values
     if style == "dots":
@@ -481,12 +485,14 @@ def add_stippling(ax, sig: xr.DataArray, style: str = "dots", color="black", siz
     if style == "contour":
         ax.contour(lon_c, lat, data, levels=[0.5], colors=color, linewidths=0.5,
                    transform=ccrs.PlateCarree(), zorder=zorder)
-    elif style == "hatch":
-        ax.contourf(lon_c, lat, np.where(data > 0.5, 1.0, np.nan), levels=[0.5, 1.5],
-                    colors="none", hatches=["...."], transform=ccrs.PlateCarree(), zorder=zorder)
-        for c in ax.collections[-1:]:
-            c.set_edgecolor(color)
-            c.set_linewidth(0.0)
+    elif style in ("hatch", "lines"):
+        cs = ax.contourf(lon_c, lat, np.where(data > 0.5, 1.0, np.nan), levels=[0.5, 1.5],
+                         colors="none", hatches=["...." if style == "hatch" else "/////"],
+                         transform=ccrs.PlateCarree(), zorder=zorder)
+        cs.set_edgecolor("dimgrey" if style == "lines" and color == "black" else color)
+        cs.set_linewidth(0.0)
+        if style == "lines":
+            cs.set_hatch_linewidth(0.3)
     else:
         raise ValueError(f"unknown stippling style {style!r}")
 
@@ -502,7 +508,7 @@ def plot_single_boreal_panel(
     add_cbar: bool = True,
     cbar_label: str | None = None,
     mean_lat_min: float | None = 45.0,
-    shade_ocean: bool = True,
+    shade_ocean: bool = False,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
     ocean_zorder: int = 2,
@@ -527,7 +533,7 @@ def plot_single_boreal_panel(
     sig:
         Boolean map; True cells are marked (drawn above the ocean shading).
     sig_style:
-        "dots", "contour" or "hatch", see add_stippling.
+        "dots", "contour", "hatch" or "lines", see add_stippling.
     mean_text:
         Text under the panel; default is the area-weighted mean of `da`.
     """
@@ -685,9 +691,13 @@ def _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min
     da = d.mean("year")
 
     sig = None
-    if stipple:   # True or a style name: "dots" (default), "contour", "hatch"
-        sig = fdr_mask(cellwise_pvalue(d), alpha=fdr_alpha, within=d["lat"] >= extent_lat)
-        kwargs["sig_style"] = "dots" if stipple is True else stipple
+    if stipple:   # True or a style name: "lines" (default), "dots", "contour", "hatch"
+        p = cellwise_pvalue(d)
+        region = d["lat"] >= extent_lat
+        sig = fdr_mask(p, alpha=fdr_alpha, within=region)
+        kwargs["sig_style"] = "lines" if stipple is True else stipple
+        if kwargs["sig_style"] == "lines":   # "lines" marks the NON-significant cells
+            sig = (~sig) & np.isfinite(p) & region
 
     m, half = regional_mean_interval(d, lat_min=mean_lat_min)
     region = f"≥{mean_lat_min:g}°N" if mean_lat_min is not None else "global"
@@ -724,7 +734,7 @@ def make_forcing_summary_figure(
     dpi: int = 300,
     cmap: str = "RdBu_r",
     add_cbar: bool = True,
-    shade_ocean: bool = True,
+    shade_ocean: bool = False,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
     transparent_background: bool = True,
@@ -801,7 +811,7 @@ def make_context_maps_figure(
     dpi: int = 300,
     cmap: str = "RdBu_r",
     add_cbar: bool = True,
-    shade_ocean: bool = True,
+    shade_ocean: bool = False,
     ocean_alpha: float = 0.75,
     ocean_facecolor: str = "white",
     stipple: bool | str = True,
