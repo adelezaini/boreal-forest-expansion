@@ -80,6 +80,58 @@ remove_case_if_exists() {
     fi
 }
 
+##------ extend an existing case (continue run)
+# Continues a finished case for NYEARS more years from its last restart.
+# Keeps casename, namelists, SourceMods and archive continuous (no rebuild).
+# Usage: extend_case "$CASENAME" 5 "2010-01-01-00000"
+
+extend_case() {
+    local casename="$1"        # existing case name (with date suffix)
+    local nyears="$2"          # years to add
+    local restdate="$3"        # restart date the run dir must point to
+    local met_end_year=2015    # nudging data end: ..._6h_2000-2015 (last file 2015-01-01-00000)
+
+    local caseroot="$HOME/cases/BRL_FRST_XPSN/$casename"
+    [[ -d "$caseroot" ]] || { echo "ERROR: missing case directory: $caseroot" >&2; return 1; }
+    cd "$caseroot" || return 1
+
+    # Do not touch a case that is still queued/running
+    if squeue -u "$USER" -h -o %j | grep -q -- "$casename"; then
+        echo "ERROR: a job for $casename is still in the queue." >&2
+        return 1
+    fi
+
+    # Previous segment must have completed and been archived
+    tail -n 3 CaseStatus | grep -q 'st_archive success' || {
+        echo "ERROR: last CaseStatus entry is not 'st_archive success' for $casename." >&2
+        return 1
+    }
+
+    # Run dir must point to the expected restart
+    local rundir
+    rundir=$(./xmlquery --value RUNDIR)
+    grep -q -- "$restdate" "$rundir/rpointer.atm" || {
+        echo "ERROR: $rundir/rpointer.atm does not point to $restdate:" >&2
+        cat "$rundir/rpointer.atm" >&2
+        return 1
+    }
+
+    # Stay inside the nudging data period
+    local end_year=$(( 10#${restdate:0:4} + nyears ))
+    (( end_year <= met_end_year )) || {
+        echo "ERROR: run would end in $end_year, after nudging data end ($met_end_year-01-01)." >&2
+        return 1
+    }
+
+    ./xmlchange CONTINUE_RUN=TRUE
+    ./xmlchange STOP_OPTION=nyears,STOP_N="$nyears"
+    ./xmlchange RESUBMIT=0
+    ./xmlchange REST_OPTION=nyears,REST_N=1
+
+    echo "Extending $casename from $restdate by $nyears years (to $end_year-01-01)"
+    ./case.submit
+}
+
 ##----------------- restart file handling -----------------##
 prepare_restart_files() {
     # Synchronizes restart files from a source directory to a local directory.
@@ -438,11 +490,14 @@ EOF
 }
 
 cam_diagnostics(){
-    # optional arg "HR_BVOC" -> add an h1 tape of 30-min BVOC surface fluxes (CTRL only),
+    # optional arg:
+    #   "HR_BVOC"     -> h1 tape of 30-min SFISOP, SFMTERP (CTRL only; original workflow)
+    #   "HR_BVOC_ALL" -> h1 tape of 30-min SFISOP, SFMTERP + the short-lived MEGAN species
+    #                    (CTRL reruns that feed the all-species fixed-BVOC files)
     # for tests: set nhtfrq = -24
     ./xmlchange CAM_AEROCOM=TRUE
 
-    if [[ "${1:-}" == "HR_BVOC" ]]; then
+    if [[ "${1:-}" == "HR_BVOC" || "${1:-}" == "HR_BVOC_ALL" ]]; then
         cat << 'EOF' >> user_nl_cam
 empty_htapes    = .true.
 history_aerosol = .true.
@@ -497,13 +552,31 @@ fincl1 = 'FSNT','FSNTC','FLNT','FLNTC','FLUT','FLUTC',
        'HO2','TROP_P','TROP_T','TROP_Z',
        'T','Q','U','V','OMEGA','Z3',
        'PS',
-       'SF6', 'CFC115', 'N2O', 'CO2'
+       'SF6', 'CFC115', 'N2O', 'CO2',
+       'MEG_CH3OH','MEG_C2H5OH','MEG_CH2O','MEG_CH3CHO','MEG_CH3COOH','MEG_CH3COCH3',
+       'MEG_HCOOH','MEG_HCN','MEG_CO','MEG_C2H6','MEG_C2H4','MEG_C3H8',
+       'MEG_C3H6','MEG_BIGALK','MEG_BIGENE','MEG_TOLUENE'
 EOF
+    # The last 16 MEG_* fields = biogenic (MEGAN) flux of every other CAM species in
+    # megan_specifier, kg m-2 s-1 per grid-cell area (chemistry.F90). Monthly means feed the
+    # fixed-BVOC files of the long-lived species. In fBVOC runs (megan_specifier = '') they
+    # do not exist: CAM drops unknown fincl fields with a log line, no abort
+    # (cam_history.F90: the abort flag is a .false. parameter).
 
-    # --- h1 hourly-BVOC tape (CTRL only), feeds the emission-climatology script ---
+    # --- h1 30-min BVOC tape (CTRL only), feeds the emission-climatology script ---
     if [[ "${1:-}" == "HR_BVOC" ]]; then
         cat << 'EOF' >> user_nl_cam
 fincl2 = 'SFISOP','SFMTERP'
+EOF
+    elif [[ "${1:-}" == "HR_BVOC_ALL" ]]; then
+        # SFISOP, SFMTERP first and in the same order as HR_BVOC, so position-based
+        # readers keep working. Then MEG_* (biogenic only; NOT SF*, which would include the
+        # anthropogenic and biomass-burning file emissions that stay active in fBVOC runs)
+        # for the species with lifetime <~ 1 day, whose diurnal cycle matters:
+        # BCARY, C3H6, BIGENE, CH3CHO, CH2O, C2H4.
+        cat << 'EOF' >> user_nl_cam
+fincl2 = 'SFISOP','SFMTERP',
+       'MEG_BCARY','MEG_C3H6','MEG_BIGENE','MEG_CH3CHO','MEG_CH2O','MEG_C2H4'
 EOF
     fi
 
@@ -664,14 +737,17 @@ clm_spinup_diagnostics(){
 # To check if reached equilibrium in the spinup
 # Monthly average output, each file has 1 month
 # NB: Added CLM_VARS = ('TOTVEGN', 'TWS') after running the simulations (for equilibrium check)
+# NB: added 'TSAI','HTOP' (canopy structure -> albedo), 'PCO2','PBOT' (CO2 seen by CLM:
+#   PCO2/PBOT*1e6 = ppm, catches the land-only CO2 bug), 'FSNO','SNOWDP' (snow, TWS drift at >45N)
 cat << EOF >> user_nl_clm
 hist_empty_htapes = .true.
 hist_mfilt = 1
 hist_nhtfrq = 0
 
-hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN',
+hist_fincl1 = 'TSA','TLAI','LAISHA','LAISUN','TSAI','HTOP',
 'TOTVEGC','TOTSOMC','TOTECOSYSC',
 'TOTVEGN', 'TWS',
+'PCO2','PBOT','FSNO','SNOWDP',
 'GPP','NPP','AR','HR','NEE',
 'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS', 'FSR','FGR',
 'RAIN','SNOW', 'H2OSNO',
@@ -683,15 +759,17 @@ EOF
 clm_long_spinup_diagnostics(){
 # Yearly average output, everyfile have 10 years
 # NB: Added CLM_VARS = ('TOTVEGN', 'TWS') after running the simulations (for equilibrium check)
+# NB added 'TSAI','HTOP','PCO2','PBOT','FSNO','SNOWDP' (see clm_spinup_diagnostics)
 
 cat << EOF >> user_nl_clm
 hist_empty_htapes = .true.
 hist_mfilt  = 10
 hist_nhtfrq = -8760
 
-hist_fincl1 = 'TSA','TLAI','TOTVEGC','TOTSOMC','TOTECOSYSC',
+hist_fincl1 = 'TSA','TLAI','TSAI','HTOP','TOTVEGC','TOTSOMC','TOTECOSYSC',
 'GPP','NPP','AR','HR','NEE',
 'TOTVEGN', 'TWS',
+'PCO2','PBOT','FSNO','SNOWDP',
 'FSH','EFLX_LH_TOT','FSA','FIRA','FSDS','FLDS','FSR','FGR',
 'RAIN','SNOW', 'H2OSNO',
 'QSOIL','QVEGE','QVEGT','QOVER','QRUNOFF',
