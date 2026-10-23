@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# NB: the first run (I2000Clm50BgcCropCplHist_f19_f19-20260925) used the compset default CO2 = 367 ppm (CLM_CO2_TYPE=constant),
+#     close to PD but not the CO2 of the coupled runs. Fixed 2026-10-23: CLM_CO2_TYPE=diagnostic, so CLM uses the CO2 in the
+#     cplhist forcing (a2x3h_Sa_co2diag), as in the coupled runs. Needs CCSM_BGC=CO2A, else Sa_co2diag is not passed to CLM.
+# CTRL twin: 12c (same set-up, CTRL surfdata).
+
 ### Land-only spinup to equilibrate cells that can start from cold start after changing the land cover (even with initial_interp=.true. because the change is dramatic)
 # Free run, no nudging
 # Set LCC
@@ -17,7 +22,7 @@ source cases-setup.sh
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="I2000Clm50BgcCropCplHist_f19_f19-$today"
+CASENAME="I2000Clm50BgcCropCplHist_lcc_f19_f19-$today"
 COMPSET=2000_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_SGLC_SWAV
 set_project_noresm_res_vars
 
@@ -49,6 +54,7 @@ cd "$CASEROOT"
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 datm_forcing_from_cplhist_files 2000
+./xmlchange CCSM_BGC=CO2A,CLM_CO2_TYPE=diagnostic
 
 # Initial files from restart
 ./xmlchange RUN_TYPE=hybrid
@@ -88,6 +94,10 @@ EOF
 
 # Diagnostics
 clm_long_spinup_diagnostics
+
+./preview_namelists
+grep -Eq "co2_type *= *'diagnostic'" CaseDocs/lnd_in || { echo "co2_type is not diagnostic in lnd_in" >&2; exit 1; }
+grep -Eq 'flds_co2a *= *\.true\.' CaseDocs/drv_in || { echo "flds_co2a is not .true. in drv namelists" >&2; exit 1; }
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 ./case.build

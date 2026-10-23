@@ -1,5 +1,5 @@
 #!/bin/bash
-# LCC_PD_fBVOC: two-day July test of prescribed total ISOP/MTERP.
+# LCC_PD_fBVOC_PD_IM: two-day July test of prescribed total ISOP/MTERP.
 # January restart + July start tests the forcing, not July equilibrium.
 # Keep this script beside case-setup.sh (or cases-setup.sh). Requires the existing fBVOC helpers.
 set -euo pipefail

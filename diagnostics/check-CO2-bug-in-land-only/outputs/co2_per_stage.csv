@@ -1,0 +1,11 @@
+stage,period,branch,kind,CLM_CO2_TYPE,CCSM_CO2_PPMV,co2_seen_ppm
+PD_spinup,PD,shared,coupled,diagnostic,367.0,370.3
+CTRL_PD,PD,CTRL,nudged,diagnostic,367.0,370.3
+PD_landonly_LCC,PD,LCC,land-only,constant,367.0,
+PD_spinup_LCC,PD,LCC,coupled,diagnostic,367.0,
+LCC_PD,PD,LCC,nudged,diagnostic,367.0,370.3
+FUT_spinup,FUT,shared,coupled,diagnostic,284.32,1134.0
+CTRL_FUT,FUT,CTRL,nudged,diagnostic,284.32,1142.0
+FUT_landonly_LCC,FUT,LCC,land-only,constant,284.32,
+FUT_spinup_LCC,FUT,LCC,coupled,diagnostic,284.32,
+LCC_FUT,FUT,LCC,nudged,diagnostic,284.32,1142.0

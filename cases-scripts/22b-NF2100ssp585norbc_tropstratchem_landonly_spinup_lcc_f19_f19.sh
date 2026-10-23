@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# NB: I left "test-" in the casename even though it is not a test
+# NB: the first run (I2100ssp585Clm50BgcCropCplHist_f19_f19-20260924) kept "test-" in its case_id although it was not a test.
+# NB: that run used the compset default CO2 = 284.32 ppm (CLM_CO2_TYPE=constant), not 2100 SSP5-8.5 CO2.
+#     Vegetation collapsed (global TLAI 2.5 -> 0.95). Fixed 2026-10-23: CLM_CO2_TYPE=diagnostic, so CLM uses the CO2 in the
+#     cplhist forcing (a2x3h_Sa_co2diag, ~1134 ppm), as in the coupled runs. Needs CCSM_BGC=CO2A, else Sa_co2diag is not passed to CLM.
+# CTRL twin: 22c (same set-up, CTRL surfdata).
 
 ### Land-only spinup to equilibrate cells that can start from cold start after changing the land cover (even with initial_interp=.true. because the change is dramatic)
 # Free run, no nudging
@@ -18,7 +22,7 @@ source cases-setup.sh
 
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="I2100ssp585Clm50BgcCropCplHist_f19_f19-$today"
+CASENAME="I2100ssp585Clm50BgcCropCplHist_lcc_f19_f19-$today"
 COMPSET=2100SSP585_DATM%CPLHIST_CLM50%BGC-CROP_SICE_SOCN_MOSART_SGLC_SWAV
 
 # Restart files specifics:
@@ -57,6 +61,7 @@ cd "$CASEROOT"
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 datm_forcing_from_cplhist_files 2100
+./xmlchange CCSM_BGC=CO2A,CLM_CO2_TYPE=diagnostic
 
 # Simulation length
 ./xmlchange STOP_OPTION=nyears,STOP_N=10
@@ -95,6 +100,10 @@ EOF
 
 # Diagnostics
 clm_long_spinup_diagnostics
+
+./preview_namelists
+grep -Eq "co2_type *= *'diagnostic'" CaseDocs/lnd_in || { echo "co2_type is not diagnostic in lnd_in" >&2; exit 1; }
+grep -Eq 'flds_co2a *= *\.true\.' CaseDocs/drv_in || { echo "flds_co2a is not .true. in drv namelists" >&2; exit 1; }
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 ./case.build

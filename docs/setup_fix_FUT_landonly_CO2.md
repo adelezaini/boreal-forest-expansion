@@ -71,11 +71,12 @@ Notebooks with all figures and numbers:
 | Script | Change | Status |
 |---|---|---|
 | `cases-setup.sh`: `clm_spinup_diagnostics`, `clm_long_spinup_diagnostics` | add `TSAI`, `HTOP` (canopy structure, albedo), `PCO2`, `PBOT` (the CO₂ CLM sees: PCO2/PBOT × 10⁶ = ppm), `FSNO`, `SNOWDP` (snow). The six equilibrium variables were already present (TOTVEGN and TWS added after the existing runs). | **done**, not committed |
-| `22b-…landonly_spinup_lcc…` | CO₂: recommended `./xmlchange CLM_CO2_TYPE=diagnostic`, so CLM uses the cplhist CO₂ as in the coupled runs. The current uncommitted edit sets `constant` at 1137.78 ppm with a check on `lnd_in`; switch it to `diagnostic`. CASENAME gets `_lcc_`. | edit pending |
+| `22b-…landonly_spinup_lcc…` | CO₂: `./xmlchange CCSM_BGC=CO2A,CLM_CO2_TYPE=diagnostic`, so CLM uses the cplhist CO₂ as in the coupled runs. `CO2A` is required: with the DATM default `CCSM_BGC=none` the coupler does not pass `Sa_co2diag` and CLM aborts (`lnd_import_export.F90:90`). Checks on `lnd_in` (`co2_type`) and `drv_in` (`flds_co2a`). CASENAME gets `_lcc_`. | **done** 2026-10-23 (22b and 22c), not run |
 | `22a-…landonly_spinup_ctrl…` (new) | copy of 22b with the CTRL surfdata (`…simyr2000_c190304.nc`) and `_ctrl_` | created, not run (B only) |
 | `23b-…spinup_lcc…` | `LAND_CASE` / `LAND_REFDATE` → new 22b run | after 22b |
 | new CTRL coupled spin-up (e.g. `23c-…spinup_ctrl…`) | copy of 23b with CTRL surfdata and `finidat` from 22a | B only |
 | `23a`, `24a`, `24b` | `REFCASE` / `REFDATE` → new spin-ups (A: `finidat` from 22b for 24a/24b) | after the spin-ups |
+| PD (`12b`, new `12c`, new `13c`) | Same symmetric design for PD: 12b → `CCSM_BGC=CO2A,CLM_CO2_TYPE=diagnostic` (old run: constant 367 ppm), CASENAME `_lcc_`; 12c = CTRL twin of 12b; 13c = CTRL twin of 13b (finidat from 12c, placeholder + guard). Then 13a → 13c, 14a/14b → new 13b. | scripts written 2026-10-23, not run; run decision pending |
 | `setup_nudging_data` | unchanged (PD winds for all) | — |
 
 ## 6. Before submitting each case
