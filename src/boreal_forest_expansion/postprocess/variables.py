@@ -179,6 +179,16 @@ CATEGORIES = {
         # Conservation errors: a one-off check that the modified surface data behaves.
         # All should be ~0 everywhere (energy in W/m2, water in mm).
         "QA": ["ERRSEB", "ERRSOL", "ERRSOI", "ERRH2O", "ERRH2OSNO"],
+        # Water budget and runoff: P (RAIN + SNOW) - ET - QRUNOFF - QSNWCPICE = d(TWS)/dt (+ glacier ice QICE).
+        # QRUNOFF = liquid runoff (QOVER + QDRAI + QH2OSFC + snow-capping liquid ...); QSNWCPICE = solid
+        # runoff from snow capping (glaciers, Greenland); *_TO_COUPLER include the land-use corrections. mm/s.
+        "HYDRO": [
+            "QRUNOFF", "QOVER", "QDRAI", "QH2OSFC", "QSNOMELT", "QINTR", "QDRIP",
+            "RAIN", "SNOW", "TWS", "TOTSOILLIQ", "TOTSOILICE", "H2OCAN",
+            "FSAT", "ZWT", "QCHARGE", "BTRANMN",
+            "QSNWCPICE", "QSNOCPLIQ", "QICE", "QICE_FRZ", "QICE_MELT",
+            "QRUNOFF_TO_COUPLER", "QRUNOFF_ICE_TO_COUPLER", "QFLX_LIQ_DYNBAL", "QFLX_ICE_DYNBAL",
+        ],
     },
 }
 

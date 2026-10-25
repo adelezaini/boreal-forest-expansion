@@ -21,7 +21,7 @@ Options:
 
 Available categories:
     atm: BVOC SOA SULFATE AEROPT CLOUDPROP RADIATIVE CHEM METEO
-    lnd: LAND ENERGY SNOW BIOGEOCHEM BVOC ET QA
+    lnd: LAND ENERGY SNOW BIOGEOCHEM BVOC ET QA HYDRO
 
 Output filenames:
     <ALIAS>_<COMPONENT>_<CATEGORY>_<firstyear>-<lastyear>.nc
