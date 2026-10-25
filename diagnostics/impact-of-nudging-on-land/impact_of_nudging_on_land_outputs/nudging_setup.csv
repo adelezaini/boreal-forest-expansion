@@ -1,0 +1,10 @@
+stage,kind,met_data_file,met_nudge_only_uvps,met_rlx_time
+PD_spinup,free,not set,not set,not set
+PD_met,free (met source),not set,not set,not set
+CTRL_PD,nudged,NF2000norbc_tropstratchem_met_f19_f19_20260422.cam.h1.2000-01-01-00000.nc,.true.,6
+PD_spinup_LCC,free,not set,not set,not set
+LCC_PD,nudged,NF2000norbc_tropstratchem_met_f19_f19_20260422.cam.h1.2000-01-01-00000.nc,.true.,6
+FUT_spinup,free,not set,not set,not set
+CTRL_FUT,nudged,NF2000norbc_tropstratchem_met_f19_f19_20260422.cam.h1.2000-01-01-00000.nc,.true.,6
+FUT_spinup_LCC,free,not set,not set,not set
+LCC_FUT,nudged,NF2000norbc_tropstratchem_met_f19_f19_20260422.cam.h1.2000-01-01-00000.nc,.true.,6

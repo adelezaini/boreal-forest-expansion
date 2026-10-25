@@ -1,0 +1,14 @@
+diagnostic,contrast,mean_change,units
+cb_ISOP,Full contrast,1.241230872011718e-07,kg/m2
+cb_MTERP,Full contrast,1.049374083291993e-07,kg/m2
+cb_SOA_LV,Full contrast,5.874999463291092e-10,kg/m2
+cb_SOA_SV,Full contrast,4.28246177742034e-10,kg/m2
+AOD_VIS,Full contrast,0.005389764444680238,unitless
+CDNUMC,Full contrast,1613434634.9386275,1/m2
+ACTREL,Full contrast,-0.05740350794857076,Micron
+TGCLDLWP,Full contrast,0.00219289792576095,kg/m2
+CLDTOT,Full contrast,0.00015725011979744153,fraction
+SWCF,Full contrast,-0.5758917492320265,W/m2
+LWCF,Full contrast,-0.059695325426071866,W/m2
+FSNT,Full contrast,-0.8076221792726317,W/m2
+FLNT,Full contrast,-0.11048691315695654,W/m2
