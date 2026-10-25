@@ -26,8 +26,8 @@ REST_LOCAL="/cluster/home/$USER/restart/$REFCASE/$REFDATE-00000"
 # Surface data file with modified land cover for boreal forest expansion
 SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_SSP5-8.5_2100_78pfts_LPJGUESS.nc"
 
-# CLM finitdat = 100 year spinup
-LAND_CASE="I2000Clm50BgcCropCplHist_f19_f19-20260925"
+# CLM finitdat = 100 year LCC land-only spinup (12b, CO2 diagnostic)
+LAND_CASE="I2000Clm50BgcCropCplHist_lcc_f19_f19-20261023"
 LAND_REFDATE="0101-01-01"
 LAND_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/$LAND_CASE/rest/$LAND_REFDATE-00000"
 LAND_LOCAL="/cluster/home/$USER/restart/$LAND_CASE/$LAND_REFDATE-00000"

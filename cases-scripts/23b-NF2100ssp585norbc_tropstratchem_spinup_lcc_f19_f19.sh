@@ -21,8 +21,8 @@ REFDATE=0021-01-01
 REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/$REFCASE/rest/$REFDATE-00000"
 REST_LOCAL="/cluster/home/$USER/restart/$REFCASE/$REFDATE-00000"
 
-# CLM finitdat = 100 year spinup
-LAND_CASE="I2100ssp585Clm50BgcCropCplHist_f19_f19-20260924"
+# CLM finitdat = 100 year LCC land-only spinup (22b, CO2 diagnostic)
+LAND_CASE="I2100ssp585Clm50BgcCropCplHist_lcc_f19_f19-20261023"
 LAND_REFDATE="0101-01-01"
 LAND_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/$LAND_CASE/rest/$LAND_REFDATE-00000"
 LAND_LOCAL="/cluster/home/$USER/restart/$LAND_CASE/$LAND_REFDATE-00000"

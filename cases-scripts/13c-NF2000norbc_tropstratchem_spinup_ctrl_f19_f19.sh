@@ -27,7 +27,7 @@ REST_LOCAL="/cluster/home/$USER/restart/$REFCASE/$REFDATE-00000"
 SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/release-clm5.0.18/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc"
 
 # CLM finitdat = 100 year CTRL land-only spinup (12c). Set the date once 12c has run.
-LAND_CASE="I2000Clm50BgcCropCplHist_ctrl_f19_f19-YYYYMMDD"
+LAND_CASE="I2000Clm50BgcCropCplHist_ctrl_f19_f19-20261025"
 LAND_REFDATE="0101-01-01"
 LAND_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/$LAND_CASE/rest/$LAND_REFDATE-00000"
 LAND_LOCAL="/cluster/home/$USER/restart/$LAND_CASE/$LAND_REFDATE-00000"

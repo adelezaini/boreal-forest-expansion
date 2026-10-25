@@ -7,6 +7,8 @@
 
 # Exit if error, undefined variable...
 set -euo pipefail
+# HOLD (user, 2026-10-25): do not submit until the all-species prescribed BVOC set-up is decided and prepared (not ISOP+MTERP only). Remove this line then.
+{ echo "HOLD: fBVOC run on hold, see CLAUDE.md (fBVOC hold)" >&2; exit 1; }
 # Load common functions for case setup
 source cases-setup.sh
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
@@ -56,7 +58,7 @@ setup_nudging_data
 
 # Simulation length
 ./xmlchange STOP_OPTION=nyears,STOP_N=5
-./xmlchange RESUBMIT=1 # 5 yrs + 1 x 5 yrs = 10 yrs
+./xmlchange RESUBMIT=2 # 5 yrs + 2 x 5 yrs = 15 yrs (2000-2014; nudging data end 2015-01-01)
 ./xmlchange REST_OPTION=nyears,REST_N=1
 #./xmlchange DOUT_S_SAVE_INTERIM_RESTART_FILES=FALSE # To avoid saving restarts at the end of each run, which is not necessary for the spinup and takes a lot of space
 ./xmlchange RUN_STARTDATE=2000-01-01
