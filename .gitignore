@@ -12,8 +12,7 @@
 .ipynb_checkpoints/
 to-do.txt
 generate_env_yml.py
-*/*/__pycache__
-*/*/*/__pycache__
+**/__pycache__
 
 *.egg-info/
 
