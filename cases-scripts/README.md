@@ -57,3 +57,4 @@ Suffix `_fBVOC<source run>` = run the prescribed emissions come from; `_IM` = IS
 42-NF2100ssp585norbc_tropstratchem_met_f19_f19.sh
 43-NF2100ssp585norbc_tropstratchem_fut_nudg_ctrl_f19_f19.sh
 ```
+- `auto_launch_new_chain.sh`: watcher that launches 13c and the nudged runs 13a/14a/23a/24a on the new (20261025) chain as each spin-up finishes (see header).
