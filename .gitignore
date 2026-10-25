@@ -1,5 +1,7 @@
 # Save space on GutHub repository - save nc files just locally
 *.nc
+# Regenerable notebook caches (<notebook_stem>_outputs/cache/)
+**/cache/
 
 #Local machine files:
 
