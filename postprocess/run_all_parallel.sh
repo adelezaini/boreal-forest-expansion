@@ -16,12 +16,16 @@ mkdir -p "$LOG_DIR"
 # One process reads with one thread (HDF5 serialises reads anyway); parallelism is across processes.
 export DASK_SCHEDULER=synchronous OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 
-CASES="CTRL_PD NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925
+# Aliases: <VEG>_<PERIOD>[_fBVOC<source run>[_IM]], e.g. LCC_FUT_fBVOCctrlPD = emissions from CTRL_PD;
+# _IM = only ISOP and MTERP prescribed (original fBVOC runs). Add when they exist (all 19 MEGAN species):
+#   LCC_PD_fBVOCctrlPD, LCC_FUT_fBVOCctrlPD, LCC_FUT_fBVOCctrlFUT; later LCC_FUT_fBVOClccPD
+# Case names: keep up to date (CLAUDE.md "When a run version changes"; move old processed files first).
+CASES="CTRL_PD NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023
 LCC_PD NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005
-LCC_PD_fBVOC NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008
-CTRL_FUT NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20260925
+LCC_PD_fBVOCctrlPD_IM NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008
+CTRL_FUT NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20261023
 LCC_FUT NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005
-LCC_FUT_fBVOC NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009"
+LCC_FUT_fBVOCctrlPD_IM NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009"
 
 # Largest categories first, so the slowest jobs do not start last.
 ATM_CATS="SOA METEO CHEM CLOUDPROP SULFATE BVOC AEROPT RADIATIVE"

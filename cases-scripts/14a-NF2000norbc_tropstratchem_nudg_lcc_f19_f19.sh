@@ -76,7 +76,7 @@ fsurdat = '${SURFDATA_FILE}'
 use_init_interp = .true.
 EOF
 
-cam_diagnostics
+cam_diagnostics HR_BVOC_ALL   # emissions for LCC_FUT_fBVOClccPD (all 19 species)
 install_clm_sourcemods
 clm_diagnostics
 

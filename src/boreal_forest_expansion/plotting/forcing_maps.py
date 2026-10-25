@@ -53,11 +53,11 @@ FIGURE_DIR = REPO_DIR / "results" / "figures"
 
 # Total = lcc - ctrl, BVOC = lcc - fbvoc. Each period uses its own CTRL, so the FUT
 # total does not contain the 2100 background (SST, GHG, emissions) change.
-# fbvoc alias suffix = run the prescribed emissions come from; _IM = ISOP and MTERP only.
-# LCC_FUT_fBVOC_PD_IM is fixed at CTRL_PD, so BVOC_FUT = LCC + climate change. Switch to
-# LCC_PD_fBVOC_PD / LCC_FUT_fBVOC_FUT (all 19 MEGAN species) once those runs exist.
-# The processed files still carry the old aliases LCC_{PD,FUT}_fBVOC (= the _PD_IM runs);
-# switch to the _PD_IM names once the files are renamed.
+# fbvoc alias = LCC_<PERIOD>_fBVOC<source run>[_IM]; _IM = ISOP and MTERP only.
+# LCC_FUT_fBVOCctrlPD(_IM) is fixed at CTRL_PD, so BVOC_FUT = LCC + climate change; the
+# LCC-only FUT contrast needs LCC_FUT_fBVOCctrlFUT (all 19 MEGAN species).
+# The processed files still carry the old aliases LCC_{PD,FUT}_fBVOC (= the fBVOCctrlPD_IM runs);
+# switch to the _IM names once the files are renamed.
 BVOC_PAIRS = {
     "PD": {
         "lcc": "LCC_PD",

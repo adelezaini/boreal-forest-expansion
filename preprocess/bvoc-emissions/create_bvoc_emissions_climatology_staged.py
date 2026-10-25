@@ -5,26 +5,38 @@
 Workflow
 --------
 1. Find the history files for each requested year (both endpoints included).
-2. Check the source calendar, grid, units and complete half-hourly time axis.
+2. Check the source calendar, grid, units and complete half-hourly time axis
+   (monthly species: 12 contiguous monthly-mean records).
 3. Concatenate each year with NCO and reject missing or nonfinite flux values.
 4. Remove the February 29 record block from source leap years, then rebuild
    every yearly time axis on the same 365-day reference year 2000.
-5. Average corresponding grid cells and half-hourly slots across years.
+   Monthly species: time = mid-month of reference year 2000, bounds = month edges.
+5. Average corresponding grid cells and half-hourly (or monthly) slots across years.
 6. Convert kg of emitted compound/m2/s to molecules/cm2/s.
 7. Keep one emission field and its coordinates; verify mean-flux preservation.
 8. For Gregorian output, insert a synthetic February 29 copied from February 28
    and rebuild time, date, datesec and any time bounds. Save the final file.
+   Monthly species need no synthetic day: month edges follow the output calendar.
+
+Species
+-------
+All 19 CAM species fed by MEGAN (megan_specifier in CaseDocs/drv_flds_in).
+- Half-hourly from h1 (lifetime <~ 1 day, diurnal cycle matters): SFISOP, SFMTERP,
+  MEG_BCARY, MEG_C3H6, MEG_BIGENE, MEG_CH3CHO, MEG_CH2O, MEG_C2H4.
+- Monthly means from h0: the other 11 MEG_* (MONTHLY_VARS).
+The h1/h0 fields are written by cam_diagnostics HR_BVOC_ALL (cases-setup.sh).
 
 Usage
 -----
 module load NCO/5.2.9-foss-2024a
-python create_bvoc_emissions_climatology.py CASE START_YEAR END_YEAR SFISOP/SFMTERP --calendar noleap
+python create_bvoc_emissions_climatology.py CASE START_YEAR END_YEAR VAR --calendar noleap
+    VAR = SFISOP, SFMTERP or MEG_<species> (see MOLAR_MASS)
 
 Optional arguments:
     --stage concat          Only concatenate all source years
     --stage climatology     Process previously concatenated years
     --stage all             Run both stages (default)
-    --history-field h1       CAM history stream (default: h1)
+    --history-field h1       CAM history stream (default: h0 for MONTHLY_VARS, else h1)
     --postfix _test          Suffix inserted into the output filename
     --path /archive         Parent directory containing CASE/atm/hist
     --output-path /output   Destination directory
@@ -59,10 +71,19 @@ CAM use
 - Mass must be kg of compound, not kg of carbon. Generic kg/m2/s metadata alone 
 cannot establish that distinction; check the model's history-field calculation.
 
-- SFISOP/SFMTERP are total surface-flux diagnostics: in the inspected CTRL they 
-include interactive MEGAN plus prescribed biomass-burning emissions. For the 
-total-flux fBVOC approach, replace the original prescribed ISOP/MTERP entries 
+- SFISOP/SFMTERP are total surface-flux diagnostics: in the inspected CTRL they
+include interactive MEGAN plus prescribed biomass-burning emissions. For the
+total-flux fBVOC approach, replace the original prescribed ISOP/MTERP entries
 and disable their interactive contributions to avoid double counting.
+
+- MEG_<species> is the biogenic (MEGAN) part only: CAM's chemistry.F90 writes the
+coupler flux (mol/m2/s) times adv_mass*1e-3, so dividing by MOLAR_MASS returns
+the original molar flux. Keep the anthropogenic and biomass-burning files of these
+species in srf_emis_specifier; only the interactive MEGAN part is replaced.
+
+- Monthly files hold 12 monthly means stamped at mid-month. With srf_emis_type =
+'CYCLICAL', CAM interpolates linearly between records (Dec -> Jan wraps), so the
+monthly means are reproduced only approximately, as for other monthly emission files.
 
 - The inspected reader also imposes an isoprene daily profile: bypass that extra 
 adjustment in the fBVOC case when prescribing this half-hourly climatology. This 
@@ -95,16 +116,28 @@ from netCDF4 import Dataset
 # Defaults, physical constants and output variable names
 # =============================================================================
 DEFAULT_NORESM_ARCHIVE = "/cluster/work/users/adelez/archive"
-DEFAULT_OUTPUT_PATH = "/cluster/projects/nn9188k/adelez/noresm-inputdata/processed/bvoc-emissions"
+DEFAULT_OUTPUT_PATH = "/cluster/work/users/adelez/bvoc-emissions"  # work area (purged after 42 days); final files are moved to the shared bvoc_emissions folder
 AVOGADRO = 6.022e23  # molecules / mol
-MOLAR_MASS = {"SFISOP": 68.114200e-3, "SFMTERP": 136.228400e-3}  # kg / mol
+# kg / mol = CAM adv_mass * 1e-3 (pp_tropstrat_mam_oslo/mo_sim_dat.F90)
+MOLAR_MASS = {
+    "SFISOP": 68.114200e-3, "SFMTERP": 136.228400e-3,
+    "MEG_BCARY": 204.3426e-3, "MEG_C3H6": 42.0774e-3, "MEG_BIGENE": 56.1032e-3,
+    "MEG_CH3CHO": 44.051e-3, "MEG_CH2O": 30.0252e-3, "MEG_C2H4": 28.0516e-3,
+    "MEG_CH3OH": 32.04e-3, "MEG_C2H5OH": 46.0658e-3, "MEG_CH3COOH": 60.0504e-3,
+    "MEG_CH3COCH3": 58.0768e-3, "MEG_HCOOH": 46.0246e-3, "MEG_HCN": 27.02514e-3,
+    "MEG_CO": 28.0104e-3, "MEG_C2H6": 30.0664e-3, "MEG_C3H8": 44.0922e-3,
+    "MEG_BIGALK": 72.1438e-3, "MEG_TOLUENE": 92.1362e-3,
+}
+# Monthly means from h0; all other species are half-hourly instantaneous from h1.
+MONTHLY_VARS = {"MEG_CH3OH", "MEG_C2H5OH", "MEG_CH3COOH", "MEG_CH3COCH3", "MEG_HCOOH",
+                "MEG_HCN", "MEG_CO", "MEG_C2H6", "MEG_C3H8", "MEG_BIGALK", "MEG_TOLUENE"}
 TIMESTEPS_PER_DAY = 48
 STEP_SECONDS = 86400 // TIMESTEPS_PER_DAY
 TIME_UNITS = "days since 2000-01-01 00:00:00"
 
 # CAM reads all 3-D variables as emission sectors.
 # The receiving species is selected by srf_emis_specifier.
-OUTPUT_VAR_NAME = {"SFISOP": "ISOP", "SFMTERP": "MTERP"}
+OUTPUT_VAR_NAME = {var: var.split("_", 1)[1] if var.startswith("MEG_") else var[2:] for var in MOLAR_MASS}
 PROCESSING_VERSION = "bvoc-staged-netcdf4-v1"  # Bump when calculations or metadata rules change.
 _WORK_LOCK_FD = None  # Inherited by NCO children while they write checkpoints.
 
@@ -236,13 +269,83 @@ def output_variable_name(var):
 # =============================================================================
 
 
+def check_header(ds, path, year, var, monthly):
+    """Shared checks for half-hourly and monthly yearly files (metadata only).
+
+    Require an unpacked (time, lat, lon) field, unlimited float64 time, compound-mass
+    units, the expected averaging (instantaneous half-hourly or monthly mean) and a
+    supported calendar. Decode timestamps and compare date and datesec when present.
+    Returns calendar, bounds name, timestamps in seconds since the year start and
+    a metadata/grid signature for cross-year comparisons."""
+    flux, time = ds.variables[var], ds.variables["time"]
+    if np.dtype(time.dtype).kind != "f" or np.dtype(time.dtype).itemsize != 8:
+        raise ValueError(f"{path}: time must be float64 before rewriting timestamps in days.")
+    if flux.dimensions != ("time", "lat", "lon") or not ds.dimensions["time"].isunlimited():
+        raise ValueError(f"{path}: expected (time,lat,lon) with unlimited time for ncrcat.")
+    if any(k in flux.ncattrs() for k in ("scale_factor", "add_offset")):
+        raise ValueError(f"{path}: unpack the flux before using ncrcat.")
+    units = getattr(flux, "units", "")
+    normalized = re.sub(r"[\s^*]", "", units.lower())
+    description = " ".join(str(getattr(flux, k, "")) for k in ("long_name", "description", "comment"))
+    # MEG_* fields are labelled kg/m2/sec in chemistry.F90.
+    if normalized not in {"kg/m2/s", "kg/m2/sec", "kgm-2s-1", "kgm-2/s", "kg/m2s"} or re.search(r"kg\s*c\b|as carbon|mass of carbon", description, re.I):
+        raise ValueError(f"{path}: check compound-mass units: {units!r}; {description}")
+    is_mean = re.search(r"time\s*:\s*mean", getattr(flux, "cell_methods", ""))
+    if monthly and not is_mean:
+        raise ValueError(f"{path}: monthly species need monthly-mean output (cell_methods 'time: mean').")
+    if not monthly and re.search(r"time\s*:\s*(mean|sum)", getattr(flux, "cell_methods", "")):
+        raise ValueError(f"{path}: this script expects instantaneous half-hourly output.")
+    cal = getattr(time, "calendar", "").lower()
+    cal = {"365_day": "noleap", "standard": "gregorian"}.get(cal, cal)
+    if cal not in {"noleap", "gregorian", "proleptic_gregorian"}:
+        raise ValueError(f"{path}: missing/unsupported source calendar {cal!r}.")
+    bound_name = getattr(time, "bounds", "")
+    grid = (np.asarray(ds.variables["lat"][:]), np.asarray(ds.variables["lon"][:]))
+    print(f"{year}: source calendar={cal}, {var}:units={units}; {description}")
+    origin = f"seconds since {year:04d}-01-01 00:00:00"
+    dates = cftime.num2date(time[:], time.units, calendar=cal)
+    sec = np.asarray(cftime.date2num(dates, origin, calendar=cal), dtype=float)
+    if np.ma.getmaskarray(time[:]).any() or not np.isfinite(sec).all():
+        raise ValueError(f"{path}: missing/nonfinite time values.")
+    for key, expected in (("date", [d.year*10000 + d.month*100 + d.day for d in dates]),
+                          ("datesec", [d.hour*3600 + d.minute*60 + d.second for d in dates])):
+        if key in ds.variables and not np.array_equal(ds.variables[key][:], expected):
+            raise ValueError(f"{path}: {key} disagrees with time.")
+    return cal, bound_name, origin, sec, ((cal, units, bound_name), grid)
+
+
+def check_year_monthly(path, year, var):
+    """Validate one concatenated year of monthly means (h0).
+
+    Require time bounds that cover the 12 calendar months of `year` exactly, in
+    order. CAM stamps a monthly mean at the end of its interval, so the bounds,
+    not the timestamps, identify the month. Returns the same dictionary as
+    check_year, with phase=None and offsets=None (monthly time is rebuilt from
+    the output calendar's month edges)."""
+    with Dataset(path) as ds:
+        cal, bound_name, origin, sec, reference = check_header(ds, path, year, var, monthly=True)
+        if not bound_name:
+            raise ValueError(f"{path}: monthly means need time bounds to identify the months.")
+        b = ds.variables[bound_name]
+        if b.dimensions[0] != "time" or b.shape != (len(sec), 2):
+            raise ValueError(f"{path}: expected time bounds shaped (time,2).")
+        bd = cftime.num2date(b[:].ravel(), getattr(b, "units", ds.variables["time"].units), calendar=cal)
+        bs = np.asarray(cftime.date2num(bd, origin, calendar=cal), dtype=float).reshape(-1, 2)
+    edges = [cftime.date2num(cftime.datetime(year + m // 12, m % 12 + 1, 1, calendar=cal), origin, calendar=cal)
+             for m in range(13)]
+    if bs.shape != (12, 2) or not np.allclose(bs, np.column_stack([edges[:-1], edges[1:]]), rtol=0, atol=1):
+        raise ValueError(f"{year}: expected 12 monthly-mean records with bounds on the month edges of {year}.")
+    days = (cftime.datetime(year+1, 1, 1, calendar=cal) - cftime.datetime(year, 1, 1, calendar=cal)).days
+    return dict(calendar=cal, phase=None, leap=(days == 366), bounds=bound_name,
+                offsets=None, signature=reference)
+
+
 def check_year(path, year, var):
     """Validate one concatenated yearly file before using fixed record indices.
 
     Read metadata and coordinates only; emission arrays are not validated.
-    Require an unpacked (time, lat, lon) field and unlimited time.
-    Decode timestamps using the yearly file's units and calendar; compare date and
-    datesec when present. Verify complete, evenly spaced half-hourly coverage.
+    Header checks are in check_header. Verify complete, evenly spaced
+    half-hourly coverage.
 
     Returns a dictionary with calendar, phase (0 or 1800 seconds), leap status,
     bounds variable name, bounds offsets in days relative to each timestamp,
@@ -250,38 +353,8 @@ def check_year(path, year, var):
     offsets=None. Malformed or inconsistent input raises ValueError."""
     offsets = None
     with Dataset(path) as ds:
-        flux, time = ds.variables[var], ds.variables["time"]
-        if np.dtype(time.dtype).kind != "f" or np.dtype(time.dtype).itemsize != 8:
-            raise ValueError(f"{path}: time must be float64 before rewriting half-hourly timestamps in days.")
-        if flux.dimensions != ("time", "lat", "lon") or not ds.dimensions["time"].isunlimited():
-            raise ValueError(f"{path}: expected (time,lat,lon) with unlimited time for ncrcat.")
-        if any(k in flux.ncattrs() for k in ("scale_factor", "add_offset")):
-            raise ValueError(f"{path}: unpack the flux before using ncrcat.")
-        units = getattr(flux, "units", "")
-        normalized = re.sub(r"[\s^*]", "", units.lower())
-        description = " ".join(str(getattr(flux, k, "")) for k in ("long_name", "description", "comment"))
-        if normalized not in {"kg/m2/s", "kgm-2s-1", "kgm-2/s", "kg/m2s"} or re.search(r"kg\s*c\b|as carbon|mass of carbon", description, re.I):
-            raise ValueError(f"{path}: check compound-mass units: {units!r}; {description}")
-        if re.search(r"time\s*:\s*(mean|sum)", getattr(flux, "cell_methods", "")):
-            raise ValueError(f"{path}: this script expects instantaneous half-hourly output.")
-        cal = getattr(time, "calendar", "").lower()
-        cal = {"365_day": "noleap", "standard": "gregorian"}.get(cal, cal)
-        if cal not in {"noleap", "gregorian", "proleptic_gregorian"}:
-            raise ValueError(f"{path}: missing/unsupported source calendar {cal!r}.")
-        bound_name = getattr(time, "bounds", "")
-        grid = (np.asarray(ds.variables["lat"][:]), np.asarray(ds.variables["lon"][:]))
-        signature = (cal, units, bound_name)
-        reference = (signature, grid)
-        print(f"{year}: source calendar={cal}, {var}:units={units}; {description}")
-        origin = f"seconds since {year:04d}-01-01 00:00:00"
-        dates = cftime.num2date(time[:], time.units, calendar=cal)
-        sec = np.asarray(cftime.date2num(dates, origin, calendar=cal), dtype=float)
-        if np.ma.getmaskarray(time[:]).any() or not np.isfinite(sec).all():
-            raise ValueError(f"{path}: missing/nonfinite time values.")
-        for key, expected in (("date", [d.year*10000 + d.month*100 + d.day for d in dates]),
-                              ("datesec", [d.hour*3600 + d.minute*60 + d.second for d in dates])):
-            if key in ds.variables and not np.array_equal(ds.variables[key][:], expected):
-                raise ValueError(f"{path}: {key} disagrees with time.")
+        cal, bound_name, origin, sec, reference = check_header(ds, path, year, var, monthly=False)
+        time = ds.variables["time"]
         if bound_name:
             b = ds.variables[bound_name]
             if np.dtype(b.dtype).kind != "f" or np.dtype(b.dtype).itemsize != 8:
@@ -368,6 +441,31 @@ def rebuild_time(file, calendar_type, phase, bound_name, offsets):
             ds.variables[bound_name].calendar = calendar_type
 
 
+def rebuild_monthly_time(file, calendar_type, bound_name):
+    """Write mid-month timestamps and month-edge bounds for reference year 2000.
+
+    file is edited in place and must hold 12 validated monthly means (Jan..Dec).
+    Edges follow calendar_type, so Gregorian output gets a 29-day February
+    without a synthetic record. date and datesec follow from the new time."""
+    edges = np.array([cftime.date2num(cftime.datetime(2000 + m // 12, m % 12 + 1, 1, calendar=calendar_type),
+                                      TIME_UNITS, calendar=calendar_type) for m in range(13)], dtype=float)
+    values = (edges[:-1] + edges[1:]) / 2.
+    dates = cftime.num2date(values, TIME_UNITS, calendar=calendar_type)
+    with Dataset(file, "r+") as ds:
+        time = ds.variables["time"]
+        time[:] = values
+        time.units, time.calendar = TIME_UNITS, calendar_type
+        for key, data in (("date", [d.year*10000 + d.month*100 + d.day for d in dates]),
+                          ("datesec", [d.hour*3600 + d.minute*60 + d.second for d in dates])):
+            variable = ds.variables[key] if key in ds.variables else ds.createVariable(key, "i4", ("time",))
+            variable[:] = data
+        ds.variables["date"].long_name = "current date (YYYYMMDD)"
+        ds.variables["datesec"].units = "seconds"
+        bounds = ds.variables[bound_name]
+        bounds[:] = np.column_stack([edges[:-1], edges[1:]])
+        bounds.units, bounds.calendar = TIME_UNITS, calendar_type
+
+
 def average_yearly_files(files, outfile):
     # nces is the current name of ncea; yearly time axes have already been aligned.
     """Average aligned yearly arrays element by element with nces (ncea).
@@ -377,7 +475,7 @@ def average_yearly_files(files, outfile):
     run_command(["nces", "-O", "-7", "-L", "0", "-o", outfile], files)
 
 
-def convert_units_and_update_metadata(infile, outfile, var, name):
+def convert_units_and_update_metadata(infile, outfile, var, name, monthly=False):
     """Convert compound mass flux to molecular flux with ncap2.
 
     molecules/cm2/s = kg/m2/s * (molecules/mol) / (kg/mol) * 1e-4.
@@ -387,8 +485,9 @@ def convert_units_and_update_metadata(infile, outfile, var, name):
     No conversion from carbon mass is implemented."""
     factor = AVOGADRO / MOLAR_MASS[var] * 1e-4
     run_command(["ncap2", "-O", "-7", "-L", "0", "-s", f"{name}=float(double({var})*{factor:.17g});", infile, outfile])
+    long_name = f"Prescribed {var} emission climatology" + (" of monthly means" if monthly else "")
     run_command(["ncatted", "-O", "-a", f"units,{name},o,c,molecules/cm2/s",
-                 "-a", f"long_name,{name},o,c,Prescribed {var} emission climatology", outfile])
+                 "-a", f"long_name,{name},o,c,{long_name}", outfile])
 
 
 def save_emission_variables(infile, outfile, name, bound_name):
@@ -431,11 +530,13 @@ def add_synthetic_feb29(infile, outfile, phase, bound_name, offsets, tmp):
 # =============================================================================
 
 
-def main(case_name, startyear, endyear, var, calendar_type, history_field="h1", postfix="",
+def main(case_name, startyear, endyear, var, calendar_type, history_field=None, postfix="",
          path=DEFAULT_NORESM_ARCHIVE, output_path=DEFAULT_OUTPUT_PATH, stage="all"):
     """Run the complete workflow and return the final NetCDF Path.
 
     Process startyear..endyear inclusively, one species per invocation.
+    MONTHLY_VARS are read as monthly means (default h0), all others as
+    half-hourly instantaneous values (default h1).
     Temporary yearly files are aligned before averaging. The full-array flux
     checks and mean-preservation check are deliberately omitted to reduce I/O.
     Missing/nonfinite emission values are not rejected by this script; missing
@@ -448,6 +549,9 @@ def main(case_name, startyear, endyear, var, calendar_type, history_field="h1", 
             raise ValueError("Load NCO first: module load NCO/5.2.9-foss-2024a")
     # 1. Resolve input/output paths and refuse to overwrite an existing result.
     name = output_variable_name(var)
+    monthly = var in MONTHLY_VARS
+    if history_field is None:
+        history_field = "h0" if monthly else "h1"
     input_path = Path(path).expanduser() / case_name / "atm" / "hist"
     output_path = Path(output_path).expanduser()
     output_path.mkdir(parents=True, exist_ok=True)
@@ -494,6 +598,12 @@ def main(case_name, startyear, endyear, var, calendar_type, history_field="h1", 
                     raise ValueError(f"{year}: completed raw file missing or outdated. "
                                      "Run --stage concat, then --stage climatology again.")
                 print(f"{year}: checking yearly time axis", flush=True)
+                if monthly:
+                    info = check_year_monthly(raw, year, var)
+                    raw.with_suffix(".nc.done.json").unlink(missing_ok=True)
+                    raw.replace(out)
+                    rebuild_monthly_time(out, calendar_type, info["bounds"])
+                    return info
                 info = aligned_metadata(raw, year, var)
                 # 3. Move noleap data, avoiding an extra full-file copy. The raw
                 # marker must disappear before its data can be modified in place.
@@ -526,11 +636,12 @@ def main(case_name, startyear, endyear, var, calendar_type, history_field="h1", 
         # 5. Average matching half-hourly slots, convert units, keep one flux.
         checkpoint(avg, yearly, settings, lambda out: average_yearly_files(yearly, out))
         checkpoint(converted, [avg], settings,
-                   lambda out: convert_units_and_update_metadata(avg, out, var, name))
+                   lambda out: convert_units_and_update_metadata(avg, out, var, name, monthly))
         checkpoint(saved, [converted], settings,
                    lambda out: save_emission_variables(converted, out, name, reference["bounds"]))
-        # 6. Add a synthetic leap day only for Gregorian year-2000 output.
-        if calendar_type == "gregorian":
+        # 6. Add a synthetic leap day only for Gregorian year-2000 half-hourly output
+        # (monthly edges already follow the output calendar).
+        if calendar_type == "gregorian" and not monthly:
             leap = tmp / "emissions_leap.nc"
             checkpoint(leap, [saved], settings,
                        lambda out: add_synthetic_feb29(saved, out, reference["phase"],
@@ -570,7 +681,7 @@ def parse_args():
     parser.add_argument("var", choices=OUTPUT_VAR_NAME)
     parser.add_argument("--calendar", dest="calendar_type", required=True, choices=["noleap", "gregorian"], help="Output calendar (reference year 2000)")
     parser.add_argument("--stage", choices=["concat", "climatology", "all"], default="all")
-    parser.add_argument("--history-field", default="h1")
+    parser.add_argument("--history-field", default=None, help="Default: h0 for MONTHLY_VARS, else h1")
     parser.add_argument("--postfix", default="")
     parser.add_argument("--path", default=DEFAULT_NORESM_ARCHIVE)
     parser.add_argument("--output-path", default=DEFAULT_OUTPUT_PATH)

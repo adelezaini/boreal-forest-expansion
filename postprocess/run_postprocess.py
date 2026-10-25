@@ -30,7 +30,7 @@ Notes: Time coordinates are set to the midpoint of their time bounds.
 
 Example:
     python run_postprocess.py \
-        NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20260925 CTRL_PD atm \
+        NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023 CTRL_PD atm \
         --categories BVOC SOA CLOUDPROP RADIATIVE \
         --raw-path ~/work/archive \
         --out-path ./processed-data/postprocessing \

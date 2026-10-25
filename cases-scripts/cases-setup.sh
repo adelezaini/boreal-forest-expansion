@@ -458,6 +458,33 @@ cat << EOF >> user_nl_cam
 EOF
 }
 
+prescribed_bvoc_emissions_all(){
+    # All 19 MEGAN-fed species prescribed, MEGAN off (fBVOC<source> runs, e.g. LCC_FUT_fBVOCctrlFUT).
+    # Usage: prescribed_bvoc_emissions_all <2000|2100> <prefix>
+    #   2000/2100 -> anthropogenic/BB file list of prescribed_bvoc_emissions / _2100 (single source, unchanged)
+    #   prefix    -> <dir>/ems_<source case>_<y0>-<y1>[_on_yr2100]; files <prefix>_SFISOP.nc, <prefix>_MEG_<SP>.nc
+    # ISOP/MTERP come from SF* (MEGAN + biomass burning), so their BB files stay out of the list, as in
+    # the _IM runs. The other 17 come from MEG_* (biogenic only), so their anthro/BB files stay in.
+    local period="$1" prefix="$2" sp extra=""
+    local others=(BCARY C3H6 BIGENE CH3CHO CH2O C2H4 CH3OH C2H5OH CH3COOH CH3COCH3 HCOOH HCN CO
+                  C2H6 C3H8 BIGALK TOLUENE)
+    for sp in SFISOP SFMTERP "${others[@]/#/MEG_}"; do
+        [[ -f "${prefix}_${sp}.nc" ]] || { echo "ERROR: missing ${prefix}_${sp}.nc" >&2; return 1; }
+    done
+    case "$period" in
+        2000) prescribed_bvoc_emissions ;;
+        2100) prescribed_bvoc_emissions_2100 ;;
+        *) echo "ERROR: period must be 2000 or 2100" >&2; return 1 ;;
+    esac
+    # Point the ISOP/MTERP entries to the new files and add the 17 other species after MTERP.
+    for sp in "${others[@]}"; do extra+=",\n         '${sp} -> ${prefix}_MEG_${sp}.nc'"; done
+    sed -i -E -e "s|^( *'ISOP -> ).*\.nc',$|\1${prefix}_SFISOP.nc',|" \
+              -e "s|^( *'MTERP -> ).*\.nc'$|\1${prefix}_SFMTERP.nc'${extra}|" user_nl_cam
+    local n
+    n=$(grep -c -- "-> ${prefix}_" user_nl_cam)
+    [[ "$n" -eq 19 ]] || { echo "ERROR: expected 19 prescribed BVOC entries in user_nl_cam, found $n" >&2; return 1; }
+}
+
 xmlchange_test_1day() {
 # Run for one model day.
 # Remember to change the casename

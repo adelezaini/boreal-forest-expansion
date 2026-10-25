@@ -20,8 +20,8 @@ CASES=(
     "NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005"               # LCC_PD
 #    "NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20260925"        # CTRL_FUT
     "NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005"         # LCC_FUT
-#   "NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008"         # LCC_PD_fBVOC_PD_IM
-#   "NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009"   # LCC_FUT_fBVOC_PD_IM
+#   "NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008"         # LCC_PD_fBVOCctrlPD_IM
+#   "NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009"   # LCC_FUT_fBVOCctrlPD_IM
 )
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
