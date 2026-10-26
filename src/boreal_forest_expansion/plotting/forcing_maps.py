@@ -160,6 +160,12 @@ def forcing_panels(band: str = "NET") -> list[MapPanel]:
 
 FORCING_PANELS = forcing_panels("NET")
 
+# Shared colour scales for make_forcing_summary_figure: [(panel indices, vmax), ...]
+SUMMARY_SCALES = {
+    "shared6": [([0, 1, 2, 3, 4, 5], 6.0)],                    # all six panels [-6, 6]
+    "split6-2": [([0, 1], 6.0), ([2, 3, 4, 5], 2.0)],          # albedo + total [-6, 6], BVOC terms [-2, 2]
+}
+
 
 CONTEXT_PANELS = [
     MapPanel(
@@ -775,6 +781,7 @@ def make_forcing_summary_figure(
     transparent_background: bool = True,
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
+    scales: str | list[tuple[list[int], float]] | None = None,
 ):
     """
     Create six-panel forcing decomposition figure.
@@ -790,12 +797,21 @@ def make_forcing_summary_figure(
         ocean_facecolor="white", "lightgrey", etc.
 
     Each panel gets its own individual colourbar when add_cbar=True.
+
+    scales:
+        None = one colourbar per panel (panel.vmax). Otherwise shared colourbars, as
+        [(panel indices, vmax), ...] or a name from SUMMARY_SCALES ("shared6", "split6-2");
+        the name is added to the file name.
     """
     if experiment not in BVOC_PAIRS:
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
 
     pairs = BVOC_PAIRS[experiment]
     panels = forcing_panels(band)
+    scale_tag = scales if isinstance(scales, str) else ("custom" if scales else None)
+    if isinstance(scales, str):
+        scales = SUMMARY_SCALES[scales]
+    panel_vmax = {i: vmax for idx, vmax in (scales or []) for i in idx}
 
     fig, axes = plt.subplots(
         1,
@@ -805,16 +821,24 @@ def make_forcing_summary_figure(
         constrained_layout=True,
     )
 
-    for ax, panel in zip(axes, panels):
+    for i, (ax, panel) in enumerate(zip(axes, panels)):
         _plot_panel(
             ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
             stipple, fdr_alpha,
+            vmax=panel_vmax.get(i),
             cmap=cmap,
-            add_cbar=add_cbar,
+            add_cbar=add_cbar and i not in panel_vmax,
             shade_ocean=shade_ocean,
             ocean_alpha=ocean_alpha,
             ocean_facecolor=ocean_facecolor,
         )
+
+    for idx, vmax in scales or []:
+        sm = plt.cm.ScalarMappable(norm=mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax), cmap=cmap)
+        cb = fig.colorbar(sm, ax=[axes[i] for i in idx], orientation="horizontal",
+                          shrink=0.8 if len(idx) > 2 else 0.9, aspect=12 * len(idx), extend="both", pad=0.07)
+        cb.set_label(f"radiative effect difference [{panels[idx[0]].units}]", fontsize=8)
+        cb.ax.tick_params(labelsize=7)
 
     fig.suptitle(
         f"{experiment}: radiative forcing decomposition, {band} ({start_year}–{end_year})",
@@ -825,7 +849,8 @@ def make_forcing_summary_figure(
 
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
-        path = figdir / f"{experiment}_forcing_decomposition_{band}_{start_year}_{end_year}.png"
+        suffix = f"_{scale_tag}" if scale_tag else ""
+        path = figdir / f"{experiment}_forcing_decomposition_{band}{suffix}_{start_year}_{end_year}.png"
         fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=transparent_background)
         print(f"Saved {path}")
 
