@@ -1020,6 +1020,8 @@ def contrast_sets() -> dict[str, list[tuple[str, str]]]:
         "LCC-CTRL": [(pd_["lcc"], pd_["ctrl"]), (fut["lcc"], fut["ctrl"]), (fut["lcc"], pd_["ctrl"]),
                      (fut["ctrl"], pd_["ctrl"])],
         "LCC-fBVOC": [(pd_["lcc"], pd_["fbvoc"]), (fut["lcc"], fut["fbvoc"])],
+        # land-cover change with emissions held at the CTRL_PD ISOP/MTERP climatology
+        "fBVOC-CTRL": [(pd_["fbvoc"], pd_["ctrl"]), (fut["fbvoc"], fut["ctrl"])],
     }
 
 
