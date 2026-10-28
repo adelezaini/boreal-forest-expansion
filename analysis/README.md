@@ -2,6 +2,7 @@
 
 Paper notebooks. Plotting code: `src/boreal_forest_expansion/plotting/forcing_maps.py`. Figures go to `results/figures/`, tables to `results/tables/`.
 Run with `$PY results/tables/logs/run_nb_inplace.py analysis/<nb>.ipynb` (outputs saved in the notebook).
+Variables in each figure (subtitle, variable, category, calculation): `PLOTTED_VARIABLES.md`.
 
 | Notebook | Content |
 |---|---|
@@ -10,6 +11,5 @@ Run with `$PY results/tables/logs/run_nb_inplace.py analysis/<nb>.ipynb` (output
 | `biogeophysical-hydro.ipynb` | Hydrology, snow/albedo, surface energy, FSDS split contrast grids; land water budget P − ET − R − ΔTWS |
 | `pd-fut-attribution.ipynb` | Why the response reverses PD → FUT: radiative budget of LCC−CTRL / fBVOC−CTRL / LCC−fBVOC, emission & LAI origin (modified vs unmodified, early vs late), seasonal BVOC→SOA→cloud→SW chain, baselines and % changes, paired years, PD source boxes |
 | `megan_factor_maps.ipynb` | MEGAN emission/activity factor maps |
-| `test_significance_marking.ipynb` | Choice of the significance marking style |
 
 `forcing_maps.ipynb` was split into the first two notebooks (2026-10-25). Its first-round figures are in `results/figures/first-round/`.
