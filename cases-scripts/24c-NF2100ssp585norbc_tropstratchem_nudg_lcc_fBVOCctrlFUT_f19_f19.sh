@@ -18,7 +18,7 @@ COMPSET=NF2100ssp585norbc_tropstratchem
 set_project_noresm_res_vars
 
 # Restart files specifics:
-REFCASE="NF2100ssp585norbc_tropstratchem_spinup_lcc_f19_f19-20260928"
+REFCASE="NF2100ssp585norbc_tropstratchem_spinup_lcc_f19_f19-20261025"
 REFDATE="0021-01-01"
 REST_SRC="/nird/datapeak/NS9188K/adelez/BRL-FRST-XPSN_archive/$REFCASE/rest/$REFDATE-00000"
 REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"

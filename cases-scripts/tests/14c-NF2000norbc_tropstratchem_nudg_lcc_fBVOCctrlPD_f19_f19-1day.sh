@@ -1,5 +1,5 @@
 #!/bin/bash
-# 1-day test: copy of 14c-NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh with test casename, xmlchange_test_1day and daily h0.
+# 1-day test: copy of 14b-NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh with test casename, xmlchange_test_1day and daily h0.
 # Run from cases-scripts/. Check with tests/check_fbvoc_all_1day.py
 
 ### LCC_PD_fBVOCctrlPD RUN

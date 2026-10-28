@@ -1,19 +1,22 @@
 #!/bin/bash
 
-### LCC_FUT_fBVOCctrlPD RUN
-# Nudging, 15 years (2000-2014). MEGAN off; all 19 MEGAN-fed species prescribed from CTRL_PD (relabelled to 2100):
-#   ISOP/MTERP from SF* (half-hourly), BCARY C3H6 BIGENE CH3CHO CH2O C2H4 from MEG_* (half-hourly),
-#   the other 11 from MEG_* (monthly); 2001-2014 climatology (preprocess/bvoc-emissions, run_bvoc_climatology_array.sh).
-# Initial state: LCC coupled spin-up restart (REFCASE below), as for the LCC run.
-# Keep REFCASE and EMS_PREFIX up to date (CLAUDE.md "When a run version changes").
+### LC_FUT_fBVOC RUN
+#!/bin/bash
+
+### LC_FUT RUN
+# Nudging
+# Initial state: NF2100ssp585norbc_tropstratchem_spinup_lcc_f19_f19-YYYYMMDD at 0020-01-01
+# 10 years to start
 
 # Exit if error, undefined variable...
 set -euo pipefail
+# HOLD (user, 2026-10-25): do not submit until the all-species prescribed BVOC set-up is decided and prepared (not ISOP+MTERP only). Remove this line then.
+{ echo "HOLD: fBVOC run on hold, see CLAUDE.md (fBVOC hold)" >&2; exit 1; }
 # Load common functions for case setup
-source cases-setup.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../cases-setup.sh"
 #––––––––––– SIMULATION SPECIFICS: –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 today=$(date +'%Y%m%d')
-CASENAME="NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19-$today"
+CASENAME="NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-$today"
 COMPSET=NF2100ssp585norbc_tropstratchem
 set_project_noresm_res_vars
 
@@ -26,16 +29,11 @@ REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 # Surface data file with modified land cover for boreal forest expansion
 SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_SSP5-8.5_2100_78pfts_LPJGUESS.nc"
 
-# Prescribed BVOC files: <EMS_PREFIX>_SFISOP.nc, <EMS_PREFIX>_MEG_<species>.nc (19 files)
-EMS_PREFIX="/cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023_2001-2014_on_yr2100"
-
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"
 
 [[ -f "$REST_LOCAL/$REFCASE.clm2.r.$REFDATE-00000.nc" ]] || { echo 'Missing coupled LCC land restart' >&2; exit 1; }
 [[ -f "$SURFDATA_FILE" ]] || { echo "Missing surfdata: $SURFDATA_FILE" >&2; exit 1; }
-n_ems=$(ls "$EMS_PREFIX"_SF*.nc "$EMS_PREFIX"_MEG_*.nc 2>/dev/null | wc -l)
-(( n_ems == 19 )) || { echo "Expected 19 prescribed BVOC files ${EMS_PREFIX}_*.nc, found $n_ems" >&2; exit 1; }
 
 BASE_CASE_DIR="$HOME/cases/BRL_FRST_XPSN/"
 CASEROOT="$BASE_CASE_DIR/$CASENAME"
@@ -89,11 +87,14 @@ cam_diagnostics
 install_clm_sourcemods
 clm_diagnostics fBVOC
 
-# Disable all interactive MEGAN and prescribe all 19 MEGAN-fed species from CTRL_PD (relabelled to 2100).
-prescribed_bvoc_emissions_all 2100 "$EMS_PREFIX"
+# Disable all interactive MEGAN and prescribe PD ISOP/MTERP.
+prescribed_bvoc_emissions_2100
 
 # The prescribed ISOP already contains its diurnal cycle.
 bypass_isoprene_diurnal_adjustment
 
 ./case.build
 ./case.submit
+
+
+

@@ -1,11 +1,11 @@
 #!/bin/bash
 # LCC_PD_fBVOCctrlPD_IM: two-day July test of prescribed total ISOP/MTERP.
 # January restart + July start tests the forcing, not July equilibrium.
-# Keep this script beside case-setup.sh (or cases-setup.sh). Requires the existing fBVOC helpers.
+# Lives in cases-scripts/tests/; sources ../cases-setup.sh. Requires the existing fBVOC helpers.
 set -euo pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-SETUP_DIR="$SCRIPT_DIR"
+SETUP_DIR="$SCRIPT_DIR/.."
 if [[ -f "$SETUP_DIR/case-setup.sh" ]]; then
     source "$SETUP_DIR/case-setup.sh"
 else

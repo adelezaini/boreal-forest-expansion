@@ -4,29 +4,35 @@ The numbering refers to the order of simulations.
   - second digit: step of running (`1` is required for `2`)
   - letter: parallel runs (`a` and `b` can run simultaneously)
 ----
-- SPINUP_PD: `11-NF2000norbc_tropstratchem_spinup_f19_f19.sh`
-- MET: `12a-NF2000norbc_tropstratchem_met_f19_f19.sh`
-- LANDONLY_SPINUP_PD: `12b-NF2000norbc_tropstratchem_landonly_spinup_lcc_f19_f19.sh`
-- CTRL_LANDONLY_SPINUP_PD: `12c-NF2000norbc_tropstratchem_landonly_spinup_ctrl_f19_f19.sh` (CTRL twin of 12b; not run, run decision pending)
-- CTRL_PD: `13a-NF2000norbc_tropstratchem_nudg_ctrl_f19_f19.sh`
-- LCC_SPINUP_PD: `13b-NF2000norbc_tropstratchem_spinup_lcc_f19_f19.sh`
-- CTRL_SPINUP_PD: `13c-NF2000norbc_tropstratchem_spinup_ctrl_f19_f19.sh` (CTRL twin of 13b, finidat from 12c; not run. If run, repoint 13a to it)
-- LCC_PD: `14a-NF2000norbc_tropstratchem_nudg_lcc_f19_f19.sh`
-- LCC_PD_fBVOCctrlPD_IM: `14b-NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19.sh`
+Aliases follow the chain figure. Every run, with case names, versions (old / CO₂-fix chain), parents and status: [`run_aliases.csv`](run_aliases.csv).
 
-- SPINUP_FUT: `21-NF2100ssp585norbc_tropstratchem_spinup_f19_f19.sh`
-- LANDONLY_SPINUP_FUT: `22b-NF2100ssp585norbc_tropstratchem_landonly_spinup_lcc_f19_f19.sh`
-- CTRL_LANDONLY_SPINUP_FUT: `22c-NF2100ssp585norbc_tropstratchem_landonly_spinup_ctrl_f19_f19.sh` (CTRL twin of 22b; not run)
-- CTRL_FUT: `23a-NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19.sh`
-- LCC_SPINUP_FUT: `23b-NF2100ssp585norbc_tropstratchem_spinup_lcc_f19_f19.sh`
-- CTRL_SPINUP_FUT: `23c-NF2100ssp585norbc_tropstratchem_spinup_ctrl_f19_f19.sh` (CTRL twin of 23b, finidat from 22c; not run. Then repoint 23a to it)
-- LCC_FUT: `24a-NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19.sh`
-- LCC_FUT_fBVOCctrlPD_IM: `24b-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19.sh`
+**Present day (PD)**
+- PD_spinup: `11-NF2000norbc_tropstratchem_spinup_f19_f19.sh` (20-yr coupled spin-up; its cpl history = CPLHIST_PD)
+- MET: `12a-NF2000norbc_tropstratchem_met_f19_f19.sh` (u, v for nudging all PD and FUT nudged runs)
+- LCC_PD_landonly_spinup: `12b-NF2000norbc_tropstratchem_landonly_spinup_lcc_f19_f19.sh` (100 yr, CPLHIST_PD forcing)
+- CTRL_PD_landonly_spinup: `12c-NF2000norbc_tropstratchem_landonly_spinup_ctrl_f19_f19.sh` (CTRL twin of 12b)
+- CTRL_PD_spinup: `13c-NF2000norbc_tropstratchem_spinup_ctrl_f19_f19.sh` (20 yr, land from 12c)
+- LCC_PD_spinup: `13b-NF2000norbc_tropstratchem_spinup_lcc_f19_f19.sh` (20 yr, land from 12b)
+- CTRL_PD: `13a-NF2000norbc_tropstratchem_nudg_ctrl_f19_f19.sh` (from 13c)
+- LCC_PD: `14a-NF2000norbc_tropstratchem_nudg_lcc_f19_f19.sh` (from 13b)
+- LCC_PD_fBVOCctrlPD: `14b-NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh` (from 13b; all 19 MEGAN species from CTRL_PD)
 
-- LCC_PD_fBVOCctrlPD: `14c-NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh` (all 19 MEGAN species from CTRL_PD)
-- LCC_FUT_fBVOCctrlPD: `24c-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh` (all 19 species from CTRL_PD, relabelled to 2100)
-- LCC_FUT_fBVOCctrlFUT: `24d-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19.sh` (all 19 species from CTRL_FUT, relabelled to 2100)
-- LCC_FUT_fBVOClccPD: `24e-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19.sh` (all 19 species from LCC_PD, relabelled to 2100; needs an LCC_PD run with HR_BVOC_ALL, new spin-up chain; set LCC_PD_CASE)
+**Future (FUT)**
+- FUT_spinup: `21-NF2100ssp585norbc_tropstratchem_spinup_f19_f19.sh` (20-yr coupled spin-up; its cpl history = CPLHIST_FUT)
+- LCC_FUT_landonly_spinup: `22b-NF2100ssp585norbc_tropstratchem_landonly_spinup_lcc_f19_f19.sh` (100 yr, CPLHIST_FUT forcing)
+- CTRL_FUT_landonly_spinup: `22c-NF2100ssp585norbc_tropstratchem_landonly_spinup_ctrl_f19_f19.sh` (CTRL twin of 22b)
+- CTRL_FUT_spinup: `23c-NF2100ssp585norbc_tropstratchem_spinup_ctrl_f19_f19.sh` (20 yr, land from 22c)
+- LCC_FUT_spinup: `23b-NF2100ssp585norbc_tropstratchem_spinup_lcc_f19_f19.sh` (20 yr, land from 22b)
+- CTRL_FUT: `23a-NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19.sh` (from 23c)
+- LCC_FUT: `24a-NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19.sh` (from 23b)
+- LCC_FUT_fBVOCctrlPD: `24b-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh` (from 23b; all 19 species from CTRL_PD, relabelled to 2100)
+- LCC_FUT_fBVOCctrlFUT: `24c-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19.sh` (from 23b; all 19 species from CTRL_FUT, relabelled to 2100)
+- LCC_FUT_fBVOClccPD: `24d-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19.sh` (from 23b; all 19 species from LCC_PD, relabelled to 2100; needs an LCC_PD run with HR_BVOC_ALL; set LCC_PD_CASE)
+
+**ISOP/MTERP only (`just-ISOP-MTERP/`, on hold: `exit 1` at the top)**
+- LCC_PD_fBVOCctrlPD_IM: `just-ISOP-MTERP/14b-NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19.sh`
+- LCC_FUT_fBVOCctrlPD_IM: `just-ISOP-MTERP/24b-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19.sh`
+- 2-day test: `tests/test_LCC_PD_fBVOC_2days.sh`
 
 ### Analysis aliases
 
@@ -48,13 +54,11 @@ Suffix `_fBVOC<source run>` = run the prescribed emissions come from; `_IM` = IS
 ### Extensions (2010-2014, continue runs within nudging data 2000-2015):
 - `extend_nudg_runs_2010-2014.sh` (comment in/out the cases to extend)
 
-### Quick lcc spinups to avoid land-only+coupled spinup, used preliminary:
-- `13bx-NF2000norbc_tropstratchem_quick_spinup_lcc_f19_f19.sh`
-- `23bx-NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19.sh`
+### Quick LCC spin-ups (preliminary, superseded; no land-only step): `quick-spinups/`
+- LCC_PD_quick_spinup: `quick-spinups/13bx-NF2000norbc_tropstratchem_quick_spinup_lcc_f19_f19.sh`
+- LCC_FUT_quick_spinup: `quick-spinups/23bx-NF2100ssp585norbc_tropstratchem_quick_spinup_lcc_f19_f19.sh`
 
-```
-37-NF2100ssp585norbc_tropstratchem_nudg_lcc_fFUTBVOC_f19_f19.sh
-42-NF2100ssp585norbc_tropstratchem_met_f19_f19.sh
-43-NF2100ssp585norbc_tropstratchem_fut_nudg_ctrl_f19_f19.sh
-```
-- `auto_launch_new_chain.sh`: watcher that launches 13c and the nudged runs 13a/14a/23a/24a on the new (20261025) chain as each spin-up finishes (see header).
+### Tests (`tests/`)
+Short model test runs (1-day, 2-day, timing). The 1-day tests of the all-species fBVOC runs keep their old numbers: `tests/14c-…` = 14b, `tests/24c-…` = 24b, `tests/24d-…` = 24c, `tests/24e-…` = 24d.
+
+- `auto_launch_new_chain.sh`: watcher that launches 13c and the nudged runs 13a/14a/23a/24a on the new (20261025) chain as each spin-up finishes (see header). It finds the scripts by number (`ls 13a-*.sh` etc.), so keep 13a, 13c, 14a, 23a, 24a unique.
