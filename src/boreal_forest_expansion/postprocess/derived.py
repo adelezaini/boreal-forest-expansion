@@ -22,8 +22,8 @@ Ghan decomposition (formulas unchanged, names and labels changed):
 - FIXED   the old code OVERWROTE the model's SWCF and LWCF with the Ghan clean-sky cloud
           terms; the same name then meant two different quantities. New names:
               old SWDIR / LWDIR / DIR      -> SW_dir / LW_dir / NET_dir
-              old SWCF  / LWCF  / NCFT     -> SW_cre_clean / LW_cre_clean / NET_cre_clean
-              old SW_rest / LW_rest / FREST -> SW_clearclean / LW_clearclean / NET_clearclean
+              old SWCF  / LWCF  / NCFT     -> SW_cloud / LW_cloud / NET_cloud  (SW_cre_clean ... until 2026-10-28)
+              old SW_rest / LW_rest / FREST -> SW_rest / LW_rest / NET_rest     (SW_clearclean ... until 2026-10-28)
               old FTOT                     -> NET_toa
               old SWTOT / LWTOT            -> removed (copies of FSNT and -FLNT)
 - FIXED   long_names said "forcing"; these are fluxes/effects of ONE run. Forcing is the
@@ -101,12 +101,12 @@ def ghan_decomposition(ds):
     ("clean"), made on the same radiation timesteps as FSNT/FLNT (verified in OsloAero
     radiation.F90), so the terms below are consistent and close exactly:
 
-        NET_dir + NET_cre_clean + NET_clearclean == NET_toa
+        NET_dir + NET_cloud + NET_rest == NET_toa
 
     Differences between two runs give:
         d(NET_dir)        -> ERFari  (aerosol-radiation interactions)
-        d(NET_cre_clean)  -> cloud term (ERFaci + cloud adjustments)
-        d(NET_clearclean) -> surface albedo and other clear-sky, aerosol-free changes
+        d(NET_cloud)  -> cloud term (ERFaci + cloud adjustments)
+        d(NET_rest) -> surface albedo and other clear-sky, aerosol-free changes
     """
     _require(ds, GHAN_INPUTS, "Ghan decomposition")
     src = "Ghan (2013) decomposition of " + ", ".join(GHAN_INPUTS)
@@ -120,12 +120,12 @@ def ghan_decomposition(ds):
         "SW_dir": (sw_dir, "SW aerosol direct radiative effect (all-sky)"),
         "LW_dir": (lw_dir, "LW aerosol direct radiative effect (all-sky)"),
         "NET_dir": (sw_dir + lw_dir, "Net aerosol direct radiative effect (all-sky)"),
-        "SW_cre_clean": (sw_cre, "SW cloud radiative effect without aerosol (clean)"),
-        "LW_cre_clean": (lw_cre, "LW cloud radiative effect without aerosol (clean)"),
-        "NET_cre_clean": (sw_cre + lw_cre, "Net cloud radiative effect without aerosol (clean)"),
-        "SW_clearclean": (sw_clr, "SW net flux, clear-sky and aerosol-free"),
-        "LW_clearclean": (lw_clr, "LW net flux (down positive), clear-sky and aerosol-free"),
-        "NET_clearclean": (sw_clr + lw_clr, "Net flux, clear-sky and aerosol-free"),
+        "SW_cloud": (sw_cre, "SW cloud radiative effect without aerosol (clean)"),
+        "LW_cloud": (lw_cre, "LW cloud radiative effect without aerosol (clean)"),
+        "NET_cloud": (sw_cre + lw_cre, "Net cloud radiative effect without aerosol (clean)"),
+        "SW_rest": (sw_clr, "SW net flux, clear-sky and aerosol-free"),
+        "LW_rest": (lw_clr, "LW net flux (down positive), clear-sky and aerosol-free"),
+        "NET_rest": (sw_clr + lw_clr, "Net flux, clear-sky and aerosol-free"),
         "NET_toa": (ds.FSNT - ds.FLNT, "Net flux at top of model (down positive)"),
     }
     return {name: _secondary(da, name, "W/m2", long_name, src, sign_convention="positive down")

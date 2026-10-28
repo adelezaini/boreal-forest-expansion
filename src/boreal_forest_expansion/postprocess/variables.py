@@ -77,15 +77,27 @@ CATEGORIES = {
             "MEG_ISOP", "MEG_MTERP", "MEG_BCARY",
             "ISOP", "MTERP", "BCARY",
             "cb_ISOP", "cb_MTERP", "cb_BCARY",
+            # Other species with a MEGAN part (prescribed in the all-species fBVOC runs); post-CO2-fix runs only.
+            "SFCO", "SFCH2O", "SFCH3OH",
+        ],
+        # BVOC oxidation products (post-CO2-fix runs only).
+        "BVOCOX": [
+            "CH2O", "ISOPOOH", "IEPOX", "MVK", "MACR", "ISOPNO3",
+            "TERPROD1", "TERPROD2", "TERPNIT",
         ],
         # Secondary organic aerosol: concentrations, NPF, growth, budget terms, CCN.
         "SOA": [
             "SOA_A1", "SOA_NA", "SOA_LV", "SOA_SV", "cb_SOA_LV", "cb_SOA_SV",
+            # model column burdens (every timestep), only in the post-CO2-fix nudged runs (from 2026-10-28);
+            # interstitial A1/NA and cloud-borne (_OCW). Older runs: logged as missing and skipped.
+            "cb_SOA_A1", "cb_SOA_NA", "cb_SOA_A1_OCW", "cb_SOA_NA_OCW",
             "NUCLRATE", "FORMRATE", "GR", "GRSOA", "GRH2SO4",
             "NUCLSOA", "ORGNUCL", "COAGNUCL",
             "SOA_A1condTend", "SOA_NAcondTend", "SOA_A1coagTend", "SOA_NAcoagTend",
             "SOA_A1_mixnuc1", "SOA_NA_mixnuc1",
             "SOA_A1DDF", "SOA_NADDF", "SOA_A1SFWET", "SOA_NASFWET",
+            # removal of cloud-borne SOA (post-CO2-fix runs only)
+            "SOA_A1_OCWSFWET", "SOA_NA_OCWSFWET", "SOA_A1_OCWDDF", "SOA_NA_OCWDDF",
             "N_AER",
             "CCN1", "CCN2", "CCN3", "CCN4", "CCN5", "CCN6", "CCN7", "CCN_B",
         ],
@@ -96,7 +108,11 @@ CATEGORIES = {
             "SO4_A1condTend", "SO4_NAcondTend", "SO4_A1coagTend", "SO4_NAcoagTend",
             "SO4_A1_mixnuc1", "SO4_NA_mixnuc1",
             "SO4_A1DDF", "SO4_NADDF", "SO4_A1SFWET", "SO4_NASFWET",
+            # H2SO4 precursors and sulfate burdens (post-CO2-fix runs only)
+            "SO2", "DMS", "DF_SO2", "WD_SO2", "cb_SULFATE", "cb_SO4_NA",
         ],
+        # Aerosol number concentration and number median radius per OsloAero mode (post-CO2-fix runs only).
+        "AERSIZE": [f"NCONC{m:02d}" for m in range(1, 15)] + [f"NMR{m:02d}" for m in range(1, 15)],
         # Aerosol optical properties (direct effect).
         "AEROPT": [
             "DOD440", "DOD550", "DOD870", "AOD_VIS", "AEROD_v", "OD550DRY",
@@ -124,6 +140,8 @@ CATEGORIES = {
         "CHEM": [
             "O3", "OH", "HO2", "NO", "NO2", "CO", "CH4",
             "TROP_P", "TROP_T", "TROP_Z",
+            # post-CO2-fix runs only: columns, ozone uptake, oxidants and nitrogen reservoirs
+            "cb_O3", "cb_CH4", "DF_O3", "H2O2", "HNO3", "NO3", "N2O5", "PAN",
         ],
         # Meteorology, surface state and turbulent fluxes.
         "METEO": [
@@ -132,6 +150,7 @@ CATEGORIES = {
             "PRECC", "PRECL", "PRECSC", "PRECSL",
             "SNOWHLND", "ICEFRAC", "OCNFRAC",
             "T", "U", "V", "Q", "OMEGA", "Z3",
+            "PBLH", "QFLX", "TMQ", "RELHUM",        # post-CO2-fix runs only
         ],
     },
     # CLM: the h0 list is the CLM default (~560 fields), so only a targeted subset is kept.
@@ -149,6 +168,8 @@ CATEGORIES = {
             "FSH", "FSH_V", "FSH_G",                # sensible heat: total, vegetation, ground
             "EFLX_LH_TOT", "FGR",
             "FSDSVD", "FSDSVI", "FSDSND", "FSDSNI", "FSRVD", "FSRVI", "FSRND", "FSRNI",
+            # surface and ground albedo by band, direct/diffuse (post-CO2-fix runs only)
+            "ALBD", "ALBI", "ALBGRD", "ALBGRI",
         ],
         # Snow: the canopy-masking part of the boreal albedo signal.
         # SNOCAN = snow held in the canopy; SNOFSR* = solar reflected by snow (vis/NIR,
@@ -156,6 +177,14 @@ CATEGORIES = {
         "SNOW": [
             "H2OSNO", "FSNO", "FSNO_EFF", "SNOW_DEPTH", "SNOWDP", "SNOW_PERSISTENCE",
             "SNOCAN", "SNOFSRVD", "SNOFSRVI", "SNOFSRND", "SNOFSRNI",
+            # solar incident on snow (post-CO2-fix runs only); snow albedo = SNOFSR* / SNOFSDS*
+            "SNOFSDSVD", "SNOFSDSVI", "SNOFSDSND", "SNOFSDSNI",
+        ],
+        # Surface exchange: roughness, displacement height, aerodynamic and stomatal resistance.
+        # Only RSSUN/RSSHA are in the old-chain output; the rest are post-CO2-fix runs only.
+        "SURFEXCH": [
+            "Z0M", "Z0MV", "Z0MG", "Z0HV", "Z0HG", "Z0QV", "Z0QG", "DISPLA", "HBOT",
+            "RAM1", "RSSUN", "RSSHA",
         ],
         "BIOGEOCHEM": [
             "GPP", "NPP", "AR", "HR", "ER", "NEE", "NEP", "NBP",

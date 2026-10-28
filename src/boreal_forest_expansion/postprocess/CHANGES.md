@@ -112,3 +112,5 @@ by record length (days), over `lat`/`lon` by cell area. Example: an annual mean 
   the `_DRF` fields average over several calls (a, source).
 - CLM CH₄ fields left out on the assumption that CH₄ is prescribed at the lower boundary (c).
 - `min_frac=0.01` for in-cloud ratios is a starting value to test.
+
+- 2026-10-28: Ghan terms renamed `*_cre_clean` -> `*_cloud`, `*_clearclean` -> `*_rest` (derived.py). Older processed files keep the old names; `plotting.forcing_maps.open_class` renames them on loading.
