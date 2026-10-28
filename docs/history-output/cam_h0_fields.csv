@@ -1,0 +1,296 @@
+component,name,long_name,units,dims,n_lev,cell_methods,kind,added,group,absent_in_fBVOC,postprocess_category,est_MB_per_month
+CAM,gw,latitude weights,,lat,,,grid/coord,False,,False,,0.0
+CAM,hyam,hybrid A coefficient at layer midpoints,,lev,32,,grid/coord,False,,False,,
+CAM,hybm,hybrid B coefficient at layer midpoints,,lev,32,,grid/coord,False,,False,,
+CAM,P0,reference pressure,Pa,,,,grid/coord,False,,False,,
+CAM,hyai,hybrid A coefficient at layer interfaces,,ilev,33,,grid/coord,False,,False,,
+CAM,hybi,hybrid B coefficient at layer interfaces,,ilev,33,,grid/coord,False,,False,,
+CAM,date,current date (YYYYMMDD),,time,,,grid/coord,False,,False,,
+CAM,datesec,current seconds of current date,,time,,,grid/coord,False,,False,,
+CAM,time_bnds,time interval endpoints,,"time,nbnd",2,,grid/coord,False,,False,,
+CAM,date_written,,,time,,,grid/coord,False,,False,,
+CAM,time_written,,,time,,,grid/coord,False,,False,,
+CAM,ndbase,base day,,,,,grid/coord,False,,False,,
+CAM,nsbase,seconds of base day,,,,,grid/coord,False,,False,,
+CAM,nbdate,base date (YYYYMMDD),,,,,grid/coord,False,,False,,
+CAM,nbsec,seconds of base date,,,,,grid/coord,False,,False,,
+CAM,mdt,timestep,s,,,,grid/coord,False,,False,,
+CAM,ndcur,current day (from base day),,time,,,grid/coord,False,,False,,
+CAM,nscur,current seconds of current day,,time,,,grid/coord,False,,False,,
+CAM,co2vmr,co2 volume mixing ratio,,time,,,grid/coord,False,,False,,
+CAM,ch4vmr,ch4 volume mixing ratio,,time,,,grid/coord,False,,False,,
+CAM,n2ovmr,n2o volume mixing ratio,,time,,,grid/coord,False,,False,,
+CAM,f11vmr,f11 volume mixing ratio,,time,,,grid/coord,False,,False,,
+CAM,f12vmr,f12 volume mixing ratio,,time,,,grid/coord,False,,False,,
+CAM,sol_tsi,total solar irradiance,W/m2,time,,,grid/coord,False,,False,,
+CAM,nsteph,current timestep,,time,,,grid/coord,False,,False,,
+CAM,A550_BC,BC abs. aerosol optical depth 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,A550_DU,mineral abs. aerosol optical depth 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,A550_POM,OC abs. aerosol optical depth 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,A550_SO4,SO4 aerosol abs. optical depth 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,A550_SS,sea-salt abs aerosol optical depth 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,AB550DRY,Dry aerosol absorptive optical depth at 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,ABS550,Aerosol absorptive optical depth at 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,ABS550_A,aerosol absorption coefficient,m-1,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,AEROPT,1.769
+CAM,ACTNL,Average Cloud Top droplet number,m-3,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,ACTREI,Average Cloud Top ice effective radius,Micron,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,ACTREL,Average Cloud Top droplet effective radius,Micron,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,AEROD_v,Total Aerosol Optical Depth in visible band,1,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,AOD_VIS,Aerosol optical depth at 0.442-0.625um,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,AREI,Average ice effective radius,Micron,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,AREL,Average droplet effective radius,Micron,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,AWNC,Average cloud water number conc,m-3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,BCARY,BCARY concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,BVOC,1.769
+CAM,CABS550,Clear air Aerosol abs optical depth at 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,CCN1,CCN concentration at S=0.02%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN2,CCN concentration at S=0.05%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN3,CCN concentration at S=0.1%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN4,CCN concentration at S=0.15%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN5,CCN concentration at S=0.2%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN6,CCN concentration at S=0.5%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN7,CCN concentration at S=1.0%,#/cm3,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,CCN_B,Average Cloud Top liquid CCN (Bennartz),m-3,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,CDNUMC,Vertically-integrated droplet concentration,1/m2,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,CFC115,CFC115 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,,1.769
+CAM,CH2O,CH2O concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,CH4,CH4 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,CLDHGH,Vertically-integrated high cloud,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,CLDICE,Grid box averaged cloud ice amount,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,CLDLIQ,Grid box averaged cloud liquid amount,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,CLDLOW,Vertically-integrated low cloud,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,CLDMED,Vertically-integrated mid-level cloud,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,CLDTOT,Vertically-integrated total cloud,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,CLOUD,Cloud fraction,fraction,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,CO,CO concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,CO2,CO2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,,1.769
+CAM,COAGNUCL,Coagulation sink for nucleating particles,/s,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,DF_H2SO4,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,DF_HNO3,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,DF_ISOPNO3,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,DF_O3,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,DF_PAN,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,DF_SO2,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,DMS,DMS concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,sulfur,False,,1.769
+CAM,DOD440,Aerosol optical depth at 440nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,DOD550,Aerosol optical depth at 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,DOD870,Aerosol optical depth at 870nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,FCTI,Fractional occurrence of cloud top ice,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,FCTL,Fractional occurrence of cloud top liquid,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,FLDS,Downwelling longwave flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLNS,Net longwave flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLNSC,Clearsky net longwave flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLNT,Net longwave flux at top of model,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLNTC,Clearsky net longwave flux at top of model,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLNTCDRF,Clear sky total column longwave flux (DIRind),W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLNT_DRF,Total column longwave flux (DIRind),W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLUS,LW surface upwelling flux,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLUT,Upwelling longwave flux at top of model,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FLUTC,Clearsky upwelling longwave flux at top of model,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FORMRATE,Formation rate of 12nm particles,#/cm3/s,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,FREQI,Fractional occurrence of ice,fraction,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,FREQL,Fractional occurrence of liquid,fraction,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,FSDS,Downwelling solar flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSDSC,Clearsky downwelling solar flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSDSCDRF,SW downwelling clear sky flux at surface,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSDS_DRF,SW downelling flux at surface,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNS,Net solar flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNSC,Clearsky net solar flux at surface,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNT,Net solar flux at top of model,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNTC,Clearsky net solar flux at top of model,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNTCDRF,Clear sky total column absorbed solar flux (DIRind),W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNTOA,Net solar flux at top of atmosphere,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNTOAC,Clearsky net solar flux at top of atmosphere,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSNT_DRF,Total column absorbed solar flux (DIRind),W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSUS_DRF,SW upwelling flux at surface,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,FSUTADRF,SW upwelling flux at TOA,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,GR,"Growth rate, H2SO4+SOA",nm/hour,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,GRH2SO4,Growth rate H2SO4,nm/hour,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,GRSOA,Growth rate SOA,nm/hour,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,H2O2,H2O2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,oxidants / nitrogen reservoirs,False,,1.769
+CAM,H2SO4,H2SO4 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SULFATE,1.769
+CAM,HNO3,HNO3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,oxidants / nitrogen reservoirs,False,,1.769
+CAM,HO2,HO2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,ICEFRAC,Fraction of sfc area covered by sea-ice,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,IEPOX,IEPOX concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,ISOP,ISOP concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,BVOC,1.769
+CAM,ISOPNO3,ISOPNO3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,ISOPOOH,ISOPOOH concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,LANDFRAC,Fraction of sfc area covered by land,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CAM,LHFLX,Surface latent heat flux,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,LWCF,Longwave cloud forcing,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,MACR,MACR concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,MEG_BCARY,BCARY MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CAM,MEG_BIGALK,BIGALK MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_BIGENE,BIGENE MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_C2H4,C2H4 MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_C2H5OH,C2H5OH MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_C2H6,C2H6 MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_C3H6,C3H6 MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_C3H8,C3H8 MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_CH2O,CH2O MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_CH3CHO,CH3CHO MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_CH3COCH3,CH3COCH3 MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_CH3COOH,CH3COOH MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_CH3OH,CH3OH MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_CO,CO MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_HCN,HCN MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_HCOOH,HCOOH MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MEG_ISOP,ISOP MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CAM,MEG_MTERP,MTERP MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CAM,MEG_TOLUENE,TOLUENE MEGAN emissions flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,,0.055
+CAM,MTERP,MTERP concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,BVOC,1.769
+CAM,MVK,MVK concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,N2O,N2O concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,,1.769
+CAM,N2O5,N2O5 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,oxidants / nitrogen reservoirs,False,,1.769
+CAM,NCONC01,number concentration mode 01,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC02,number concentration mode 02,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC03,number concentration mode 03,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC04,number concentration mode 04,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC05,number concentration mode 05,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC06,number concentration mode 06,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC07,number concentration mode 07,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC08,number concentration mode 08,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC09,number concentration mode 09,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC10,number concentration mode 10,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC11,number concentration mode 11,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC12,number concentration mode 12,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC13,number concentration mode 13,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NCONC14,number concentration mode 14,#/m3,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR01,number median radius mode 01,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR02,number median radius mode 02,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR03,number median radius mode 03,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR04,number median radius mode 04,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR05,number median radius mode 05,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR06,number median radius mode 06,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR07,number median radius mode 07,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR08,number median radius mode 08,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR09,number median radius mode 09,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR10,number median radius mode 10,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR11,number median radius mode 11,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR12,number median radius mode 12,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR13,number median radius mode 13,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NMR14,number median radius mode 14,m,"time,lev,lat,lon",32,time: mean,whitelist,True,aerosol number / size per mode,False,,1.769
+CAM,NO,NO concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,NO2,NO2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,NO3,NO3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,oxidants / nitrogen reservoirs,False,,1.769
+CAM,NUCLRATE,Nucleation rate,#/cm3/s,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,NUCLSOA,SOA nucleate,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,NUMICE,Grid box averaged cloud ice number,1/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,NUMLIQ,Grid box averaged cloud liquid number,1/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CLOUDPROP,1.769
+CAM,N_AER,Aerosol number concentration,unitless,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,O3,O3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,OCNFRAC,Fraction of sfc area covered by ocean,fraction,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,OD550DRY,Dry aerosol optical depth at 550nm,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,AEROPT,0.055
+CAM,OH,OH concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,CHEM,1.769
+CAM,OMEGA,Vertical velocity (pressure),Pa/s,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,METEO,1.769
+CAM,ORGNUCL,Organic gas available for nucleation,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,PAN,PAN concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,oxidants / nitrogen reservoirs,False,,1.769
+CAM,PBLH,PBL height,m,"time,lat,lon",,time: mean,whitelist,True,humidity / boundary layer,False,,0.055
+CAM,PRECC,Convective precipitation rate (liq + ice),m/s,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,PRECL,Large-scale (stable) precipitation rate (liq + ice),m/s,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,PRECSC,Convective snow rate (water equivalent),m/s,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,PRECSL,Large-scale (stable) snow rate (water equivalent),m/s,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,PS,Surface pressure,Pa,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CAM,PSL,Sea level pressure,Pa,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,Q,Specific humidity,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,METEO,1.769
+CAM,QFLX,Surface water flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,humidity / boundary layer,False,,0.055
+CAM,QREFHT,Reference height humidity,kg/kg,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,RELHUM,Relative humidity,percent,"time,lev,lat,lon",32,time: mean,whitelist,True,humidity / boundary layer,False,,1.769
+CAM,SF6,SF6 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,,1.769
+CAM,SFBCARY,BCARY surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BVOC,0.055
+CAM,SFCH2O,CH2O surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,surface emission flux,False,,0.055
+CAM,SFCH3OH,CH3OH surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,surface emission flux,False,,0.055
+CAM,SFCO,CO surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,surface emission flux,False,,0.055
+CAM,SFISOP,ISOP surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BVOC,0.055
+CAM,SFMTERP,MTERP surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BVOC,0.055
+CAM,SFNO,NO surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,surface emission flux,False,,0.055
+CAM,SFNO2,NO2 surface flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,surface emission flux,False,,0.055
+CAM,SHFLX,Surface sensible heat flux,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,SNOWHLND,Water equivalent snow depth,m,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,SO2,SO2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,sulfur,False,,1.769
+CAM,SO4_A1,SO4_A1 concentration,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SULFATE,1.769
+CAM,SO4_A1DDF,SO4_A1 dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_A1SFWET,Wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_A1_mixnuc1,SO4_A1_mixnuc1 dropmixnuc column tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_A1coagTend,coagulation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_A1condTend,condensation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_NA,SO4_NA concentration,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SULFATE,1.769
+CAM,SO4_NADDF,SO4_NA dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_NASFWET,Wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_NA_mixnuc1,SO4_NA_mixnuc1 dropmixnuc column tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_NAcoagTend,coagulation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SO4_NAcondTend,condensation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,SOA_A1,SOA_A1 concentration,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,SOA_A1DDF,SOA_A1 dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_A1GVF,SOA_A1 gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,SOA dry deposition (grav./turb.),False,,0.055
+CAM,SOA_A1SFWET,Wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_A1TBF,SOA_A1 turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,SOA dry deposition (grav./turb.),False,,0.055
+CAM,SOA_A1_OCWDDF,SOA_A1_OCW dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_A1_OCWGVF,SOA_A1_OCW gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_A1_OCWSFWET,SOA_A1_OCW wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_A1_OCWTBF,SOA_A1_OCW turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_A1_mixnuc1,SOA_A1_mixnuc1 dropmixnuc column tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_A1coagTend,coagulation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_A1condTend,condensation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_LV,SOA_LV concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,SOA_NA,SOA_NA concentration,kg/kg,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,SOA_NADDF,SOA_NA dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_NAGVF,SOA_NA gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,SOA dry deposition (grav./turb.),False,,0.055
+CAM,SOA_NASFWET,Wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_NATBF,SOA_NA turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,SOA dry deposition (grav./turb.),False,,0.055
+CAM,SOA_NA_OCWDDF,SOA_NA_OCW dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_NA_OCWGVF,SOA_NA_OCW gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_NA_OCWSFWET,SOA_NA_OCW wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_NA_OCWTBF,SOA_NA_OCW turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,cloud-borne SOA removal,False,,0.055
+CAM,SOA_NA_mixnuc1,SOA_NA_mixnuc1 dropmixnuc column tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_NAcoagTend,coagulation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_NAcondTend,condensation tendency,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,SOA_SV,SOA_SV concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,SOA,1.769
+CAM,SOLIN,Solar insolation,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,SWCF,Shortwave cloud forcing,W/m2,"time,lat,lon",,time: mean,whitelist,False,,False,RADIATIVE,0.055
+CAM,T,Temperature,K,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,METEO,1.769
+CAM,TAUX,Zonal surface stress,N/m2,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,TAUY,Meridional surface stress,N/m2,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,TERPNIT,TERPNIT concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,TERPROD1,TERPROD1 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,TERPROD2,TERPROD2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,whitelist,True,BVOC oxidation products,False,,1.769
+CAM,TGCLDCWP,Total grid-box cloud water path (liquid and ice),kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,TGCLDIWP,Total grid-box cloud ice water path,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,TGCLDLWP,Total grid-box cloud liquid water path,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,CLOUDPROP,0.055
+CAM,TMQ,Total (vertically integrated) precipitable water,kg/m2,"time,lat,lon",,time: mean,whitelist,True,humidity / boundary layer,False,,0.055
+CAM,TREFHT,Reference height temperature,K,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,TROP_P,Tropopause Pressure,Pa,"time,lat,lon",,time: mean,whitelist,False,,False,CHEM,0.055
+CAM,TROP_T,Tropopause Temperature,K,"time,lat,lon",,time: mean,whitelist,False,,False,CHEM,0.055
+CAM,TROP_Z,Tropopause Height,m,"time,lat,lon",,time: mean,whitelist,False,,False,CHEM,0.055
+CAM,TS,Surface temperature (radiative),K,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,U,Zonal wind,m/s,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,METEO,1.769
+CAM,U10,10m wind speed,m/s,"time,lat,lon",,time: mean,whitelist,False,,False,METEO,0.055
+CAM,V,Meridional wind,m/s,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,METEO,1.769
+CAM,WD_A_H2SO4,H2SO4            wet deposition,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,WD_A_ISOPNO3,ISOPNO3          wet deposition,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,WD_A_PAN,PAN              wet deposition,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,WD_H2SO4,vertical integrated wet deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,WD_HNO3,vertical integrated wet deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,WD_SO2,vertical integrated wet deposition flux,kg/m2/s,"time,lat,lon",,time: mean,whitelist,True,gas dry/wet deposition,False,,0.055
+CAM,Z3,Geopotential Height (above sea level),m,"time,lev,lat,lon",32,time: mean,whitelist,False,,False,METEO,1.769
+CAM,cb_BCARY,cb_BCARY in column,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,BVOC,0.055
+CAM,cb_CH4,cb_CH4 in column,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,,0.055
+CAM,cb_H2SO4,cb_H2SO4 in column,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,SULFATE,0.055
+CAM,cb_ISOP,cb_ISOP in column,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,BVOC,0.055
+CAM,cb_MTERP,cb_MTERP in column,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,BVOC,0.055
+CAM,cb_O3,cb_O3 in column,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,,0.055
+CAM,cb_SO4_NA,cb_SO4_NA in column,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,,0.055
+CAM,cb_SOA_A1,cb_SOA_A1 in column,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,SOA,0.055
+CAM,cb_SOA_A1_OCW,cb_SOA_A1_OCW column in cloud water,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,SOA,0.055
+CAM,cb_SOA_LV,cb_SOA_LV in column,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,cb_SOA_NA,cb_SOA_NA in column,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,SOA,0.055
+CAM,cb_SOA_NA_OCW,cb_SOA_NA_OCW column in cloud water,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,SOA,0.055
+CAM,cb_SOA_SV,cb_SOA_SV in column,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,SOA,0.055
+CAM,cb_SULFATE,cb_SULFATE column of aerosol type,kg/m2,"time,lat,lon",,time: mean,whitelist,True,column burden,False,,0.055
+CAM,emis_ISOP,ISOP emissions,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CAM,emis_MTERP,MTERP emissions,kg/m2/s,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CAM,lat,latitude,degrees_north,lat,,,grid/coord,False,,False,,0.0
+CAM,lon,longitude,degrees_east,lon,,,grid/coord,False,,False,,0.001
+CAM,lev,hybrid level at midpoints (1000*(A+B)),hPa,lev,32,,grid/coord,False,,False,,
+CAM,ilev,hybrid level at interfaces (1000*(A+B)),hPa,ilev,33,,grid/coord,False,,False,,
+CAM,time,time,days since 2000-01-01 00:00:00,time,,,grid/coord,False,,False,,

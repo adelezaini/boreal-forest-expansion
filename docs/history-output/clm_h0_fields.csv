@@ -1,0 +1,600 @@
+component,name,long_name,units,dims,n_lev,cell_methods,kind,added,group,absent_in_fBVOC,postprocess_category,est_MB_per_month
+CLM,mcdate,current date (YYYYMMDD),,time,,,grid/coord,False,,False,,
+CLM,mcsec,current seconds of current date,s,time,,,grid/coord,False,,False,,
+CLM,mdcur,current day (from base day),,time,,,grid/coord,False,,False,,
+CLM,mscur,current seconds of current day,,time,,,grid/coord,False,,False,,
+CLM,nstep,time step,,time,,,grid/coord,False,,False,,
+CLM,time_bounds,history time interval endpoints,,"time,hist_interval",2,,grid/coord,False,,False,,
+CLM,date_written,,,time,,,grid/coord,False,,False,,
+CLM,time_written,,,time,,,grid/coord,False,,False,,
+CLM,area,grid cell areas,km^2,"lat,lon",,,grid/coord,False,,False,,0.055
+CLM,landfrac,land fraction,,"lat,lon",,,grid/coord,False,,False,,0.055
+CLM,landmask,land/ocean mask (0.=ocean and 1.=land),,"lat,lon",,,grid/coord,False,,False,,0.055
+CLM,pftmask,pft real/fake mask (0.=fake and 1.=real),,"lat,lon",,,grid/coord,False,,False,,0.055
+CLM,nbedrock,index of shallowest bedrock layer,,"lat,lon",,,grid/coord,False,,False,,0.055
+CLM,ZSOI,soil depth,m,"levgrnd,lat,lon",25,,grid/coord,False,,False,,1.382
+CLM,DZSOI,soil thickness,m,"levgrnd,lat,lon",25,,grid/coord,False,,False,,1.382
+CLM,WATSAT,saturated soil water content (porosity),mm3/mm3,"levgrnd,lat,lon",25,,grid/coord,False,,False,,1.382
+CLM,SUCSAT,saturated soil matric potential,mm,"levgrnd,lat,lon",25,,grid/coord,False,,False,,1.382
+CLM,BSW,slope of soil water retention curve,unitless,"levgrnd,lat,lon",25,,grid/coord,False,,False,,1.382
+CLM,HKSAT,saturated hydraulic conductivity,mm s-1,"levgrnd,lat,lon",25,,grid/coord,False,,False,,1.382
+CLM,ZLAKE,lake layer node depth,m,"levlak,lat,lon",10,,grid/coord,False,,False,,0.553
+CLM,DZLAKE,lake layer thickness,m,"levlak,lat,lon",10,,grid/coord,False,,False,,0.553
+CLM,ACTUAL_IMMOB,actual N immobilization,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,AGNPP,aboveground NPP,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,ALBD,surface albedo (direct),proportion,"time,numrad,lat,lon",2,time: mean,whitelist,True,albedo / absorbed solar,False,,0.111
+CLM,ALBGRD,ground albedo (direct),proportion,"time,numrad,lat,lon",2,time: mean,whitelist,True,albedo / absorbed solar,False,,0.111
+CLM,ALBGRI,ground albedo (indirect),proportion,"time,numrad,lat,lon",2,time: mean,whitelist,True,albedo / absorbed solar,False,,0.111
+CLM,ALBI,surface albedo (indirect),proportion,"time,numrad,lat,lon",2,time: mean,whitelist,True,albedo / absorbed solar,False,,0.111
+CLM,ALT,current active layer thickness,m,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,ALTMAX,maximum annual active layer thickness,m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,AR,autotrophic respiration (MR + GR),gC/m^2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,ATM_TOPO,atmospheric surface height,m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,BAF_CROP,fractional area burned for crop,proportion/sec,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,BAF_PEATF,fractional area burned in peatland,proportion/sec,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,BCDEP,total BC deposition (dry+wet) from atmosphere,kg/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,BGNPP,belowground NPP,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,BTRAN2,root zone soil wetness factor,unitless,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,BTRANMN,daily minimum of transpiration beta factor,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,CH4PROD,Gridcell total production of CH4,gC/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CH4_SURF_AERE_SAT,aerenchyma surface CH4 flux for inundated area; (+ to atm),mol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CH4_SURF_AERE_UNSAT,aerenchyma surface CH4 flux for non-inundated area; (+ to atm),mol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CH4_SURF_DIFF_SAT,diffusive surface CH4 flux for inundated / lake area; (+ to atm),mol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CH4_SURF_DIFF_UNSAT,diffusive surface CH4 flux for non-inundated area; (+ to atm),mol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CH4_SURF_EBUL_SAT,ebullition surface CH4 flux for inundated / lake area; (+ to atm),mol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CH4_SURF_EBUL_UNSAT,ebullition surface CH4 flux for non-inundated area; (+ to atm),mol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,COL_FIRE_CLOSS,total column-level fire C loss for non-peat fires outside land-type converted region,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,COL_FIRE_NLOSS,total column-level fire N loss,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CONC_O2_SAT,O2 soil Concentration for inundated / lake area,mol/m3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,CONC_O2_UNSAT,O2 soil Concentration for non-inundated area,mol/m3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,COST_NACTIVE,Cost of active uptake,gN/gC,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,COST_NFIX,Cost of fixation,gN/gC,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,COST_NRETRANS,Cost of retranslocation,gN/gC,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CPHASE,crop phenology phase,"0-not planted, 1-planted, 2-leaf emerge, 3-grain fill, 4-harvest","time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CPOOL,temporary photosynthate C pool,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CROPPROD1C,1-yr grain product C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CROPPROD1C_LOSS,loss from 1-yr grain product pool,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CROPPROD1N,1-yr grain product N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CROPPROD1N_LOSS,loss from 1-yr grain product pool,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CROPSEEDC_DEFICIT,C used for crop seed that needs to be repaid,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CWDC,CWD C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CWDC_LOSS,coarse woody debris C loss,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CWDC_vr,CWD C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,CWDN,CWD N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,CWDN_vr,CWD N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,DEADCROOTC,dead coarse root C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DEADCROOTN,dead coarse root N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DEADSTEMC,dead stem C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DEADSTEMN,dead stem N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DENIT,total rate of denitrification,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DISPLA,displacement height,m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,DISPVEGC,"displayed veg carbon, excluding storage and cpool",gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DISPVEGN,displayed vegetation nitrogen,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DSL,dry surface layer thickness,mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DSTDEP,total dust deposition (dry+wet) from atmosphere,kg/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DSTFLXT,total surface dust emission,kg/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_CONV_CFLUX,conversion C flux (immediate loss to atm) (0 at all times except first timestep of year),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_CONV_CFLUX_DRIBBLED,"conversion C flux (immediate loss to atm), dribbled throughout the year",gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_CONV_NFLUX,conversion N flux (immediate loss to atm) (0 at all times except first timestep of year),gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_CROPPROD1C_GAIN,landcover change-driven addition to 1-year crop product pool,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_CROPPROD1N_GAIN,landcover change-driven addition to 1-year crop product pool,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_SEEDN_TO_DEADSTEM,seed source to patch-level deadstem,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_SEEDN_TO_LEAF,seed source to patch-level leaf,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_SLASH_CFLUX,slash C flux to litter and CWD due to land use,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_WOODPRODC_GAIN,landcover change-driven addition to wood product pools,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,DWT_WOODPRODN_GAIN,landcover change-driven addition to wood product pools,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,EFLXBUILD,building heat flux from change in interior building air temperature,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,EFLX_DYNBAL,dynamic land cover change conversion energy flux,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,EFLX_GRND_LAKE,"net heat flux into lake/snow surface, excluding light transmission",W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,EFLX_LH_TOT,total latent heat flux [+ to atm],W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,EFLX_LH_TOT_R,Rural total evaporation,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,ELAI,exposed one-sided leaf area index,m^2/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,EPS_acetone,baseline emission factor used: acetone,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_carene_3,baseline emission factor used: carene_3,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_isoprene,baseline emission factor used: isoprene,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_limonene,baseline emission factor used: limonene,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_methanol,baseline emission factor used: methanol,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_myrcene,baseline emission factor used: myrcene,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_ocimene_t_b,baseline emission factor used: ocimene_t_b,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_pinene_a,baseline emission factor used: pinene_a,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_pinene_b,baseline emission factor used: pinene_b,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,EPS_sabinene,baseline emission factor used: sabinene,ug/m2/h,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,ER,"total ecosystem respiration, autotrophic + heterotrophic",gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,ERRH2O,total water conservation error,mm,"time,lat,lon",,time: mean,default,False,,False,QA,0.055
+CLM,ERRH2OSNO,imbalance in snow depth (liquid water),mm,"time,lat,lon",,time: mean,default,False,,False,QA,0.055
+CLM,ERRSEB,surface energy conservation error,W/m^2,"time,lat,lon",,time: mean,default,False,,False,QA,0.055
+CLM,ERRSOI,soil/lake energy conservation error,W/m^2,"time,lat,lon",,time: mean,default,False,,False,QA,0.055
+CLM,ERRSOL,solar radiation conservation error,W/m^2,"time,lat,lon",,time: mean,default,False,,False,QA,0.055
+CLM,ESAI,exposed one-sided stem area index,m^2/m^2,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,FAREA_BURNED,timestep fractional area burned,proportion/sec,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FCEV,canopy evaporation,W/m^2,"time,lat,lon",,time: mean,whitelist,True,latent heat split,False,ET,0.055
+CLM,FCH4,Gridcell surface CH4 flux to atmosphere (+ to atm),kgC/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FCH4TOCO2,Gridcell oxidation of CH4 to CO2,gC/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FCH4_DFSAT,"CH4 additional flux due to changing fsat, vegetated landunits only",kgC/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FCOV,fractional impermeable area,unitless,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FCTR,canopy transpiration,W/m^2,"time,lat,lon",,time: mean,whitelist,True,latent heat split,False,ET,0.055
+CLM,FFIX_TO_SMINN,free living  N fixation to soil mineral N,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FGEV,ground evaporation,W/m^2,"time,lat,lon",,time: mean,whitelist,True,latent heat split,False,ET,0.055
+CLM,FGR,heat flux into soil/snow including snow melt and lake / snow light transmission,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FGR12,heat flux between soil layers 1 and 2,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FH2OSFC,fraction of ground covered by surface water,unitless,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FINUNDATED,fractional inundated area of vegetated columns,unitless,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FIRA,net infrared (longwave) radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FIRA_R,Rural net infrared (longwave) radiation,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FIRE,emitted infrared (longwave) radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FIRE_R,Rural emitted infrared (longwave) radiation,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FLDS,atmospheric longwave radiation (downscaled to columns in glacier regions),W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FPI,fraction of potential immobilization,proportion,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FPSN,photosynthesis,umol/m2s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FREE_RETRANSN_TO_NPOOL,deployment of retranslocated N,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FROOTC,fine root C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FROOTC_ALLOC,fine root C allocation,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FROOTC_LOSS,fine root C loss,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FROOTN,fine root N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSA,absorbed solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSAT,fractional area with water table at surface,unitless,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,FSDS,atmospheric incident solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSDSND,direct nir incident solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSDSNDLN,direct nir incident solar radiation at local noon,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSDSNI,diffuse nir incident solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSDSVD,direct vis incident solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSDSVDLN,direct vis incident solar radiation at local noon,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSDSVI,diffuse vis incident solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSDSVILN,diffuse vis incident solar radiation at local noon,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSH,sensible heat not including correction for land use change and rain/snow conversion,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSH_G,sensible heat from ground,W/m^2,"time,lat,lon",,time: mean,default,False,,False,ENERGY,0.055
+CLM,FSH_PRECIP_CONVERSION,Sensible heat flux from conversion of rain/snow atm forcing,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSH_R,Rural sensible heat,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSH_RUNOFF_ICE_TO_LIQ,sensible heat flux generated from conversion of ice runoff to liquid,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSH_TO_COUPLER,"sensible heat sent to coupler (includes corrections for land use change, rain/snow conversion and conversion of ice runoff to liquid)",W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSH_V,sensible heat from veg,W/m^2,"time,lat,lon",,time: mean,default,False,,False,ENERGY,0.055
+CLM,FSM,snow melt heat flux,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSNO,fraction of ground covered by snow,unitless,"time,lat,lon",,time: mean,whitelist,False,,False,SNOW,0.055
+CLM,FSNO_EFF,effective fraction of ground covered by snow,unitless,"time,lat,lon",,time: mean,default,False,,False,SNOW,0.055
+CLM,FSR,reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSRND,direct nir reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSRNDLN,direct nir reflected solar radiation at local noon,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSRNI,diffuse nir reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,True,albedo / absorbed solar,False,ENERGY,0.055
+CLM,FSRVD,direct vis reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,ENERGY,0.055
+CLM,FSRVDLN,direct vis reflected solar radiation at local noon,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,FSRVI,diffuse vis reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,whitelist,True,albedo / absorbed solar,False,ENERGY,0.055
+CLM,FUELC,fuel load,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,F_DENIT,denitrification flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,F_N2O_DENIT,denitrification N2O flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,F_N2O_NIT,nitrification N2O flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,F_NIT,nitrification flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GAMMAA_acetone,leaf-age activity factor: acetone,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_carene_3,leaf-age activity factor: carene_3,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_isoprene,leaf-age activity factor: isoprene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_limonene,leaf-age activity factor: limonene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_methanol,leaf-age activity factor: methanol,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_myrcene,leaf-age activity factor: myrcene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_ocimene_t_b,leaf-age activity factor: ocimene_t_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_pinene_a,leaf-age activity factor: pinene_a,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_pinene_b,leaf-age activity factor: pinene_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAA_sabinene,leaf-age activity factor: sabinene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAC_isoprene,CO2 inhibition activity factor (isoprene only),1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAL,LAI activity factor (all MEGAN compounds),1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_acetone,light activity factor: acetone,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_carene_3,light activity factor: carene_3,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_isoprene,light activity factor: isoprene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_limonene,light activity factor: limonene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_methanol,light activity factor: methanol,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_myrcene,light activity factor: myrcene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_ocimene_t_b,light activity factor: ocimene_t_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_pinene_a,light activity factor: pinene_a,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_pinene_b,light activity factor: pinene_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAP_sabinene,light activity factor: sabinene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAS,soil-moisture activity factor (all MEGAN compounds; currently fixed at 1),1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_acetone,temperature activity factor: acetone,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_carene_3,temperature activity factor: carene_3,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_isoprene,temperature activity factor: isoprene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_limonene,temperature activity factor: limonene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_methanol,temperature activity factor: methanol,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_myrcene,temperature activity factor: myrcene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_ocimene_t_b,temperature activity factor: ocimene_t_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_pinene_a,temperature activity factor: pinene_a,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_pinene_b,temperature activity factor: pinene_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMAT_sabinene,temperature activity factor: sabinene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_acetone,total VOC activity factor: acetone,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_carene_3,total VOC activity factor: carene_3,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_isoprene,total VOC activity factor: isoprene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_limonene,total VOC activity factor: limonene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_methanol,total VOC activity factor: methanol,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_myrcene,total VOC activity factor: myrcene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_ocimene_t_b,total VOC activity factor: ocimene_t_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_pinene_a,total VOC activity factor: pinene_a,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_pinene_b,total VOC activity factor: pinene_b,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GAMMA_sabinene,total VOC activity factor: sabinene,1,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,GPP,gross primary production,gC/m^2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,GR,total growth respiration,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GRAINC,grain C (does not equal yield),gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GRAINC_TO_FOOD,grain C to food,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GRAINC_TO_SEED,grain C to seed,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GRAINN,grain N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GROSS_NMIN,gross rate of N mineralization,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GSSHA,shaded leaf stomatal conductance,umol H20/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GSSHALN,shaded leaf stomatal conductance at local noon,umol H20/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GSSUN,sunlit leaf stomatal conductance,umol H20/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,GSSUNLN,sunlit leaf stomatal conductance at local noon,umol H20/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,H2OCAN,intercepted water,mm,"time,lat,lon",,time: mean,whitelist,True,canopy / carbon storage,False,HYDRO,0.055
+CLM,H2OSFC,surface water depth,mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,H2OSNO,snow depth (liquid water),mm,"time,lat,lon",,time: mean,whitelist,False,,False,SNOW,0.055
+CLM,H2OSNO_TOP,mass of snow in top snow layer,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,H2OSOI,volumetric soil water (vegetated landunits only),mm3/mm3,"time,levsoi,lat,lon",20,time: mean,whitelist,False,,False,,1.106
+CLM,HBOT,canopy bottom,m,"time,lat,lon",,time: mean,whitelist,True,canopy / carbon storage,False,,0.055
+CLM,HEAT_CONTENT1,initial gridcell total heat content,J/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HEAT_FROM_AC,sensible heat flux put into canyon due to heat removed from air conditioning,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HIA,2 m NWS Heat Index,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HIA_R,Rural 2 m NWS Heat Index,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HIA_U,Urban 2 m NWS Heat Index,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HR,total heterotrophic respiration,gC/m^2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,HR_vr,total vertically resolved heterotrophic respiration,gC/m^3/s,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,HTOP,canopy top,m,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,HUMIDEX,2 m Humidex,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HUMIDEX_R,Rural 2 m Humidex,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,HUMIDEX_U,Urban 2 m Humidex,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,ICE_CONTENT1,initial gridcell total ice content,mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,JMX25T,canopy profile of jmax,umol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,Jmx25Z,canopy profile of  vcmax25 predicted by LUNA model,umol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LAISHA,shaded projected leaf area index,m^2/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,LAISUN,sunlit projected leaf area index,m^2/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,LAKEICEFRAC_SURF,surface lake layer ice mass fraction,unitless,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LAKEICETHICK,thickness of lake ice (including physical expansion on freezing),m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LAND_USE_FLUX,total C emitted from land cover conversion (smoothed over the year) and wood and grain product pools (NOTE: not a net value),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFC,leaf C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,LEAFCN,Leaf CN ratio used for flexible CN,gC/gN,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFC_ALLOC,leaf C allocation,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFC_CHANGE,C change in leaf,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFC_LOSS,leaf C loss,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFC_TO_LITTER_FUN,leaf C litterfall used by FUN,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFN,leaf N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAFN_TO_LITTER,leaf N litterfall,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LEAF_MR,leaf maintenance respiration,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LFC2,conversion area fraction of BET and BDT that burned,per sec,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LIQCAN,intercepted liquid water,mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LIQUID_CONTENT1,initial gridcell total liq content,mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITFALL,litterfall (leaves and fine roots),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR1C,LITR1 C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR1C_vr,LITR1 C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,LITR1N,LITR1 N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR1N_vr,LITR1 N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,LITR2C,LITR2 C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR2C_vr,LITR2 C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,LITR2N,LITR2 N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR2N_vr,LITR2 N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,LITR3C,LITR3 C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR3C_vr,LITR3 C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,LITR3N,LITR3 N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITR3N_vr,LITR3 N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,LITTERC_HR,litter C heterotrophic respiration,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LITTERC_LOSS,litter C loss,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LIVECROOTC,live coarse root C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LIVECROOTN,live coarse root N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LIVESTEMC,live stem C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LIVESTEMN,live stem N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,LNC,leaf N concentration,gN leaf/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,MEG_2met_styrene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_acetaldehyde,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_acetic_acid,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_acetone,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_bergamotene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_bisabolene_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_bornene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_butene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_camphene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_carbon_monoxide,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_carene_3,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_caryophyllene_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_cymene_o,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_cymene_p,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_ethane,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_ethanol,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_ethene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_farnescene_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_fenchene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_formaldehyde,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_formic_acid,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_heptane,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_hexane,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_humulene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_hydrogen_cyanide,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_isoprene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_limonene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_methanol,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_myrcene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_ocimene_al,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_ocimene_c_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_ocimene_t_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_pentane,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_phellandrene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_phellandrene_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_pinene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_pinene_b,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_propane,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_propene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_sabinene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,whitelist,False,,True,BVOC,0.055
+CLM,MEG_terpinene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_terpinene_g,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_terpinolene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_thujene_a,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_toluene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MEG_tricyclene,MEGAN flux,kg/m2/sec,"time,lat,lon",,time: mean,default,False,,False,BVOC,0.055
+CLM,MR,maintenance respiration,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NACTIVE,Mycorrhizal N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NACTIVE_NH4,Mycorrhizal N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NACTIVE_NO3,Mycorrhizal N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NAM,AM-associated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NAM_NH4,AM-associated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NAM_NO3,AM-associated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NBP,"net biome production, includes fire, landuse, harvest and hrv_xsmrpool flux (latter smoothed over the year), positive for sink (same as net carbon exchange between land and atmosphere)",gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,NDEPLOY,total N deployed in new growth,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NDEP_TO_SMINN,atmospheric N deposition to soil mineral N,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NECM,ECM-associated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NECM_NH4,ECM-associated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NECM_NO3,ECM-associated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NEE,"net ecosystem exchange of carbon, includes fire and hrv_xsmrpool (latter smoothed over the year), excludes landuse and harvest flux, positive for source",gC/m^2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,NEM,Gridcell net adjustment to net carbon exchange passed to atm. for methane production,gC/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NEP,"net ecosystem production, excludes fire, landuse, and harvest flux, positive for sink",gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,NET_NMIN,net rate of N mineralization,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NFERTILIZATION,fertilizer added,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NFIRE,fire counts valid only in Reg.C,counts/km2/sec,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NFIX,Symbiotic BNF uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NNONMYC,Non-mycorrhizal N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NNONMYC_NH4,Non-mycorrhizal N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NNONMYC_NO3,Non-mycorrhizal N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPASSIVE,Passive N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPOOL,temporary plant N pool,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP,net primary production,gC/m^2/s,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,NPP_GROWTH,Total C used for growth in FUN,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NACTIVE,Mycorrhizal N uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NACTIVE_NH4,Mycorrhizal N uptake use C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NACTIVE_NO3,Mycorrhizal N uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NAM,AM-associated N uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NAM_NH4,AM-associated N uptake use C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NAM_NO3,AM-associated N uptake use C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NECM,ECM-associated N uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NECM_NH4,ECM-associated N uptake use C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NECM_NO3,ECM-associated N uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NFIX,Symbiotic BNF uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NNONMYC,Non-mycorrhizal N uptake used C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NNONMYC_NH4,Non-mycorrhizal N uptake use C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NNONMYC_NO3,Non-mycorrhizal N uptake use C,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NRETRANS,Retranslocated N uptake flux,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NPP_NUPTAKE,Total C used by N uptake in FUN,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NRETRANS,Retranslocated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NRETRANS_REG,Retranslocated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NRETRANS_SEASON,Retranslocated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NRETRANS_STRESS,Retranslocated N uptake flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NUPTAKE,Total N uptake of FUN,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,NUPTAKE_NPP_FRACTION,frac of NPP used in N uptake,-,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,OCDEP,total OC deposition (dry+wet) from atmosphere,kg/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,O_SCALAR,fraction by which decomposition is reduced due to anoxia,unitless,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,PARVEGLN,absorbed par by vegetation at local noon,W/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CLM,PBOT,atmospheric pressure at surface (downscaled to columns in glacier regions),Pa,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PCH4,atmospheric partial pressure of CH4,Pa,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PCO2,atmospheric partial pressure of CO2,Pa,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PCT_CFT,% of each crop on the crop landunit,%,"time,cft,lat,lon",64,time: mean,default,False,,False,,3.539
+CLM,PCT_GLC_MEC,% of each GLC elevation class on the glc_mec landunit,%,"time,glc_nec,lat,lon",10,time: mean,default,False,,False,,0.553
+CLM,PCT_LANDUNIT,% of each landunit on grid cell,%,"time,ltype,lat,lon",9,time: mean,default,False,,False,,0.498
+CLM,PCT_NAT_PFT,"% of each PFT on the natural vegetation (i.e., soil) landunit",%,"time,natpft,lat,lon",15,time: mean,whitelist,False,,False,LAND,0.829
+CLM,PFT_FIRE_CLOSS,total patch-level fire C loss for non-peat fires outside land-type converted region,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PFT_FIRE_NLOSS,total patch-level fire N loss,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PLANT_NDEMAND,N flux required to support initial GPP,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,POTENTIAL_IMMOB,potential N immobilization,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,POT_F_DENIT,potential denitrification flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,POT_F_NIT,potential nitrification flux,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PSNSHA,shaded leaf photosynthesis,umolCO2/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PSNSHADE_TO_CPOOL,C fixation from shaded canopy,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PSNSUN,sunlit leaf photosynthesis,umolCO2/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,PSNSUN_TO_CPOOL,C fixation from sunlit canopy,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,Q2M,2m specific humidity,kg/kg,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,QBOT,atmospheric specific humidity (downscaled to columns in glacier regions),kg/kg,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QCHARGE,aquifer recharge rate (vegetated landunits only),mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QDRAI,sub-surface drainage,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QDRAI_PERCH,perched wt drainage,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QDRAI_XS,saturation excess drainage,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QDRIP,throughfall,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QFLOOD,runoff from river flooding,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QFLX_DEW_GRND,ground surface dew formation,mm H2O/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QFLX_DEW_SNOW,surface dew added to snow pacK,mm H2O/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QFLX_EVAP_TOT,qflx_evap_soi + qflx_evap_can + qflx_tran_veg,mm H2O/s,"time,lat,lon",,time: mean,whitelist,False,,False,ET,0.055
+CLM,QFLX_ICE_DYNBAL,ice dynamic land cover change conversion runoff flux,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QFLX_LIQ_DYNBAL,liq dynamic land cover change conversion runoff flux,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QFLX_SNOW_DRAIN,drainage from snow pack,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QFLX_SNOW_DRAIN_ICE,drainage from snow pack melt (ice landunits only),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QFLX_SUB_SNOW,sublimation rate from snow pack (also includes bare ice sublimation from glacier columns),mm H2O/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QH2OSFC,surface water runoff,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QICE,ice growth/melt,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QICE_FRZ,ice growth,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QICE_MELT,ice melt,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QINFL,infiltration,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QINTR,interception,mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,QIRRIG,water added through irrigation,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QOVER,surface runoff,mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,QRGWL,"surface runoff at glaciers (liquid only), wetlands, lakes; also includes melted ice runoff from QSNWCPICE",mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QRUNOFF,total liquid runoff not including correction for land use change,mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,QRUNOFF_ICE,total liquid runoff not incl corret for LULCC (ice landunits only),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QRUNOFF_ICE_TO_COUPLER,total ice runoff sent to coupler (includes corrections for land use change),mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QRUNOFF_TO_COUPLER,total liquid runoff sent to coupler (includes corrections for land use change),mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QSNOCPLIQ,excess liquid h2o due to snow capping not including correction for land use change,mm H2O/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QSNOEVAP,evaporation from snow,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QSNOFRZ,column-integrated snow freezing rate,kg/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QSNOFRZ_ICE,column-integrated snow freezing rate (ice landunits only),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QSNOMELT,snow melt rate,mm/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QSNOMELT_ICE,snow melt (ice landunits only),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QSNO_TEMPUNLOAD,canopy snow temp unloading,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QSNO_WINDUNLOAD,canopy snow wind unloading,mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QSNWCPICE,excess solid h2o due to snow capping not including correction for land use change,mm H2O/s,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,QSOIL,Ground evaporation (soil/snow evaporation + soil/snow sublimation - dew),mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,ET,0.055
+CLM,QSOIL_ICE,Ground evaporation (ice landunits only),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,QVEGE,canopy evaporation,mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,ET,0.055
+CLM,QVEGT,canopy transpiration,mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,ET,0.055
+CLM,RAIN,"atmospheric rain, after rain/snow repartitioning based on temperature",mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,RAIN_FROM_ATM,atmospheric rain received from atmosphere (pre-repartitioning),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,RAM1,aerodynamical resistance,s/m,"time,lat,lon",,time: mean,whitelist,True,resistance / stomata / humidity,False,,0.055
+CLM,RETRANSN,plant pool of retranslocated N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,RETRANSN_TO_NPOOL,deployment of retranslocated N,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,RH2M,2m relative humidity,%,"time,lat,lon",,time: mean,whitelist,True,resistance / stomata / humidity,False,LAND,0.055
+CLM,RR,root respiration (fine root MR + total root GR),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,RSSHA,shaded leaf stomatal resistance,s/m,"time,lat,lon",,time: mean,whitelist,True,resistance / stomata / humidity,False,,0.055
+CLM,RSSUN,sunlit leaf stomatal resistance,s/m,"time,lat,lon",,time: mean,whitelist,True,resistance / stomata / humidity,False,,0.055
+CLM,SABG,solar rad absorbed by ground,W/m^2,"time,lat,lon",,time: mean,whitelist,True,albedo / absorbed solar,False,ENERGY,0.055
+CLM,SABG_PEN,Rural solar rad penetrating top soil or snow layer,watt/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SABV,solar rad absorbed by veg,W/m^2,"time,lat,lon",,time: mean,whitelist,True,albedo / absorbed solar,False,ENERGY,0.055
+CLM,SEEDC,pool for seeding new PFTs via dynamic landcover,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SEEDN,pool for seeding new PFTs via dynamic landcover,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SLASH_HARVESTC,slash harvest carbon (to litter),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMINN,soil mineral N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMINN_TO_NPOOL,deployment of soil mineral N uptake,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMINN_TO_PLANT,plant uptake of soil mineral N,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMINN_TO_PLANT_FUN,Total soil N uptake of FUN,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMINN_vr,soil mineral N,gN/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,SMIN_NH4,soil mineral NH4,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMIN_NH4_vr,soil mineral NH4 (vert. res.),gN/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,SMIN_NO3,soil mineral NO3,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMIN_NO3_LEACHED,soil NO3 pool loss to leaching,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMIN_NO3_RUNOFF,soil NO3 pool loss to runoff,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SMIN_NO3_vr,soil mineral NO3 (vert. res.),gN/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,SMP,soil matric potential (vegetated landunits only),mm,"time,levgrnd,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,SNOBCMCL,mass of BC in snow column,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOBCMSL,mass of BC in top snow layer,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOCAN,intercepted snow,mm,"time,lat,lon",,time: mean,default,False,,False,SNOW,0.055
+CLM,SNODSTMCL,mass of dust in snow column,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNODSTMSL,mass of dust in top snow layer,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOFSDSND,direct nir incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,,0.055
+CLM,SNOFSDSNI,diffuse nir incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,,0.055
+CLM,SNOFSDSVD,direct vis incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,,0.055
+CLM,SNOFSDSVI,diffuse vis incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,,0.055
+CLM,SNOFSRND,direct nir reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,SNOW,0.055
+CLM,SNOFSRNI,diffuse nir reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,SNOW,0.055
+CLM,SNOFSRVD,direct vis reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,SNOW,0.055
+CLM,SNOFSRVI,diffuse vis reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,whitelist,True,snow radiation,False,SNOW,0.055
+CLM,SNOINTABS,Fraction of incoming solar absorbed by lower snow layers,-,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOOCMCL,mass of OC in snow column,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOOCMSL,mass of OC in top snow layer,kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOTXMASS,"snow temperature times layer mass, layer sum; to get mass-weighted temperature, divide by (SNOWICE+SNOWLIQ)",K kg/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOUNLOAD,Canopy snow unloading,mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOW,"atmospheric snow, after rain/snow repartitioning based on temperature",mm/s,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,SNOWDP,gridcell mean snow height,m,"time,lat,lon",,time: mean,whitelist,False,,False,SNOW,0.055
+CLM,SNOWICE,snow ice,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CLM,SNOWLIQ,snow liquid water,kg/m2,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CLM,SNOW_DEPTH,snow height of snow covered area,m,"time,lat,lon",,time: mean,default,False,,False,SNOW,0.055
+CLM,SNOW_FROM_ATM,atmospheric snow received from atmosphere (pre-repartitioning),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOW_PERSISTENCE,Length of time of continuous snow cover (nat. veg. landunits only),seconds,"time,lat,lon",,time: mean,default,False,,False,SNOW,0.055
+CLM,SNOW_SINKS,snow sinks (liquid water),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SNOW_SOURCES,snow sources (liquid water),mm/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL1C,SOIL1 C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL1C_vr,SOIL1 C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,SOIL1N,SOIL1 N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL1N_vr,SOIL1 N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,SOIL2C,SOIL2 C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL2C_vr,SOIL2 C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,SOIL2N,SOIL2 N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL2N_vr,SOIL2 N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,SOIL3C,SOIL3 C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL3C_vr,SOIL3 C (vertically resolved),gC/m^3,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,SOIL3N,SOIL3 N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOIL3N_vr,SOIL3 N (vertically resolved),gN/m^3,"time,levdcmp,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,SOILC_CHANGE,C change in soil,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOILC_HR,soil C heterotrophic respiration,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOILICE,soil ice (vegetated landunits only),kg/m2,"time,levsoi,lat,lon",20,time: mean,whitelist,False,,False,,1.106
+CLM,SOILLIQ,soil liquid water (vegetated landunits only),kg/m2,"time,levsoi,lat,lon",20,time: mean,whitelist,False,,False,,1.106
+CLM,SOILRESIS,soil resistance to evaporation,s/m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOILWATER_10CM,soil liquid water + ice in top 10cm of soil (veg landunits only),kg/m2,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,SOMC_FIRE,C loss due to peat burning,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SOM_C_LEACHED,total flux of C from SOM pools due to leaching,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SR,total soil respiration (HR + root resp),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,STORVEGC,"stored vegetation carbon, excluding cpool",gC/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,STORVEGN,stored vegetation nitrogen,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,SUPPLEMENT_TO_SMINN,supplemental N supply,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SWBGT,2 m Simplified Wetbulb Globe Temp,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SWBGT_R,Rural 2 m Simplified Wetbulb Globe Temp,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,SWBGT_U,Urban 2 m Simplified Wetbulb Globe Temp,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TAUX,zonal surface stress,kg/m/s^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TAUY,meridional surface stress,kg/m/s^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TBOT,atmospheric air temperature (downscaled to columns in glacier regions),K,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TBUILD,internal urban building air temperature,K,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TG,ground temperature,K,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,TH2OSFC,surface water temperature,K,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,THBOT,atmospheric air potential temperature (downscaled to columns in glacier regions),K,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TKE1,top lake level eddy thermal conductivity,W/(mK),"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TLAI,total projected leaf area index,m^2/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,TLAKE,lake temperature,K,"time,levlak,lat,lon",10,time: mean,default,False,,False,,0.553
+CLM,TOTCOLC,"total column carbon, incl veg and cpool but excl product pools",gC/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,TOTCOLCH4,total belowground CH4 (0 for non-lake special landunits in the absence of dynamic landunits),gC/m2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTCOLN,"total column-level N, excluding product pools",gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTECOSYSC,"total ecosystem carbon, incl veg but excl cpool and product pools",gC/m^2,"time,lat,lon",,time: mean,whitelist,True,canopy / carbon storage,False,BIOGEOCHEM,0.055
+CLM,TOTECOSYSN,"total ecosystem N, excluding product pools",gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTLITC,total litter carbon,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,TOTLITC_1m,total litter carbon to 1 meter depth,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTLITN,total litter N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTLITN_1m,total litter N to 1 meter,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTPFTC,"total patch-level carbon, including cpool",gC/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,TOTPFTN,total patch-level nitrogen,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,TOTSOILICE,vertically summed soil cie (veg landunits only),kg/m2,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,TOTSOILLIQ,vertically summed soil liquid water (veg landunits only),kg/m2,"time,lat,lon",,time: mean,default,False,,False,HYDRO,0.055
+CLM,TOTSOMC,total soil organic matter carbon,gC/m^2,"time,lat,lon",,time: mean,whitelist,True,canopy / carbon storage,False,BIOGEOCHEM,0.055
+CLM,TOTSOMC_1m,total soil organic matter carbon to 1 meter depth,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTSOMN,total soil organic matter N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTSOMN_1m,total soil organic matter N to 1 meter,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOTVEGC,"total vegetation carbon, excluding cpool",gC/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,TOTVEGN,total vegetation nitrogen,gN/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,BIOGEOCHEM,0.055
+CLM,TOT_WOODPRODC,total wood product C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOT_WOODPRODC_LOSS,total loss from wood product pools,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOT_WOODPRODN,total wood product N,gN/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TOT_WOODPRODN_LOSS,total loss from wood product pools,gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TPU25T,canopy profile of tpu,umol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TREFMNAV,daily minimum of average 2-m temperature,K,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,TREFMXAV,daily maximum of average 2-m temperature,K,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,TSA,2m air temperature,K,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,TSAI,total projected stem area index,m^2/m^2,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,TSKIN,skin temperature,K,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,TSL,temperature of near-surface soil layer (vegetated landunits only),K,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,TSOI,soil temperature (vegetated landunits only),K,"time,levgrnd,lat,lon",25,time: mean,whitelist,False,,False,,1.382
+CLM,TSOI_10CM,soil temperature in top 10cm of soil,K,"time,lat,lon",,time: mean,default,False,,False,LAND,0.055
+CLM,TSOI_ICE,soil temperature (ice landunits only),K,"time,levgrnd,lat,lon",25,time: mean,default,False,,False,,1.382
+CLM,TV,vegetation temperature,K,"time,lat,lon",,time: mean,whitelist,False,,False,LAND,0.055
+CLM,TWS,total water storage,mm,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,T_SCALAR,temperature inhibition of decomposition,unitless,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,U10,10-m wind,m/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,U10_DUST,10-m wind for dust model,m/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,URBAN_AC,urban air conditioning flux,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,URBAN_HEAT,urban heating flux,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,VCMX25T,canopy profile of vcmax25,umol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,VEGWP,"vegetation water matric potential for sun/sha canopy,xyl,root segments",mm,"time,nvegwcs,lat,lon",4,time: mean,default,False,,False,,0.221
+CLM,VOLR,river channel total water storage,m3,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,VOLRMCH,river channel main channel water storage,m3,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,Vcmx25Z,canopy profile of vcmax25 predicted by LUNA model,umol/m2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WA,water in the unconfined aquifer (vegetated landunits only),mm,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WASTEHEAT,sensible heat flux from heating/cooling sources of urban waste heat,W/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WBT,2 m Stull Wet Bulb,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WBT_R,Rural 2 m Stull Wet Bulb,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WBT_U,Urban 2 m Stull Wet Bulb,C,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WIND,atmospheric wind velocity magnitude,m/s,"time,lat,lon",,time: mean,whitelist,False,,False,,0.055
+CLM,WOODC,wood C,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,BIOGEOCHEM,0.055
+CLM,WOODC_ALLOC,wood C eallocation,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WOODC_LOSS,wood C loss,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WOOD_HARVESTC,wood harvest carbon (to product pools),gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WOOD_HARVESTN,wood harvest N (to product pools),gN/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,WTGQ,surface tracer conductance,m/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,W_SCALAR,Moisture (dryness) inhibition of decomposition,unitless,"time,levsoi,lat,lon",20,time: mean,default,False,,False,,1.106
+CLM,XSMRPOOL,temporary photosynthate C pool,gC/m^2,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,XSMRPOOL_RECOVER,C flux assigned to recovery of negative xsmrpool,gC/m^2/s,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,Z0HG,"roughness length over ground, sensible heat",m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,Z0HV,"roughness length over vegetation, sensible heat",m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,Z0M,momentum roughness length,m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,Z0MG,"roughness length over ground, momentum",m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,Z0MV,"roughness length over vegetation, momentum",m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,Z0QG,"roughness length over ground, latent heat",m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,Z0QV,"roughness length over vegetation, latent heat",m,"time,lat,lon",,time: mean,whitelist,True,roughness / displacement,False,,0.055
+CLM,ZBOT,atmospheric reference height,m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,ZWT,water table depth (vegetated landunits only),m,"time,lat,lon",,time: mean,whitelist,False,,False,HYDRO,0.055
+CLM,ZWT_CH4_UNSAT,depth of water table for methane production used in non-inundated area,m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,ZWT_PERCH,perched water table depth (vegetated landunits only),m,"time,lat,lon",,time: mean,default,False,,False,,0.055
+CLM,levgrnd,coordinate soil levels,m,levgrnd,25,,grid/coord,False,,False,,
+CLM,levlak,coordinate lake levels,m,levlak,10,,grid/coord,False,,False,,
+CLM,levdcmp,coordinate soil levels,m,levdcmp,25,,grid/coord,False,,False,,
+CLM,time,time,days since 2000-01-01 00:00:00,time,,,grid/coord,False,,False,,
+CLM,lon,coordinate longitude,degrees_east,lon,,,grid/coord,False,,False,,0.001
+CLM,lat,coordinate latitude,degrees_north,lat,,,grid/coord,False,,False,,0.0

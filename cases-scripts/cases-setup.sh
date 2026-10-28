@@ -582,8 +582,31 @@ fincl1 = 'FSNT','FSNTC','FLNT','FLNTC','FLUT','FLUTC',
        'SF6', 'CFC115', 'N2O', 'CO2',
        'MEG_CH3OH','MEG_C2H5OH','MEG_CH2O','MEG_CH3CHO','MEG_CH3COOH','MEG_CH3COCH3',
        'MEG_HCOOH','MEG_HCN','MEG_CO','MEG_C2H6','MEG_C2H4','MEG_C3H8',
-       'MEG_C3H6','MEG_BIGALK','MEG_BIGENE','MEG_TOLUENE'
+       'MEG_C3H6','MEG_BIGALK','MEG_BIGENE','MEG_TOLUENE',
+       'QFLX','PBLH','RELHUM','TMQ',
+       'cb_SOA_NA','cb_SOA_A1','cb_SOA_NA_OCW','cb_SOA_A1_OCW',
+       'cb_SO4_NA','cb_SULFATE','cb_CH4','cb_O3',
+       'NO3','N2O5','HNO3','PAN','H2O2','CH2O',
+       'MACR','MVK','ISOPOOH','IEPOX','ISOPNO3',
+       'TERPNIT','TERPROD1','TERPROD2','DMS','SO2',
+       'SFCH2O','SFCH3OH','SFCO','SFNO','SFNO2',
+       'DF_O3','DF_HNO3','DF_PAN','DF_SO2','DF_ISOPNO3',
+       'WD_HNO3','WD_SO2','WD_A_PAN','WD_A_ISOPNO3',
+       'SOA_NAGVF','SOA_NATBF','SOA_A1GVF','SOA_A1TBF',
+       'SOA_NA_OCWDDF','SOA_A1_OCWDDF','SOA_NA_OCWSFWET','SOA_A1_OCWSFWET',
+       'SOA_NA_OCWGVF','SOA_A1_OCWGVF','SOA_NA_OCWTBF','SOA_A1_OCWTBF',
+       'NCONC01','NCONC02','NCONC03','NCONC04','NCONC05','NCONC06','NCONC07',
+       'NCONC08','NCONC09','NCONC10','NCONC11','NCONC12','NCONC13','NCONC14',
+       'NMR01','NMR02','NMR03','NMR04','NMR05','NMR06','NMR07',
+       'NMR08','NMR09','NMR10','NMR11','NMR12','NMR13','NMR14'
 EOF
+    # Added 2026-10-28 for the new nudged chain (all names checked in the CTRL_PD -20261023
+    # atm.log master list): humidity/PBL, oxidants and BVOC oxidation products, sulfur,
+    # gas dry/wet deposition, SOA dry deposition split into GVF (gravitational) and TBF
+    # (turbulent) -- DDF already = GVF + TBF, do not sum them -- cloud-borne SOA removal,
+    # and per-mode number (NCONC) and number-median radius (NMR). SIGMA*/HYGRO* left out (size).
+    # 20:27 same day: + cb_SOA_A1 (only cb_SOA_NA was listed) and the cloud-borne SOA burdens
+    # cb_SOA_NA_OCW, cb_SOA_A1_OCW (model column burdens, every timestep); 14a/23a/24a relaunched.
     # The last 16 MEG_* fields = biogenic (MEGAN) flux of every other CAM species in
     # megan_specifier, kg m-2 s-1 per grid-cell area (chemistry.F90). Monthly means feed the
     # fixed-BVOC files of the long-lived species. In fBVOC runs (megan_specifier = '') they
@@ -672,9 +695,19 @@ hist_fincl1 = 'FSA','FSR','FIRA','FIRE','FSH','EFLX_LH_TOT',
        'QVEGT','QINTR','QOVER','QRUNOFF','RAIN','SNOW',
        'H2OSOI','SOILLIQ','SOILICE','ZWT','GPP','NPP',
        'AR','HR','NEE','WIND','PCT_NAT_PFT',
-       'TOTVEGC', 'TOTVEGN', 'TWS'
+       'TOTVEGC', 'TOTVEGN', 'TWS',
+       'Z0M','Z0MV','Z0MG','DISPLA','Z0HV','Z0HG','Z0QV','Z0QG',
+       'RAM1','RSSUN','RSSHA','RH2M','FCTR','FCEV','FGEV',
+       'ALBD','ALBI','ALBGRD','ALBGRI','SABV','SABG','FSRVI','FSRNI',
+       'SNOFSDSVD','SNOFSDSVI','SNOFSDSND','SNOFSDSNI',
+       'SNOFSRVD','SNOFSRVI','SNOFSRND','SNOFSRNI',
+       'H2OCAN','HBOT','TOTSOMC','TOTECOSYSC'
 
 EOF
+# Added 2026-10-28 (checked in the CTRL_PD -20261023 lnd.log master list): roughness,
+# resistances, latent-heat split, albedo and snow radiation. CLM aborts on an unknown
+# hist_fincl name (histFileMod.F90), so Z0M_TO_COUPLER, RAH1, RAW1, RB, VPD_CAN, ALBDSF,
+# ALBISF are left out: they do not exist in this build.
 }
 
 #-------------------------------------------------------------------------------

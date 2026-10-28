@@ -1,0 +1,118 @@
+component,name,long_name,units,dims,n_lev,cell_methods,group,est_MB_per_month,absent_in_fBVOC,postprocess_category
+CAM,CH2O,CH2O concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,DF_HNO3,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,
+CAM,DF_ISOPNO3,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,
+CAM,DF_O3,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,CHEM
+CAM,DF_PAN,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,
+CAM,DF_SO2,dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,SULFATE
+CAM,DMS,DMS concentration,mol/mol,"time,lev,lat,lon",32,time: mean,sulfur,1.769,False,SULFATE
+CAM,H2O2,H2O2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,oxidants / nitrogen reservoirs,1.769,False,CHEM
+CAM,HNO3,HNO3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,oxidants / nitrogen reservoirs,1.769,False,CHEM
+CAM,IEPOX,IEPOX concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,ISOPNO3,ISOPNO3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,ISOPOOH,ISOPOOH concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,MACR,MACR concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,MVK,MVK concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,N2O5,N2O5 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,oxidants / nitrogen reservoirs,1.769,False,CHEM
+CAM,NCONC01,number concentration mode 01,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC02,number concentration mode 02,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC03,number concentration mode 03,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC04,number concentration mode 04,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC05,number concentration mode 05,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC06,number concentration mode 06,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC07,number concentration mode 07,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC08,number concentration mode 08,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC09,number concentration mode 09,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC10,number concentration mode 10,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC11,number concentration mode 11,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC12,number concentration mode 12,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC13,number concentration mode 13,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NCONC14,number concentration mode 14,#/m3,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR01,number median radius mode 01,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR02,number median radius mode 02,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR03,number median radius mode 03,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR04,number median radius mode 04,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR05,number median radius mode 05,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR06,number median radius mode 06,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR07,number median radius mode 07,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR08,number median radius mode 08,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR09,number median radius mode 09,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR10,number median radius mode 10,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR11,number median radius mode 11,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR12,number median radius mode 12,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR13,number median radius mode 13,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NMR14,number median radius mode 14,m,"time,lev,lat,lon",32,time: mean,aerosol number / size per mode,1.769,False,AERSIZE
+CAM,NO3,NO3 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,oxidants / nitrogen reservoirs,1.769,False,CHEM
+CAM,PAN,PAN concentration,mol/mol,"time,lev,lat,lon",32,time: mean,oxidants / nitrogen reservoirs,1.769,False,CHEM
+CAM,PBLH,PBL height,m,"time,lat,lon",,time: mean,humidity / boundary layer,0.055,False,METEO
+CAM,QFLX,Surface water flux,kg/m2/s,"time,lat,lon",,time: mean,humidity / boundary layer,0.055,False,METEO
+CAM,RELHUM,Relative humidity,percent,"time,lev,lat,lon",32,time: mean,humidity / boundary layer,1.769,False,METEO
+CAM,SFCH2O,CH2O surface flux,kg/m2/s,"time,lat,lon",,time: mean,surface emission flux,0.055,False,BVOC
+CAM,SFCH3OH,CH3OH surface flux,kg/m2/s,"time,lat,lon",,time: mean,surface emission flux,0.055,False,BVOC
+CAM,SFCO,CO surface flux,kg/m2/s,"time,lat,lon",,time: mean,surface emission flux,0.055,False,BVOC
+CAM,SFNO,NO surface flux,kg/m2/s,"time,lat,lon",,time: mean,surface emission flux,0.055,False,
+CAM,SFNO2,NO2 surface flux,kg/m2/s,"time,lat,lon",,time: mean,surface emission flux,0.055,False,
+CAM,SO2,SO2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,sulfur,1.769,False,SULFATE
+CAM,SOA_A1GVF,SOA_A1 gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,SOA dry deposition (grav./turb.),0.055,False,
+CAM,SOA_A1TBF,SOA_A1 turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,SOA dry deposition (grav./turb.),0.055,False,
+CAM,SOA_A1_OCWDDF,SOA_A1_OCW dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,SOA
+CAM,SOA_A1_OCWGVF,SOA_A1_OCW gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,
+CAM,SOA_A1_OCWSFWET,SOA_A1_OCW wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,SOA
+CAM,SOA_A1_OCWTBF,SOA_A1_OCW turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,
+CAM,SOA_NAGVF,SOA_NA gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,SOA dry deposition (grav./turb.),0.055,False,
+CAM,SOA_NATBF,SOA_NA turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,SOA dry deposition (grav./turb.),0.055,False,
+CAM,SOA_NA_OCWDDF,SOA_NA_OCW dry deposition flux at bottom (grav + turb),kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,SOA
+CAM,SOA_NA_OCWGVF,SOA_NA_OCW gravitational dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,
+CAM,SOA_NA_OCWSFWET,SOA_NA_OCW wet deposition flux at surface,kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,SOA
+CAM,SOA_NA_OCWTBF,SOA_NA_OCW turbulent dry deposition flux,kg/m2/s,"time,lat,lon",,time: mean,cloud-borne SOA removal,0.055,False,
+CAM,TERPNIT,TERPNIT concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,TERPROD1,TERPROD1 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,TERPROD2,TERPROD2 concentration,mol/mol,"time,lev,lat,lon",32,time: mean,BVOC oxidation products,1.769,False,BVOCOX
+CAM,TMQ,Total (vertically integrated) precipitable water,kg/m2,"time,lat,lon",,time: mean,humidity / boundary layer,0.055,False,METEO
+CAM,WD_A_ISOPNO3,ISOPNO3          wet deposition,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,
+CAM,WD_A_PAN,PAN              wet deposition,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,
+CAM,WD_HNO3,vertical integrated wet deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,
+CAM,WD_SO2,vertical integrated wet deposition flux,kg/m2/s,"time,lat,lon",,time: mean,gas dry/wet deposition,0.055,False,SULFATE
+CAM,cb_CH4,cb_CH4 in column,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,CHEM
+CAM,cb_O3,cb_O3 in column,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,CHEM
+CAM,cb_SO4_NA,cb_SO4_NA in column,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,SULFATE
+CAM,cb_SOA_A1,cb_SOA_A1 in column,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,SOA
+CAM,cb_SOA_A1_OCW,cb_SOA_A1_OCW column in cloud water,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,SOA
+CAM,cb_SOA_NA,cb_SOA_NA in column,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,SOA
+CAM,cb_SOA_NA_OCW,cb_SOA_NA_OCW column in cloud water,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,SOA
+CAM,cb_SULFATE,cb_SULFATE column of aerosol type,kg/m2,"time,lat,lon",,time: mean,column burden,0.055,False,SULFATE
+CLM,ALBD,surface albedo (direct),proportion,"time,numrad,lat,lon",2,time: mean,albedo / absorbed solar,0.111,False,ENERGY
+CLM,ALBGRD,ground albedo (direct),proportion,"time,numrad,lat,lon",2,time: mean,albedo / absorbed solar,0.111,False,ENERGY
+CLM,ALBGRI,ground albedo (indirect),proportion,"time,numrad,lat,lon",2,time: mean,albedo / absorbed solar,0.111,False,ENERGY
+CLM,ALBI,surface albedo (indirect),proportion,"time,numrad,lat,lon",2,time: mean,albedo / absorbed solar,0.111,False,ENERGY
+CLM,DISPLA,displacement height,m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,FCEV,canopy evaporation,W/m^2,"time,lat,lon",,time: mean,latent heat split,0.055,False,ET
+CLM,FCTR,canopy transpiration,W/m^2,"time,lat,lon",,time: mean,latent heat split,0.055,False,ET
+CLM,FGEV,ground evaporation,W/m^2,"time,lat,lon",,time: mean,latent heat split,0.055,False,ET
+CLM,FSRNI,diffuse nir reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,albedo / absorbed solar,0.055,False,ENERGY
+CLM,FSRVI,diffuse vis reflected solar radiation,W/m^2,"time,lat,lon",,time: mean,albedo / absorbed solar,0.055,False,ENERGY
+CLM,H2OCAN,intercepted water,mm,"time,lat,lon",,time: mean,canopy / carbon storage,0.055,False,HYDRO
+CLM,HBOT,canopy bottom,m,"time,lat,lon",,time: mean,canopy / carbon storage,0.055,False,SURFEXCH
+CLM,RAM1,aerodynamical resistance,s/m,"time,lat,lon",,time: mean,resistance / stomata / humidity,0.055,False,SURFEXCH
+CLM,RH2M,2m relative humidity,%,"time,lat,lon",,time: mean,resistance / stomata / humidity,0.055,False,LAND
+CLM,RSSHA,shaded leaf stomatal resistance,s/m,"time,lat,lon",,time: mean,resistance / stomata / humidity,0.055,False,SURFEXCH
+CLM,RSSUN,sunlit leaf stomatal resistance,s/m,"time,lat,lon",,time: mean,resistance / stomata / humidity,0.055,False,SURFEXCH
+CLM,SABG,solar rad absorbed by ground,W/m^2,"time,lat,lon",,time: mean,albedo / absorbed solar,0.055,False,ENERGY
+CLM,SABV,solar rad absorbed by veg,W/m^2,"time,lat,lon",,time: mean,albedo / absorbed solar,0.055,False,ENERGY
+CLM,SNOFSDSND,direct nir incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSDSNI,diffuse nir incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSDSVD,direct vis incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSDSVI,diffuse vis incident solar radiation on snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSRND,direct nir reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSRNI,diffuse nir reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSRVD,direct vis reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,SNOFSRVI,diffuse vis reflected solar radiation from snow,W/m^2,"time,lat,lon",,time: mean,snow radiation,0.055,False,SNOW
+CLM,TOTECOSYSC,"total ecosystem carbon, incl veg but excl cpool and product pools",gC/m^2,"time,lat,lon",,time: mean,canopy / carbon storage,0.055,False,BIOGEOCHEM
+CLM,TOTSOMC,total soil organic matter carbon,gC/m^2,"time,lat,lon",,time: mean,canopy / carbon storage,0.055,False,BIOGEOCHEM
+CLM,Z0HG,"roughness length over ground, sensible heat",m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,Z0HV,"roughness length over vegetation, sensible heat",m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,Z0M,momentum roughness length,m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,Z0MG,"roughness length over ground, momentum",m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,Z0MV,"roughness length over vegetation, momentum",m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,Z0QG,"roughness length over ground, latent heat",m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
+CLM,Z0QV,"roughness length over vegetation, latent heat",m,"time,lat,lon",,time: mean,roughness / displacement,0.055,False,SURFEXCH
