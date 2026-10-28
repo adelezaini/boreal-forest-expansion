@@ -4,10 +4,10 @@ The fBVOC runs switch MEGAN off (`megan_specifier = ''`) and read biogenic emiss
 
 | Folder | Species | Source run | Used by |
 |---|---|---|---|
-| this folder | all 19 MEGAN-fed CAM species | CTRL_PD / CTRL_FUT `-20261023`, 2001–2014 (later also LCC_PD) | 14c, 24c, 24d, 24e |
-| `prescribe-just-ISOP-MTERP/` | ISOP, MTERP | CTRL_PD `-20260925`, 2001–2009 | 14b, 24b (`*_fBVOCctrlPD_IM`) |
+| this folder | all 19 MEGAN-fed CAM species | CTRL_PD / CTRL_FUT `-20261023`, 2001–2014 (later also LCC_PD) | 14b, 24b, 24c, 24d |
+| `prescribe-just-ISOP-MTERP/` | ISOP, MTERP | CTRL_PD `-20260925`, 2001–2009 | `just-ISOP-MTERP/` 14b, 24b (`*_fBVOCctrlPD_IM`) |
 
-`prescribe-just-ISOP-MTERP/` keeps the original scripts unchanged. Don't update it until the `_IM` runs are redone.
+`prescribe-just-ISOP-MTERP/` keeps the original scripts unchanged. Legacy: the `_IM` runs were dropped (user 2026-10-28).
 
 ## Workflow (all species)
 
