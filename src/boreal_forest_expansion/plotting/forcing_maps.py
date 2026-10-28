@@ -18,6 +18,9 @@ t-interval across the yearly regional means.
 
 from __future__ import annotations
 
+import re
+import textwrap
+
 from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Iterable
@@ -28,6 +31,8 @@ from scipy import stats
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import matplotlib.ticker as mticker
+from matplotlib.transforms import offset_copy
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.util import add_cyclic_point
@@ -58,7 +63,7 @@ FIGURE_DIR = REPO_DIR / "results" / "figures"
 # LCC_FUT_fBVOCctrlPD(_IM) is fixed at CTRL_PD, so BVOC_FUT = LCC + climate change; the
 # LCC-only FUT contrast needs LCC_FUT_fBVOCctrlFUT (all 19 MEGAN species).
 # The processed files of the fBVOCctrlPD_IM runs keep their on-disk names LCC_{PD,FUT}_fBVOC (no rename);
-# they move to 2001-2009-pre-co2-fix/ when the 2001-2014 runs (incl. 14c/24c/24d) are postprocessed;
+# they move to 2001-2009-pre-co2-fix/ when the 2001-2014 runs (incl. 14b/24b/24c) are postprocessed;
 # then switch fbvoc to the new aliases.
 BVOC_PAIRS = {
     "PD": {
@@ -99,7 +104,7 @@ def forcing_panels(band: str = "NET") -> list[MapPanel]:
             key="albedo",
             title="ALBEDO / SW CLEAR-SKY FORCING",
             variable_class="RADIATIVE",
-            variable="SFC_ALBEDO_FORCING_CLEAR",  # f"SW_clearclean" also holds other clear-sky changes (e.g. chemistry)
+            variable="SFC_ALBEDO_FORCING_CLEAR",  # "SW_rest" also holds other clear-sky changes (e.g. chemistry)
             case1_role="lcc",
             case2_role="ctrl",
             long_label="Clear-sky surface albedo forcing (proxy)",
@@ -129,7 +134,7 @@ def forcing_panels(band: str = "NET") -> list[MapPanel]:
             key="bvoc_cloud",
             title=f"BVOC-SOA-CLOUD FORCING ({b})",
             variable_class="RADIATIVE",
-            variable=f"{b}_cre_clean",
+            variable=f"{b}_cloud",
             case1_role="lcc",
             case2_role="fbvoc",
             long_label=f"{b} cloud-mediated BVOC/SOA forcing",
@@ -149,7 +154,7 @@ def forcing_panels(band: str = "NET") -> list[MapPanel]:
             key="bvoc_residual",
             title=f"BVOC CHEMISTRY / RESIDUAL FORCING ({b})",
             variable_class="RADIATIVE",
-            variable=f"{b}_clearclean",
+            variable=f"{b}_rest",
             case1_role="lcc",
             case2_role="fbvoc",
             long_label=f"{b} clean clear-sky residual forcing",
@@ -200,7 +205,7 @@ CONTEXT_PANELS = [
     ),
     MapPanel(
         key="n_aer",
-        title="AEROSOL NUMBER",
+        title="AEROSOL NUMBER CONCENTRATION",
         variable_class="SOA",
         variable="N_AER",
         case1_role="lcc",
@@ -220,7 +225,7 @@ CONTEXT_PANELS = [
     ),
     MapPanel(
         key="actrel",
-        title="ACTIVATED EFFECTIVE RADIUS",
+        title="CLOUD DROPLET EFFECTIVE RADIUS",
         variable_class="CLOUDPROP",
         variable="ACTREL_incld",
         case1_role="lcc",
@@ -230,7 +235,7 @@ CONTEXT_PANELS = [
     ),
     MapPanel(
         key="actnl",
-        title="ACTIVATED DROPLET NUMBER",
+        title="CLOUD DROPLET NUMBER CONCENTRATION",
         variable_class="CLOUDPROP",
         variable="ACTNL_incld",
         case1_role="lcc",
@@ -278,7 +283,10 @@ def open_class(alias: str, variable_class: str, start_year: int, end_year: int,
     path = filename(alias, variable_class, start_year, end_year, component)
     if not path.exists():
         raise FileNotFoundError(f"Missing postprocessed file: {path}")
-    return xr.open_dataset(path)
+    ds = xr.open_dataset(path)
+    # Ghan terms were called *_cre_clean / *_clearclean in files made before 2026-10-28
+    return ds.rename({v: v.replace("cre_clean", "cloud").replace("clearclean", "rest")
+                      for v in ds.data_vars if v.endswith(("_cre_clean", "_clearclean"))})
 
 
 def to_map(da: xr.DataArray) -> xr.DataArray:
@@ -338,6 +346,11 @@ YEARLY_DERIVED = {
     "SFISOP_mgm2d": lambda ds, mo: annual_mean(ds["SFISOP"], ds, mo) * 1e6 * 86400,
     "SFMTERP_mgm2d": lambda ds, mo: annual_mean(ds["SFMTERP"], ds, mo) * 1e6 * 86400,
     "SOA_cb_mgm2": lambda ds, mo: annual_mean(ds["SOA_cb"], ds, mo) * 1e6,
+    # Model SOA burdens of the post-CO2-fix runs (not in older files): interstitial, and interstitial + cloud-borne.
+    # Switch the SOA panels to these once all runs of a contrast have them (CLAUDE.md, run-version step 7).
+    "cbSOA_mgm2": lambda ds, mo: annual_mean(ds["cb_SOA_A1"] + ds["cb_SOA_NA"], ds, mo) * 1e6,
+    "cbSOA_all_mgm2": lambda ds, mo: annual_mean(ds["cb_SOA_A1"] + ds["cb_SOA_NA"]
+                                                 + ds["cb_SOA_A1_OCW"] + ds["cb_SOA_NA_OCW"], ds, mo) * 1e6,
     "TGCLDLWP_gm2": lambda ds, mo: annual_mean(ds["TGCLDLWP"], ds, mo) * 1e3,
     "QFLX_mmday": lambda ds, mo: annual_mean(ds["QFLX_EVAP_TOT"], ds, mo) * 86400,
     "ACTREL_incld": lambda ds, mo: _incloud(ds, "ACTREL", months=mo),
@@ -489,12 +502,155 @@ def format_forcing_mean(value: float) -> str:
         return f"{value:+.1e}"
 
 
+MEAN_FONTSIZE = 13   # regional mean printed under each map
+CBAR_TICKSIZE = 10   # colourbar tick numbers
+CBAR_LABELSIZE = 8   # colourbar label, one colourbar per panel
+CBAR_LABELSIZE_SHARED = 8  # colourbar label, colourbar shared by several panels
+CBAR_LINESPACING = 1.05    # between the label's two lines (variable / [units]); default 1.2, <1 hits superscripts
+GRID_MEAN_FONTSIZE = 12   # mean under the narrow panels of the contrast grids
+GRID_TITLE_FONTSIZE = 11.5  # column titles of the contrast grids (other maps: 9.5)
+GRID_TITLE_WRAP = 22        # characters per line of those titles
+
+
+def mean_subtitle(mean_lat_min: float | None) -> str:
+    region = f"over {mean_lat_min:g}–90°N" if mean_lat_min is not None else "global"
+    return rf"$\mathit{{Under\ the\ maps}}$: area-weighted mean {region} ± 95 % CI of the yearly means"
+
+
+def add_suptitle(fig, title: str, mean_lat_min: float | None, fontsize: float = 14, y: float | None = None):
+    """Bold figure title plus a plain subtitle saying what the numbers under the maps are."""
+    # The second line " " reserves room for the subtitle: constrained layout only knows the
+    # suptitle, and only when y is not given (an explicit y switches its space off).
+    st = fig.suptitle(f"{title}\n ", fontsize=fontsize, fontweight="bold", **({} if y is None else {"y": y}))
+    fig.text(0.5, st.get_position()[1], mean_subtitle(mean_lat_min), ha="center", va="top", fontsize=0.8 * fontsize,
+             transform=offset_copy(fig.transFigure, fig=fig, y=-1.3 * fontsize, units="points"))
+
+
+# Fixed map-grid layout, in inches: equal gaps between all panels, whatever the text lengths
+# (constrained layout sized each column to its own widest text, so gaps differed).
+# All read at call time, so a notebook can try other values (sandbox/test_layout_options.ipynb).
+MAP_SIZE = 2.4       # map diameter
+GRID_MAP_SIZE = 2.2  # map diameter in the contrast grids (many columns)
+MAP_COL_GAP = 0.45   # between map columns
+TITLE_SPACE = 0.45   # panel title above a map
+TITLE_PAD = 10       # gap between panel title and map [pt]
+ROW_GAP = 0.35       # extra gap between rows without panel titles
+UNDER_CBAR = 1.35    # under a map: mean + colourbar with ticks and a 2-line label
+FIG_TOP = 0.65       # figure title + subtitle
+CBAR_OFFSET = 0.52   # top of a colourbar below the bottom of its map(s), leaves room for the mean
+CBAR_HEIGHT = 0.16   # thickness of a colourbar under one map
+CBAR_SHRINK = 1.12   # length of a colourbar under one map, relative to the map width
+CBAR_HEIGHT_SHARED = 0.22  # thickness of a colourbar shared by several maps
+
+
+def map_grid(nrows: int, ncols: int, under: float | None = None, titles_every_row: bool = False,
+             left: float = 0.25, right: float = 0.25, map_size: float | None = None, col_gap: float | None = None):
+    """Figure with nrows x ncols polar map axes at fixed positions; `under` inches are kept free
+    below every row (mean, colourbars), plus TITLE_SPACE above rows that have panel titles.
+    None = module defaults UNDER_CBAR, MAP_SIZE, MAP_COL_GAP."""
+    under = UNDER_CBAR if under is None else under
+    map_size = MAP_SIZE if map_size is None else map_size
+    col_gap = MAP_COL_GAP if col_gap is None else col_gap
+    row_gap = under + (TITLE_SPACE if titles_every_row else ROW_GAP)
+    W = left + ncols * map_size + (ncols - 1) * col_gap + right
+    H = FIG_TOP + TITLE_SPACE + nrows * map_size + (nrows - 1) * row_gap + under + 0.1
+    fig = plt.figure(figsize=(W, H))
+    axes = np.empty((nrows, ncols), dtype=object)
+    for i in range(nrows):
+        for j in range(ncols):
+            x = left + j * (map_size + col_gap)
+            y = H - FIG_TOP - TITLE_SPACE - (i + 1) * map_size - i * row_gap
+            axes[i, j] = fig.add_axes([x / W, y / H, map_size / W, map_size / H],
+                                      projection=ccrs.Orthographic(0, 90))
+    return fig, axes
+
+
+def _five_ticks(vmax: float) -> list[float]:
+    """-2s, -s, 0, s, 2s with 2s = vmax floored to 2 significant digits (>= ~91 % of the bar).
+    From mantissa 2 the 2nd digit is made even, so s keeps 2 digits too (2.8 -> 1.4, not 2.9 -> 1.45)."""
+    k = int(np.floor(np.log10(vmax))) - 1
+    n = int(np.floor(vmax / 10.0 ** k + 1e-9))   # 10..99
+    if n >= 20 and n % 2:
+        n -= 1
+    step = n * 10.0 ** k / 2
+    return [-2 * step, -step, 0.0, step, 2 * step]
+
+
+def _cbar_below(fig, axes_group, mappable, label, labelsize, shrink=0.88, height=None, five_ticks=False):
+    """Horizontal colourbar under `axes_group` (one or more map axes of a map_grid), below the mean text."""
+    boxes = [ax.get_position() for ax in np.atleast_1d(axes_group)]
+    x0, x1, y0 = min(b.x0 for b in boxes), max(b.x1 for b in boxes), min(b.y0 for b in boxes)
+    H = fig.get_figheight()
+    height = CBAR_HEIGHT_SHARED if height is None else height
+    w = (x1 - x0) * shrink
+    cax = fig.add_axes([x0 + (x1 - x0 - w) / 2, y0 - (CBAR_OFFSET + height) / H, w, height / H])
+    cb = fig.colorbar(mappable, cax=cax, orientation="horizontal", extend="both")
+    if five_ticks:
+        cb.set_ticks(_five_ticks(mappable.norm.vmax))
+    # short tick labels: -10 -5 0 5 10 with "×10⁻³" at the end, instead of -0.010 -0.005 ...
+    fmt = mticker.ScalarFormatter(useMathText=True)
+    fmt.set_powerlimits((-2, 3))   # ×10ⁿ from 10⁻²: decimals were too long on narrow bars
+    cb.ax.xaxis.set_major_formatter(fmt)
+    # ×10ⁿ above the right end of the bar: below it, it collided with the label
+    fmt.set_locs(cb.get_ticks())
+    cb.ax.xaxis.get_offset_text().set_visible(False)
+    cb.ax.text(1.0, 1.15, fmt.get_offset(), transform=cb.ax.transAxes, ha="right", va="bottom",
+               fontsize=CBAR_TICKSIZE - 1)
+    cb.ax.tick_params(labelsize=CBAR_TICKSIZE, pad=2)
+    cb.set_label(label, fontsize=labelsize, labelpad=3, linespacing=CBAR_LINESPACING)
+    return cb
+
+
+def _cbar_right(fig, axes_row, mappable, label):
+    """Vertical colourbar right of a row of map axes (seasonal Ghan rows)."""
+    b = axes_row[-1].get_position()
+    W = fig.get_figwidth()
+    cax = fig.add_axes([b.x1 + 0.25 / W, b.y0 + 0.1 * b.height, CBAR_HEIGHT_SHARED / W, 0.8 * b.height])
+    cb = fig.colorbar(mappable, cax=cax, orientation="vertical", extend="both")
+    cb.ax.tick_params(labelsize=CBAR_TICKSIZE)
+    cb.set_label(label, fontsize=CBAR_LABELSIZE_SHARED, linespacing=CBAR_LINESPACING)
+    return cb
+
+
+def _suptitle_y(fig) -> float:
+    return 1 - 0.12 / fig.get_figheight()
+
+
+def _sci(text: str) -> str:
+    """'8.2e-04' -> mathtext '8.2\\times10^{-4}' (in math mode 'e-04' gets operator spacing)."""
+    return re.sub(r"e([+-])0*(\d+)", lambda m: rf"\times10^{{{'-' if m[1] == '-' else ''}{m[2]}}}", text)
+
+
+def _bold(text: str) -> str:
+    """Bold through mathtext, so one Text can mix weights (STIX in text and math, style.py)."""
+    return rf"$\mathbf{{{_sci(text)}}}$"
+
+
 def _format_interval(mean: float, half: float) -> str:
-    if abs(mean) >= 1 or half >= 1:
-        return f"{mean:+.1f} ± {half:.1f}"
-    if abs(mean) >= 0.01 or half >= 0.01:
-        return f"{mean:+.2f} ± {half:.2f}"
-    return f"{mean:+.1e} ± {half:.0e}"
+    """Mean in bold, ± 95 % CI half-width in normal weight (user 2026-10-28).
+
+    ≥ 1: 3 significant digits of the larger number, same decimal for both, e.g. +12.3 ± 1.6.
+    0.01–1: the CI keeps 1 significant digit and the mean is rounded to the same decimal,
+    e.g. +0.016 ± 0.002; a mean that rounds to zero is shown unsigned (0.00 ± 0.01: zero
+    within the CI). Below 0.01: common ×10ⁿ, one decimal each, e.g. (−2.4 ± 9.1) ×10⁻³.
+    """
+    big = max(abs(mean), half)
+    if not np.isfinite(big) or big == 0:
+        return f"{_bold(f'{mean:+.2f}')} ± {half:.2f}"
+    if big < 0.01:
+        k = int(np.floor(np.log10(big)))
+        m, h = f"{mean / 10**k:+.1f}", f"{half / 10**k:.1f}"
+        return f"({_bold(m)} ± {h}) " + rf"$\times10^{{{k}}}$"
+    d = 2
+    if big >= 1:
+        d = max(0, 2 - int(np.floor(np.log10(big))))
+    elif np.isfinite(half) and half > 0:
+        h = float(f"{half:.0e}")  # 1 significant digit; may round up a decade (0.0096 -> 0.01)
+        d = max(0, -int(np.floor(np.log10(h))))
+    m = f"{mean:+.{d}f}"
+    if float(m) == 0:
+        m = f"{0:.{d}f}"
+    return f"{_bold(m)} ± {half:.{d}f}"
 
 
 def add_stippling(ax, sig: xr.DataArray, style: str = "dots", color="black", size: float = 0.6,
@@ -551,6 +707,7 @@ def plot_single_boreal_panel(
     sig: xr.DataArray | None = None,
     sig_style: str = "dots",
     mean_text: str | None = None,
+    mean_fontsize: float | None = None,
 ):
     """
     Plot one polar boreal map panel.
@@ -571,7 +728,9 @@ def plot_single_boreal_panel(
     sig_style:
         "dots", "contour", "hatch" or "lines", see add_stippling.
     mean_text:
-        Text under the panel; default is the area-weighted mean of `da`.
+        Text under the panel (units are appended), normal weight (bold parts via _bold);
+        default is the area-weighted mean of `da`, in bold.
+        The region goes in the figure subtitle (add_suptitle), not here.
     """
     if vmax is None:
         vmax = symmetric_vmax(da)
@@ -620,54 +779,32 @@ def plot_single_boreal_panel(
         title,
         fontsize=9.5,
         fontweight="semibold",
-        pad=5,
+        pad=TITLE_PAD,
     )
 
     unit_text = units or da.attrs.get("units", "")
     if mean_text is None:
-        mean_text = f"mean: {format_forcing_mean(area_weighted_mean(da, lat_min=mean_lat_min))}"
+        mean_text = _bold(format_forcing_mean(area_weighted_mean(da, lat_min=mean_lat_min)))
 
+    # centred between the map and its colourbar (CBAR_OFFSET below the map, see _cbar_below)
+    map_height_in = ax.get_position().height * ax.figure.get_figheight()
     ax.text(
         0.5,
-        -0.12,
-        f"{mean_text} {unit_text}",
+        -0.5 * CBAR_OFFSET / map_height_in,
+        f"{mean_text} {unit_text}" if unit_text not in ("", "–", "-") else mean_text,   # no dash for unitless
         transform=ax.transAxes,
         ha="center",
-        va="top",
-        fontsize=7.8,
-        fontweight="semibold",
+        va="center",
+        fontsize=MEAN_FONTSIZE if mean_fontsize is None else mean_fontsize,
+        fontweight="normal",
         color="black",
     )
 
     cb = None
 
     if add_cbar:
-        cb = plt.colorbar(
-            p,
-            ax=ax,
-            orientation="horizontal",
-            pad=0.085,
-            shrink=0.88,
-            aspect=24,
-            extend="both",
-        )
-
-        cb.ax.xaxis.set_ticks_position("bottom")
-        cb.ax.xaxis.set_label_position("bottom")
-        cb.ax.tick_params(
-            axis="x",
-            bottom=True,
-            top=False,
-            labelbottom=True,
-            labeltop=False,
-            labelsize=7,
-            pad=2,
-        )
-
-        if cbar_label is None:
-            cbar_label = unit_text
-
-        cb.set_label(cbar_label, fontsize=7, labelpad=3)
+        cb = _cbar_below(ax.figure, ax, p, cbar_label if cbar_label is not None else unit_text,
+                         CBAR_LABELSIZE, shrink=CBAR_SHRINK, height=CBAR_HEIGHT, five_ticks=True)
 
     return p, norm, cb
 
@@ -682,8 +819,8 @@ def add_grouped_horizontal_colorbar(
     pad=0.075,
     height=0.035,
     extend="both",
-    tick_labelsize=7,
-    labelsize=8,
+    tick_labelsize=CBAR_TICKSIZE,
+    labelsize=CBAR_LABELSIZE_SHARED,
 ):
     """
     Add one horizontal colorbar spanning a group of axes.
@@ -713,7 +850,7 @@ def add_grouped_horizontal_colorbar(
     )
 
     cb.ax.tick_params(labelsize=tick_labelsize, pad=2)
-    cb.set_label(label, fontsize=labelsize, labelpad=3)
+    cb.set_label(label, fontsize=labelsize, labelpad=3, linespacing=CBAR_LINESPACING)
 
     return cb
 
@@ -741,7 +878,6 @@ def _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min
             sig = (~sig) & np.isfinite(p) & region
 
     m, half = regional_mean_interval(d, lat_min=mean_lat_min)
-    region = f"≥{mean_lat_min:g}°N" if mean_lat_min is not None else "global"
     plot_single_boreal_panel(
         ax=ax,
         da=da,
@@ -752,7 +888,7 @@ def _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min
         mean_lat_min=mean_lat_min,
         cbar_label=f"{panel.long_label or panel.variable}\n[{panel.units}]",
         sig=sig,
-        mean_text=f"mean {region}: {_format_interval(m, half)}",
+        mean_text=_format_interval(m, half),
         **kwargs,
     )
     return d
@@ -769,7 +905,8 @@ def make_forcing_summary_figure(
     band: str = "NET",
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
-    figsize: tuple[float, float] = (19, 5.2),
+    map_size: float | None = None,
+    col_gap: float | None = None,
     save: bool = True,
     figdir: Path = FIGURE_DIR,
     dpi: int = 300,
@@ -798,6 +935,10 @@ def make_forcing_summary_figure(
 
     Each panel gets its own individual colourbar when add_cbar=True.
 
+    map_size, col_gap:
+        Map diameter and gap between maps, in inches (map_grid). Text sizes are in points, so a
+        smaller map_size makes the maps smaller relative to the text.
+
     scales:
         None = one colourbar per panel (panel.vmax). Otherwise shared colourbars, as
         [(panel indices, vmax), ...] or a name from SUMMARY_SCALES ("shared6", "split6-2");
@@ -813,13 +954,8 @@ def make_forcing_summary_figure(
         scales = SUMMARY_SCALES[scales]
     panel_vmax = {i: vmax for idx, vmax in (scales or []) for i in idx}
 
-    fig, axes = plt.subplots(
-        1,
-        len(panels),
-        figsize=figsize,
-        subplot_kw={"projection": ccrs.Orthographic(0, 90)},
-        constrained_layout=True,
-    )
+    fig, axes = map_grid(1, len(panels), map_size=map_size, col_gap=col_gap)
+    axes = axes[0]
 
     for i, (ax, panel) in enumerate(zip(axes, panels)):
         _plot_panel(
@@ -835,17 +971,11 @@ def make_forcing_summary_figure(
 
     for idx, vmax in scales or []:
         sm = plt.cm.ScalarMappable(norm=mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax), cmap=cmap)
-        cb = fig.colorbar(sm, ax=[axes[i] for i in idx], orientation="horizontal",
-                          shrink=0.8 if len(idx) > 2 else 0.9, aspect=12 * len(idx), extend="both", pad=0.07)
-        cb.set_label(f"radiative effect difference [{panels[idx[0]].units}]", fontsize=8)
-        cb.ax.tick_params(labelsize=7)
+        _cbar_below(fig, [axes[i] for i in idx], sm, f"radiative effect difference [{panels[idx[0]].units}]",
+                    CBAR_LABELSIZE_SHARED, shrink=0.8 if len(idx) > 2 else 0.9)
 
-    fig.suptitle(
-        f"{experiment}: radiative forcing decomposition, {band} ({start_year}–{end_year})",
-        fontsize=14,
-        fontweight="bold",
-        y=1.03,
-    )
+    add_suptitle(fig, f"{experiment}: radiative forcing decomposition, {band} ({start_year}–{end_year})",
+                 mean_lat_min, y=_suptitle_y(fig))
 
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
@@ -864,7 +994,6 @@ def make_context_maps_figure(
     panels: Iterable[MapPanel] = CONTEXT_PANELS,
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
-    figsize: tuple[float, float] = (13, 13),
     ncols: int = 3,
     save: bool = True,
     figdir: Path = FIGURE_DIR,
@@ -890,15 +1019,8 @@ def make_context_maps_figure(
     panels = list(panels)
     nrows = int(np.ceil(len(panels) / ncols))
 
-    fig, axes = plt.subplots(
-        nrows,
-        ncols,
-        figsize=figsize,
-        subplot_kw={"projection": ccrs.Orthographic(0, 90)},
-        constrained_layout=True,
-    )
-
-    axes = np.asarray(axes).ravel()
+    fig, axes = map_grid(nrows, ncols, titles_every_row=True)
+    axes = axes.ravel()
 
     for ax, panel in zip(axes, panels):
         try:
@@ -920,12 +1042,8 @@ def make_context_maps_figure(
     for ax in axes[len(panels):]:
         ax.set_axis_off()
 
-    fig.suptitle(
-        f"{experiment}: BVOC/SOA/cloud context maps, LCC − LCC_fBVOC ({start_year}–{end_year})",
-        fontsize=14,
-        fontweight="bold",
-        y=1.02,
-    )
+    add_suptitle(fig, f"BVOC/SOA/cloud maps: {pairs['lcc']} − {pairs['fbvoc']} ({start_year}–{end_year})",
+                 mean_lat_min, y=_suptitle_y(fig))
 
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
@@ -942,20 +1060,25 @@ def make_context_maps_figure(
 
 GHAN_CONTRASTS = {"total": ("lcc", "ctrl", "LCC-CTRL"), "bvoc": ("lcc", "fbvoc", "LCC-fBVOC"),
                   "fbvoc_ctrl": ("fbvoc", "ctrl", "fBVOC-CTRL")}
+# Ghan term names in panel titles and chart labels (mathtext: bold F with the term as subscript)
+GHAN_TITLES = {"toa": r"$\mathbf{F}_{\mathbf{TOTAL}}$", "dir": r"$\mathbf{F}_{\mathbf{AEROSOL\text{-}DIRECT}}$",
+               "cloud": r"$\mathbf{F}_{\mathbf{CLOUD}}$", "rest": r"$\mathbf{F}_{\mathbf{REST}}$"}
+# Figure-title names of the contrast tags (tags stay short in file names)
+CONTRAST_LABELS = {"LCC-CTRL": "LCC − CTRL", "LCC-fBVOC": "LCC − LCC_fBVOC", "fBVOC-CTRL": "LCC_fBVOC − CTRL"}
 
 
 def ghan_panels(band: str = "NET", case1_role: str = "lcc", case2_role: str = "ctrl",
                 months=None) -> list[MapPanel]:
-    """Total + the three Ghan (2013) terms; d(total) = d(dir) + d(cre_clean) + d(clearclean)."""
+    """Total + the three Ghan (2013) terms; d(total) = d(dir) + d(cloud) + d(rest)."""
     if band not in ("NET", "SW", "LW"):
         raise ValueError("band must be 'NET', 'SW' or 'LW'")
     terms = [
-        ("toa", "TOTAL", "TOA radiative effect"),
-        ("dir", "AEROSOL–RADIATION (ARI)", "direct aerosol term"),
-        ("cre_clean", "CLOUD (clean-sky CRE)", "clean-sky cloud term"),
-        ("clearclean", "CLEAR-CLEAN (albedo, gases, T)", "clear-sky clean term"),
+        ("toa", GHAN_TITLES["toa"], "TOA radiative effect"),
+        ("dir", GHAN_TITLES["dir"], "direct aerosol term"),
+        ("cloud", GHAN_TITLES["cloud"], "cloud term"),
+        ("rest", GHAN_TITLES["rest"], "clear-sky clean term"),
     ]
-    return [MapPanel(key=f"{band}_{t}", title=f"{title} ({band})", variable_class="RADIATIVE",
+    return [MapPanel(key=f"{band}_{t}", title=title, variable_class="RADIATIVE",
                      variable=f"{band}_{t}", case1_role=case1_role, case2_role=case2_role,
                      long_label=f"{band} {label}", months=months)
             for t, title, label in terms]
@@ -967,7 +1090,7 @@ def _shared_vmax(ds_list, extent_lat, q=0.98):
 
 
 def _ghan_closure(ds_list, label=""):
-    """Max |d(dir) + d(cre_clean) + d(clearclean) - d(total)| over all cells and years."""
+    """Max |d(dir) + d(cloud) + d(rest) - d(total)| over all cells and years."""
     tot, *terms = ds_list
     err = float(abs(sum(terms) - tot).max())
     print(f"Ghan closure {label}: max |sum of terms - total| = {err:.1e} W m-2")
@@ -1002,9 +1125,9 @@ def make_ghan_figure(
     pairs = BVOC_PAIRS[experiment]
     rows = list(SEASONS.items()) if seasonal else [("ANN", None)]
 
-    fig, axes = plt.subplots(len(rows), 4, figsize=(15, 4.6 * len(rows)), squeeze=False,
-                             subplot_kw={"projection": ccrs.Orthographic(0, 90)},
-                             constrained_layout=True)
+    # seasonal: one vertical colourbar right of each row; annual: one horizontal colourbar below
+    fig, axes = map_grid(len(rows), 4, under=0.5 if seasonal else UNDER_CBAR, titles_every_row=seasonal,
+                         right=1.4 if seasonal else 0.25)
     for i, (season, months) in enumerate(rows):
         panels = ghan_panels(band, role1, role2, months)
         diffs = [panel_difference(p, pairs, start_year, end_year) for p in panels]
@@ -1014,17 +1137,18 @@ def make_ghan_figure(
             _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
                         stipple, fdr_alpha, vmax=vmax, d=d, cmap=cmap, add_cbar=False)
             if seasonal:
-                ax.set_title(f"{season}: {panel.title}", fontsize=9.5, fontweight="semibold", pad=5)
+                ax.set_title(f"{season}: {panel.title}", fontsize=9.5, fontweight="semibold", pad=TITLE_PAD)
         sm = plt.cm.ScalarMappable(norm=mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax), cmap=cmap)
-        cb = fig.colorbar(sm, ax=list(axes[i]), orientation="vertical" if seasonal else "horizontal",
-                          shrink=0.8 if seasonal else 0.45, aspect=25, extend="both", pad=0.02 if seasonal else 0.1)
-        cb.set_label(f"{band} radiative effect difference [W m$^{{-2}}$]", fontsize=8)
-        cb.ax.tick_params(labelsize=7)
+        label = f"{band} radiative effect difference [W m$^{{-2}}$]"
+        if seasonal:
+            _cbar_right(fig, axes[i], sm, label.replace(" [", "\n["))
+        else:
+            _cbar_below(fig, axes[i, 1:3], sm, label, CBAR_LABELSIZE_SHARED, shrink=1.0)
 
     c1, c2 = pairs[role1], pairs[role2]
     kind = "seasonal " if seasonal else ""
-    fig.suptitle(f"{experiment}: {kind}Ghan decomposition, {band}, {c1} − {c2} ({start_year}–{end_year})",
-                 fontsize=14, fontweight="bold")
+    add_suptitle(fig, f"{kind}Ghan decomposition, {band}: {c1} − {c2} ({start_year}–{end_year})",
+                 mean_lat_min, y=_suptitle_y(fig))
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
         stem = f"{experiment}_ghan_{'seasonal_' if seasonal else ''}{tag}_{band}_{start_year}_{end_year}.png"
@@ -1111,7 +1235,7 @@ def make_contrast_grid_figure(
     end_year: int = 2009,
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
-    panel_size: tuple[float, float] = (2.6, 3.3),
+    map_size: float | None = None,
     save: bool = True,
     figdir: Path = FIGURE_DIR,
     dpi: int = 200,
@@ -1126,28 +1250,30 @@ def make_contrast_grid_figure(
     """
     rows = contrast_sets()[contrast_set]
     panels = [replace(p, case1_role="case1", case2_role="case2") for p in panels]
-    fig, axes = plt.subplots(len(rows), len(panels),
-                             figsize=(panel_size[0] * len(panels), panel_size[1] * len(rows)),
-                             squeeze=False, subplot_kw={"projection": ccrs.Orthographic(0, 90)},
-                             constrained_layout=True)
+    fig, axes = map_grid(len(rows), len(panels), left=2.0, map_size=GRID_MAP_SIZE if map_size is None else map_size)
     for i, (c1, c2) in enumerate(rows):
         pairs = {"case1": c1, "case2": c2}
         for j, (ax, panel) in enumerate(zip(axes[i], panels)):
             try:
                 _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
-                            stipple, fdr_alpha, cmap=cmap, add_cbar=True)
+                            stipple, fdr_alpha, cmap=cmap, add_cbar=True,
+                            mean_fontsize=GRID_MEAN_FONTSIZE)
             except (FileNotFoundError, KeyError) as exc:
                 ax.set_axis_off()
                 ax.set_title(f"{panel.title}\nmissing", fontsize=9)
                 print(f"Skipping {panel.key} ({c1} − {c2}): {exc}")
             if i > 0:
                 ax.set_title("")
+            else:   # bigger column titles, long ones on two lines so they don't run into the next column
+                ax.title.set_fontsize(GRID_TITLE_FONTSIZE)
+                ax.title.set_text(textwrap.fill(ax.get_title(), GRID_TITLE_WRAP))
             if j == 0:
-                ax.text(-0.12, 0.5, f"{c1}\n−\n{c2}", transform=ax.transAxes, rotation=0,
+                ax.text(-0.08, 0.5, f"{c1}\n−\n{c2}", transform=ax.transAxes, rotation=0,
                         ha="right", va="center", fontsize=10, fontweight="bold")
 
-    fig.suptitle(f"{name}: {contrast_set} contrasts ({start_year}–{end_year})",
-                 fontsize=15, fontweight="bold")
+    title = "BVOC/SOA/cloud" if name == "context" else name
+    add_suptitle(fig, f"{title}: {CONTRAST_LABELS[contrast_set]} ({start_year}–{end_year})", mean_lat_min, fontsize=15,
+                 y=_suptitle_y(fig))
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
         path = figdir / f"contrast_grid_{name}_{contrast_set}_{start_year}_{end_year}.png"
@@ -1233,7 +1359,7 @@ def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir
     t = table[table["contrast_set"] == contrast_set]
     regions, contrasts = list(dict.fromkeys(t["region"])), list(dict.fromkeys(t["contrast"]))
     terms = WATER_BUDGET_TERMS
-    colors = ["#3b75af", "#4f9e5a", "#d08a2e", "#7fc6d6", "#8c6bb1", "#9a9a9a"]
+    colors = WATER_BUDGET_COLORS
     fig, axes = plt.subplots(1, len(regions), figsize=(6.5 * len(regions), 4.2), sharey=True,
                              constrained_layout=True)
     width = 0.8 / len(terms)
@@ -1246,9 +1372,10 @@ def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir
         ax.axhline(0, color="black", lw=0.6)
         ax.set_xticks(np.arange(len(contrasts)), [c.replace(" − ", "\n− ") for c in contrasts], fontsize=8)
         ax.set_title(region, fontsize=10, fontweight="semibold")
-        ax.set_ylabel("difference [mm yr$^{-1}$]")
+        ax.tick_params(labelsize=8)
+        ax.set_ylabel("difference [mm yr$^{-1}$]", fontsize=9)
     np.atleast_1d(axes)[0].legend(fontsize=8, ncol=len(terms), loc="best")
-    fig.suptitle(f"Land water budget P − ET − R_liq − R_ice − ΔTWS, {contrast_set} ({t['years'].iloc[0]})",
+    fig.suptitle(f"Land water budget P − ET − R_liq − R_ice − ΔTWS, {CONTRAST_LABELS[contrast_set]} ({t['years'].iloc[0]})",
                  fontsize=12, fontweight="bold")
     if save:
         path = figdir / f"water_budget_{contrast_set}_{start_year}_{end_year}.png"
@@ -1333,13 +1460,13 @@ MONTHLY_FIELDS = {
     "cb_SOA_LV": ("SOA", "atm", lambda ds: ds["cb_SOA_LV"] * 1e6, "mg m$^{-2}$", "SOA_LV gas burden"),
     "cb_SOA_SV": ("SOA", "atm", lambda ds: ds["cb_SOA_SV"] * 1e6, "mg m$^{-2}$", "SOA_SV gas burden"),
     "N_AER": ("SOA", "atm", lambda ds: to_map(ds["N_AER"]), "cm$^{-3}$", "aerosol number, lowest level"),
-    "NUCLRATE": ("SOA", "atm", lambda ds: to_map(ds["NUCLRATE"]), "", "nucleation rate, lowest level"),
+    "NUCLRATE": ("SOA", "atm", lambda ds: to_map(ds["NUCLRATE"]), "cm$^{-3}$ s$^{-1}$", "nucleation rate, lowest level"),
     "ACTNL_incld": ("CLOUDPROP", "atm", lambda ds: (ds["ACTNL"] / ds["FCTL"]).where(ds["FCTL"] >= INCLOUD_MIN_FRAC) * 1e-6,
                     "cm$^{-3}$", "in-cloud cloud-top droplet number"),
     "ACTREL_incld": ("CLOUDPROP", "atm", lambda ds: (ds["ACTREL"] / ds["FCTL"]).where(ds["FCTL"] >= INCLOUD_MIN_FRAC),
                      "µm", "in-cloud cloud-top effective radius"),
     "TGCLDLWP": ("CLOUDPROP", "atm", lambda ds: ds["TGCLDLWP"] * 1e3, "g m$^{-2}$", "liquid water path (grid box)"),
-    "SW_cre_clean": ("RADIATIVE", "atm", lambda ds: ds["SW_cre_clean"], WM2, "SW cloud term (clean sky)"),
+    "SW_cloud": ("RADIATIVE", "atm", lambda ds: ds["SW_cloud"], WM2, "SW cloud term (clean sky)"),
     "SOLIN": ("RADIATIVE", "atm", lambda ds: ds["SOLIN"], WM2, "insolation (TOA)"),
 }
 
@@ -1386,6 +1513,8 @@ def _month_axes(ax):
     ax.axhline(0, color="black", lw=0.5)
     ax.set_xticks(range(1, 13), list("JFMAMJJASOND"), fontsize=7)
     ax.tick_params(labelsize=7)
+    ax.ticklabel_format(axis="y", style="sci", scilimits=(-3, 4), useMathText=True)   # ×10ⁿ, not 0.000025
+    ax.yaxis.get_offset_text().set_fontsize(7)
 
 
 # ---------------------------------------------------------------- A + E: radiative budget, 3 contrasts
@@ -1393,18 +1522,18 @@ def _month_axes(ax):
 def budget_contrasts(period: str) -> list[tuple[str, str, str]]:
     """(label, case1, case2): LCC-CTRL = (fBVOC-CTRL) + (LCC-fBVOC) exactly, year by year."""
     p = BVOC_PAIRS[period]
-    return [("LCC−CTRL", p["lcc"], p["ctrl"]), ("fBVOC−CTRL", p["fbvoc"], p["ctrl"]),
-            ("LCC−fBVOC", p["lcc"], p["fbvoc"])]
+    return [(CONTRAST_LABELS["LCC-CTRL"], p["lcc"], p["ctrl"]), (CONTRAST_LABELS["fBVOC-CTRL"], p["fbvoc"], p["ctrl"]),
+            (CONTRAST_LABELS["LCC-fBVOC"], p["lcc"], p["fbvoc"])]
 
 
-GHAN_TERMS = ("toa", "dir", "cre_clean", "clearclean")
+GHAN_TERMS = ("toa", "dir", "cloud", "rest")
 
 
 def radiative_budget_table(start_year: int = 2001, end_year: int = 2009,
                            regions=("≥45°N", "modified cells")):
     """Long table of yearly regional means: period, region, contrast, band, term, year, value [W m-2].
 
-    term = toa / dir / cre_clean / clearclean (Ghan) or albedo_proxy (SW, surface, not a budget term).
+    term = toa / dir / cloud / rest (Ghan) or albedo_proxy (SW, surface, not a budget term).
     Checks before returning: Ghan terms sum to toa, and LCC-CTRL = (fBVOC-CTRL) + (LCC-fBVOC).
     """
     import pandas as pd
@@ -1427,9 +1556,10 @@ def radiative_budget_table(start_year: int = 2001, end_year: int = 2009,
 
     key = ["period", "region", "band", "year"]
     ghan = t[t.term.isin(GHAN_TERMS)].pivot_table(index=key + ["contrast"], columns="term", values="value")
-    err_g = (ghan["dir"] + ghan["cre_clean"] + ghan["clearclean"] - ghan["toa"]).abs().max()
+    err_g = (ghan["dir"] + ghan["cloud"] + ghan["rest"] - ghan["toa"]).abs().max()
     w = t.pivot_table(index=key + ["term"], columns="contrast", values="value")
-    err_c = (w["fBVOC−CTRL"] + w["LCC−fBVOC"] - w["LCC−CTRL"]).abs().max()
+    L = CONTRAST_LABELS
+    err_c = (w[L["fBVOC-CTRL"]] + w[L["LCC-fBVOC"]] - w[L["LCC-CTRL"]]).abs().max()
     print(f"Closure before rounding: Ghan terms vs total {err_g:.1e}, contrasts {err_c:.1e} W m-2")
     if max(err_g, err_c) > 1e-3:
         raise ValueError("radiative budget does not close")
@@ -1444,8 +1574,12 @@ def summarize_years(t, by, conf: float = 0.95):
     return out.drop(columns="sd")
 
 
-TERM_STYLE = {"toa": ("total", "#333333"), "dir": ("ARI", "#d08a2e"), "cre_clean": ("cloud", "#3b75af"),
-              "clearclean": ("clear-clean", "#c44e52"), "albedo_proxy": ("albedo proxy (sfc)", "white")}
+# Chart colours, all module-level so they can be swapped in one place (sandbox/test_palettes.ipynb).
+PERIOD_COLORS = {"PD": "#3b75af", "FUT": "#c44e52"}
+REGION_COLORS = {"modified cells": "#c44e52", "unmodified land ≥45°N": "#3b75af"}
+WATER_BUDGET_COLORS = ["#3b75af", "#4f9e5a", "#d08a2e", "#7fc6d6", "#8c6bb1", "#9a9a9a"]   # WATER_BUDGET_TERMS order
+TERM_STYLE = {"toa": (GHAN_TITLES["toa"], "#333333"), "dir": (GHAN_TITLES["dir"], "#d08a2e"), "cloud": (GHAN_TITLES["cloud"], "#3b75af"),
+              "rest": (GHAN_TITLES["rest"], "#c44e52"), "albedo_proxy": ("albedo proxy (sfc)", "white")}
 
 
 def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=200,
@@ -1454,7 +1588,8 @@ def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=20
     s = summarize_years(t, ["period", "region", "contrast", "band", "term"])
     rows = [(r, p) for r in dict.fromkeys(t.region) for p in BVOC_PAIRS]
     contrasts = [c for c, _, _ in budget_contrasts("PD")]
-    fig, axes = plt.subplots(len(rows), 3, figsize=(15, 3.3 * len(rows)), squeeze=False, constrained_layout=True)
+    fig, axes = plt.subplots(len(rows), 3, figsize=(15, 3.9 * len(rows)), squeeze=False, constrained_layout=True)
+    fig.get_layout_engine().set(h_pad=0.12)   # room between a row's tick labels and the next row's titles
     for i, (region, period) in enumerate(rows):
         for j, band in enumerate(("NET", "SW", "LW")):
             ax = axes[i, j]
@@ -1473,13 +1608,14 @@ def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=20
                         ax.text(xi, m + np.sign(m or 1) * (h + 0.03), f"{m:+.2f}", ha="center",
                                 va="bottom" if m >= 0 else "top", fontsize=6.5)
             ax.axhline(0, color="black", lw=0.6)
+            ax.margins(y=0.18)   # room for the value labels above/below the total bars
             ax.set_xticks(range(len(contrasts)), contrasts, fontsize=8)
             ax.set_title(f"{period}, {region}: {band}", fontsize=9.5, fontweight="semibold")
             ax.tick_params(labelsize=7)
             if j == 0:
                 ax.set_ylabel("W m$^{-2}$", fontsize=8)
     axes[0, 1].legend(fontsize=7, ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.35))
-    fig.suptitle(f"Radiative budget: LCC−CTRL = (fBVOC−CTRL) + (LCC−fBVOC), mean ± 95 % CI over years "
+    fig.suptitle(f"Radiative budget: LCC − CTRL = (LCC_fBVOC − CTRL) + (LCC − LCC_fBVOC), mean ± 95 % CI over years "
                  f"({start_year}–{end_year})", fontsize=12, fontweight="bold")
     if save:
         path = figdir / f"radiative_budget_3contrasts_{start_year}_{end_year}.png"
@@ -1494,16 +1630,16 @@ def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir
     sub = t[(t.region == region) & (t.band == band) & t.term.isin(GHAN_TERMS)]
     s = summarize_years(sub, ["period", "contrast", "term"])
     cols = [(p, c) for p in BVOC_PAIRS for c, _, _ in budget_contrasts(p)]
-    fig, axes = plt.subplots(1, len(GHAN_TERMS), figsize=(16, 4), sharey=False, constrained_layout=True)
+    fig, axes = plt.subplots(1, len(GHAN_TERMS), figsize=(18, 4.4), sharey=False, constrained_layout=True)
     for ax, term in zip(axes, GHAN_TERMS):
         for x, (p, c) in enumerate(cols):
             v = sub[(sub.period == p) & (sub.contrast == c) & (sub.term == term)].sort_values("year")
-            color = "#3b75af" if p == "PD" else "#c44e52"
+            color = PERIOD_COLORS[p]
             ax.scatter(np.full(len(v), x) + np.linspace(-0.15, 0.15, len(v)), v["value"], s=10, color=color, alpha=0.7)
             m = s[(s.period == p) & (s.contrast == c) & (s.term == term)].iloc[0]
             ax.errorbar(x + 0.3, m["mean"], yerr=m["ci95"], fmt="D", color="black", ms=4, capsize=3, lw=1)
         ax.axhline(0, color="black", lw=0.5)
-        ax.set_xticks(range(len(cols)), [f"{p}\n{c}" for p, c in cols], fontsize=7)
+        ax.set_xticks(range(len(cols)), [f"{p}\n{c.replace(' − ', chr(10) + '− ')}" for p, c in cols], fontsize=7)
         ax.set_title(f"{TERM_STYLE[term][0]} ({band})", fontsize=10, fontweight="semibold")
         ax.tick_params(labelsize=7)
     axes[0].set_ylabel(f"{region} difference [W m$^{{-2}}$]", fontsize=8)
@@ -1522,8 +1658,8 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
                                 save=True, figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2009):
     """Monthly differences, modified vs unmodified land >=45N, early vs late years.
     Columns = period x (LCC-CTRL, LCC-fBVOC); MEGAN factors only exist with MEGAN on (not in fBVOC)."""
-    cols = [(p, lab, c1, c2) for p in BVOC_PAIRS for lab, c1, c2 in budget_contrasts(p) if lab != "fBVOC−CTRL"]
-    regions = {"modified cells": "#c44e52", "unmodified land ≥45°N": "#3b75af"}
+    cols = [(p, lab, c1, c2) for p in BVOC_PAIRS for lab, c1, c2 in budget_contrasts(p) if lab != CONTRAST_LABELS["fBVOC-CTRL"]]
+    regions = REGION_COLORS
     fig, axes = plt.subplots(len(fields), len(cols), figsize=(4 * len(cols), 2.4 * len(fields)),
                              squeeze=False, constrained_layout=True, sharex=True)
     for i, field in enumerate(fields):
@@ -1538,6 +1674,7 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
             except KeyError:
                 ax.text(0.5, 0.5, "not available\n(MEGAN off in fBVOC)", transform=ax.transAxes,
                         ha="center", va="center", fontsize=8, color="grey")
+                ax.set_yticks([])   # no empty 0-1 axis
             _month_axes(ax)
             if i == 0:
                 ax.set_title(f"{p}: {c1} − {c2}", fontsize=9, fontweight="semibold")
@@ -1633,9 +1770,8 @@ PERCENT_PANELS = [   # (yearly field, category, title, minimum baseline for the 
 def make_percent_change_figure(start_year=2001, end_year=2009, extent_lat=45.0, save=True,
                                figdir: Path = FIGURE_DIR, dpi=200, stipple=True, fdr_alpha=0.10):
     """BVOC contrast (LCC - fBVOC) as % of the fBVOC baseline mean; rows PD/FUT. Cells with a baseline
-    below the panel threshold are blank. Hatching = not significant (paired t-test of the yearly % values, FDR)."""
-    fig, axes = plt.subplots(2, len(PERCENT_PANELS), figsize=(3.2 * len(PERCENT_PANELS), 7.2), squeeze=False,
-                             subplot_kw={"projection": ccrs.Orthographic(0, 90)}, constrained_layout=True)
+    below the panel threshold are blank. Marked cells = not significant (paired t-test of the yearly % values, FDR)."""
+    fig, axes = map_grid(2, len(PERCENT_PANELS), left=2.0)
     for i, (p, roles) in enumerate(BVOC_PAIRS.items()):
         for j, (var, cls, title, vmin_base) in enumerate(PERCENT_PANELS):
             d = yearly_difference(roles["lcc"], roles["fbvoc"], cls, var, start_year, end_year)
@@ -1643,13 +1779,13 @@ def make_percent_change_figure(start_year=2001, end_year=2009, extent_lat=45.0, 
             pct = (100 * d / base).where(abs(base) >= vmin_base)
             panel = MapPanel(key=var, title=title if i == 0 else "", variable_class=cls, variable=var,
                              case1_role="lcc", case2_role="fbvoc", units="%",
-                             long_label=f"{var}: (LCC − fBVOC) / fBVOC")
+                             long_label=f"{var}: (LCC − LCC_fBVOC) / LCC_fBVOC")
             _plot_panel(axes[i, j], panel, roles, start_year, end_year, extent_lat, extent_lat,
                         stipple, fdr_alpha, d=pct, add_cbar=True)
-        axes[i, 0].text(-0.12, 0.5, f"{p}\n{roles['lcc']}\n− {roles['fbvoc']}", transform=axes[i, 0].transAxes,
+        axes[i, 0].text(-0.08, 0.5, f"{p}\n{roles['lcc']}\n− {roles['fbvoc']}", transform=axes[i, 0].transAxes,
                         ha="right", va="center", fontsize=9, fontweight="bold")
-    fig.suptitle(f"BVOC contrast relative to the fBVOC baseline [%] ({start_year}–{end_year})",
-                 fontsize=13, fontweight="bold")
+    add_suptitle(fig, f"LCC − LCC_fBVOC relative to LCC_fBVOC [%] ({start_year}–{end_year})",
+                 extent_lat, fontsize=13, y=_suptitle_y(fig))
     if save:
         path = figdir / f"bvoc_percent_change_maps_{start_year}_{end_year}.png"
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
