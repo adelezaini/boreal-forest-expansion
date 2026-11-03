@@ -48,6 +48,9 @@ bash create_bvoc_emissions_for_year_2100.sh NF2000norbc_tropstratchem_nudg_ctrl_
 bash create_bvoc_emissions_for_year_2100.sh NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20261023_2001-2014
 ```
 
+### One-year files (replay run CTRL_PD_fBVOCctrlPD_HR, 2026-10-29)
+`sbatch run_bvoc_climatology_array.sh NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023 Y Y` (Y = 2000, 2001, 2002) gives the **actual** emissions of year Y in the same format (stamped on reference year 2000): `ems_<case>_Y-Y_<VAR>.nc`, 57 files in the shared folder. All passed `check_bvoc_climatology.py <case> Y Y` (ratio to h0 within 4e-5). Used by `cases-scripts/14d-…`, which swaps them between 1-year jobs.
+
 ## Files
 | File | What it does |
 |---|---|
