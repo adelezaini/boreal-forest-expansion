@@ -1,0 +1,6 @@
+Thu Oct 29 10:32:14 AM CET 2026 archive job: COMPLETED, atm h0 files 2000-2002: 36
+ls: cannot access 'data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_atm_BVOC_2001-2002.nc': No such file or directory
+missing BVOC, see postprocess_BVOC.log
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 FAILED (38s)
+Thu 29 Oct 10:41:01 CET 2026 finished

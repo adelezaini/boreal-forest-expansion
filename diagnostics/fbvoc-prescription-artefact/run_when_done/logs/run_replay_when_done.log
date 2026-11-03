@@ -1,0 +1,33 @@
+Fri 30 Oct 01:01:37 CET 2026 run archived, atm h0 files 2000-2002: 36
+data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_BVOC_2001-2002.nc
+data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_SOA_2001-2002.nc
+data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_CHEM_2001-2002.nc
+data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_CLOUDPROP_2001-2002.nc
+data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_RADIATIVE_2001-2002.nc
+Fri 30 Oct 01:04:07 CET 2026 postprocessing done
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (36s)
+--- cell 3 ok (0s)
+--- cell 5 ok (30s)
+--- cell 7 ok (0s)
+--- cell 9 ok (34s)
+--- cell 11 ok (1s)
+--- cell 13 ok (0s)
+--- cell 16 ok (1s)
+--- cell 18 ok (4s)
+--- cell 20 ok (2s)
+--- cell 22 ok (0s)
+--- cell 24 ok (0s)
+--- cell 27 ok (20s)
+--- cell 29 ok (7s)
+--- cell 31 ok (0s)
+--- cell 34 ok (2s)
+--- cell 36 ok (1s)
+--- cell 38 ok (0s)
+--- cell 40 ok (1s)
+--- cell 42 ok (0s)
+--- cell 44 ok (15s)
+--- cell 47 ok (2s)
+--- cell 48 ok (5s)
+--- cell 52 ok (26s)
+Fri 30 Oct 01:08:12 CET 2026 finished

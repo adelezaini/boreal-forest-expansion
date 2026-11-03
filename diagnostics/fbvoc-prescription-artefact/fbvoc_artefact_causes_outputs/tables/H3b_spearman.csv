@@ -1,0 +1,7 @@
+x,y,n,spearman_rho,p_value
+R_ISOP,A_tau_ISOP,39,0.585,0.0
+R_ISOP,A_OH_sfc,39,-0.047,0.778
+R_ISOP,A_SOA_cb,39,-0.215,0.189
+R_MTERP,A_tau_MTERP,50,0.183,0.205
+R_MTERP,A_OH_sfc,50,0.004,0.98
+R_MTERP,A_SOA_cb,50,0.045,0.754

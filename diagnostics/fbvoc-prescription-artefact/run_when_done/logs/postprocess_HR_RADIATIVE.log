@@ -1,0 +1,5 @@
+2026-10-30 01:02:06,765 INFO boreal_forest_expansion.postprocess.fileio: Found 36 files for NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_HR_f19_f19-20261029 atm h0
+2026-10-30 01:02:48,680 INFO boreal_forest_expansion.postprocess.fileio: Time axis OK: 36 contiguous monthly-mean records
+2026-10-30 01:02:48,855 INFO boreal_forest_expansion.postprocess.fileio: Dropping 12 spin-up months
+2026-10-30 01:03:03,939 INFO boreal_forest_expansion.postprocess.fileio: Saved data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_RADIATIVE_2001-2002.nc
+data/processed-data/postprocessing/CTRL_PD_fBVOCctrlPD_HR_atm_RADIATIVE_2001-2002.nc

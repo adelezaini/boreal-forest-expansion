@@ -1,0 +1,20 @@
+,in CTRL_PD megan_specifier,prescribed file in fBVOC run,srf_emis entries CTRL_PD,srf_emis entries fBVOC
+ISOP,True,True,1,1
+MTERP,True,True,1,1
+BCARY,True,True,0,1
+C3H6,True,True,3,4
+BIGENE,True,True,2,3
+CH3CHO,True,True,2,3
+CH2O,True,True,2,3
+C2H4,True,True,3,4
+CH3OH,True,True,2,3
+C2H5OH,True,True,2,3
+CH3COOH,True,True,2,3
+CH3COCH3,True,True,2,3
+HCOOH,True,True,2,3
+HCN,True,True,2,3
+CO,True,True,3,4
+C2H6,True,True,3,4
+C3H8,True,True,3,4
+BIGALK,True,True,2,3
+TOLUENE,True,True,2,3
