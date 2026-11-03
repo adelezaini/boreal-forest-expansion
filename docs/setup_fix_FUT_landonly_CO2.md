@@ -33,8 +33,7 @@ The FUT LCC land-only spin-up (`22b`, case `I2100ssp585Clm50BgcCropCplHist_f19_f
 - **Consequence for the analysis (b):** LCC_FUT − CTRL_FUT mixes the land-cover signal with this vegetation damage, both inside the forest cells and far from them.
 
 Notebooks with all figures and numbers:
-- [check_CO2_bug_in_land_only.ipynb](../diagnostics/check-CO2-bug-in-land-only/check_CO2_bug_in_land_only.ipynb): lineage, consequences, recovery.
-- [check_CO2_bug_in_land_only_six_variables.ipynb](../diagnostics/check-CO2-bug-in-land-only/check_CO2_bug_in_land_only_six_variables.ipynb): equilibrium of TWS, H2OSOI, TSOI, GPP, TOTVEGC, TOTVEGN.
+- [check_CO2_bug_in_land_only_six_variables.ipynb](../diagnostics/check-simulation-equilibrium/check-CO2-bug-in-spinups/check_CO2_bug_in_land_only_six_variables.ipynb): lineage, consequences, recovery (§1–7) and equilibrium of TWS, H2OSOI, TSOI, GPP, TOTVEGC, TOTVEGN (§8–11).
 - [impact_of_nudging_on_land.ipynb](../diagnostics/impact-of-nudging-on-land/impact_of_nudging_on_land.ipynb): the free → nudged jump; drift in both members.
 
 ## 2. Root cause

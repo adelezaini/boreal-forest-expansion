@@ -29,43 +29,67 @@ Script numbering (`cases-scripts/README.md`): first digit **1** = PD, **2** = FU
 
 | Label (used in code/output) | Script | Case name |
 |---|---|---|
+Full list of every run (spin-ups, MET, nudged, fBVOC; old and CO₂-fix versions, parents, status): `cases-scripts/run_aliases.csv`; script list: `cases-scripts/README.md`. Script renumbering 2026-10-28 (user): all-species fBVOC 14c→14b, 24c→24b, 24d→24c, 24e→24d; ISOP/MTERP-only → `just-ISOP-MTERP/`; quick spin-ups → `quick-spinups/`; tests keep their old numbers.
+
 **Current versions** (all on the OLD spin-up chain; superseded once the 20261025 spin-ups → new nudged runs exist):
 
 | Label (used in code/output) | Script | Case name | Notes |
 |---|---|---|---|
 | `CTRL_PD` | 13a | `NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023` | 2000–2014, HR_BVOC_ALL (h1 30-min BVOC). Replaces `-20260925` (2000–2009; day 1 bit-identical) |
 | `LCC_PD` | 14a | `NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261005` | extended to 2014 |
-| `LCC_PD_fBVOCctrlPD_IM` | 14b | `NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008` | ISOP/MTERP from CTRL_PD `-20260925`, 2000–2009 |
-| `LCC_PD_fBVOCctrlPD` | 14c | (being set up 2026-10-25) | all 19 species from CTRL_PD `-20261023` |
+| `LCC_PD_fBVOCctrlPD_IM` | just-ISOP-MTERP/14b | `NF2000norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261008` | ISOP/MTERP from CTRL_PD `-20260925`, 2000–2009 |
+| `LCC_PD_fBVOCctrlPD` | 14b | `NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19-20261025` | all 19 species from CTRL_PD `-20261023`; 2000–2014, provisional |
+| `CTRL_PD_fBVOCctrlPD` | 14c | `NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_f19_f19-20261028` | **diagnostic artefact test** (user OK 2026-10-28): CTRL land + restart as CTRL_PD `-20261023`, its own 19 species prescribed; 3 yr (2000–2002), old-chain test only (result: SOA +3 %); **script 14c now = new-chain 15-yr version** (user 2026-10-29) |
+| `CTRL_PD_fBVOCctrlPD_HR` | 14d | `NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_HR_f19_f19-20261029` | **replay test** (user OK 2026-10-29): as the 14c old-chain test, but CTRL_PD's actual emissions of each year (`ems_<CTRL_PD>_Y-Y_*`, Y = 2000–2002) instead of the climatology; three 1-yr jobs, files swapped by `replay_prerun.sh` (CIME `PRERUN_SCRIPT`); h1 30-min SFISOP/SFMTERP; 3 yr, exception to the 15-yr rule; watcher `diagnostics/fbvoc-prescription-artefact/run_replay_when_done.sh` |
 | `CTRL_FUT` | 23a | `NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20261023` | 2000–2014, HR_BVOC_ALL. Replaces `-20260925` |
 | `LCC_FUT` | 24a | `NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261005` | extended to 2014; CO₂-bug land spin-up |
-| `LCC_FUT_fBVOCctrlPD_IM` | 24b | `NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009` | ISOP/MTERP from CTRL_PD `-20260925` relabelled to 2100 |
-| `LCC_FUT_fBVOCctrlPD` | 24c | (being set up) | all 19 species from CTRL_PD `-20261023`, relabelled to 2100 |
-| `LCC_FUT_fBVOCctrlFUT` | 24d | (being set up) | all 19 species from CTRL_FUT `-20261023`, relabelled to 2100 |
-| `LCC_FUT_fBVOClccPD` | 24e | planned, new chain | all 19 species from LCC_PD (needs LCC_PD with HR_BVOC_ALL, 14a); set `LCC_PD_CASE` in 24e |
+| `LCC_FUT_fBVOCctrlPD_IM` | just-ISOP-MTERP/24b | `NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOC_f19_f19-20261009` | ISOP/MTERP from CTRL_PD `-20260925` relabelled to 2100 |
+| `LCC_FUT_fBVOCctrlPD` | 24b | `NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19-20261025` | all 19 species from CTRL_PD `-20261023`, relabelled to 2100; provisional, CO₂-bug spin-up |
+| `LCC_FUT_fBVOCctrlFUT` | 24c | `NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19-20261025` | all 19 species from CTRL_FUT `-20261023`, relabelled to 2100; provisional, CO₂-bug spin-up |
+| `LCC_FUT_fBVOClccPD` | 24d | planned, new chain | all 19 species from LCC_PD (present-day LCC emissions; user 2026-10-28), relabelled to 2100 (needs LCC_PD with HR_BVOC_ALL, 14a); set `LCC_PD_CASE` in 24d |
+
+The `_IM` runs are **dropped** (user 2026-10-28): they will not be redone on the new chain. On NIRD, the `_IM` runs and CTRL `-20260925` are in `BRL-FRST-XPSN_archive/c-before-all-bvoc/` (moved 2026-10-28); `diagnostics/README.md` lists the notebooks run on them.
+
+**New chain (CO₂-fix spin-ups `-20261025`/`-20261026`; 2000–2014, extra h0 fields from 2026-10-28).** Not yet used by postprocessing or analysis. Switch each alias above to its new case when the run is archived (checklist below), not before.
+
+| Label | Script | Case name | Status (2026-10-28 15:40) |
+|---|---|---|---|
+| `CTRL_PD` | 13a | `NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-<launch date>` | waits for CTRL_PD spin-up `…spinup_ctrl_f19_f19-20261026` (~29 Oct 05:00), auto; HR_BVOC_ALL |
+| `LCC_PD` | 14a | `NF2000norbc_tropstratchem_nudg_lcc_f19_f19-<launch date>` | LCC_PD spin-up `-20261025` done; auto-launch 28 Oct ~15:45; HR_BVOC_ALL |
+| `CTRL_FUT` | 23a | `NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20261028` | running since 28 Oct 14:00; HR_BVOC_ALL |
+| `LCC_FUT` | 24a | `NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261028` | running since 28 Oct 14:17; no HR_BVOC_ALL (not needed, user 2026-10-28) |
+| `LCC_PD_fBVOCctrlPD` | 14b | auto | after new CTRL_PD |
+| `CTRL_PD_fBVOCctrlPD` | 14c | auto | after new CTRL_PD (user 2026-10-29): matched baseline, LCC_PD_fBVOCctrlPD − CTRL_PD_fBVOCctrlPD; 15 yr |
+| `LCC_FUT_fBVOCctrlPD` | 24b | auto | after new CTRL_PD |
+| `LCC_FUT_fBVOCctrlFUT` | 24c | auto | after new CTRL_FUT |
+| `LCC_FUT_fBVOClccPD` | 24d | auto | after new LCC_PD |
+| `LCC_PD_fBVOClccPD` | 14e | auto | after new LCC_PD (user 2026-10-30): LCC land, its own LCC_PD emissions prescribed; **3 yr (2000–2002)**, exception to the 15-yr rule; test of the matched-baseline assumption δ_PD = art(LCC) − art(CTRL), `diagnostics/fbvoc-prescription-artefact/how_big_artefact_is_PD.ipynb` |
+| `CTRL_FUT_fBVOCctrlFUT` | 24e | auto | after new CTRL_FUT, with 24c (user 2026-10-30): CTRL land + restart as CTRL_FUT, its own emissions prescribed → art_FUT = CTRL_FUT_fBVOCctrlFUT − CTRL_FUT, matched baseline for all LCC_FUT − LCC_FUT_fBVOC* contrasts; 15 yr |
 
 ### When a run version changes (user rule 2026-10-25)
 A new CTRL_*/LCC_* version (new date suffix) invalidates everything derived from the old one. Every time:
 1. Update the table above (case name + notes).
-2. `postprocess/run_all_{parallel,postprocessing}.sh` CASES. **First move the old `<ALIAS>_*` processed files** out of `data/processed-data/postprocessing/` (`--skip-existing` matches any year span, so a new case under an old alias is silently skipped). **Processed-file archive folders (user 2026-10-25):** (i) before the first postprocessing of the current-chain 2001–2014 runs (14c/24c/24d fBVOC, for the meeting; before the CO₂ fix), move ALL current 2001–2009 processed files (+ `logs/`) to `data/processed-data/postprocessing/2001-2009-pre-co2-fix/`, names unchanged (old fBVOC files stay `LCC_{PD,FUT}_fBVOC_*`, no `_IM` rename); (ii) when the post-CO₂-fix runs are postprocessed, move the 2001–2014 files to `2001-2014-pre-co2-fix/` the same way. Point the analysis to the archive folder when it needs old results; until (i) it reads the current folder.
-3. CTRL_* only: `preprocess/bvoc-emissions/create_bvoc_emissions_climatology.sh` default CASE/years and `create_bvoc_emissions_for_year_2100.sh` default CASE_YEARS (main folder; `prescribe-just-ISOP-MTERP/` stays on `-20260925` until the `_IM` runs are redone). Then **rerun** the climatology (`sbatch run_bvoc_climatology_array.sh CASE 2001 2014`) and the 2100 relabel, and update the `EMS_*` variables in the fBVOC scripts (14c, 24c, 24d). LCC_PD changes: rerun its emissions too and set `LCC_PD_CASE` in 24e.
+2. `postprocess/run_all_{parallel,postprocessing}.sh` CASES. **First move the old `<ALIAS>_*` processed files** out of `data/processed-data/postprocessing/` (`--skip-existing` matches any year span, so a new case under an old alias is silently skipped). **Processed-file archive folders (user 2026-10-25):** (i) before the first postprocessing of the current-chain 2001–2014 runs (14b/24b/24c fBVOC, for the meeting; before the CO₂ fix), move ALL current 2001–2009 processed files (+ `logs/`) to `data/processed-data/postprocessing/2001-2009-pre-co2-fix/`, names unchanged (old fBVOC files stay `LCC_{PD,FUT}_fBVOC_*`, no `_IM` rename); (ii) when the post-CO₂-fix runs are postprocessed, move the current 2001–2014 files (all-BVOC, pre-CO₂-fix set: CTRL `-20261023`, LCC `-20261005`, fBVOC `-20261025`) to **`2001-2014-all-bvoc-pre-co2-fix/`** the same way (user 2026-10-28, replaces `2001-2014-pre-co2-fix/`). **Postprocess each new run from the work archive as soon as it is done** (`RAW_PATH` default = `/cluster/work/users/adelez/archive`), without waiting for the NIRD copy (user 2026-10-28). Point the analysis to the archive folder when it needs old results; until (i) it reads the current folder. **(iii) user 2026-10-28:** every time a run from the CO₂-fix spin-up chain is archived, move the old-version processed files of that alias out of the current folder at once, before postprocessing the new run. User named `2001-2009-pre-co2-fix/` as the target. **Resolved (user 2026-10-28):** old files covering 2001–2014 go to `2001-2014-all-bvoc-pre-co2-fix/`, those covering 2001–2009 to `2001-2009-pre-co2-fix/`. Step (i) was done 2026-10-28 (96 files + `logs/` + `logs_run_all.txt`).
+3. CTRL_* only: `preprocess/bvoc-emissions/create_bvoc_emissions_climatology.sh` default CASE/years and `create_bvoc_emissions_for_year_2100.sh` default CASE_YEARS (main folder; `prescribe-just-ISOP-MTERP/` is legacy and stays on `-20260925`: the `_IM` runs are dropped). Then **rerun** the climatology (`sbatch run_bvoc_climatology_array.sh CASE 2001 2014`) and the 2100 relabel, and update the `EMS_*` variables in the fBVOC scripts (14b, 24b, 24c). LCC_PD changes: rerun its emissions too and set `LCC_PD_CASE` in 24d.
 4. LCC spin-up changes: `REFCASE`/`REFDATE` in 14a/24a and in the fBVOC scripts. CTRL spin-up changes: 13a/23a.
 5. Case-name configs in analysis: D1/D2 notebook `CASES`, `postprocess/run_postprocess.py` docstring example, `analysis/` notebooks; rerun what is used for results.
 6. fBVOC runs must be redone after a new CTRL (emission source) or LCC (restart) version.
+7. **Post-CO₂-fix runs only (user 2026-10-28): use the new output fields.** They write 117 extra h0 fields (`docs/history-output/added_fields_20261028.csv`), incl. the model SOA burdens `cb_SOA_A1`, `cb_SOA_A1_OCW`, `cb_SOA_NA_OCW` (added 20:27, CTRL_FUT/LCC_FUT/LCC_PD relaunched for them; `cb_SOA_NA` was already there). When all runs of a contrast are on the new chain: (a) switch the SOA burden panels/fields from the offline `SOA_cb` (monthly means, interstitial only) to the model burden `cbSOA_mgm2` (`forcing_maps.YEARLY_DERIVED`), and add `cbSOA_all_mgm2` (+ cloud-borne) where cloud processing matters; same for `MONTHLY_FIELDS`, `BASELINE_FIELDS`, `PERCENT_PANELS`; (b) give the added fields whose `postprocess_category` column is empty a category in `postprocess/variables.py` if the analysis needs them; (c) update `analysis/PLOTTED_VARIABLES.md`. Old-chain files lack these fields: never mix the two in one contrast.
 
-- **Auto-launch of the new chain (user OK 2026-10-25 22:54):** `cases-scripts/auto_launch_new_chain.sh` (nohup on login-3, state/logs in `/cluster/work/users/adelez/auto-launch/`, polls 15 min): 12c done → NIRD rsync → 13c; 13c/13b/23c/23b done → NIRD rsync → set REFCASE in 13a/14a/23a/24a → launch. Status: `bash auto_launch_new_chain.sh --check`; stop: `touch …/auto-launch/STOP`; restart is idempotent. fBVOC on the new chain is NOT automated.
+- **Auto-launch of the new chain (user OK 2026-10-25 22:54):** `cases-scripts/auto_launch_new_chain.sh` (nohup on login-3, state/logs in `/cluster/work/users/adelez/auto-launch/`, polls 15 min): 12c done → NIRD rsync → 13c; 13c/13b/23c/23b done → NIRD rsync → set REFCASE in 13a/14a/23a/24a → launch. Status: `bash auto_launch_new_chain.sh --check`; stop: `touch …/auto-launch/STOP`; restart is idempotent. **fBVOC on the new chain is automated too (user 2026-10-28):** CTRL_PD / CTRL_FUT / LCC_PD done (rest 2015-01-01) → NIRD rsync → `sbatch run_bvoc_climatology_array.sh <case> 2001 2014` → `check_bvoc_climatology.py` + `create_bvoc_emissions_for_year_2100.sh` → set REFCASE + EMS_PREFIX (24d: LCC_PD_CASE) → launch 14b + 24b + 14c (CTRL_PD), 24c + 24e (CTRL_FUT), 24d + 14e (LCC_PD; 14e 3 yr, done = rest 2003-01-01). A failure halts only that branch (`<step>.failed` in the state folder). **Postprocessing is automated too (user 2026-10-29):** each nudged run of the chain (13a 14a 23a 24a 14b 14c 14e 24b 24c 24d 24e), once done → NIRD copy → `postprocess/postprocess_new_chain_run.sh <alias> <case>` in the background, one run at a time (flock): moves the old `<alias>_{atm,lnd}_*` files (+ logs) to `2001-2009-pre-co2-fix/` (2001–2009 spans) or `2001-2014-all-bvoc-pre-co2-fix/` (all others, incl. the old 2001–2002 CTRL_PD_fBVOCctrlPD test), never overwriting, then `run_all_parallel.sh` for that case (10 jobs, all categories) and checks 19 files. Result `pp<n>.{ok,err,log}` in the state folder. Until all runs of a contrast are redone, the current folder mixes chains: never mix them in one contrast. `run_all_parallel.sh` CASES defaults and the analysis are still switched by hand.
 - **Spin-up chains:** CTRL = 20 yr coupled spin-up (11/21). LCC = CTRL restart → 100 yr land-only BGC spin-up (12b/22b) → 20 yr coupled spin-up (13b/23b). fBVOC starts from the LCC restart.
 - **Contrasts** (`plotting/forcing_maps.BVOC_PAIRS`, D1/D2):
+  - **Analysis set (user 2026-10-28):** `BVOC_PAIRS` fbvoc = `LCC_PD_fBVOCctrlPD` / `LCC_FUT_fBVOCctrlPD`, years 2001–2014, early/late 2001–2007 / 2008–2014. **fBVOC − CTRL dropped**; CTRL_FUT − CTRL_PD added (Ghan `background`, budget FUT row; already row 4 of the LCC-CTRL grid). `LCC_FUT_fBVOCctrlFUT` only in `analysis/fut-fbvoc-emission-source.ipynb` (`FBVOC_SOURCE_ROWS`).
   - **Total = LCC − CTRL**, same period: `Total_PD`, `Total_FUT`.
-  - **BVOC = LCC − LCC_fBVOC_\***: `BVOC_PD`, `BVOC_FUT`. How to read it:
+  - **BVOC = LCC − LCC_fBVOC_\***: `BVOC_PD`, `BVOC_FUT`. **Artefact correction (design B, matched baseline; user 2026-10-30):** report the BVOC effect as (LCC_P − LCC_P_fBVOC*) + art_P, art_P = CTRL_P_fBVOCctrlP − CTRL_P (PD: 14c, FUT: 24e); non-BVOC part = LCC_P_fBVOCctrlP − CTRL_P_fBVOCctrlP. Assumption art(LCC land) ≈ art(CTRL land) tested by 14e (`how_big_artefact_is_PD.ipynb`); if it fails, design A in FUT (LCC_FUT rerun with HR_BVOC_ALL + LCC_FUT_fBVOClccFUT). How to read it:
     - `BVOC_PD` = response to replacing the prescribed CTRL_PD ISOP/MTERP with interactive emissions in the PD LCC setup.
     - `BVOC_FUT` mixes the effect of the future background (climate, CO₂) and the effect of the land-cover change, both measured against CTRL_PD emissions. **Never call it the forest-expansion-only BVOC effect.**
     - Turning MEGAN off also removes the other MEGAN compounds (fBVOC output has no `MEG_*`), so the contrast is not ISOP + MTERP only. Check which emissions differ before attributing a result.
     - Even with a matching reference, a prescribed climatology differs from interactive emissions (no interannual or weather coupling).
   - D2 also uses `LCC_FUT-CTRL_PD`.
-- **Every nudged run (CTRL, LCC, fBVOC; PD and FUT), new or rerun, covers 15 years: 2000–2014** (e.g. `STOP_N=5, RESUBMIT=2`; user rule 2026-10-25). Scripts 13a, 14a, 14b, 23a, 24a, 24b are set to 15 yr; check any new nudged script before launching.
+- **Every nudged run (CTRL, LCC, fBVOC; PD and FUT), new or rerun, covers 15 years: 2000–2014** (e.g. `STOP_N=5, RESUBMIT=2`; user rule 2026-10-25). Scripts 13a, 14a, 14b, 14c, 23a, 24a–24d and `just-ISOP-MTERP/` 14b, 24b are set to 15 yr; check any new nudged script before launching. Exceptions (user OK each time): the 3-yr tests CTRL_PD_fBVOCctrlPD old chain, CTRL_PD_fBVOCctrlPD_HR (14d), LCC_PD_fBVOClccPD (14e).
   The nudging met data end at 2015-01-01 00:00; the last file was patched so runs can end there (`data/nudging-met-backup/README.md`).
-- **fBVOC hold (user, 2026-10-25):** never submit the ISOP/MTERP-only scripts 14b, 24b (`exit 1` at the top; remove only when the user says so). Lifted for the all-species scripts 14c/24c/24d (user, 2026-10-25 15:50: run them now on the current chain, provisional, rerun on the new chain).
+- **fBVOC hold (user, 2026-10-25):** never submit the ISOP/MTERP-only scripts 14b, 24b, now in `cases-scripts/just-ISOP-MTERP/` (moved 2026-10-28; they source `../cases-setup.sh`; their 2-day test is `tests/test_LCC_PD_fBVOC_2days.sh`) (`exit 1` at the top; remove only when the user says so). **Dropped for good (user 2026-10-28).** Lifted for the all-species scripts 14b/24b/24c (user, 2026-10-25 15:50: run them now on the current chain, provisional, rerun on the new chain).
 - The first 12 months of every nudged run are dropped as spin-up (`--spinup-months 12`).
 - The first spin-ups started at year 0001 instead of 0000, so their restarts are dated `0021-01-01` (`NOTES.md`).
 
@@ -78,9 +102,10 @@ A new CTRL_*/LCC_* version (new date suffix) invalidates everything derived from
   ```
   $PY postprocess/run_postprocess.py CASENAME ALIAS {atm,lnd} [--categories BVOC SOA ...] [--tape h0] [--spinup-months 12] [--skip-existing]
   ```
-  - Categories: atm `BVOC SOA SULFATE AEROPT CLOUDPROP RADIATIVE CHEM METEO`; lnd `LAND ENERGY SNOW BIOGEOCHEM BVOC ET QA HYDRO` (`src/.../postprocess/variables.py`).
+  - Categories: atm `BVOC BVOCOX SOA SULFATE AERSIZE AEROPT CLOUDPROP RADIATIVE CHEM METEO`; lnd `LAND ENERGY SNOW SURFEXCH BIOGEOCHEM BVOC ET QA HYDRO`. BVOCOX, AERSIZE and most of SURFEXCH exist only in post-CO₂-fix runs (old chain: SURFEXCH = RSSUN, RSSHA only); don't run BVOCOX/AERSIZE on old-chain runs (`src/.../postprocess/variables.py`).
   - Input: `~/BRL-FRST-XPSN_archive/<case>/<atm|lnd>/hist`, a symlink to the NIRD archive.
   - Output: `data/processed-data/postprocessing/<ALIAS>_<atm|lnd>_<CAT>_<y0>-<y1>.nc`.
+- **SOA burden fields (user 2026-10-28 20:43):** `cb_SOA_A1`, `cb_SOA_NA_OCW`, `cb_SOA_A1_OCW` (column burdens; `_OCW` = cloud-borne) — user wants them added only *after* the CO₂-fix runs are done. Session ff448ee2 had already added them to `cases-setup.sh` and relaunched 23a/24a/14a at 20:27 (before this answer); check with the user what stays.
 - **Postprocess all 6 cases:** `bash postprocess/run_all_parallel.sh [njobs]`. `njobs` is a positional argument (default 24). The interpreter comes from the `PYTHON` env var, which defaults to the path above. It runs through `xargs -P` with one job per case × component × category, skips outputs that already exist, and writes logs to `<out>/logs/`. `run_all_postprocessing.sh` is the serial version.
 - **Run a notebook:** always `$PY results/tables/logs/run_nb_inplace.py path/to/nb.ipynb`, which executes it in the `lcc-env` Jupyter kernel and **saves the outputs (text, tables, figures) in the .ipynb**. Rule: every notebook created or run must keep its outputs. `run_nb.py path/to/nb.ipynb [expr ...]` only prints to the terminal (quick checks).
 - **NCO:** `module load NCO/5.2.9-foss-2024a` (as used in `postprocess/prep/select_concat_cam_raw_output.sh`).
@@ -104,8 +129,9 @@ These are working hypotheses and known facts as of 2026-10-22, not settled concl
   - Evidence that it matters (a):
     - the namelists differ only in `fsurdat`, `finidat` and `ncdata`;
     - the surfdata differ only at 46–82°N;
-    - yet the tropics (30°S–30°N, 9-yr means) show LCC − CTRL TOTVEGC +10 % in PD, and a D1 `Total_FUT` tropical contribution of +0.25 W m⁻² (net TOA, `diagnostics/other-BVOC-emission-magnitude/D1_farfield_check_outputs/tables/D1_farfield_verdict.csv`).
+    - yet the tropics (30°S–30°N, 9-yr means) show LCC − CTRL TOTVEGC +10 % in PD, and a D1 `Total_FUT` tropical contribution of +0.25 W m⁻² (net TOA, `diagnostics/other-BVOC-emission-magnitude/D1_farfield_check_outputs/old-chain-with-Total_2026-10-21/D1_farfield_verdict.csv`, kept as a record of the old chain).
   - Attributing that tropical signal to the spin-up is inference (b); its size has not been separated from other causes.
+  - **Fixed in the CO₂-fix chain (a, 2026-10-28):** CTRL and LCC both get a land-only spin-up. Coupled spin-ups, unmodified land, last 10 yr: LCC − CTRL TOTVEGC +0.04 % (PD) / −0.06 % (FUT) vs +14.5 % / −39 % in the old pairs (`diagnostics/check-simulation-equilibrium/check-equilibrium-after-co2-fix/check_coupled_spinup_equilibrium_after_co2_fix.ipynb`). Recompute D1 Total on the new runs once archived.
 - **LCC and fBVOC share the LCC restart**, so this particular mismatch should largely cancel in the BVOC contrast (b). This does not show that the runs have re-equilibrated after the emission change.
 - When quantitative findings go into docs, state the variable, region, period, calculation and output file.
 - `SF*` = everything the atmosphere receives (MEGAN + prescribed); `MEG_*` = the interactive MEGAN part only (absent in fBVOC).
@@ -122,6 +148,7 @@ These are working hypotheses and known facts as of 2026-10-22, not settled concl
 ## Working style
 - The user wants: short labelled sections, tables, bold key terms, worked examples.
 - Be critical, and separate facts from inference using evidence tags **(a)** verified / **(b)** inference / **(c)** unverified.
+- **Name runs by their alias** (`CTRL_PD`, `LCC_FUT`, `LCC_FUT_fBVOCctrlFUT`, `CTRL_PD spin-up`, …), not by script number (`23a`, `14b`) (user rule 2026-10-28). Give the script number only when a file has to be found, e.g. `CTRL_FUT (23a)`.
 
 ## Code conventions
 - Keep task-specific diagnostic calculations and their explanations together in self-contained notebooks.
@@ -131,6 +158,8 @@ These are working hypotheses and known facts as of 2026-10-22, not settled concl
   Regenerable caches (e.g. annual-mean `.nc`) go in `<notebook_stem>_outputs/cache/`. They can be deleted at any time and are rebuilt; set `REBUILD_CACHE = True` after changing variables or inputs (a stale cache silently lacks new variables).
   `cache/` folders are gitignored. Inputs shared by several notebooks (e.g. the mask `check-simulation-equilibrium/lcc-modified-cells/modified_cells.nc`) are not caches and stay where they are.
 - Prefer small, focused changes and compact, readable code.
+- **Colours (user 2026-11-03):** every chart with categorical colours uses the project palette in `src/boreal_forest_expansion/plotting/palette.py` (teal `#5D9A92`, navy `#2C3990`, plum `#9A4A84`, red `#BC423E`, orange `#DE7A3A`, gold `#EBC45C`; light grey `#CCCCCC` for residual/other). Use it **in that order**; **gold = total/sum**; PD/CTRL/unmodified = navy, FUT/LCC/modified = red. Self-contained notebooks copy the hexes. Maps keep RdBu_r. Chosen in `sandbox/test_palette_picture.py` (option Q1).
+- **Old-chain notebooks (user rule 2026-11-02):** keep them as they are (most of them document the CO₂-bug discrepancies); at most add a note at the top saying which runs they read. A new-chain version is a new notebook with the suffix `-after-co2-fix` (`<stem>-after-co2-fix.ipynb` + `<stem>-after-co2-fix_outputs/`). Notebooks that read processed files by alias from the current folder are rerun, not copied. Existing names `D1_farfield_check_pre_co2_fix`, `D2_megan_budget_pre_co2_fix` stay as they are.
 
 ## Data safety
 - **Protected** (explicit OK needed to modify or delete): raw history files, restarts, cplhist/nudging forcing, surfdata, prescribed-emission inputdata, anything under `BRL-FRST-XPSN_archive/` or `/cluster/shared/noresm/`. Exception (user OK 2026-10-25): new final `ems_*` files may be added to the shared `bvoc_emissions/` folder by the documented workflow, never overwriting (`cp -n`, the scripts refuse to overwrite).
@@ -153,6 +182,23 @@ Two logs in `docs/`, both updated **before ending every turn**:
 - **Human log keeps the history of open items.** Never delete an Open item from an older block. When one gets done, list it under **Done** in the current block with where it was opened, e.g. `- CTRL re-spin-up done (open since 2026-10-21)`. If an item is opened and closed inside the same block, keep it under Done; don't drop it.
 
 The hook `~/.claude/hooks/boreal_log.py` (registered in `~/.claude/settings.json`) says NEW or CONTINUE BLOCK with times at each prompt. It also blocks the end of the turn if the logs were not touched. If the hook is silent, apply the same rules by hand (`date`).
+
+**Markdown line breaks:** consecutive lines merge into one paragraph in the preview. Separate box items with a lone `>` line, and put a blank line before each **Goal / Done / Found / Open-next / Files changed** label.
+
+**Topic colours (human log only; VS Code preview, light theme).** Box item: `> <span style="color:#HEX">**Title (date, time):** text</span>`. Dated block: `<div style="color:#HEX">`, blank line, the block, blank line, `</div>`. One colour per entry (main topic); precedence Waiting on you > Artefact > CO₂ fix > rest. Keep the legend line under the title.
+
+| Topic | Hex |
+|---|---|
+| Artefact (fBVOC prescription artefact) | `#7B2FBE` |
+| CO₂ fix (spin-up CO₂ bug, re-spin-ups, new chain) | `#B8860B` |
+| Waiting on you: prefix `<span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span>`, text red; remove the label once answered | `#CC0000` |
+| Diagnostics (`diagnostics/`) | `#008080` |
+| Analysis (`analysis/`, findings) | `#A84300` |
+| Run status (queue, progress, crashes, finished) | `#AAAAAA` |
+| Run setup (scripts, output fields, launcher), archiving, postprocessing | `#555555` |
+| Preprocessing (`preprocess/`, BVOC climatologies) | `#62733B` |
+| Figure style / appearance | `#E58AA5` |
+| Housekeeping (logs, CLAUDE.md, folders, git) | `#999999` |
 
 Trivial turns: only refresh the end time and duration.
 End every reply with one line: `📝 Logs updated (block HH:MM → HH:MM)` or `📝 New log block started HH:MM`.
