@@ -1,7 +1,7 @@
 # Plotted variables: what each figure panel shows and how it is calculated
 
 Code: `src/boreal_forest_expansion/plotting/forcing_maps.py`.
-Input: the processed files `data/processed-data/postprocessing/<ALIAS>_<atm|lnd>_<CATEGORY>_2001-2009.nc` (see `postprocess/POSTPROCESSING.md`). They are monthly means; spin-up year 2000 is already dropped.
+Input: the processed files `data/processed-data/postprocessing/<ALIAS>_<atm|lnd>_<CATEGORY>_2001-2014.nc` (see `postprocess/POSTPROCESSING.md`). They are monthly means; spin-up year 2000 is already dropped.
 
 - **Category** = the processed-file category (`atm`/`lnd` + name) the variable is read from.
 - **Long name** = the `long_name` attribute in the history file, verbatim (typos included). For secondary variables it is the long name set in `postprocess/derived.py`.
@@ -10,11 +10,11 @@ Input: the processed files `data/processed-data/postprocessing/<ALIAS>_<atm|lnd>
 
 | Step | What | Code |
 |---|---|---|
-| 1. Yearly means | Each calendar year (2001–2009, n = 9) is averaged from its monthly means, **weighted by month length** in days. Seasonal panels (e.g. MAM) use only those months of each year. DJF = Jan + Feb + Dec of the **same** year. | `annual_mean` |
+| 1. Yearly means | Each calendar year (2001–2014, n = 14) is averaged from its monthly means, **weighted by month length** in days. Seasonal panels (e.g. MAM) use only those months of each year. DJF = Jan + Feb + Dec of the **same** year. | `annual_mean` |
 | 2. Paired differences | `case1 − case2` for each year, e.g. LCC_PD 2003 − CTRL_PD 2003. The two runs must have identical time axes. | `yearly_difference` |
-| 3. Map | Mean of the 9 yearly differences. | `_plot_panel` |
-| 4. Significance | Two-sided one-sample t-test of the 9 yearly differences in each cell, then Benjamini–Hochberg FDR at α = 0.10, applied over the cells ≥ 45°N. **Grey hatching = not significant.** | `analysis/stats.py` |
-| 5. Number under the map | Area-weighted mean over 45–90°N of each yearly difference (cos-latitude weights), then the mean of the 9 values ± 95 % t-interval half-width (8 degrees of freedom). | `regional_mean_interval` |
+| 3. Map | Mean of the 14 yearly differences. | `_plot_panel` |
+| 4. Significance | Two-sided one-sample t-test of the 14 yearly differences in each cell, then Benjamini–Hochberg FDR at α = 0.10, applied over the cells ≥ 45°N. **Grey hatching = not significant.** | `analysis/stats.py` |
+| 5. Number under the map | Area-weighted mean over 45–90°N of each yearly difference (cos-latitude weights), then the mean of the 14 values ± 95 % t-interval half-width (13 degrees of freedom). | `regional_mean_interval` |
 | 6. Colour scale | Symmetric, ± the 98th percentile of \|map\| unless the panel fixes it. Five ticks: ±vmax floored to 2 significant digits, ±half of that, 0. | `symmetric_vmax`, `_five_ticks` |
 
 **Note on the area mean (step 5):**
@@ -26,10 +26,9 @@ Input: the processed files `data/processed-data/postprocessing/<ALIAS>_<atm|lnd>
 | Grid | Rows (case1 − case2) |
 |---|---|
 | LCC-CTRL | LCC_PD − CTRL_PD; LCC_FUT − CTRL_FUT; LCC_FUT − CTRL_PD; CTRL_FUT − CTRL_PD |
-| LCC-fBVOC | LCC_PD − LCC_PD_fBVOC; LCC_FUT − LCC_FUT_fBVOC |
-| fBVOC-CTRL | LCC_PD_fBVOC − CTRL_PD; LCC_FUT_fBVOC − CTRL_FUT |
+| LCC-fBVOC | LCC_PD − LCC_PD_fBVOCctrlPD; LCC_FUT − LCC_FUT_fBVOCctrlPD; LCC_FUT − LCC_FUT_fBVOCctrlFUT; LCC_FUT_fBVOCctrlFUT − LCC_FUT_fBVOCctrlPD (emission source, = row 2 − row 3) |
 
-In the current (old-chain, 2001–2009) files, `LCC_*_fBVOC` = the ISOP/MTERP-only `_IM` runs.
+Current set (2001–2014, all-BVOC, old spin-up chain): `LCC_PD_fBVOC` = `LCC_PD_fBVOCctrlPD`, `LCC_FUT_fBVOC` = `LCC_FUT_fBVOCctrlPD` (all 19 MEGAN species from CTRL_PD). The fBVOC − CTRL contrast is no longer computed; CTRL_FUT − CTRL_PD is row 4 of LCC-CTRL and an extra Ghan/budget contrast (FUT). `LCC_FUT_fBVOCctrlFUT` is compared in `fut-fbvoc-emission-source.ipynb`. The 2001–2009 `_IM` set: `*_2001_2009` figures.
 
 ## 2. Ghan decomposition terms (used in §3 and §4)
 
@@ -97,6 +96,28 @@ Used by the context maps (`make_context_maps_figure`: LCC_X − LCC_X_fBVOC, 3 c
 - `cbSOA_all_mgm2` = the same + cloud-borne
 
 TOTAL SOA BURDEN switches to them once all runs of a contrast are on the new chain (`CLAUDE.md`, run-version step 7).
+
+### Cloud types (§3 of the notebook; `CLOUD_TYPE_PANELS`, `make_monthly_chain_figure`, `make_cloud_profile_figure`)
+
+Maps: `make_contrast_grid_figure(..., CLOUD_TYPE_PANELS, "cloud_types[_JJA]")`, annual and JJA. Seasonal lines: `MONTHLY_FIELDS` of the same names. Low + mid + high ≠ total (random overlap).
+
+| Subtitle | Variable | Category | Long name | Calculation | Units |
+|---|---|---|---|---|---|
+| TOTAL CLOUD | `CLDTOT` | atm CLOUDPROP | Vertically-integrated total cloud | model output | fraction |
+| LOW CLOUD | `CLDLOW` | atm CLOUDPROP | Vertically-integrated low cloud | model output, p > 700 hPa | fraction |
+| MID-LEVEL CLOUD | `CLDMED` | atm CLOUDPROP | Vertically-integrated mid-level cloud | model output, 400–700 hPa | fraction |
+| HIGH CLOUD | `CLDHGH` | atm CLOUDPROP | Vertically-integrated high cloud | model output, p < 400 hPa | fraction |
+| LIQUID WATER PATH | `TGCLDLWP` → `TGCLDLWP_gm2` | atm CLOUDPROP | Total grid-box cloud liquid water path | × 10³ (kg → g) | g m⁻² |
+| ICE WATER PATH | `TGCLDIWP` → `TGCLDIWP_gm2` | atm CLOUDPROP | Total grid-box cloud ice water path | × 10³ (kg → g) | g m⁻² |
+| SW cloud term (lines only) | `SW_cloud` | atm RADIATIVE | Ghan SW cloud term (clean sky) | see §2 | W m⁻² |
+
+Vertical structure (`make_cloud_profile_figure`, `PROFILE_FIELDS`): zonal mean over all longitudes, 45–90°N, 1000–150 hPa (`lev`, hybrid level midpoints in hPa), yearly (or JJA) means, case1 − case2 averaged over years; hatched = NOT significant, FDR (α = 0.10) on the paired yearly t-test within each panel (same `/////` look as the maps).
+
+| Subtitle | Variable | Long name | Calculation | Units |
+|---|---|---|---|---|
+| CLOUD FRACTION | `CLOUD` | Cloud fraction | model output | fraction |
+| CLOUD LIQUID (grid box) | `CLDLIQ` | Grid box averaged cloud liquid amount | × 10⁶ | mg kg⁻¹ |
+| CLOUD ICE (grid box) | `CLDICE` | Grid box averaged cloud ice amount | × 10⁶ | mg kg⁻¹ |
 
 ## 6. Biogeophysical and hydrology grids (`biogeophysical-hydro.ipynb`, `make_contrast_grid_figure`)
 
@@ -189,4 +210,8 @@ These show `100 × (LCC − LCC_fBVOC) / mean(LCC_fBVOC)` for each year. Cells w
 | `water_budget_*` | `RAIN + SNOW` (P), `QFLX_EVAP_TOT` (ET), `QRUNOFF_TO_COUPLER` (R_liq), `QRUNOFF_ICE_TO_COUPLER` (R_ice), `TWS` | yearly means × seconds per year → mm yr⁻¹. ΔTWS = TWS(Dec y) − TWS(Dec y−1), so 2001 is dropped. Residual = P − ET − R_liq − R_ice − ΔTWS. |
 | `baseline_aerosol_cloud` (table) | `SOA_cb`, `N_AER`, `CCN3`, `ACTNL_incld`, `ACTREL_incld`, `TGCLDLWP`, `CLDLOW`, `FCTL` | CTRL and fBVOC regional means (annual, JJA); FUT − PD change; BVOC contrast as % of the fBVOC baseline |
 
-`megan_factor_maps.ipynb` uses its own module (`plotting/megan_maps.py`). It plots raw CLM `EPS_*` and `GAMMA*` for isoprene and 7 monoterpenes, as annual means per run. Grid-cell `GAMMA_*` is an area mean over vegetated patches, not emission-weighted.
+## 9. MEGAN factor maps and attribution (`megan_factor_maps.ipynb`)
+
+Code: `src/boreal_forest_expansion/plotting/megan_maps.py` (`make_factor_maps`, `make_attribution_maps`). Figures: `results/figures/megan_factors/`. It plots raw CLM `EPS_*` and `GAMMA*` for isoprene and 7 monoterpenes, as annual and JJA means per run. Grid-cell `GAMMA_*` is an area mean over vegetated patches, not emission-weighted.
+
+Attribution figures (rows, residual, weighting vs co-variation, options to remove the residual): see `MEGAN_ATTRIBUTION.md`.
