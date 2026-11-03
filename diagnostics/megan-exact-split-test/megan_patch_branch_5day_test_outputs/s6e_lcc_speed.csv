@@ -1,0 +1,4 @@
+,init (s),total s / model day,ATM s / model day,LND s / model day,simulated years / day,core-hours / simulated year
+CTRL_PD parent,775.84,32.832,30.454,1.437,7.21,1704.32
+"CTRL branch, full output (§5)",949.563,131.532,39.118,90.837,1.8,6827.98
+"LCC branch, MEGAN-only output",1164.333,131.168,39.094,90.393,1.8,6809.07

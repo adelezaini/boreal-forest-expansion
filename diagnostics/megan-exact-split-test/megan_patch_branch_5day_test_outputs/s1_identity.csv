@@ -1,0 +1,3 @@
+field,common 30-min steps,first step (days),last step (days),steps not identical,max |diff|,max |value|,bit-identical
+SFISOP,240,1825.0208333333333,1830.0,0,0.0,9.370941e-09,True
+SFMTERP,240,1825.0208333333333,1830.0,0,0.0,1.3313727e-09,True

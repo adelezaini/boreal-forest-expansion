@@ -1,0 +1,4 @@
+case,init (s),total s / model day,ATM s / model day,LND s / model day,simulated years / day,core-hours / simulated year
+NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023,775.84,32.832,30.454,1.437,7.21,1704.32
+NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-test-meganpatch-5day-20261029,949.563,131.532,39.118,90.837,1.8,6827.98
+ratio test / parent,1.2239160136110538,4.006213450292398,1.2844946476653314,63.21294363256785,0.24965325936199723,4.006278163725122

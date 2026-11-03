@@ -1,0 +1,8 @@
+namelist,keys compared,other keys differing
+atm_in,292,none
+lnd_in,173,none
+drv_in,239,none
+drv_flds_in,4,none
+ice_in,352,ice_ic
+mosart_in,21,none
+docn_in,20,none

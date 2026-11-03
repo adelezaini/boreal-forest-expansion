@@ -1,0 +1,15 @@
+,LCC branch
+CLM tape 2 files,5
+30-min records,240
+patches,64751
+tape-2 fields missing,0
+"NaN patch-steps, all compounds (non-emitting patches)",6412560
+"extra NaN patch-steps, isoprene only",219699
+  patches with them,1596
+  of which >= 45N,1
+  their PFTs,"6, 10, 13, 14, 15, 17, 23, 41, 61, 62, 67, 68, 77, 78"
+"6c GAMMA_isoprene / product, max |rel diff|",6.661338147750939e-16
+"6d sum(w MEG) landfrac / SFISOP, median",0.9999968318742819
+6d ... 1st percentile,0.392312420849811
+6d ... 99th percentile,0.9999970868557748
+6d grid cell-steps compared,269551
