@@ -16,6 +16,8 @@ Aliases follow the chain figure. Every run, with case names, versions (old / CO�
 - CTRL_PD: `13a-NF2000norbc_tropstratchem_nudg_ctrl_f19_f19.sh` (from 13c)
 - LCC_PD: `14a-NF2000norbc_tropstratchem_nudg_lcc_f19_f19.sh` (from 13b)
 - LCC_PD_fBVOCctrlPD: `14b-NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh` (from 13b; all 19 MEGAN species from CTRL_PD)
+- CTRL_PD_fBVOCctrlPD: `14c-NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_f19_f19.sh` (CTRL land + restart as CTRL_PD, its own 19 species prescribed → CTRL_PD_fBVOCctrlPD − CTRL_PD = prescription artefact; baseline for LCC_PD_fBVOCctrlPD. New chain, 15 yr, auto-launched with 14b (user 2026-10-29); the old-chain 3-yr test is case `-20261028`)
+- CTRL_PD_fBVOCctrlPD_HR: `14d-NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_HR_f19_f19.sh` (replay test, old chain, 3 yr 2000–2002, user OK 2026-10-29: as the old-chain 14c test but with CTRL_PD's **actual** emissions of each year, files `ems_<CTRL_PD>_Y-Y_*`; three 1-yr jobs, `replay_prerun.sh` (CIME `PRERUN_SCRIPT`) points `user_nl_cam` to the year's files; h1 30-min SFISOP/SFMTERP)
 
 **Future (FUT)**
 - FUT_spinup: `21-NF2100ssp585norbc_tropstratchem_spinup_f19_f19.sh` (20-yr coupled spin-up; its cpl history = CPLHIST_FUT)
@@ -27,6 +29,8 @@ Aliases follow the chain figure. Every run, with case names, versions (old / CO�
 - LCC_FUT: `24a-NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19.sh` (from 23b)
 - LCC_FUT_fBVOCctrlPD: `24b-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19.sh` (from 23b; all 19 species from CTRL_PD, relabelled to 2100)
 - LCC_FUT_fBVOCctrlFUT: `24c-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19.sh` (from 23b; all 19 species from CTRL_FUT, relabelled to 2100)
+- LCC_PD_fBVOClccPD: `14e-NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19.sh` (LCC land, its own LCC_PD emissions prescribed; 3 yr 2000–2002, user 2026-10-30; test of the matched-baseline assumption; auto-launched after the LCC_PD climatology)
+- CTRL_FUT_fBVOCctrlFUT: `24e-NF2100ssp585norbc_tropstratchem_nudg_ctrl_fBVOCctrlFUT_f19_f19.sh` (CTRL land + restart as CTRL_FUT, its own emissions prescribed → FUT artefact art_FUT; 15 yr, auto-launched with 24c, user 2026-10-30). Not the same as `tests/24e-…` (= 1-day test of 24d)
 - LCC_FUT_fBVOClccPD: `24d-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19.sh` (from 23b; all 19 species from LCC_PD, relabelled to 2100; needs an LCC_PD run with HR_BVOC_ALL; set LCC_PD_CASE)
 
 **ISOP/MTERP only (`just-ISOP-MTERP/`, on hold: `exit 1` at the top)**

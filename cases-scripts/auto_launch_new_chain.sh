@@ -8,9 +8,13 @@
 # fBVOC on the new chain (user 2026-10-28): nudged source run done (rest 2015-01-01) -> NIRD copy
 #   -> 19-species climatology 2001-2014 (sbatch run_bvoc_climatology_array.sh) -> check_bvoc_climatology.py
 #   -> relabel to 2100 -> set REFCASE (LCC spin-up) + EMS_PREFIX / LCC_PD_CASE -> launch:
-#   E: 13a CTRL_PD  -> 14b LCC_PD_fBVOCctrlPD, 24b LCC_FUT_fBVOCctrlPD
-#   F: 23a CTRL_FUT -> 24c LCC_FUT_fBVOCctrlFUT
-#   G: 14a LCC_PD   -> 24d LCC_FUT_fBVOClccPD
+#   E: 13a CTRL_PD  -> 14b LCC_PD_fBVOCctrlPD, 24b LCC_FUT_fBVOCctrlPD, 14c CTRL_PD_fBVOCctrlPD (user 2026-10-29)
+#   F: 23a CTRL_FUT -> 24c LCC_FUT_fBVOCctrlFUT, 24e CTRL_FUT_fBVOCctrlFUT (user 2026-10-30)
+#   G: 14a LCC_PD   -> 24d LCC_FUT_fBVOClccPD, 14e LCC_PD_fBVOClccPD (3 yr, 2000-2002; user 2026-10-30)
+# Postprocessing (user 2026-10-29): every nudged run of the chain (13a 14a 23a 24a 14b 14c 14e 24b 24c 24d 24e), once DONE
+#   (rest 2015-01-01; 14e: 2003-01-01) -> NIRD copy -> background postprocess/postprocess_new_chain_run.sh <alias> <case> (one at a time):
+#   old <alias> files moved to the archive folders, then all atm + lnd categories. State pp<n>.{done,failed} = started,
+#   pp<n>.{ok,err,log} = result.
 #   State: <src>.case (launched case name), clim<src>.{done,failed} + clim<src>.job (array id),
 #   ems<src>.{done,failed} (array finished + check + relabel), check_<src>.log, <fBVOC>.{done,failed}.
 # "Done" = no Slurm job left for the case, RESUBMIT=0, last CaseStatus st_archive entry = success,
@@ -83,7 +87,7 @@ do_13c()  { launch 13c && new_case NF2000norbc_tropstratchem_spinup_ctrl_f19_f19
 do_13a()  { set_refcase 13a "$(cat "$STATE/13c.case")" && launch 13a && new_case NF2000norbc_tropstratchem_nudg_ctrl_f19_f19 > "$STATE/13a.case"; }
 do_14a()  { set_refcase 14a $LCC_PD_SPIN && launch 14a && new_case NF2000norbc_tropstratchem_nudg_lcc_f19_f19 > "$STATE/14a.case"; }
 do_23a()  { set_refcase 23a NF2100ssp585norbc_tropstratchem_spinup_ctrl_f19_f19-20261025 && launch 23a && new_case NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19 > "$STATE/23a.case"; }
-do_24a()  { set_refcase 24a $LCC_FUT_SPIN && launch 24a; }
+do_24a()  { set_refcase 24a $LCC_FUT_SPIN && launch 24a && new_case NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19 > "$STATE/24a.case"; }
 
 # --- fBVOC on the new chain ---
 set_var() {  # set VAR="value" (whole line) in script $1, check the edit; refuses an empty value
@@ -128,15 +132,35 @@ after() {
 }
 
 ems() { echo "$EMS_DIR/ems_$(cat "$STATE/$1.case")_2001-2014${2:-}"; }  # EMS_PREFIX of source $1, suffix $2
-do_14b() { set_refcase 14b $LCC_PD_SPIN  && set_var 14b EMS_PREFIX "$(ems 13a)" && launch 14b; }
-do_24b() { set_refcase 24b $LCC_FUT_SPIN && set_var 24b EMS_PREFIX "$(ems 13a _on_yr2100)" && launch 24b; }
-do_24c() { set_refcase 24c $LCC_FUT_SPIN && set_var 24c EMS_PREFIX "$(ems 23a _on_yr2100)" && launch 24c; }
-do_24d() { set_refcase 24d $LCC_FUT_SPIN && set_var 24d LCC_PD_CASE "$(cat "$STATE/14a.case")" && launch 24d; }
+do_14b() { set_refcase 14b $LCC_PD_SPIN  && set_var 14b EMS_PREFIX "$(ems 13a)" && launch 14b && new_case NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19 > "$STATE/14b.case"; }
+do_14c() { set_refcase 14c "$(cat "$STATE/13c.case")" && set_var 14c EMS_PREFIX "$(ems 13a)" && launch 14c && new_case NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_f19_f19 > "$STATE/14c.case"; }
+do_24b() { set_refcase 24b $LCC_FUT_SPIN && set_var 24b EMS_PREFIX "$(ems 13a _on_yr2100)" && launch 24b && new_case NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19 > "$STATE/24b.case"; }
+do_24c() { set_refcase 24c $LCC_FUT_SPIN && set_var 24c EMS_PREFIX "$(ems 23a _on_yr2100)" && launch 24c && new_case NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19 > "$STATE/24c.case"; }
+do_14e() { set_refcase 14e $LCC_PD_SPIN  && set_var 14e EMS_PREFIX "$(ems 14a)" && launch 14e && new_case NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19 > "$STATE/14e.case"; }
+do_24e() { set_refcase 24e NF2100ssp585norbc_tropstratchem_spinup_ctrl_f19_f19-20261025 && set_var 24e EMS_PREFIX "$(ems 23a _on_yr2100)" && launch 24e && new_case NF2100ssp585norbc_tropstratchem_nudg_ctrl_fBVOCctrlFUT_f19_f19 > "$STATE/24e.case"; }
+do_24d() { set_refcase 24d $LCC_FUT_SPIN && set_var 24d LCC_PD_CASE "$(cat "$STATE/14a.case")" && launch 24d && new_case NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19 > "$STATE/24d.case"; }
 
 # a source run's step: once done (rest 2015-01-01) -> NIRD copy -> climatology array
 src_step() {
     if [[ -e "$STATE/$1.failed" && ! -e "$STATE/clim$1.failed" ]]; then log "FAILED: $1 -> clim$1 halted"; touch "$STATE/clim$1.failed"; fi
     [[ -s "$STATE/$1.case" ]] && step clim$1 "$(cat "$STATE/$1.case")" 2015-01-01 do_clim $1
+}
+
+# --- postprocessing of finished runs ---
+PP=/cluster/home/adelez/BOREAL-FOREST-EXPANSION/postprocess/postprocess_new_chain_run.sh
+declare -A ALIAS=([13a]=CTRL_PD [14a]=LCC_PD [23a]=CTRL_FUT [24a]=LCC_FUT [14b]=LCC_PD_fBVOCctrlPD [14c]=CTRL_PD_fBVOCctrlPD
+                  [24b]=LCC_FUT_fBVOCctrlPD [24c]=LCC_FUT_fBVOCctrlFUT [24d]=LCC_FUT_fBVOClccPD
+                  [14e]=LCC_PD_fBVOClccPD [24e]=CTRL_FUT_fBVOCctrlFUT)
+declare -A FINAL=([14e]=2003-01-01)  # final restart date if not 2015-01-01 (short runs)
+do_pp() {  # start the postprocessing of run $1 in the background (it waits for its turn on a lock)
+    log "postprocess ${ALIAS[$1]} $(cat "$STATE/$1.case") (log $STATE/pp$1.log)"
+    nohup setsid bash "$PP" "${ALIAS[$1]}" "$(cat "$STATE/$1.case")" "$STATE/pp$1" < /dev/null > /dev/null 2>&1 &
+}
+pp_branch() {  # pp$1 once run $1 (launched, case name in $1.case) is DONE; a failed launch fails pp$1
+    local name=pp$1
+    [[ -e "$STATE/$name.done" || -e "$STATE/$name.failed" ]] && return
+    [[ -e "$STATE/$1.failed" ]] && { log "FAILED: $1 -> $name halted"; touch "$STATE/$name.failed"; return; }
+    [[ -e "$STATE/$1.done" && -s "$STATE/$1.case" ]] && step $name "$(cat "$STATE/$1.case")" "${FINAL[$1]:-2015-01-01}" do_pp $1
 }
 
 if [[ ${1:-} == --check ]]; then  # print the status of the watched cases and exit
@@ -161,12 +185,16 @@ while [[ ! -e "$STATE/STOP" ]]; do
     step 24a NF2100ssp585norbc_tropstratchem_spinup_lcc_f19_f19-20261025 0021-01-01 do_24a
     for s in 13a 14a 23a; do src_step $s; ems_step $s; done
     after 14b ems13a do_14b
+    after 14c ems13a do_14c
     after 24b ems13a do_24b
     after 24c ems23a do_24c
     after 24d ems14a do_24d
+    after 24e ems23a do_24e
+    after 14e ems14a do_14e
+    for r in 13a 14a 23a 24a 14b 14c 14e 24b 24c 24d 24e; do pp_branch $r; done
     # failures propagate (clim -> ems -> fBVOC), so every branch ends in a .done or .failed
-    n=$(ls "$STATE"/{13a,14a,23a,24a,14b,24b,24c,24d}.{done,failed} 2>/dev/null | wc -l)
-    [[ $n -ge 8 ]] && { log "all branches finished"; break; }
+    n=$(ls "$STATE"/pp{13a,14a,23a,24a,14b,14c,14e,24b,24c,24d,24e}.{done,failed} 2>/dev/null | wc -l)
+    [[ $n -ge 11 ]] && { log "all branches finished"; break; }
     sleep $POLL
 done
 log "watcher exit"

@@ -27,7 +27,7 @@ REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_SSP5-8.5_2100_78pfts_LPJGUESS.nc"
 
 # Prescribed BVOC files: <EMS_PREFIX>_SFISOP.nc, <EMS_PREFIX>_MEG_<species>.nc (19 files)
-EMS_PREFIX="/cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261023_2001-2014_on_yr2100"
+EMS_PREFIX="/cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261029_2001-2014_on_yr2100"
 
 #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 prepare_restart_files "$REST_SRC" "$REST_LOCAL"

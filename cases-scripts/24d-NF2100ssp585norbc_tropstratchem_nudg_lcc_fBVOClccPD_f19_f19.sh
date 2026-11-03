@@ -32,7 +32,7 @@ REST_LOCAL="/cluster/home/$USER/restart/${REFCASE}/${REFDATE}-00000"
 SURFDATA_FILE="/cluster/shared/noresm/inputdata/lnd/clm2/surfdata_map/surfdata_1.9x2.5_SSP5-8.5_2100_78pfts_LPJGUESS.nc"
 
 # Prescribed BVOC files: <EMS_PREFIX>_SFISOP.nc, <EMS_PREFIX>_MEG_<species>.nc (19 files)
-LCC_PD_CASE="NF2000norbc_tropstratchem_nudg_lcc_f19_f19-YYYYMMDD"   # TODO: LCC_PD run with HR_BVOC_ALL (none exists yet)
+LCC_PD_CASE="NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261028"
 [[ "$LCC_PD_CASE" != *YYYYMMDD ]] || { echo "Set LCC_PD_CASE (LCC_PD run with HR_BVOC_ALL) first" >&2; exit 1; }
 EMS_PREFIX="/cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_${LCC_PD_CASE}_2001-2014_on_yr2100"
 
