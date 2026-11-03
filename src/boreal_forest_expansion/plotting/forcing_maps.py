@@ -81,6 +81,57 @@ BVOC_PAIRS = {
 }
 
 
+class VirtualRun(str):
+    """
+    A linear combination of runs, usable wherever an alias goes in a contrast (pairs, rows).
+
+    weights: alias -> coefficient, summing to 1. A difference involving virtual runs is the
+    weighted sum of real paired differences,
+
+        V1 - V2 = sum_a sum_b w1_a * w2_b * (a - b),
+
+    so derived fields (ratios, in-cloud values, the albedo proxy) are computed per real pair
+    and only then combined. The string value is the label used in titles and file names.
+
+    Example (design B, analysis/FBVOC_ARTEFACT.md): with
+        V = LCC_P^ctrlP - CTRL_P^ctrlP + CTRL_P
+    LCC_P - V = (LCC_P - LCC_P^ctrlP) + (CTRL_P^ctrlP - CTRL_P), the artefact-corrected BVOC effect.
+    """
+
+    def __new__(cls, label: str, weights: dict[str, float]):
+        total = sum(weights.values())
+        if abs(total - 1.0) > 1e-9:
+            raise ValueError(f"weights of {label} sum to {total}, not 1")
+        obj = super().__new__(cls, label)
+        obj.weights = dict(weights)
+        return obj
+
+
+def run_weights(alias: str) -> dict[str, float]:
+    """alias -> weight: the weights of a VirtualRun, {alias: 1} for a real run."""
+    return alias.weights if isinstance(alias, VirtualRun) else {str(alias): 1.0}
+
+
+def corrected_fbvoc(period: str, source: str | None = None) -> VirtualRun:
+    """
+    Artefact-corrected fBVOC reference of `period` (design B): LCC_P^E - CTRL_P^ctrlP + CTRL_P,
+    so that LCC_P - result = (LCC_P - LCC_P^E) + art_CTRL,P. `source` = E (default ctrl<P>),
+    e.g. "ctrlPD", "ctrlFUT", "lccPD"; the artefact is always measured on CTRL land of the period.
+    """
+    source = source or f"ctrl{period}"
+    return VirtualRun(f"LCC_{period}_fBVOC{source}_corr", {
+        f"LCC_{period}_fBVOC{source}": 1.0,
+        f"CTRL_{period}_fBVOCctrl{period}": -1.0,
+        f"CTRL_{period}": 1.0,
+    })
+
+
+# Artefact-corrected pairs (design B, user 2026-10-30): same roles as BVOC_PAIRS, the fbvoc role is the
+# corrected reference, so lcc - fbvoc = corrected BVOC effect and lcc - ctrl = total. The non-BVOC part
+# is LCC_P^ctrlP - CTRL_P^ctrlP (real runs). Used in analysis/artefact-corrected-split.ipynb.
+CORRECTED_PAIRS = {p: {**roles, "fbvoc": corrected_fbvoc(p)} for p, roles in BVOC_PAIRS.items()}
+
+
 @dataclass(frozen=True)
 class MapPanel:
     key: str
@@ -282,10 +333,21 @@ def filename(alias: str, variable_class: str, start_year: int, end_year: int,
 
 def open_class(alias: str, variable_class: str, start_year: int, end_year: int,
                component: str = "atm") -> xr.Dataset:
+    if isinstance(alias, VirtualRun):
+        raise TypeError(f"{alias} is a VirtualRun: use yearly_difference, not open_class")
     path = filename(alias, variable_class, start_year, end_year, component)
-    if not path.exists():
-        raise FileNotFoundError(f"Missing postprocessed file: {path}")
-    ds = xr.open_dataset(path)
+    if path.exists():
+        ds = xr.open_dataset(path)
+    else:
+        # a file with a longer span (e.g. 2001-2014 when 2001-2002 is asked): select the years
+        longer = [p for p in sorted(POSTPROCESSED_DIR.glob(f"{alias}_{component}_{variable_class}_*-*.nc"))
+                  if (m := re.search(r"_(\d{4})-(\d{4})\.nc$", p.name))
+                  and int(m[1]) <= start_year and int(m[2]) >= end_year]
+        if not longer:
+            raise FileNotFoundError(f"Missing postprocessed file: {path}")
+        print(f"open_class: {alias} {variable_class} {start_year}-{end_year} taken from {longer[0].name}")
+        ds = xr.open_dataset(longer[0])
+        ds = ds.sel(time=(ds["time"].dt.year >= start_year) & (ds["time"].dt.year <= end_year))
     # Ghan terms were called *_cre_clean / *_clearclean in files made before 2026-10-28
     return ds.rename({v: v.replace("cre_clean", "cloud").replace("clearclean", "rest")
                       for v in ds.data_vars if v.endswith(("_cre_clean", "_clearclean"))})
@@ -407,7 +469,22 @@ def yearly_difference(
     component: str = "atm",
     months=None,
 ) -> xr.DataArray:
-    """Paired yearly differences case1 - case2, dims (year, lat, lon); `months` as in annual_mean."""
+    """
+    Paired yearly differences case1 - case2, dims (year, lat, lon); `months` as in annual_mean.
+    case1/case2 may be VirtualRun: the result is then the weighted sum of real paired differences.
+    """
+    if isinstance(case1, VirtualRun) or isinstance(case2, VirtualRun):
+        terms = [(w1 * w2, a, b) for a, w1 in run_weights(case1).items()
+                 for b, w2 in run_weights(case2).items() if a != b and w1 * w2 != 0]
+        parts = [w * yearly_difference(a, b, variable_class, variable, start_year, end_year, component, months)
+                 for w, a, b in terms]
+        units = parts[0].attrs.get("units", "")
+        diff = sum(parts[1:], parts[0])
+        diff.name = f"{variable}_{case1}_minus_{case2}"
+        diff.attrs.update(units=units, long_name=f"{variable}: {case1} - {case2}",
+                          terms="; ".join(f"{w:+g} ({a} - {b})" for w, a, b in terms))
+        return diff
+
     ds1 = open_class(case1, variable_class, start_year, end_year, component)
     ds2 = open_class(case2, variable_class, start_year, end_year, component)
     if not np.array_equal(ds1["time"].values, ds2["time"].values):
@@ -546,28 +623,43 @@ CBAR_OFFSET = 0.52   # top of a colourbar below the bottom of its map(s), leaves
 CBAR_HEIGHT = 0.16   # thickness of a colourbar under one map
 CBAR_SHRINK = 1.12   # length of a colourbar under one map, relative to the map width
 CBAR_HEIGHT_SHARED = 0.22  # thickness of a colourbar shared by several maps
+GROUP_LABEL_SPACE = 0.32   # extra space above the panel titles for a label spanning several panels
 
 
 def map_grid(nrows: int, ncols: int, under: float | None = None, titles_every_row: bool = False,
-             left: float = 0.25, right: float = 0.25, map_size: float | None = None, col_gap: float | None = None):
+             left: float = 0.25, right: float = 0.25, map_size: float | None = None, col_gap: float | None = None,
+             top_extra: float = 0.0):
     """Figure with nrows x ncols polar map axes at fixed positions; `under` inches are kept free
     below every row (mean, colourbars), plus TITLE_SPACE above rows that have panel titles.
-    None = module defaults UNDER_CBAR, MAP_SIZE, MAP_COL_GAP."""
+    None = module defaults UNDER_CBAR, MAP_SIZE, MAP_COL_GAP. `top_extra` inches are added under
+    the figure title (e.g. GROUP_LABEL_SPACE for add_group_label)."""
     under = UNDER_CBAR if under is None else under
     map_size = MAP_SIZE if map_size is None else map_size
     col_gap = MAP_COL_GAP if col_gap is None else col_gap
     row_gap = under + (TITLE_SPACE if titles_every_row else ROW_GAP)
     W = left + ncols * map_size + (ncols - 1) * col_gap + right
-    H = FIG_TOP + TITLE_SPACE + nrows * map_size + (nrows - 1) * row_gap + under + 0.1
+    H = FIG_TOP + top_extra + TITLE_SPACE + nrows * map_size + (nrows - 1) * row_gap + under + 0.1
     fig = plt.figure(figsize=(W, H))
     axes = np.empty((nrows, ncols), dtype=object)
     for i in range(nrows):
         for j in range(ncols):
             x = left + j * (map_size + col_gap)
-            y = H - FIG_TOP - TITLE_SPACE - (i + 1) * map_size - i * row_gap
+            y = H - FIG_TOP - top_extra - TITLE_SPACE - (i + 1) * map_size - i * row_gap
             axes[i, j] = fig.add_axes([x / W, y / H, map_size / W, map_size / H],
                                       projection=ccrs.Orthographic(0, 90))
     return fig, axes
+
+
+def add_group_label(fig, axes_group, text: str, fontsize: float = 11):
+    """One line of text centred over `axes_group` (maps of one row), above their panel titles,
+    with a thin bracket line spanning the group. Needs map_grid(..., top_extra=GROUP_LABEL_SPACE)."""
+    boxes = [ax.get_position() for ax in np.atleast_1d(axes_group)]
+    x0, x1, y_top = min(b.x0 for b in boxes), max(b.x1 for b in boxes), max(b.y1 for b in boxes)
+    H = fig.get_figheight()
+    y_line = y_top + (TITLE_SPACE + 0.06) / H
+    fig.add_artist(plt.Line2D([x0, x1], [y_line, y_line], transform=fig.transFigure, color="0.3", lw=0.8))
+    fig.text((x0 + x1) / 2, y_line + 0.05 / H, text, ha="center", va="bottom", fontsize=fontsize,
+             fontweight="semibold")
 
 
 def _five_ticks(vmax: float) -> list[float]:
@@ -967,8 +1059,11 @@ def make_forcing_summary_figure(
         scales = SUMMARY_SCALES[scales]
     panel_vmax = {i: vmax for idx, vmax in (scales or []) for i in idx}
 
-    fig, axes = map_grid(1, len(panels), map_size=map_size, col_gap=col_gap)
+    fig, axes = map_grid(1, len(panels), map_size=map_size, col_gap=col_gap, top_extra=GROUP_LABEL_SPACE)
     axes = axes[0]
+    # the BVOC decomposition panels are LCC − LCC_fBVOC; albedo and total are LCC − CTRL
+    bvoc_idx = [i for i, p in enumerate(panels) if p.case2_role == "fbvoc"]
+    add_group_label(fig, [axes[i] for i in bvoc_idx], f"{pairs['lcc']} − {pairs['fbvoc']}")
 
     for i, (ax, panel) in enumerate(zip(axes, panels)):
         _plot_panel(
@@ -1340,7 +1435,7 @@ def make_contrast_grid_figure(
 # Land water budget: P - ET - R - dTWS (all from CLM, same land basis)
 # =============================================================================
 
-MODIFIED_CELLS = REPO_DIR / "diagnostics" / "check-simulation-equilibrium" / "lcc-modified-cells" / "modified_cells.nc"
+MODIFIED_CELLS = REPO_DIR / "diagnostics" / "lcc-modified-cells" / "modified_cells.nc"
 SECONDS_PER_YEAR = 365 * 86400   # noleap calendar
 WATER_BUDGET_TERMS = ("P", "ET", "R_liq", "R_ice", "dTWS", "residual")
 
