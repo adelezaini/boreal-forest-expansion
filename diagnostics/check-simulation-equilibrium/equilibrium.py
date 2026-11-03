@@ -403,10 +403,10 @@ def plot_timeseries(result, variables, region, title='', window=20):
         d, summary = rolling_diagnostics(annual, var, region, window)
         summaries.append(summary)
         left.plot(table.year + (table.month - .5) / 12, table[var], color='0.75', lw=.7, label='Monthly')
-        left.plot(d.index + .5, d.annual, color='#245B78', lw=1.2, label='Annual (day-weighted)')
+        left.plot(d.index + .5, d.annual, color='#2C3990', lw=1.2, label='Annual (day-weighted)')
         if d['rolling'].notna().any():
-            left.plot(d.index + .5, d['rolling'], color='#D35400', lw=2, label=f'{window}-year mean (trailing)')
-        right.plot(d.index + .5, d.derivative, color='#D35400')
+            left.plot(d.index + .5, d['rolling'], color='#BC423E', lw=2, label=f'{window}-year mean (trailing)')
+        right.plot(d.index + .5, d.derivative, color='#BC423E')
         right.axhline(0, color='0.4', lw=.7)
         right.set_xlim(float(d.index.min()), float(d.index.max()) + 1)
         if not d.derivative.notna().any():
@@ -437,9 +437,9 @@ def plot_gas_profiles(result, gas, region='global', block=5, min_coverage=.95, t
         previous, last = data.iloc[-2*block:-block], data.iloc[-block:]
         # Require all years at each pressure; prevent unequal block denominators.
         a, b = previous.mean().where(previous.notna().all()), last.mean().where(last.notna().all())
-        axes[1].plot(a, data.columns, label=f'{previous.index[0]}–{previous.index[-1]}', color='#245B78')
-        axes[1].plot(b, data.columns, label=f'{last.index[0]}–{last.index[-1]}', color='#D35400')
-        axes[1].legend(); axes[2].plot(b - a, data.columns, color='#D35400')
+        axes[1].plot(a, data.columns, label=f'{previous.index[0]}–{previous.index[-1]}', color='#2C3990')
+        axes[1].plot(b, data.columns, label=f'{last.index[0]}–{last.index[-1]}', color='#BC423E')
+        axes[1].legend(); axes[2].plot(b - a, data.columns, color='#BC423E')
     else:
         axes[1].text(.1, .5, f'Needs {2*block} years', transform=axes[1].transAxes)
     axes[1].set(xlabel=result['units'][gas], title='Last two blocks')
