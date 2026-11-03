@@ -5,7 +5,7 @@ Reads the monthly files written by the postprocess package (postprocess/run_all_
 
     [alias]_[component]_[category]_[startyr]-[endyr].nc
 
-in data/processed-data/postprocessing, e.g. LCC_PD_atm_RADIATIVE_2001-2009.nc.
+in data/processed-data/postprocessing, e.g. LCC_PD_atm_RADIATIVE_2001-2014.nc.
 Each file holds monthly means (time = midpoint of the time bounds, spin-up dropped).
 
 Maps show the mean over years of paired yearly differences (case1 - case2). The members
@@ -31,6 +31,8 @@ from scipy import stats
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+
+from . import palette as pal
 import matplotlib.ticker as mticker
 from matplotlib.transforms import offset_copy
 import cartopy.crs as ccrs
@@ -62,18 +64,18 @@ FIGURE_DIR = REPO_DIR / "results" / "figures"
 # fbvoc alias = LCC_<PERIOD>_fBVOC<source run>[_IM]; _IM = ISOP and MTERP only.
 # LCC_FUT_fBVOCctrlPD(_IM) is fixed at CTRL_PD, so BVOC_FUT = LCC + climate change; the
 # LCC-only FUT contrast needs LCC_FUT_fBVOCctrlFUT (all 19 MEGAN species).
-# The processed files of the fBVOCctrlPD_IM runs keep their on-disk names LCC_{PD,FUT}_fBVOC (no rename);
-# they move to 2001-2009-pre-co2-fix/ when the 2001-2014 runs (incl. 14b/24b/24c) are postprocessed;
-# then switch fbvoc to the new aliases.
+# Current set (2026-10-28): all-species fBVOC runs, 2001-2014, pre-CO2-fix chain. The old _IM files
+# (LCC_{PD,FUT}_fBVOC, 2001-2009) are in 2001-2009-pre-co2-fix/. LCC_FUT_fBVOCctrlFUT is compared with
+# fBVOCctrlPD in analysis/fut-fbvoc-emission-source.ipynb (FBVOC_SOURCE_ROWS).
 BVOC_PAIRS = {
     "PD": {
         "lcc": "LCC_PD",
-        "fbvoc": "LCC_PD_fBVOC",
+        "fbvoc": "LCC_PD_fBVOCctrlPD",
         "ctrl": "CTRL_PD",
     },
     "FUT": {
         "lcc": "LCC_FUT",
-        "fbvoc": "LCC_FUT_fBVOC",
+        "fbvoc": "LCC_FUT_fBVOCctrlPD",
         "ctrl": "CTRL_FUT",
     },
 }
@@ -197,11 +199,11 @@ CONTEXT_PANELS = [
         key="soa_tot",
         title="TOTAL SOA BURDEN",
         variable_class="SOA",
-        variable="SOA_cb_mgm2",
+        variable="cbSOA_mgm2",
         case1_role="lcc",
         case2_role="fbvoc",
         units="mg m$^{-2}$",
-        long_label="SOA column burden (A1 + NA, interstitial)",
+        long_label="SOA column burden (model cb_SOA_A1 + cb_SOA_NA, interstitial)",
     ),
     MapPanel(
         key="n_aer",
@@ -347,11 +349,12 @@ YEARLY_DERIVED = {
     "SFMTERP_mgm2d": lambda ds, mo: annual_mean(ds["SFMTERP"], ds, mo) * 1e6 * 86400,
     "SOA_cb_mgm2": lambda ds, mo: annual_mean(ds["SOA_cb"], ds, mo) * 1e6,
     # Model SOA burdens of the post-CO2-fix runs (not in older files): interstitial, and interstitial + cloud-borne.
-    # Switch the SOA panels to these once all runs of a contrast have them (CLAUDE.md, run-version step 7).
+    # Used by the SOA panels since 2026-11-02 (CLAUDE.md, run-version step 7); SOA_cb_mgm2 kept for old-chain files.
     "cbSOA_mgm2": lambda ds, mo: annual_mean(ds["cb_SOA_A1"] + ds["cb_SOA_NA"], ds, mo) * 1e6,
     "cbSOA_all_mgm2": lambda ds, mo: annual_mean(ds["cb_SOA_A1"] + ds["cb_SOA_NA"]
                                                  + ds["cb_SOA_A1_OCW"] + ds["cb_SOA_NA_OCW"], ds, mo) * 1e6,
     "TGCLDLWP_gm2": lambda ds, mo: annual_mean(ds["TGCLDLWP"], ds, mo) * 1e3,
+    "TGCLDIWP_gm2": lambda ds, mo: annual_mean(ds["TGCLDIWP"], ds, mo) * 1e3,
     "QFLX_mmday": lambda ds, mo: annual_mean(ds["QFLX_EVAP_TOT"], ds, mo) * 86400,
     "ACTREL_incld": lambda ds, mo: _incloud(ds, "ACTREL", months=mo),
     "ACTNL_incld": lambda ds, mo: _incloud(ds, "ACTNL", scale=1e-6, months=mo),   # m-3 -> cm-3
@@ -490,14 +493,14 @@ def format_forcing_mean(value: float) -> str:
         11.123 -> +11.1
         1.734  -> +1.7
         -0.593 -> -0.59
-        -0.024 -> -0.02
+        -0.024 -> -0.024
     """
     value = float(value)
 
     if abs(value) >= 1:
         return f"{value:+.1f}"
-    elif abs(value) >= 0.01 or value == 0:
-        return f"{value:+.2f}"
+    elif abs(value) >= 0.001 or value == 0:   # at least 2 significant digits (user 2026-10-28)
+        return f"{value:+.{max(2, _sig2_decimals(value))}f}"
     else:
         return f"{value:+.1e}"
 
@@ -517,12 +520,14 @@ def mean_subtitle(mean_lat_min: float | None) -> str:
     return rf"$\mathit{{Under\ the\ maps}}$: area-weighted mean {region} ± 95 % CI of the yearly means"
 
 
-def add_suptitle(fig, title: str, mean_lat_min: float | None, fontsize: float = 14, y: float | None = None):
-    """Bold figure title plus a plain subtitle saying what the numbers under the maps are."""
+def add_suptitle(fig, title: str, mean_lat_min: float | None, fontsize: float = 14, y: float | None = None,
+                 subtitle: str | None = None):
+    """Bold figure title plus a plain subtitle saying what the numbers under the maps are
+    (`subtitle` replaces the default text)."""
     # The second line " " reserves room for the subtitle: constrained layout only knows the
     # suptitle, and only when y is not given (an explicit y switches its space off).
     st = fig.suptitle(f"{title}\n ", fontsize=fontsize, fontweight="bold", **({} if y is None else {"y": y}))
-    fig.text(0.5, st.get_position()[1], mean_subtitle(mean_lat_min), ha="center", va="top", fontsize=0.8 * fontsize,
+    fig.text(0.5, st.get_position()[1], subtitle or mean_subtitle(mean_lat_min), ha="center", va="top", fontsize=0.8 * fontsize,
              transform=offset_copy(fig.transFigure, fig=fig, y=-1.3 * fontsize, units="points"))
 
 
@@ -576,7 +581,8 @@ def _five_ticks(vmax: float) -> list[float]:
     return [-2 * step, -step, 0.0, step, 2 * step]
 
 
-def _cbar_below(fig, axes_group, mappable, label, labelsize, shrink=0.88, height=None, five_ticks=False):
+def _cbar_below(fig, axes_group, mappable, label, labelsize, shrink=0.88, height=None, five_ticks=False,
+                extend="both"):
     """Horizontal colourbar under `axes_group` (one or more map axes of a map_grid), below the mean text."""
     boxes = [ax.get_position() for ax in np.atleast_1d(axes_group)]
     x0, x1, y0 = min(b.x0 for b in boxes), max(b.x1 for b in boxes), min(b.y0 for b in boxes)
@@ -584,7 +590,7 @@ def _cbar_below(fig, axes_group, mappable, label, labelsize, shrink=0.88, height
     height = CBAR_HEIGHT_SHARED if height is None else height
     w = (x1 - x0) * shrink
     cax = fig.add_axes([x0 + (x1 - x0 - w) / 2, y0 - (CBAR_OFFSET + height) / H, w, height / H])
-    cb = fig.colorbar(mappable, cax=cax, orientation="horizontal", extend="both")
+    cb = fig.colorbar(mappable, cax=cax, orientation="horizontal", extend=extend)
     if five_ticks:
         cb.set_ticks(_five_ticks(mappable.norm.vmax))
     # short tick labels: -10 -5 0 5 10 with "×10⁻³" at the end, instead of -0.010 -0.005 ...
@@ -626,31 +632,35 @@ def _bold(text: str) -> str:
     return rf"$\mathbf{{{_sci(text)}}}$"
 
 
-def _format_interval(mean: float, half: float) -> str:
-    """Mean in bold, ± 95 % CI half-width in normal weight (user 2026-10-28).
+def _sig2_decimals(x: float) -> int:
+    """Decimals that show `x` with 2 significant digits (0 for |x| >= 10)."""
+    return max(0, 1 - int(np.floor(np.log10(abs(x))))) if x else 0
 
-    ≥ 1: 3 significant digits of the larger number, same decimal for both, e.g. +12.3 ± 1.6.
-    0.01–1: the CI keeps 1 significant digit and the mean is rounded to the same decimal,
-    e.g. +0.016 ± 0.002; a mean that rounds to zero is shown unsigned (0.00 ± 0.01: zero
-    within the CI). Below 0.01: common ×10ⁿ, one decimal each, e.g. (−2.4 ± 9.1) ×10⁻³.
+
+def _format_interval(mean: float, half: float) -> str:
+    """Mean in bold, ± 95 % CI half-width in normal weight, both with the same decimals.
+
+    The mean always has at least 2 significant digits and the CI at least 1 (user 2026-10-28,
+    replaces "CI with 1 significant digit, mean rounded to it"). The format depends on the mean
+    only, so equal means look the same whatever the CI:
+    |mean| ≥ 0.01: decimals, at least 2, 3 significant digits for |mean| ≥ 1, e.g. +12.3 ± 1.6,
+    +0.24 ± 0.31, +0.012 ± 0.040.
+    |mean| < 0.01: common ×10ⁿ, n = min(−3, floor(log10|mean|) + 1), e.g. (−4.9 ± 14.5) ×10⁻³,
+    (+0.18 ± 8.52) ×10⁻³, (+0.20 ± 3.10) ×10⁻⁴.
     """
-    big = max(abs(mean), half)
-    if not np.isfinite(big) or big == 0:
+    if not (np.isfinite(mean) and np.isfinite(half)):
         return f"{_bold(f'{mean:+.2f}')} ± {half:.2f}"
-    if big < 0.01:
-        k = int(np.floor(np.log10(big)))
-        m, h = f"{mean / 10**k:+.1f}", f"{half / 10**k:.1f}"
-        return f"({_bold(m)} ± {h}) " + rf"$\times10^{{{k}}}$"
-    d = 2
-    if big >= 1:
-        d = max(0, 2 - int(np.floor(np.log10(big))))
-    elif np.isfinite(half) and half > 0:
-        h = float(f"{half:.0e}")  # 1 significant digit; may round up a decade (0.0096 -> 0.01)
-        d = max(0, -int(np.floor(np.log10(h))))
-    m = f"{mean:+.{d}f}"
-    if float(m) == 0:
-        m = f"{0:.{d}f}"
-    return f"{_bold(m)} ± {half:.{d}f}"
+    k = 0
+    if 0 < abs(mean) < 0.01:
+        k = min(-3, int(np.floor(np.log10(abs(mean)))) + 1)
+    m, h = mean / 10**k, half / 10**k
+    d = 0 if k else (max(0, 2 - int(np.floor(np.log10(abs(m))))) if abs(m) >= 1 else 2)   # ×10ⁿ: 2 significant digits
+    # CI keeps ≥ 1 digit, unless it is negligible next to the mean (e.g. 1e-17 for the year-invariant
+    # difference of two prescribed climatologies): then it shows as 0 with the mean's decimals
+    ci_digits = -int(np.floor(np.log10(h))) if h > 1e-3 * abs(m) else 0
+    d = min(max(d, _sig2_decimals(m), ci_digits), 6)
+    text = f"{_bold(f'{m:+.{d}f}')} ± {h:.{d}f}"
+    return f"({text}) " + rf"$\times10^{{{k}}}$" if k else text
 
 
 def add_stippling(ax, sig: xr.DataArray, style: str = "dots", color="black", size: float = 0.6,
@@ -919,6 +929,7 @@ def make_forcing_summary_figure(
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
     scales: str | list[tuple[list[int], float]] | None = None,
+    pairs: dict | None = None,
 ):
     """
     Create six-panel forcing decomposition figure.
@@ -943,11 +954,13 @@ def make_forcing_summary_figure(
         None = one colourbar per panel (panel.vmax). Otherwise shared colourbars, as
         [(panel indices, vmax), ...] or a name from SUMMARY_SCALES ("shared6", "split6-2");
         the name is added to the file name.
+    pairs: role -> alias, overrides BVOC_PAIRS[experiment]; `experiment` is then only a label
+        (title, file name), e.g. "FUT_fBVOCctrlFUT".
     """
-    if experiment not in BVOC_PAIRS:
+    if pairs is None and experiment not in BVOC_PAIRS:
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
 
-    pairs = BVOC_PAIRS[experiment]
+    pairs = pairs or BVOC_PAIRS[experiment]
     panels = forcing_panels(band)
     scale_tag = scales if isinstance(scales, str) else ("custom" if scales else None)
     if isinstance(scales, str):
@@ -1005,17 +1018,20 @@ def make_context_maps_figure(
     ocean_facecolor: str = "white",
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
+    pairs: dict | None = None,
 ):
     """
     Create BVOC/SOA/cloud/context map figure for LCC-X - LCC-X-fBVOC.
 
     Each panel gets its own colourbar when add_cbar=True.
     Ocean shading is controlled by shade_ocean, ocean_alpha, and ocean_facecolor.
+    pairs: role -> alias, overrides BVOC_PAIRS[experiment]; `experiment` is then only a label
+    (file name), e.g. "FUT_fBVOCctrlFUT".
     """
-    if experiment not in BVOC_PAIRS:
+    if pairs is None and experiment not in BVOC_PAIRS:
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
 
-    pairs = BVOC_PAIRS[experiment]
+    pairs = pairs or BVOC_PAIRS[experiment]
     panels = list(panels)
     nrows = int(np.ceil(len(panels) / ncols))
 
@@ -1058,13 +1074,16 @@ def make_context_maps_figure(
 # Ghan decomposition per contrast (total + 3 terms, shared colour scale)
 # =============================================================================
 
+# "background" = CTRL_FUT - CTRL_PD (2100 background change alone): FUT only.
+# File names of the "bvoc" contrast use the run names (short_alias), e.g. LCC-fBVOCctrlPD.
 GHAN_CONTRASTS = {"total": ("lcc", "ctrl", "LCC-CTRL"), "bvoc": ("lcc", "fbvoc", "LCC-fBVOC"),
-                  "fbvoc_ctrl": ("fbvoc", "ctrl", "fBVOC-CTRL")}
+                  "background": ("ctrl", "ctrl_pd", "CTRLFUT-CTRLPD")}
 # Ghan term names in panel titles and chart labels (mathtext: bold F with the term as subscript)
 GHAN_TITLES = {"toa": r"$\mathbf{F}_{\mathbf{TOTAL}}$", "dir": r"$\mathbf{F}_{\mathbf{AEROSOL\text{-}DIRECT}}$",
                "cloud": r"$\mathbf{F}_{\mathbf{CLOUD}}$", "rest": r"$\mathbf{F}_{\mathbf{REST}}$"}
 # Figure-title names of the contrast tags (tags stay short in file names)
-CONTRAST_LABELS = {"LCC-CTRL": "LCC − CTRL", "LCC-fBVOC": "LCC − LCC_fBVOC", "fBVOC-CTRL": "LCC_fBVOC − CTRL"}
+CONTRAST_LABELS = {"LCC-CTRL": "LCC − CTRL", "LCC-fBVOC": "LCC − LCC_fBVOC", "CTRLFUT-CTRLPD": "CTRL_FUT − CTRL_PD",
+                   "FUT-fBVOC-source": "LCC_FUT vs the two FUT fBVOC runs"}
 
 
 def ghan_panels(band: str = "NET", case1_role: str = "lcc", case2_role: str = "ctrl",
@@ -1104,7 +1123,7 @@ def make_ghan_figure(
     contrast: str = "total",
     band: str = "NET",
     start_year: int = 2001,
-    end_year: int = 2009,
+    end_year: int = 2014,
     seasonal: bool = False,
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
@@ -1114,15 +1133,21 @@ def make_ghan_figure(
     cmap: str = "RdBu_r",
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
+    pairs: dict | None = None,
 ):
     """
     Ghan decomposition of one contrast: total + ARI + cloud + clear-clean, one shared scale.
 
-    contrast: "total" (LCC - CTRL) or "bvoc" (LCC - LCC_fBVOC), roles from BVOC_PAIRS.
+    contrast: "total" (LCC - CTRL), "bvoc" (LCC - LCC_fBVOC) or "background" (CTRL_FUT - CTRL_PD,
+    experiment "FUT" only); roles from BVOC_PAIRS.
     seasonal: False = one row of annual means; True = rows DJF/MAM/JJA/SON, one scale per row.
+    pairs: role -> alias, overrides BVOC_PAIRS[experiment]; `experiment` is then only a label
+    (file name), e.g. "FUT_fBVOCctrlFUT".
     """
     role1, role2, tag = GHAN_CONTRASTS[contrast]
-    pairs = BVOC_PAIRS[experiment]
+    if contrast == "background" and experiment != "FUT":
+        raise ValueError("contrast 'background' (CTRL_FUT - CTRL_PD) exists only for experiment 'FUT'")
+    pairs = {**(pairs or BVOC_PAIRS[experiment]), "ctrl_pd": BVOC_PAIRS["PD"]["ctrl"]}
     rows = list(SEASONS.items()) if seasonal else [("ANN", None)]
 
     # seasonal: one vertical colourbar right of each row; annual: one horizontal colourbar below
@@ -1151,6 +1176,8 @@ def make_ghan_figure(
                  mean_lat_min, y=_suptitle_y(fig))
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
+        if contrast == "bvoc":   # name the fBVOC run, e.g. LCC-fBVOCctrlPD (user 2026-10-28)
+            tag = f"{short_alias(c1)}-{short_alias(c2)}"
         stem = f"{experiment}_ghan_{'seasonal_' if seasonal else ''}{tag}_{band}_{start_year}_{end_year}.png"
         fig.savefig(figdir / stem, dpi=dpi, bbox_inches="tight")
         print(f"Saved {figdir / stem}")
@@ -1161,6 +1188,14 @@ def make_ghan_figure(
 # Contrast grids: rows = contrasts, columns = variables
 # =============================================================================
 
+def short_alias(alias: str) -> str:
+    """Alias without the LCC_<PERIOD>_ prefix of the fBVOC runs: LCC_FUT_fBVOCctrlPD -> fBVOCctrlPD, LCC_FUT -> LCC."""
+    for period in BVOC_PAIRS:
+        if alias.startswith(f"LCC_{period}_"):
+            return alias[len(f"LCC_{period}_"):]
+    return "LCC" if alias in {p["lcc"] for p in BVOC_PAIRS.values()} else alias
+
+
 def contrast_sets() -> dict[str, list[tuple[str, str]]]:
     """(case1, case2) rows of the contrast grids, built from BVOC_PAIRS."""
     pd_, fut = BVOC_PAIRS["PD"], BVOC_PAIRS["FUT"]
@@ -1168,10 +1203,17 @@ def contrast_sets() -> dict[str, list[tuple[str, str]]]:
         # CTRL_FUT - CTRL_PD = background change alone, so row 3 ~ row 2 + row 4
         "LCC-CTRL": [(pd_["lcc"], pd_["ctrl"]), (fut["lcc"], fut["ctrl"]), (fut["lcc"], pd_["ctrl"]),
                      (fut["ctrl"], pd_["ctrl"])],
-        "LCC-fBVOC": [(pd_["lcc"], pd_["fbvoc"]), (fut["lcc"], fut["fbvoc"])],
-        # land-cover change with emissions held at the CTRL_PD ISOP/MTERP climatology
-        "fBVOC-CTRL": [(pd_["fbvoc"], pd_["ctrl"]), (fut["fbvoc"], fut["ctrl"])],
+        # row 3: FUT with the emissions of CTRL_FUT instead of CTRL_PD (user 2026-10-28)
+        # row 4: CTRL_FUT instead of CTRL_PD emissions, same LCC_FUT setup (= row 2 - row 3; user 2026-10-28)
+        "LCC-fBVOC": [(pd_["lcc"], pd_["fbvoc"]), (fut["lcc"], fut["fbvoc"]), (fut["lcc"], "LCC_FUT_fBVOCctrlFUT"),
+                      ("LCC_FUT_fBVOCctrlFUT", fut["fbvoc"])],
     }
+
+
+# FUT fBVOC emission source (analysis/fut-fbvoc-emission-source.ipynb): row 3 = row 1 - row 2, i.e. the
+# effect of prescribing CTRL_FUT instead of CTRL_PD emissions in the same LCC_FUT setup.
+FBVOC_SOURCE_ROWS = [("LCC_FUT", "LCC_FUT_fBVOCctrlPD"), ("LCC_FUT", "LCC_FUT_fBVOCctrlFUT"),
+                     ("LCC_FUT_fBVOCctrlFUT", "LCC_FUT_fBVOCctrlPD")]
 
 
 def _panel(key, title, cls, var, units, label, component="atm", months=None):
@@ -1194,6 +1236,16 @@ HYDRO_PANELS = [
     _panel("lh", "LATENT HEAT FLUX", "METEO", "LHFLX", WM2, "LHFLX (up positive)"),
     _panel("sh", "SENSIBLE HEAT FLUX", "METEO", "SHFLX", WM2, "SHFLX (up positive)"),
     _panel("cldlow", "LOW CLOUD", "CLOUDPROP", "CLDLOW", "fraction", "CLDLOW"),
+]
+
+# CAM column cloud fractions by pressure band (random overlap within each band, so LOW + MED + HGH != TOT)
+CLOUD_TYPE_PANELS = [
+    _panel("cldtot", "TOTAL CLOUD", "CLOUDPROP", "CLDTOT", "fraction", "CLDTOT"),
+    _panel("cldlow", "LOW CLOUD", "CLOUDPROP", "CLDLOW", "fraction", "CLDLOW (p > 700 hPa)"),
+    _panel("cldmed", "MID-LEVEL CLOUD", "CLOUDPROP", "CLDMED", "fraction", "CLDMED (400–700 hPa)"),
+    _panel("cldhgh", "HIGH CLOUD", "CLOUDPROP", "CLDHGH", "fraction", "CLDHGH (p < 400 hPa)"),
+    _panel("lwp", "LIQUID WATER PATH", "CLOUDPROP", "TGCLDLWP_gm2", "g m$^{-2}$", "TGCLDLWP (grid box)"),
+    _panel("iwp", "ICE WATER PATH", "CLOUDPROP", "TGCLDIWP_gm2", "g m$^{-2}$", "TGCLDIWP (grid box)"),
 ]
 
 SNOW_ALBEDO_PANELS = [
@@ -1232,7 +1284,7 @@ def make_contrast_grid_figure(
     panels: Iterable[MapPanel],
     name: str,
     start_year: int = 2001,
-    end_year: int = 2009,
+    end_year: int = 2014,
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
     map_size: float | None = None,
@@ -1242,13 +1294,15 @@ def make_contrast_grid_figure(
     cmap: str = "RdBu_r",
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
+    rows: list[tuple[str, str]] | None = None,
 ):
     """
     Grid of maps: one row per contrast of `contrast_set` ("LCC-CTRL" or "LCC-fBVOC", see
     contrast_sets), one column per panel. Each panel has its own colourbar, because the
     rows differ a lot in size (LCC_FUT - CTRL_PD contains the whole 2100 background change).
+    rows: (case1, case2) list overriding contrast_sets()[contrast_set] (contrast_set is then a label).
     """
-    rows = contrast_sets()[contrast_set]
+    rows = rows or contrast_sets()[contrast_set]
     panels = [replace(p, case1_role="case1", case2_role="case2") for p in panels]
     fig, axes = map_grid(len(rows), len(panels), left=2.0, map_size=GRID_MAP_SIZE if map_size is None else map_size)
     for i, (c1, c2) in enumerate(rows):
@@ -1272,7 +1326,7 @@ def make_contrast_grid_figure(
                         ha="right", va="center", fontsize=10, fontweight="bold")
 
     title = "BVOC/SOA/cloud" if name == "context" else name
-    add_suptitle(fig, f"{title}: {CONTRAST_LABELS[contrast_set]} ({start_year}–{end_year})", mean_lat_min, fontsize=15,
+    add_suptitle(fig, f"{title}: {CONTRAST_LABELS.get(contrast_set, contrast_set)} ({start_year}–{end_year})", mean_lat_min, fontsize=15,
                  y=_suptitle_y(fig))
     if save:
         figdir.mkdir(parents=True, exist_ok=True)
@@ -1323,7 +1377,7 @@ def water_budget_regions(ds: xr.Dataset, lat_min: float = 45.0) -> dict[str, xr.
             f"unmodified land ≥{lat_min:g}°N": land & ~modified & (ds["lat"] >= lat_min)}
 
 
-def water_budget_table(start_year: int = 2001, end_year: int = 2009, conf: float = 0.95):
+def water_budget_table(start_year: int = 2001, end_year: int = 2014, conf: float = 0.95):
     """
     Regional water budget of every contrast in contrast_sets(): yearly area x landfrac weighted
     means, case values and paired difference with a t-interval across years. mm yr-1.
@@ -1354,7 +1408,7 @@ def water_budget_table(start_year: int = 2001, end_year: int = 2009, conf: float
 
 
 def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir: Path = FIGURE_DIR,
-                             dpi: int = 200, start_year: int = 2001, end_year: int = 2009):
+                             dpi: int = 200, start_year: int = 2001, end_year: int = 2014):
     """Bars of the paired differences (± 95 % CI): one subplot per region, groups = contrasts."""
     t = table[table["contrast_set"] == contrast_set]
     regions, contrasts = list(dict.fromkeys(t["region"])), list(dict.fromkeys(t["contrast"]))
@@ -1389,7 +1443,7 @@ def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir
 # =============================================================================
 
 EARTH_RADIUS = 6.371e6   # m
-EARLY_YEARS, LATE_YEARS = (2001, 2004), (2006, 2009)
+EARLY_YEARS, LATE_YEARS = (2001, 2007), (2008, 2014)
 SOURCE_BOXES = {          # lat_min, lat_max, lon_min, lon_max (degrees east; lon_min > lon_max wraps)
     "Alaska/W Canada": (50, 72, 190, 245),
     "E Canada": (45, 65, 245, 300),
@@ -1456,7 +1510,11 @@ MONTHLY_FIELDS = {
     "TLAI": ("LAND", "lnd", lambda ds: ds["TLAI"], "m$^2$ m$^{-2}$", "leaf area index"),
     "GAMMA_isoprene": ("BVOC", "lnd", lambda ds: ds["GAMMA_isoprene"], "–", "MEGAN γ isoprene (area mean)"),
     "GAMMAL": ("BVOC", "lnd", lambda ds: ds["GAMMAL"], "–", "MEGAN γ LAI (area mean)"),
-    "SOA_cb": ("SOA", "atm", lambda ds: ds["SOA_cb"] * 1e6, "mg m$^{-2}$", "SOA column burden"),
+    "SOA_cb": ("SOA", "atm", lambda ds: ds["SOA_cb"] * 1e6, "mg m$^{-2}$", "SOA column burden (offline, old chain)"),
+    "cbSOA": ("SOA", "atm", lambda ds: (ds["cb_SOA_A1"] + ds["cb_SOA_NA"]) * 1e6, "mg m$^{-2}$", "SOA column burden"),
+    "cbSOA_all": ("SOA", "atm", lambda ds: (ds["cb_SOA_A1"] + ds["cb_SOA_NA"] + ds["cb_SOA_A1_OCW"]
+                                            + ds["cb_SOA_NA_OCW"]) * 1e6, "mg m$^{-2}$",
+                  "SOA column burden incl. cloud-borne"),
     "cb_SOA_LV": ("SOA", "atm", lambda ds: ds["cb_SOA_LV"] * 1e6, "mg m$^{-2}$", "SOA_LV gas burden"),
     "cb_SOA_SV": ("SOA", "atm", lambda ds: ds["cb_SOA_SV"] * 1e6, "mg m$^{-2}$", "SOA_SV gas burden"),
     "N_AER": ("SOA", "atm", lambda ds: to_map(ds["N_AER"]), "cm$^{-3}$", "aerosol number, lowest level"),
@@ -1466,12 +1524,17 @@ MONTHLY_FIELDS = {
     "ACTREL_incld": ("CLOUDPROP", "atm", lambda ds: (ds["ACTREL"] / ds["FCTL"]).where(ds["FCTL"] >= INCLOUD_MIN_FRAC),
                      "µm", "in-cloud cloud-top effective radius"),
     "TGCLDLWP": ("CLOUDPROP", "atm", lambda ds: ds["TGCLDLWP"] * 1e3, "g m$^{-2}$", "liquid water path (grid box)"),
+    "TGCLDIWP": ("CLOUDPROP", "atm", lambda ds: ds["TGCLDIWP"] * 1e3, "g m$^{-2}$", "ice water path (grid box)"),
+    "CLDTOT": ("CLOUDPROP", "atm", lambda ds: ds["CLDTOT"], "fraction", "total cloud"),
+    "CLDLOW": ("CLOUDPROP", "atm", lambda ds: ds["CLDLOW"], "fraction", "low cloud (> 700 hPa)"),
+    "CLDMED": ("CLOUDPROP", "atm", lambda ds: ds["CLDMED"], "fraction", "mid cloud (400–700 hPa)"),
+    "CLDHGH": ("CLOUDPROP", "atm", lambda ds: ds["CLDHGH"], "fraction", "high cloud (< 400 hPa)"),
     "SW_cloud": ("RADIATIVE", "atm", lambda ds: ds["SW_cloud"], WM2, "SW cloud term (clean sky)"),
     "SOLIN": ("RADIATIVE", "atm", lambda ds: ds["SOLIN"], WM2, "insolation (TOA)"),
 }
 
 
-def monthly_regional(alias: str, field: str, region: str, start_year: int = 2001, end_year: int = 2009,
+def monthly_regional(alias: str, field: str, region: str, start_year: int = 2001, end_year: int = 2014,
                      boxes: bool = False) -> xr.DataArray:
     """Regional mean (or total for *_Tg) of a monthly field, dims (year, month)."""
     cls, comp, f, _, _ = MONTHLY_FIELDS[field]
@@ -1520,21 +1583,23 @@ def _month_axes(ax):
 # ---------------------------------------------------------------- A + E: radiative budget, 3 contrasts
 
 def budget_contrasts(period: str) -> list[tuple[str, str, str]]:
-    """(label, case1, case2): LCC-CTRL = (fBVOC-CTRL) + (LCC-fBVOC) exactly, year by year."""
+    """(label, case1, case2): LCC-CTRL, LCC-fBVOC; FUT also CTRL_FUT - CTRL_PD (2100 background change)."""
     p = BVOC_PAIRS[period]
-    return [(CONTRAST_LABELS["LCC-CTRL"], p["lcc"], p["ctrl"]), (CONTRAST_LABELS["fBVOC-CTRL"], p["fbvoc"], p["ctrl"]),
-            (CONTRAST_LABELS["LCC-fBVOC"], p["lcc"], p["fbvoc"])]
+    rows = [(CONTRAST_LABELS["LCC-CTRL"], p["lcc"], p["ctrl"]), (CONTRAST_LABELS["LCC-fBVOC"], p["lcc"], p["fbvoc"])]
+    if period == "FUT":
+        rows.append((CONTRAST_LABELS["CTRLFUT-CTRLPD"], p["ctrl"], BVOC_PAIRS["PD"]["ctrl"]))
+    return rows
 
 
 GHAN_TERMS = ("toa", "dir", "cloud", "rest")
 
 
-def radiative_budget_table(start_year: int = 2001, end_year: int = 2009,
+def radiative_budget_table(start_year: int = 2001, end_year: int = 2014,
                            regions=("≥45°N", "modified cells")):
     """Long table of yearly regional means: period, region, contrast, band, term, year, value [W m-2].
 
     term = toa / dir / cloud / rest (Ghan) or albedo_proxy (SW, surface, not a budget term).
-    Checks before returning: Ghan terms sum to toa, and LCC-CTRL = (fBVOC-CTRL) + (LCC-fBVOC).
+    Checks before returning: Ghan terms sum to toa.
     """
     import pandas as pd
 
@@ -1557,11 +1622,8 @@ def radiative_budget_table(start_year: int = 2001, end_year: int = 2009,
     key = ["period", "region", "band", "year"]
     ghan = t[t.term.isin(GHAN_TERMS)].pivot_table(index=key + ["contrast"], columns="term", values="value")
     err_g = (ghan["dir"] + ghan["cloud"] + ghan["rest"] - ghan["toa"]).abs().max()
-    w = t.pivot_table(index=key + ["term"], columns="contrast", values="value")
-    L = CONTRAST_LABELS
-    err_c = (w[L["fBVOC-CTRL"]] + w[L["LCC-fBVOC"]] - w[L["LCC-CTRL"]]).abs().max()
-    print(f"Closure before rounding: Ghan terms vs total {err_g:.1e}, contrasts {err_c:.1e} W m-2")
-    if max(err_g, err_c) > 1e-3:
+    print(f"Closure before rounding: Ghan terms vs total {err_g:.1e} W m-2")
+    if err_g > 1e-3:
         raise ValueError("radiative budget does not close")
     return t
 
@@ -1575,22 +1637,22 @@ def summarize_years(t, by, conf: float = 0.95):
 
 
 # Chart colours, all module-level so they can be swapped in one place (sandbox/test_palettes.ipynb).
-PERIOD_COLORS = {"PD": "#3b75af", "FUT": "#c44e52"}
-REGION_COLORS = {"modified cells": "#c44e52", "unmodified land ≥45°N": "#3b75af"}
-WATER_BUDGET_COLORS = ["#3b75af", "#4f9e5a", "#d08a2e", "#7fc6d6", "#8c6bb1", "#9a9a9a"]   # WATER_BUDGET_TERMS order
-TERM_STYLE = {"toa": (GHAN_TITLES["toa"], "#333333"), "dir": (GHAN_TITLES["dir"], "#d08a2e"), "cloud": (GHAN_TITLES["cloud"], "#3b75af"),
-              "rest": (GHAN_TITLES["rest"], "#c44e52"), "albedo_proxy": ("albedo proxy (sfc)", "white")}
+PERIOD_COLORS = {"PD": pal.PD_COLOR, "FUT": pal.FUT_COLOR}
+REGION_COLORS = {"modified cells": pal.RED, "unmodified land ≥45°N": pal.NAVY}
+WATER_BUDGET_COLORS = pal.PALETTE_ORDER[:5] + [pal.LIGHT_GREY]   # WATER_BUDGET_TERMS order: P, ET, R_liq, R_ice, dTWS, residual
+TERM_STYLE = {"toa": (GHAN_TITLES["toa"], pal.TOTAL_COLOR), "dir": (GHAN_TITLES["dir"], pal.TEAL), "cloud": (GHAN_TITLES["cloud"], pal.NAVY),
+              "rest": (GHAN_TITLES["rest"], pal.PLUM), "albedo_proxy": ("albedo proxy (sfc)", "white")}
 
 
 def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=200,
-                                 start_year=2001, end_year=2009):
-    """Bars: rows = region x period, columns = NET / SW / LW; groups = the 3 contrasts; ± 95 % CI."""
+                                 start_year=2001, end_year=2014):
+    """Bars: rows = region x period, columns = NET / SW / LW; groups = budget_contrasts(period); ± 95 % CI."""
     s = summarize_years(t, ["period", "region", "contrast", "band", "term"])
     rows = [(r, p) for r in dict.fromkeys(t.region) for p in BVOC_PAIRS]
-    contrasts = [c for c, _, _ in budget_contrasts("PD")]
     fig, axes = plt.subplots(len(rows), 3, figsize=(15, 3.9 * len(rows)), squeeze=False, constrained_layout=True)
     fig.get_layout_engine().set(h_pad=0.12)   # room between a row's tick labels and the next row's titles
     for i, (region, period) in enumerate(rows):
+        contrasts = [c for c, _, _ in budget_contrasts(period)]
         for j, band in enumerate(("NET", "SW", "LW")):
             ax = axes[i, j]
             terms = list(GHAN_TERMS) + (["albedo_proxy"] if band == "SW" else [])
@@ -1600,9 +1662,12 @@ def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=20
                 sub = sub.set_index("contrast").loc[contrasts]
                 label, color = TERM_STYLE[term]
                 x = np.arange(len(contrasts)) + (k - (len(terms) - 1) / 2) * width
-                ax.bar(x, sub["mean"], width, yerr=sub["ci95"], color=color, label=label, capsize=2,
-                       edgecolor="black" if term == "albedo_proxy" else color, hatch="///" if term == "albedo_proxy" else None,
-                       lw=0.6, error_kw=dict(lw=0.8))
+                # albedo proxy = white bar hatched in the F_rest colour (user 2026-11-03: was black);
+                # colour "none" = hollow bar (white face, dark-grey outline)
+                edge = TERM_STYLE["rest"][1] if term == "albedo_proxy" else ("#555555" if color == "none" else color)
+                ax.bar(x, sub["mean"], width, yerr=sub["ci95"], color="white" if color == "none" else color, label=label,
+                       capsize=2, edgecolor=edge, hatch="///" if term == "albedo_proxy" else None,
+                       lw=1.0 if color == "none" else 0.6, error_kw=dict(lw=0.8))
                 for xi, (m, h) in zip(x, zip(sub["mean"], sub["ci95"])):
                     if term == "toa":
                         ax.text(xi, m + np.sign(m or 1) * (h + 0.03), f"{m:+.2f}", ha="center",
@@ -1615,17 +1680,17 @@ def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=20
             if j == 0:
                 ax.set_ylabel("W m$^{-2}$", fontsize=8)
     axes[0, 1].legend(fontsize=7, ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.35))
-    fig.suptitle(f"Radiative budget: LCC − CTRL = (LCC_fBVOC − CTRL) + (LCC − LCC_fBVOC), mean ± 95 % CI over years "
+    fig.suptitle(f"Radiative budget: LCC − CTRL, LCC − LCC_fBVOC, CTRL_FUT − CTRL_PD; mean ± 95 % CI over years "
                  f"({start_year}–{end_year})", fontsize=12, fontweight="bold")
     if save:
-        path = figdir / f"radiative_budget_3contrasts_{start_year}_{end_year}.png"
+        path = figdir / f"radiative_budget_contrasts_{start_year}_{end_year}.png"
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
 
 
 def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir: Path = FIGURE_DIR, dpi=200,
-                             start_year=2001, end_year=2009):
+                             start_year=2001, end_year=2014):
     """Strip plot: each yearly regional difference (dot) + mean ± 95 % CI, per Ghan term and contrast."""
     sub = t[(t.region == region) & (t.band == band) & t.term.isin(GHAN_TERMS)]
     s = summarize_years(sub, ["period", "contrast", "term"])
@@ -1655,10 +1720,10 @@ def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir
 # ---------------------------------------------------------------- B: emissions / LAI origin
 
 def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMMA_isoprene", "GAMMAL"),
-                                save=True, figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2009):
+                                save=True, figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2014):
     """Monthly differences, modified vs unmodified land >=45N, early vs late years.
-    Columns = period x (LCC-CTRL, LCC-fBVOC); MEGAN factors only exist with MEGAN on (not in fBVOC)."""
-    cols = [(p, lab, c1, c2) for p in BVOC_PAIRS for lab, c1, c2 in budget_contrasts(p) if lab != CONTRAST_LABELS["fBVOC-CTRL"]]
+    Columns = period x budget_contrasts (LCC-CTRL, LCC-fBVOC; FUT also CTRL_FUT - CTRL_PD); MEGAN factors only exist with MEGAN on (not in fBVOC)."""
+    cols = [(p, lab, c1, c2) for p in BVOC_PAIRS for lab, c1, c2 in budget_contrasts(p)]
     regions = REGION_COLORS
     fig, axes = plt.subplots(len(fields), len(cols), figsize=(4 * len(cols), 2.4 * len(fields)),
                              squeeze=False, constrained_layout=True, sharex=True)
@@ -1694,7 +1759,7 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
 # ---------------------------------------------------------------- C + F: monthly chains
 
 def make_monthly_chain_figure(fields, columns, lines, name, title, context=None, save=True,
-                              figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2009, boxes=False):
+                              figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2014, boxes=False):
     """Rows = fields, columns = regions; lines = {label: (case1, case2, color, ls)} monthly differences
     (mean ± 95 % CI across years). `context` = optional field drawn as absolute climatology of `lines`' case2."""
     rows = list(fields) + ([context] if context else [])
@@ -1724,16 +1789,86 @@ def make_monthly_chain_figure(fields, columns, lines, name, title, context=None,
     return fig, axes
 
 
+# ---------------------------------------------------------------- cloud vertical structure (zonal mean)
+
+PROFILE_FIELDS = {   # 3-D CLOUDPROP field: (scale, units, title)
+    "CLOUD": (1.0, "fraction", "CLOUD FRACTION"),
+    "CLDLIQ": (1e6, "mg kg$^{-1}$", "CLOUD LIQUID (grid box)"),
+    "CLDICE": (1e6, "mg kg$^{-1}$", "CLOUD ICE (grid box)"),
+}
+CLOUD_BANDS_HPA = (700.0, 400.0)   # CAM CLDLOW / CLDMED / CLDHGH limits
+
+
+def zonal_profile_difference(case1, case2, var, start_year=2001, end_year=2014, lat_min=45.0,
+                             months=None) -> xr.DataArray:
+    """Paired yearly zonal-mean (all longitudes) differences case1 - case2 of a 3-D field, dims (year, lev, lat)."""
+    scale = PROFILE_FIELDS[var][0]
+    ds1, ds2 = (open_class(a, "CLOUDPROP", start_year, end_year) for a in (case1, case2))
+    if not np.array_equal(ds1["time"].values, ds2["time"].values):
+        raise ValueError(f"{case1} and {case2} have different time axes")
+
+    def zm(ds):
+        return annual_mean(ds[var].where(ds["lat"] >= lat_min, drop=True).mean("lon"), ds, months) * scale
+    return zm(ds1) - zm(ds2)
+
+
+def make_cloud_profile_figure(rows=None, fields=tuple(PROFILE_FIELDS), name="cloud_profile", months=None,
+                              season="ANN", start_year=2001, end_year=2014, lat_min=45.0, p_top=150.0,
+                              fdr_alpha=0.10, save=True, figdir: Path = FIGURE_DIR, dpi=200):
+    """Rows = (case1, case2) contrasts, columns = 3-D cloud fields: latitude x pressure of the zonal-mean
+    difference (mean over years). Hatched = NOT FDR-significant (paired yearly t-test, alpha_FDR within the panel).
+    Dashed lines = the 700 / 400 hPa limits of low / mid / high cloud. Each panel has its own colourbar."""
+    rows = rows or [r for rs in contrast_sets().values() for r in rs]
+    fig, axes = plt.subplots(len(rows), len(fields), figsize=(4.0 * len(fields), 2.6 * len(rows)),
+                             squeeze=False, constrained_layout=True, sharex=True, sharey=True)
+    for i, (c1, c2) in enumerate(rows):
+        for j, var in enumerate(fields):
+            ax = axes[i, j]
+            d = zonal_profile_difference(c1, c2, var, start_year, end_year, lat_min, months)
+            m = d.mean("year").sel(lev=slice(p_top, None))
+            sig = fdr_mask(cellwise_pvalue(d.sel(lev=slice(p_top, None))), fdr_alpha)
+            vmax = symmetric_vmax(m)
+            pc = ax.pcolormesh(m["lat"], m["lev"], m, cmap="RdBu_r", vmin=-vmax, vmax=vmax, shading="nearest")
+            # NON-significant cells hatched, same look as the maps (add_stippling "lines")
+            hatch = ax.pcolor(m["lat"], m["lev"], np.ma.masked_where(sig.transpose("lev", "lat").values,
+                                                                     np.ones(m.shape)),
+                              shading="nearest", facecolor="none", edgecolor="dimgrey", hatch="/////", lw=0)
+            hatch.set_hatch_linewidth(0.3)
+            for p in CLOUD_BANDS_HPA:
+                ax.axhline(p, color="0.3", ls="--", lw=0.7)
+            cb = fig.colorbar(pc, ax=ax, extend="both", pad=0.01)
+            cb.locator = mticker.MaxNLocator(nbins=8, symmetric=True)
+            cb.update_ticks()
+            cb.ax.tick_params(labelsize=7)
+            cb.set_label(PROFILE_FIELDS[var][1], fontsize=7)
+            ax.tick_params(labelsize=7)
+            if i == 0:
+                ax.set_title(PROFILE_FIELDS[var][2], fontsize=10, fontweight="semibold")
+            if j == 0:
+                ax.set_ylabel(f"{c1}\n− {c2}\n\npressure [hPa]", fontsize=7.5)
+            if i == len(rows) - 1:
+                ax.set_xlabel("latitude [°N]", fontsize=7.5)
+    axes[0, 0].set_ylim(1000, p_top)   # shared y, pressure decreasing upwards
+    fig.suptitle(f"Zonal-mean cloud change, {season}, {lat_min:.0f}–90°N, all longitudes ({start_year}–{end_year}); "
+                 f"hatched: not significant (FDR α={fdr_alpha})", fontsize=11, fontweight="bold")
+    if save:
+        figdir.mkdir(parents=True, exist_ok=True)
+        path = figdir / f"{name}_{season}_{start_year}_{end_year}.png"
+        fig.savefig(path, dpi=dpi, bbox_inches="tight")
+        print(f"Saved {path}")
+    return fig, axes
+
+
 # ---------------------------------------------------------------- D: baseline and relative change
 
 BASELINE_FIELDS = {   # yearly field name (YEARLY_DERIVED / raw), category, units
-    "SOA_cb_mgm2": ("SOA", "mg m-2"), "N_AER": ("SOA", "cm-3"), "CCN3": ("SOA", "cm-3"),
+    "cbSOA_mgm2": ("SOA", "mg m-2"), "cbSOA_all_mgm2": ("SOA", "mg m-2"), "N_AER": ("SOA", "cm-3"), "CCN3": ("SOA", "cm-3"),
     "ACTNL_incld": ("CLOUDPROP", "cm-3"), "ACTREL_incld": ("CLOUDPROP", "µm"),
     "TGCLDLWP_gm2": ("CLOUDPROP", "g m-2"), "CLDLOW": ("CLOUDPROP", "fraction"), "FCTL": ("CLOUDPROP", "fraction"),
 }
 
 
-def baseline_table(region="≥45°N", start_year=2001, end_year=2009):
+def baseline_table(region="≥45°N", start_year=2001, end_year=2014):
     """CTRL and fBVOC baselines (annual and JJA, regional mean), FUT-PD change, BVOC contrast as % of baseline."""
     import pandas as pd
 
@@ -1759,7 +1894,7 @@ def baseline_table(region="≥45°N", start_year=2001, end_year=2009):
 
 
 PERCENT_PANELS = [   # (yearly field, category, title, minimum baseline for the % map)
-    ("SOA_cb_mgm2", "SOA", "SOA BURDEN", 0.05),
+    ("cbSOA_mgm2", "SOA", "SOA BURDEN", 0.05),
     ("N_AER", "SOA", "AEROSOL NUMBER", 1.0),
     ("ACTNL_incld", "CLOUDPROP", "IN-CLOUD DROPLET NUMBER", 1.0),
     ("ACTREL_incld", "CLOUDPROP", "IN-CLOUD EFFECTIVE RADIUS", 1.0),
@@ -1767,7 +1902,7 @@ PERCENT_PANELS = [   # (yearly field, category, title, minimum baseline for the 
 ]
 
 
-def make_percent_change_figure(start_year=2001, end_year=2009, extent_lat=45.0, save=True,
+def make_percent_change_figure(start_year=2001, end_year=2014, extent_lat=45.0, save=True,
                                figdir: Path = FIGURE_DIR, dpi=200, stipple=True, fdr_alpha=0.10):
     """BVOC contrast (LCC - fBVOC) as % of the fBVOC baseline mean; rows PD/FUT. Cells with a baseline
     below the panel threshold are blank. Marked cells = not significant (paired t-test of the yearly % values, FDR)."""

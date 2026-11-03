@@ -48,3 +48,17 @@ def diverging_colormap(hex_value1, hex_value2, hex_value3 = '#ffffff'):
     
     
     
+
+#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
+# Project palette for categorical colours (bars, lines, series). Chosen by the user 2026-11-03 (option Q1 in
+# sandbox/test_palette_picture.py): picture palette (gold/teal/navy/plum) + orange, red, tuned for colour-blind
+# readers (OKLab dE x100 >= ~10 between neighbours under simulated deutan/protan/tritan, Machado et al. 2009).
+# Use the colours IN ORDER (teal, navy, plum, red, orange, gold); gold is reserved for totals/sums when a chart
+# has one. Maps keep their diverging colormap (RdBu_r).
+TEAL, NAVY, PLUM, RED, ORANGE, GOLD = "#5D9A92", "#2C3990", "#9A4A84", "#BC423E", "#DE7A3A", "#EBC45C"
+LIGHT_GREY = "#CCCCCC"   # residual / 'other' / not-applicable series (mid grey looks like teal under CVD)
+PALETTE = {"teal": TEAL, "navy": NAVY, "plum": PLUM, "red": RED, "orange": ORANGE, "gold": GOLD}
+PALETTE_ORDER = [TEAL, NAVY, PLUM, RED, ORANGE, GOLD]
+TOTAL_COLOR = GOLD
+# Two-group pairs used throughout: PD / FUT, unmodified / modified cells, CTRL / LCC
+PD_COLOR, FUT_COLOR = NAVY, RED
