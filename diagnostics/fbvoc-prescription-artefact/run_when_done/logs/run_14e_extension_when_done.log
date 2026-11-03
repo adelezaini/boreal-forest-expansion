@@ -1,0 +1,7 @@
+2026-11-03 20:48:14 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787416, archive 1787417)
+2026-11-03 20:58:14 archive job: CANCELLED, atm h0 files 2000-2007: 36
+2026-11-03 20:58:14 ERROR: archive job state CANCELLED
+--- restart 2026-11-03 21:23:53: resubmitted as 1787427/1787428
+2026-11-03 21:23:53 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787427, archive 1787428)
+--- restart 2026-11-03 21:33:31: resubmitted as 1787434/1787435 (--exclude=b5165,b5175,b5179,b5180)
+2026-11-03 21:33:31 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787434, archive 1787435)

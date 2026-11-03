@@ -9,6 +9,7 @@ Aliases follow the chain figure. Every run, with case names, versions (old / COâ
 **Present day (PD)**
 - PD_spinup: `11-NF2000norbc_tropstratchem_spinup_f19_f19.sh` (20-yr coupled spin-up; its cpl history = CPLHIST_PD)
 - MET: `12a-NF2000norbc_tropstratchem_met_f19_f19.sh` (u, v for nudging all PD and FUT nudged runs)
+- MET extension: `12d-NF2000norbc_tropstratchem_met_ext_f19_f19.sh test|production` (same case name as MET, branch from its 2015-01-01 restart â†’ 2026-01-02; `test` = 10-day reproduction test from 2010-01-01, check with `preprocess/nudging/check_met_reproduction.py`; then `preprocess/nudging/copy-nudging-data-to-inputForNudging-directory-2000-2025.sh` builds the `_6h_2000-2025` folder)
 - LCC_PD_landonly_spinup: `12b-NF2000norbc_tropstratchem_landonly_spinup_lcc_f19_f19.sh` (100 yr, CPLHIST_PD forcing)
 - CTRL_PD_landonly_spinup: `12c-NF2000norbc_tropstratchem_landonly_spinup_ctrl_f19_f19.sh` (CTRL twin of 12b)
 - CTRL_PD_spinup: `13c-NF2000norbc_tropstratchem_spinup_ctrl_f19_f19.sh` (20 yr, land from 12c)

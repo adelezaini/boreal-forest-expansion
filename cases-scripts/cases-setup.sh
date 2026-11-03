@@ -261,6 +261,90 @@ EOF
 
 }
 
+cam_met_diagnostics(){
+# MET extension (12d) and its reproduction test: the nudging tape h1 of
+# cam_generate_nudging_data, plus a minimal h0 with the cam_spinup_diagnostics
+# fields (user 2026-11-03). The two functions can't be called together: both set
+# mfilt/nhtfrq. History output only, no effect on the model state.
+cat << EOF >> user_nl_cam
+empty_htapes = .true.
+mfilt = 1, 4
+nhtfrq = 0, -6
+avgflag_pertape = 'A','I'
+
+fincl1 = 'TREFHT','PSL','PRECT','PS','U10','V10','FSNT','FLNT','FSNS','FLNS','FSNSC','FLNSC',
+    'FLUTC','FSNT_DRF','FLNT_DRF','FSNTCDRF','FLNTCDRF','CLOUD','CLDTOT','LANDFRAC', 'TS', 'FLUT',
+    'SF6', 'CFC115', 'N2O', 'CO2', 'CH4'
+fincl2 = 'PS','U','V','T','Q'
+EOF
+}
+
+stage_branch_restart(){
+# Copy and unzip only the restart files (+ rpointers) of an archived restart
+# folder, no history files (a staged h1 with the same name as the new run's
+# output would be linked into the run dir).
+# Usage: stage_branch_restart <archived rest/YYYY-MM-DD-00000> <local dir>
+    local src="$1" dst="$2"
+    [[ -d "$src" ]] || { echo "ERROR: missing restart folder: $src" >&2; return 1; }
+    mkdir -p "$dst" || return 1
+    rsync -havP --exclude='*.h0.*' --exclude='*.h1.*' --exclude='*.h0[a-z]*' "$src"/ "$dst"/ || return 1
+    if find "$dst" -maxdepth 1 -name '*.gz' -print -quit | grep -q .; then
+        gunzip -fv "$dst"/*.gz || return 1
+    fi
+    echo "Restart files staged in $dst:"; ls "$dst"
+}
+
+compare_xml_to_archived_case(){
+# Compare case XML settings that change the model (build, PEs, forcing) with an
+# archived case. Returns 1 on any difference. Call from the case dir after case.setup.
+# Usage: compare_xml_to_archived_case <archived case dir>
+    local ref="$1" v a b bad=0
+    for v in COMPSET COMPILER MPILIB DEBUG CAM_CONFIG_OPTS CAM_NAMELIST_OPTS CAM_AEROCOM \
+             CLM_BLDNML_OPTS CLM_NAMELIST_OPTS CLM_CONFIG_OPTS CCSM_CO2_PPMV \
+             SSTICE_DATA_FILENAME SSTICE_YEAR_ALIGN SSTICE_YEAR_START SSTICE_YEAR_END OCN_FLUX_SCHEME \
+             ATM_NCPL LND_NCPL NTASKS NTHRDS ROOTPE PSTRID; do
+        a=$(./xmlquery --caseroot "$ref" --value "$v" 2>/dev/null || echo "<n/a>")
+        b=$(./xmlquery --value "$v" 2>/dev/null || echo "<n/a>")
+        if [[ "$a" != "$b" ]]; then
+            echo "XML DIFF $v:"; echo "  archived: $a"; echo "  this case: $b"; bad=1
+        fi
+    done
+    [[ $bad -eq 0 ]] && echo "XML build/PE/forcing settings match $ref."
+    return $bad
+}
+
+_flat_namelist(){
+# One "key = value" per line (continuation lines joined, whitespace squeezed), sorted.
+    awk '
+        /^[[:space:]]*[&\/!]/ { next }
+        /^[[:space:]]*[A-Za-z0-9_%()]+[[:space:]]*=/ { if (line != "") print line; line = $0; next }
+        NF { line = line " " $0 }
+        END { if (line != "") print line }
+    ' "$1" | sed -E 's/[[:space:]]+/ /g; s/^ //; s/ = /=/' | sort
+}
+
+compare_namelists_to_archived_case(){
+# Compare this case's CaseDocs/*_in with an archived case's CaseDocs, key by key.
+# Keys matching the allowed ERE (expected differences, e.g. history output,
+# restart/branch settings) are listed but don't count. Returns 1 if any other key
+# differs. Call after ./preview_namelists, from the case dir.
+# Usage: compare_namelists_to_archived_case <archived CaseDocs> <allowed key ERE>
+    local ref="$1" allowed="$2" f bad=0 d hard
+    for f in atm_in lnd_in ice_in docn_in drv_in drv_flds_in mosart_in; do
+        [[ -f "$ref/$f" ]] || continue
+        [[ -f "CaseDocs/$f" ]] || { echo "MISSING CaseDocs/$f"; bad=1; continue; }
+        d=$(diff <(_flat_namelist "$ref/$f") <(_flat_namelist "CaseDocs/$f") | grep -E '^[<>]' || true)
+        [[ -z "$d" ]] && continue
+        hard=$(echo "$d" | grep -v -E "^[<>] ($allowed)=" || true)
+        echo "== $f: expected differences:"; echo "$d" | grep -E "^[<>] ($allowed)=" | cut -c1-200 || true
+        if [[ -n "$hard" ]]; then
+            echo "== $f: UNEXPECTED differences:"; echo "$hard" | cut -c1-300; bad=1
+        fi
+    done
+    [[ $bad -eq 0 ]] && echo "Namelists match $ref except the expected keys."
+    return $bad
+}
+
 setup_nudging_data () {
     local CASENAME=NF2000norbc_tropstratchem_met_f19_f19_20260422
 
