@@ -29,3 +29,14 @@ data/raw/LPJ-GUESS/*.txt
 # Large data
 # data/surfdatamap/surfdata_1.9x2.5_hist_78pfts_CMIP6_simyr2000_c190304.nc
 /cluster/home/adelez/BOREAL-FOREST-EXPANSION/diagnostics/check-spinup-equilibrium/equilibrium_output/*
+
+# sandbox test figures (also embedded in the notebooks)
+sandbox/*_outputs/
+
+# Archived pre-CO2-fix figures (kept on disk only; the commit that made them is in history)
+results/figures-2001-2014-all-bvoc-pre-co2-fix/
+
+# Runtime files of watcher scripts and sandbox test runs
+**/pids/
+*.pid
+sandbox/*_outputs.log
