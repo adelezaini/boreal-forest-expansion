@@ -1,0 +1,7 @@
+group,cells,n,change > 1 %,max change
+isoprene,all cells,3188,334,5.8634868518639065
+isoprene,≥ 45°N,1040,1,0.014061037929890663
+isoprene,B cells (one patch > 90 %),257,4,0.02645360040803446
+MTERP,all cells,3205,0,1.7763568394002505e-15
+MTERP,≥ 45°N,1040,0,1.7763568394002505e-15
+MTERP,B cells (one patch > 90 %),258,0,1.5543122344752192e-15

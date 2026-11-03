@@ -1,0 +1,11 @@
+test,min,max
+"E / (k ε GAMMA) per patch-step, isoprene",0.9999999999999994,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, pinene_a",0.9999999999999994,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, carene_3",0.9999999999999994,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, pinene_b",0.9999999999999996,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, myrcene",0.9999999999999996,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, limonene",0.9999999999999994,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, ocimene_t_b",0.9999999999999996,1.0000000000000002
+"E / (k ε GAMMA) per patch-step, sabinene",0.9999999999999996,1.0000000000000002
+"γ_eff / GAMMA, cells with one valid patch (n=5), isoprene",0.9999999999999991,1.0000000000000002
+"γ_eff / GAMMA, cells with one valid patch (n=5), MTERP",0.9999999999999994,1.0000000000000002

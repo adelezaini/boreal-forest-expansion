@@ -1,0 +1,5 @@
+compound,rebuild,cells,max |h0/rebuild − 1|,max in lake cells (>1 %),lake cells
+isoprene,valid patches only (f_true),4089,4.1300296516055823e-14,4.085620730620576e-14,1204
+isoprene,lake counted as EPS = 0,4089,547.3515684256357,547.3515684256357,1204
+pinene_a,valid patches only (f_true),4089,4.107825191113079e-14,4.0967229608668276e-14,1204
+pinene_a,lake counted as EPS = 0,4089,547.3515684256188,547.3515684256188,1204
