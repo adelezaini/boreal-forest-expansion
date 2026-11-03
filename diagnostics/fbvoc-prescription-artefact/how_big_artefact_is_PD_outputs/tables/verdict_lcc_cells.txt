@@ -1,0 +1,6 @@
+LCC cells
+SOA_cb   δ_PD = -0.34 % (years -1.68, +1.01), BVOC_B = +0.20 % (years +2.00, -1.60), BVOC_A = -0.14 %  -> R = 1.69  [BVOC_B not resolved]
+SFISOP   δ_PD = -0.84 % (years -2.73, +1.04), BVOC_B = +6.97 % (years +8.41, +5.52), BVOC_A = +6.12 %  -> R = 0.12
+SFMTERP  δ_PD = -1.08 % (years -0.60, -1.55), BVOC_B = +1.81 % (years +1.31, +2.31), BVOC_A = +0.73 %  -> R = 0.60
+
+SOA_cb verdict: NOT RESOLVED: the SOA_cb BVOC effect changes sign between years, so R cannot be judged; more years are needed

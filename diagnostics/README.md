@@ -23,7 +23,6 @@ Their results describe those runs and are **not** results for the current setup.
 | `check-simulation-equilibrium/check_case_equilibrium-CTRL_{PD,FUT}.ipynb` | CTRL_PD/FUT `-20260925`; 2000–2009 |
 | `check-simulation-equilibrium/check_CTRL_FUT_vs_LCC_FUT_vegetation_state.ipynb` | CTRL_FUT `-20260925`; LCC_FUT `-20261005`; old spin-ups; 2001–2009 |
 | `check-simulation-equilibrium/check-CO2-bug-in-spinups/check_CO2_bug_in_land_only_six_variables.ipynb` | CTRL_PD/FUT `-20260925`; LCC_PD/FUT `-20261005`; old spin-ups; 2001–2009 |
-| `impact-of-nudging-on-land/impact_of_nudging_on_land.ipynb` | CTRL_PD/FUT `-20260925`; LCC_PD/FUT `-20261005`; MET; old spin-ups; 2001–2009 |
 
 **Paths, 2026-10-28.** The CTRL `-20260925` and `_IM` runs were moved on NIRD to `BRL-FRST-XPSN_archive/c-before-all-bvoc/`. The notebooks now read from there, and from NIRD instead of `/cluster/work`, which is purged. LCC `-20261005` was later extended to 2014, so the notebooks keep the nudged runs to 2000–2009: an `h0.200*` glob or a `NUDGED_YEARS` filter. The notebooks were **not rerun** after these path changes. The saved outputs are those of the original runs.
 
@@ -54,3 +53,11 @@ Their results describe those runs and are **not** results for the current setup.
 | Notebook | Runs read | What |
 |---|---|---|
 | `check-simulation-equilibrium/check_CTRL_FUT_vs_LCC_FUT_vegetation_state-after-co2-fix.ipynb` | new chain: shared FUT spin-up `-3`; land-only CTRL/LCC `-20261023`; coupled spin-ups `-20261025`; CTRL_FUT/LCC_FUT `-20261028`; 2001–2014 | new-chain twin of `check_CTRL_FUT_vs_LCC_FUT_vegetation_state.ipynb` (kept as the old-chain record) + §D paired test/FDR by region and old vs new. Unmodified land: ΔTLAI/TOTVEGC/TOTECOSYSC/GPP ≤ 0.15 % (old: −11 to −34 %); pools flagged by the paired test because their yearly Δ is persistent |
+
+## Contrast maps: LCC effect, FUT emission source, PD → FUT (2026-11-03)
+
+| Notebook | Runs read | What |
+|---|---|---|
+| `lcc-bvoc-background-contrast-maps/contrast_maps_uncorrected.ipynb` | processed files 2001–2014, new chain: CTRL_PD `-20261029`; LCC_PD, CTRL_FUT, LCC_FUT `-20261028`; LCC_PD_fBVOCctrlPD, LCC_FUT_fBVOC{ctrlPD,ctrlFUT,lccPD} `-20261031` | map grids (rows = contrasts, columns = radiation / BVOC→SOA→cloud / surface variables) for Q1 LCC effect in each background (6 contrasts), Q2 FUT BVOC emission source (4), Q3 PD → FUT (3); **raw differences, no artefact correction**; regional-mean table and additivity check of the contrast identities |
+
+**Moved to the new chain (2026-11-03, user request):** `impact-of-nudging-on-land/impact_of_nudging_on_land.ipynb` now reads CTRL_PD `-20261029`, LCC_PD/CTRL_FUT/LCC_FUT `-20261028`, their coupled spin-ups (`-20261025/26`), MET and the shared spin-ups; 2001–2014. The old-chain version (CTRL `-20260925`, LCC `-20261005`, 2001–2009) is in git (commit `2f2e672`), its outputs in `impact_of_nudging_on_land_outputs/pre_co2_fix/`.

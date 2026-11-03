@@ -1,0 +1,9 @@
+alias,case,first,last,n_months
+CTRL_FUT,NF2100ssp585norbc_tropstratchem_nudg_ctrl_f19_f19-20261028,2001-01,2014-12,168
+CTRL_PD,NF2000norbc_tropstratchem_nudg_ctrl_f19_f19-20261029,2001-01,2014-12,168
+LCC_FUT,NF2100ssp585norbc_tropstratchem_nudg_lcc_f19_f19-20261028,2001-01,2014-12,168
+LCC_FUT_fBVOCctrlFUT,NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19-20261031,2001-01,2014-12,168
+LCC_FUT_fBVOCctrlPD,NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19-20261031,2001-01,2014-12,168
+LCC_FUT_fBVOClccPD,NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031,2001-01,2014-12,168
+LCC_PD,NF2000norbc_tropstratchem_nudg_lcc_f19_f19-20261028,2001-01,2014-12,168
+LCC_PD_fBVOCctrlPD,NF2000norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19-20261031,2001-01,2014-12,168
