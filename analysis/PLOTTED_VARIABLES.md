@@ -185,7 +185,7 @@ These show `100 × (LCC − LCC_fBVOC) / mean(LCC_fBVOC)` for each year. Cells w
 **Regional means for these charts:**
 - They use true cell area: CAM from `gw`, CLM from `area`.
 - CLM fields are weighted by area × land fraction.
-- Regions: `≥45°N`; `modified cells` (LCC-modified cells, `diagnostics/check-simulation-equilibrium/lcc-modified-cells/modified_cells.nc`); `unmodified land ≥45°N`; and four source boxes (Alaska/W Canada, E Canada, Europe, Siberia).
+- Regions: `≥45°N`; `modified cells` (LCC-modified cells, `diagnostics/lcc-modified-cells/modified_cells.nc`); `unmodified land ≥45°N`; and four source boxes (Alaska/W Canada, E Canada, Europe, Siberia).
 
 **Variables not listed in §2–§6:**
 
