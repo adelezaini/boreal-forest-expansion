@@ -13,12 +13,15 @@
 # Subset of species: sbatch --array=0,1 ...   (index = position in VARS below)
 # Work files (staged_work, purged after 42 days): $OUTPUT_PATH (default /cluster/work/users/adelez/bvoc-emissions).
 # The final file is then moved (copy, never overwritten + cmp, then the work copy is deleted) to $FINAL_DIR (default /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions),
-# where the fBVOC runs read it. For FUT targets relabel there afterwards:
+# where the fBVOC runs read it.
+# Input root: $NORESM_ARCHIVE (default /cluster/work/users/adelez/archive = the builder's default);
+#   LCC_FUT_HRBVOC uses the merged tree from merge_lcc_fut_hrbvoc.sh. For FUT targets relabel there afterwards:
 #   bash create_bvoc_emissions_for_year_2100.sh CASE_START-END
 set -euo pipefail
 
 CASE="$1"; START_YEAR="$2"; END_YEAR="$3"
 OUTPUT_PATH="${OUTPUT_PATH:-/cluster/work/users/adelez/bvoc-emissions}"
+NORESM_ARCHIVE="${NORESM_ARCHIVE:-/cluster/work/users/adelez/archive}"
 FINAL_DIR="${FINAL_DIR:-/cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions}"
 VARS=(SFISOP SFMTERP MEG_BCARY MEG_C3H6 MEG_BIGENE MEG_CH3CHO MEG_CH2O MEG_C2H4
       MEG_CH3OH MEG_C2H5OH MEG_CH3COOH MEG_CH3COCH3 MEG_HCOOH MEG_HCN MEG_CO
@@ -32,7 +35,7 @@ cd "$SLURM_SUBMIT_DIR"
 echo "$CASE $START_YEAR-$END_YEAR $VAR -> $OUTPUT_PATH"
 for stage in concat climatology; do
     python3 create_bvoc_emissions_climatology_staged.py "$CASE" "$START_YEAR" "$END_YEAR" "$VAR" \
-        --calendar noleap --stage "$stage" --output-path "$OUTPUT_PATH"
+        --calendar noleap --stage "$stage" --output-path "$OUTPUT_PATH" --path "$NORESM_ARCHIVE"
 done
 final="ems_${CASE}_${START_YEAR}-${END_YEAR}_${VAR}.nc"
 cp -n "$OUTPUT_PATH/$final" "$FINAL_DIR/"

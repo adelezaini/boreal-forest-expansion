@@ -9,7 +9,7 @@ Aliases follow the chain figure. Every run, with case names, versions (old / CO�
 **Present day (PD)**
 - PD_spinup: `11-NF2000norbc_tropstratchem_spinup_f19_f19.sh` (20-yr coupled spin-up; its cpl history = CPLHIST_PD)
 - MET: `12a-NF2000norbc_tropstratchem_met_f19_f19.sh` (u, v for nudging all PD and FUT nudged runs)
-- MET extension: `12d-NF2000norbc_tropstratchem_met_ext_f19_f19.sh test|production` (same case name as MET, branch from its 2015-01-01 restart → 2026-01-02; `test` = 10-day reproduction test from 2010-01-01, check with `preprocess/nudging/check_met_reproduction.py`; then `preprocess/nudging/copy-nudging-data-to-inputForNudging-directory-2000-2025.sh` builds the `_6h_2000-2025` folder)
+- MET extension: `12d-NF2000norbc_tropstratchem_met_ext_f19_f19.sh test|production` (same case name as MET, branch from its 2015-01-01 restart → 2026-01-02; `test` = 10-day reproduction test from 2010-01-01, check with `preprocess/nudging/check_met_reproduction.py`; then `preprocess/nudging/copy-nudging-data-to-inputForNudging-directory-2000-2025.sh` builds the `_6h_2000-2025` folder, regrouping the branch-run h1 files (06 h → next day 00 h) into calendar days with `regroup_met_ext_days.py`; watcher `preprocess/nudging/met_ext_watch_and_build.sh` does it after each segment and reruns a failed st_archive on the login node)
 - LCC_PD_landonly_spinup: `12b-NF2000norbc_tropstratchem_landonly_spinup_lcc_f19_f19.sh` (100 yr, CPLHIST_PD forcing)
 - CTRL_PD_landonly_spinup: `12c-NF2000norbc_tropstratchem_landonly_spinup_ctrl_f19_f19.sh` (CTRL twin of 12b)
 - CTRL_PD_spinup: `13c-NF2000norbc_tropstratchem_spinup_ctrl_f19_f19.sh` (20 yr, land from 12c)
@@ -32,6 +32,7 @@ Aliases follow the chain figure. Every run, with case names, versions (old / CO�
 - LCC_FUT_fBVOCctrlFUT: `24c-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19.sh` (from 23b; all 19 species from CTRL_FUT, relabelled to 2100)
 - LCC_PD_fBVOClccPD: `14e-NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19.sh` (LCC land, its own LCC_PD emissions prescribed; 3 yr 2000–2002, user 2026-10-30; test of the matched-baseline assumption; auto-launched after the LCC_PD climatology)
 - CTRL_FUT_fBVOCctrlFUT: `24e-NF2100ssp585norbc_tropstratchem_nudg_ctrl_fBVOCctrlFUT_f19_f19.sh` (CTRL land + restart as CTRL_FUT, its own emissions prescribed → FUT artefact art_FUT; 15 yr, auto-launched with 24c, user 2026-10-30). Not the same as `tests/24e-…` (= 1-day test of 24d)
+- LCC_FUT_HRBVOC: `24f-NF2100ssp585norbc_tropstratchem_nudg_lcc_HRBVOC_f19_f19.sh s1|s2|s3` (output-only rerun of LCC_FUT -20261028 writing the 30-min BVOC h1 (`cam_diagnostics HR_BVOC_ONLY`), for a possible LCC_FUT_fBVOClccFUT; 3 parallel 5-yr segments: s1 hybrid 2000-04, s2/s3 branch from LCC_FUT 2005/2010; same-model check before build; merge with `preprocess/bvoc-emissions/merge_lcc_fut_hrbvoc.sh`; user 2026-11-04)
 - LCC_FUT_fBVOClccPD: `24d-NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19.sh` (from 23b; all 19 species from LCC_PD, relabelled to 2100; needs an LCC_PD run with HR_BVOC_ALL; set LCC_PD_CASE)
 
 **ISOP/MTERP only (`just-ISOP-MTERP/`, on hold: `exit 1` at the top)**
@@ -58,6 +59,7 @@ Suffix `_fBVOC<source run>` = run the prescribed emissions come from; `_IM` = IS
 
 ### Extensions (2010-2014, continue runs within nudging data 2000-2015):
 - `extend_nudg_runs_2010-2014.sh` (comment in/out the cases to extend)
+- `extend_nudg_runs_2015-2025.sh phase1|phase2 [--check]` (10 new-chain nudged runs, 2015-01-01 → 2020-01-01 → 2026-01-01 with the `_6h_2000-2025` MET folder; switches `user_nl_cam` and the met path stored in the run-dir restart, `switch_case_to_met_2000_2025` in `cases-setup.sh`; excludes the b5xxx nodes)
 
 ### Quick LCC spin-ups (preliminary, superseded; no land-only step): `quick-spinups/`
 - LCC_PD_quick_spinup: `quick-spinups/13bx-NF2000norbc_tropstratchem_quick_spinup_lcc_f19_f19.sh`
