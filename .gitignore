@@ -33,8 +33,9 @@ data/raw/LPJ-GUESS/*.txt
 # sandbox test figures (also embedded in the notebooks)
 sandbox/*_outputs/
 
-# Archived pre-CO2-fix figures (kept on disk only; the commit that made them is in history)
+# Archived pre-CO2-fix and MEGAN pre lake correction figures 
 results/figures-2001-2014-all-bvoc-pre-co2-fix/
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/figures/megan_factors/before_lake_fix
 
 # Runtime files of watcher scripts and sandbox test runs
 **/pids/
