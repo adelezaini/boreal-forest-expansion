@@ -1,4 +1,4 @@
-Global   SOA_cb: δ_PD = +1.06 % (years +0.85, +1.26), BVOC_B = -1.30 %, BVOC_A = -0.39 %  -> R = 0.81
-45–90°N  SOA_cb: δ_PD = -0.22 % (years -1.55, +1.11), BVOC_B = -0.07 %, BVOC_A = -0.42 %  -> R = 2.98
+Global   SOA_cb: δ_PD = +0.49 % (years +0.85, +1.26, +0.61, -0.18, +0.66, +0.52, -0.33), BVOC_B = -0.90 %, BVOC_A = -0.52 %  -> R = 0.54
+45–90°N  SOA_cb: δ_PD = +0.51 % (years -1.55, +1.11, +1.43, -0.03, +1.31, +1.41, -0.13), BVOC_B = -1.15 %, BVOC_A = -0.73 %  -> R = 0.44
 
 ARTEFACT DEPENDS ON THE LAND: design A in FUT is worth it

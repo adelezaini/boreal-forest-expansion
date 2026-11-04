@@ -1,6 +1,6 @@
 north of 45°N
-SOA_cb   δ_PD = -0.25 % (years -1.55, +1.05), BVOC_B = -0.18 % (years +1.54, -1.91), BVOC_A = -0.43 %  -> R = 1.35  [BVOC_B not resolved]
-SFISOP   δ_PD = -0.73 % (years -1.46, +0.01), BVOC_B = +3.97 % (years +4.49, +3.46), BVOC_A = +3.25 %  -> R = 0.18
-SFMTERP  δ_PD = -1.04 % (years -0.72, -1.36), BVOC_B = +1.78 % (years +1.43, +2.12), BVOC_A = +0.73 %  -> R = 0.59
+SOA_cb   δ_PD = +0.49 % (years -1.55, +1.05, +1.37, -0.05, +1.30, +1.41, -0.12), BVOC_B = -1.24 % (years +1.54, -1.91, -2.50, -1.45, -2.58, -1.46, -0.30), BVOC_A = -0.75 %  -> R = 0.39  [BVOC_B not resolved]
+SFISOP   δ_PD = -0.39 % (years -1.46, +0.01, -0.27, -0.61, -0.13, -0.19, -0.06), BVOC_B = +3.47 % (years +4.49, +3.46, +3.44, +3.71, +3.04, +2.99, +3.16), BVOC_A = +3.08 %  -> R = 0.11
+SFMTERP  δ_PD = -0.47 % (years -0.72, -1.36, -0.69, -0.53, -0.22, +0.03, +0.24), BVOC_B = +1.17 % (years +1.43, +2.12, +1.40, +1.23, +0.91, +0.63, +0.47), BVOC_A = +0.70 %  -> R = 0.40
 
 SOA_cb verdict: NOT RESOLVED: the SOA_cb BVOC effect changes sign between years, so R cannot be judged; more years are needed
