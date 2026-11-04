@@ -35,7 +35,8 @@ sandbox/*_outputs/
 
 # Archived pre-CO2-fix and MEGAN pre lake correction figures 
 results/figures-2001-2014-all-bvoc-pre-co2-fix/
-/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/figures/megan_factors/before_lake_fix
+results/tables-2001-2014-all-bvoc-pre-co2-fix
+results/figures/megan_factors/before_lake_fix
 
 # Runtime files of watcher scripts and sandbox test runs
 **/pids/
