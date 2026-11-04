@@ -1,6 +1,6 @@
 # analysis/
 
-Paper notebooks. Plotting code: `src/boreal_forest_expansion/plotting/forcing_maps.py`. Figures go to `results/figures/`, tables to `results/tables/`.
+Paper notebooks. Plotting code: `src/boreal_forest_expansion/plotting/forcing_maps.py`. Figures go to `results/figures/<contrast>/` (`LCC-CTRL/`, `CTRL_FUT-CTRL_PD/`, `fBVOC/…`, `megan_factors/`, `timeseries/`; see `results/README.md`), tables to `results/tables/` (uncorrected fBVOC: `tables/pre-artefact-correction/`, design B: `tables/artefact-design-B/`).
 Run with `$PY results/tables/logs/run_nb_inplace.py analysis/<nb>.ipynb` (outputs saved in the notebook).
 Variables in each figure (subtitle, variable, category, calculation): `PLOTTED_VARIABLES.md`.
 
@@ -18,6 +18,6 @@ Variables in each figure (subtitle, variable, category, calculation): `PLOTTED_V
 
 **Current set (2026-10-28):** 2001–2014, all-species fBVOC (`LCC_*_fBVOCctrlPD`), CTRL `-20261023`, LCC `-20261005`, old spin-up chain; outputs named `*_2001_2014`; figures that involve an fBVOC run name it (`PD_fBVOCctrlPD_…`, `FUT_fBVOCctrlPD_…`, `FUT_fBVOCctrlFUT_…`, Ghan `LCC-fBVOCctrlPD`). The 2001–2009 `_IM` outputs (`*_2001_2009`) are kept. The fBVOC − CTRL contrast was dropped (user 2026-10-28).
 
-**Artefact correction (2026-11-03):** outputs with an uncorrected fBVOC contrast (69 figures, the cumulative-decomposition folder, all 8 `*_2001_2014` tables) moved to `results/{figures,tables}/pre-artefact-correction/`; pure LCC − CTRL / CTRL_FUT − CTRL_PD outputs stay. Corrected contrasts: `forcing_maps.VirtualRun`, `corrected_fbvoc`, `CORRECTED_PAIRS` (see `results/README.md`). The notebooks above still show the uncorrected figures in their saved outputs.
+**Artefact correction (2026-11-03):** outputs with an uncorrected fBVOC contrast (69 figures, the cumulative-decomposition folder, all 8 `*_2001_2014` tables) moved to `results/{figures,tables}/pre-artefact-correction/` (figures since 2026-11-04 in `results/figures/fBVOC/pre-artefact-correction/`); pure LCC − CTRL / CTRL_FUT − CTRL_PD outputs stay. Corrected contrasts: `forcing_maps.VirtualRun`, `corrected_fbvoc`, `CORRECTED_PAIRS` (see `results/README.md`). The notebooks above still show the uncorrected figures in their saved outputs.
 
 `forcing_maps.ipynb` was split into the first two notebooks (2026-10-25). Its first-round figures are in `results/figures/first-round/`.

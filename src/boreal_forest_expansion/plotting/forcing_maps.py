@@ -53,6 +53,33 @@ REPO_DIR = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 POSTPROCESSED_DIR = REPO_DIR / "data" / "processed-data" / "postprocessing"
 
 FIGURE_DIR = REPO_DIR / "results" / "figures"
+# Figure folders by contrast (user 2026-11-04). fBVOC/ itself is for the design-A artefact correction.
+FIG_LCC_CTRL = FIGURE_DIR / "LCC-CTRL"
+FIG_BACKGROUND = FIGURE_DIR / "CTRL_FUT-CTRL_PD"
+FIG_FBVOC = FIGURE_DIR / "fBVOC"
+FIG_FBVOC_PRE = FIG_FBVOC / "pre-artefact-correction"   # LCC − LCC_fBVOC*, no artefact correction
+FIG_FBVOC_B = FIG_FBVOC / "artefact-design-B"           # analysis/artefact-corrected-split.ipynb
+TABLE_DIR = REPO_DIR / "results" / "tables"
+TABLE_FBVOC_PRE = TABLE_DIR / "pre-artefact-correction"
+TABLE_FBVOC_B = TABLE_DIR / "artefact-design-B"
+
+
+def figure_path(figdir: Path | None, filename: str) -> Path:
+    """Save path of a figure; creates the folder.
+
+    figdir=None routes by the contrast tag in the file name: "CTRLFUT-CTRLPD" -> CTRL_FUT-CTRL_PD/,
+    "LCC-CTRL" or the CTRL baseline (seasonal_cloud_types_ctrl) -> LCC-CTRL/, anything else (all other
+    default-saved figures contain an LCC − LCC_fBVOC contrast) -> fBVOC/pre-artefact-correction/.
+    """
+    if figdir is None:
+        if "CTRLFUT-CTRLPD" in filename:
+            figdir = FIG_BACKGROUND
+        elif "LCC-CTRL" in filename or filename.startswith("seasonal_cloud_types_ctrl"):
+            figdir = FIG_LCC_CTRL
+        else:
+            figdir = FIG_FBVOC_PRE
+    figdir = Path(figdir)
+    return figdir / filename
 
 
 # =============================================================================
@@ -1010,7 +1037,7 @@ def make_forcing_summary_figure(
     map_size: float | None = None,
     col_gap: float | None = None,
     save: bool = True,
-    figdir: Path = FIGURE_DIR,
+    figdir: Path | None = None,
     dpi: int = 300,
     cmap: str = "RdBu_r",
     add_cbar: bool = True,
@@ -1086,9 +1113,8 @@ def make_forcing_summary_figure(
                  mean_lat_min, y=_suptitle_y(fig))
 
     if save:
-        figdir.mkdir(parents=True, exist_ok=True)
         suffix = f"_{scale_tag}" if scale_tag else ""
-        path = figdir / f"{experiment}_forcing_decomposition_{band}{suffix}_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"{experiment}_forcing_decomposition_{band}{suffix}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=transparent_background)
         print(f"Saved {path}")
 
@@ -1104,7 +1130,7 @@ def make_context_maps_figure(
     mean_lat_min: float | None = 45.0,
     ncols: int = 3,
     save: bool = True,
-    figdir: Path = FIGURE_DIR,
+    figdir: Path | None = None,
     dpi: int = 300,
     cmap: str = "RdBu_r",
     add_cbar: bool = True,
@@ -1157,8 +1183,7 @@ def make_context_maps_figure(
                  mean_lat_min, y=_suptitle_y(fig))
 
     if save:
-        figdir.mkdir(parents=True, exist_ok=True)
-        path = figdir / f"{experiment}_bvoc_context_maps_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"{experiment}_bvoc_context_maps_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
 
@@ -1223,7 +1248,7 @@ def make_ghan_figure(
     extent_lat: float = 45.0,
     mean_lat_min: float | None = 45.0,
     save: bool = True,
-    figdir: Path = FIGURE_DIR,
+    figdir: Path | None = None,
     dpi: int = 300,
     cmap: str = "RdBu_r",
     stipple: bool | str = True,
@@ -1270,12 +1295,12 @@ def make_ghan_figure(
     add_suptitle(fig, f"{kind}Ghan decomposition, {band}: {c1} − {c2} ({start_year}–{end_year})",
                  mean_lat_min, y=_suptitle_y(fig))
     if save:
-        figdir.mkdir(parents=True, exist_ok=True)
         if contrast == "bvoc":   # name the fBVOC run, e.g. LCC-fBVOCctrlPD (user 2026-10-28)
             tag = f"{short_alias(c1)}-{short_alias(c2)}"
         stem = f"{experiment}_ghan_{'seasonal_' if seasonal else ''}{tag}_{band}_{start_year}_{end_year}.png"
-        fig.savefig(figdir / stem, dpi=dpi, bbox_inches="tight")
-        print(f"Saved {figdir / stem}")
+        path = figure_path(figdir, stem)
+        fig.savefig(path, dpi=dpi, bbox_inches="tight")
+        print(f"Saved {path}")
     return fig, axes
 
 
@@ -1384,7 +1409,7 @@ def make_contrast_grid_figure(
     mean_lat_min: float | None = 45.0,
     map_size: float | None = None,
     save: bool = True,
-    figdir: Path = FIGURE_DIR,
+    figdir: Path | None = None,
     dpi: int = 200,
     cmap: str = "RdBu_r",
     stipple: bool | str = True,
@@ -1424,8 +1449,7 @@ def make_contrast_grid_figure(
     add_suptitle(fig, f"{title}: {CONTRAST_LABELS.get(contrast_set, contrast_set)} ({start_year}–{end_year})", mean_lat_min, fontsize=15,
                  y=_suptitle_y(fig))
     if save:
-        figdir.mkdir(parents=True, exist_ok=True)
-        path = figdir / f"contrast_grid_{name}_{contrast_set}_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"contrast_grid_{name}_{contrast_set}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1502,7 +1526,7 @@ def water_budget_table(start_year: int = 2001, end_year: int = 2014, conf: float
     return pd.DataFrame(rows)
 
 
-def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir: Path = FIGURE_DIR,
+def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir: Path | None = None,
                              dpi: int = 200, start_year: int = 2001, end_year: int = 2014):
     """Bars of the paired differences (± 95 % CI): one subplot per region, groups = contrasts."""
     t = table[table["contrast_set"] == contrast_set]
@@ -1527,7 +1551,7 @@ def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir
     fig.suptitle(f"Land water budget P − ET − R_liq − R_ice − ΔTWS, {CONTRAST_LABELS[contrast_set]} ({t['years'].iloc[0]})",
                  fontsize=12, fontweight="bold")
     if save:
-        path = figdir / f"water_budget_{contrast_set}_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"water_budget_{contrast_set}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1739,7 +1763,7 @@ TERM_STYLE = {"toa": (GHAN_TITLES["toa"], pal.TOTAL_COLOR), "dir": (GHAN_TITLES[
               "rest": (GHAN_TITLES["rest"], pal.PLUM), "albedo_proxy": ("albedo proxy (sfc)", "white")}
 
 
-def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=200,
+def make_radiative_budget_figure(t, save=True, figdir: Path | None = None, dpi=200,
                                  start_year=2001, end_year=2014):
     """Bars: rows = region x period, columns = NET / SW / LW; groups = budget_contrasts(period); ± 95 % CI."""
     s = summarize_years(t, ["period", "region", "contrast", "band", "term"])
@@ -1778,13 +1802,13 @@ def make_radiative_budget_figure(t, save=True, figdir: Path = FIGURE_DIR, dpi=20
     fig.suptitle(f"Radiative budget: LCC − CTRL, LCC − LCC_fBVOC, CTRL_FUT − CTRL_PD; mean ± 95 % CI over years "
                  f"({start_year}–{end_year})", fontsize=12, fontweight="bold")
     if save:
-        path = figdir / f"radiative_budget_contrasts_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"radiative_budget_contrasts_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
 
 
-def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir: Path = FIGURE_DIR, dpi=200,
+def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir: Path | None = None, dpi=200,
                              start_year=2001, end_year=2014):
     """Strip plot: each yearly regional difference (dot) + mean ± 95 % CI, per Ghan term and contrast."""
     sub = t[(t.region == region) & (t.band == band) & t.term.isin(GHAN_TERMS)]
@@ -1806,7 +1830,7 @@ def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir
     fig.suptitle(f"Paired yearly regional means ({region}, {start_year}–{end_year}): dots = years "
                  f"(blue PD, red FUT), diamond = mean ± 95 % t-interval", fontsize=11, fontweight="bold")
     if save:
-        path = figdir / f"paired_years_{band}_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"paired_years_{band}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1815,7 +1839,7 @@ def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir
 # ---------------------------------------------------------------- B: emissions / LAI origin
 
 def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMMA_isoprene", "GAMMAL"),
-                                save=True, figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2014):
+                                save=True, figdir: Path | None = None, dpi=200, start_year=2001, end_year=2014):
     """Monthly differences, modified vs unmodified land >=45N, early vs late years.
     Columns = period x budget_contrasts (LCC-CTRL, LCC-fBVOC; FUT also CTRL_FUT - CTRL_PD); MEGAN factors only exist with MEGAN on (not in fBVOC)."""
     cols = [(p, lab, c1, c2) for p in BVOC_PAIRS for lab, c1, c2 in budget_contrasts(p)]
@@ -1845,7 +1869,7 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
                  f"solid {EARLY_YEARS[0]}–{EARLY_YEARS[1]} (± 95 % CI), dashed {LATE_YEARS[0]}–{LATE_YEARS[1]}",
                  fontsize=11, fontweight="bold")
     if save:
-        path = figdir / f"emission_origin_monthly_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"emission_origin_monthly_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1854,7 +1878,7 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
 # ---------------------------------------------------------------- C + F: monthly chains
 
 def make_monthly_chain_figure(fields, columns, lines, name, title, context=None, save=True,
-                              figdir: Path = FIGURE_DIR, dpi=200, start_year=2001, end_year=2014, boxes=False):
+                              figdir: Path | None = None, dpi=200, start_year=2001, end_year=2014, boxes=False):
     """Rows = fields, columns = regions; lines = {label: (case1, case2, color, ls)} monthly differences
     (mean ± 95 % CI across years). `context` = optional field drawn as absolute climatology of `lines`' case2."""
     rows = list(fields) + ([context] if context else [])
@@ -1878,7 +1902,7 @@ def make_monthly_chain_figure(fields, columns, lines, name, title, context=None,
     axes[0, 0].legend(fontsize=7)
     fig.suptitle(title, fontsize=11, fontweight="bold")
     if save:
-        path = figdir / f"{name}_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1909,7 +1933,7 @@ def zonal_profile_difference(case1, case2, var, start_year=2001, end_year=2014, 
 
 def make_cloud_profile_figure(rows=None, fields=tuple(PROFILE_FIELDS), name="cloud_profile", months=None,
                               season="ANN", start_year=2001, end_year=2014, lat_min=45.0, p_top=150.0,
-                              fdr_alpha=0.10, save=True, figdir: Path = FIGURE_DIR, dpi=200):
+                              fdr_alpha=0.10, save=True, figdir: Path | None = None, dpi=200):
     """Rows = (case1, case2) contrasts, columns = 3-D cloud fields: latitude x pressure of the zonal-mean
     difference (mean over years). Hatched = NOT FDR-significant (paired yearly t-test, alpha_FDR within the panel).
     Dashed lines = the 700 / 400 hPa limits of low / mid / high cloud. Each panel has its own colourbar."""
@@ -1947,8 +1971,7 @@ def make_cloud_profile_figure(rows=None, fields=tuple(PROFILE_FIELDS), name="clo
     fig.suptitle(f"Zonal-mean cloud change, {season}, {lat_min:.0f}–90°N, all longitudes ({start_year}–{end_year}); "
                  f"hatched: not significant (FDR α={fdr_alpha})", fontsize=11, fontweight="bold")
     if save:
-        figdir.mkdir(parents=True, exist_ok=True)
-        path = figdir / f"{name}_{season}_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"{name}_{season}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1998,7 +2021,7 @@ PERCENT_PANELS = [   # (yearly field, category, title, minimum baseline for the 
 
 
 def make_percent_change_figure(start_year=2001, end_year=2014, extent_lat=45.0, save=True,
-                               figdir: Path = FIGURE_DIR, dpi=200, stipple=True, fdr_alpha=0.10):
+                               figdir: Path | None = None, dpi=200, stipple=True, fdr_alpha=0.10):
     """BVOC contrast (LCC - fBVOC) as % of the fBVOC baseline mean; rows PD/FUT. Cells with a baseline
     below the panel threshold are blank. Marked cells = not significant (paired t-test of the yearly % values, FDR)."""
     fig, axes = map_grid(2, len(PERCENT_PANELS), left=2.0)
@@ -2017,7 +2040,7 @@ def make_percent_change_figure(start_year=2001, end_year=2014, extent_lat=45.0, 
     add_suptitle(fig, f"LCC − LCC_fBVOC relative to LCC_fBVOC [%] ({start_year}–{end_year})",
                  extent_lat, fontsize=13, y=_suptitle_y(fig))
     if save:
-        path = figdir / f"bvoc_percent_change_maps_{start_year}_{end_year}.png"
+        path = figure_path(figdir, f"bvoc_percent_change_maps_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
