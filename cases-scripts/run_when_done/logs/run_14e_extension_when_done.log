@@ -1,0 +1,64 @@
+2026-11-03 20:48:14 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787416, archive 1787417)
+2026-11-03 20:58:14 archive job: CANCELLED, atm h0 files 2000-2007: 36
+2026-11-03 20:58:14 ERROR: archive job state CANCELLED
+--- restart 2026-11-03 21:23:53: resubmitted as 1787427/1787428
+2026-11-03 21:23:53 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787427, archive 1787428)
+--- restart 2026-11-03 21:33:31: resubmitted as 1787434/1787435 (--exclude=b5165,b5175,b5179,b5180)
+2026-11-03 21:33:31 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787434, archive 1787435)
+2026-11-04 14:43:32 archive job: FAILED, atm h0 files 2000-2007: 96
+2026-11-04 14:43:32 ERROR: archive job state FAILED
+--- restart 2026-11-04 14:44:22: archive 1787435 died on b5203 (exit 126); st_archive run by hand on login-3 14:40 (success) -> manual mode
+2026-11-04 14:44:22 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1787434, archive manual)
+2026-11-04 14:44:22 archive job: COMPLETED, atm h0 files 2000-2007: 96
+2026-11-04 14:47:12 copied to NIRD
+2026-11-04 14:47:12 waiting for postprocessing lock
+2026-11-04 14:47:16 old 2001-2002 files moved to /cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/processed-data/postprocessing/superseded/LCC_PD_fBVOClccPD_2001-2002
+OK     LCC_PD_fBVOClccPD atm AEROPT (179 s)
+OK     LCC_PD_fBVOClccPD atm RADIATIVE (181 s)
+OK     LCC_PD_fBVOClccPD atm BVOC (214 s)
+OK     LCC_PD_fBVOClccPD atm SULFATE (288 s)
+OK     LCC_PD_fBVOClccPD atm BVOCOX (322 s)
+OK     LCC_PD_fBVOClccPD lnd BVOC (166 s)
+OK     LCC_PD_fBVOClccPD atm METEO (358 s)
+OK     LCC_PD_fBVOClccPD atm CLOUDPROP (390 s)
+OK     LCC_PD_fBVOClccPD atm CHEM (394 s)
+OK     LCC_PD_fBVOClccPD lnd ENERGY (183 s)
+OK     LCC_PD_fBVOClccPD lnd LAND (226 s)
+OK     LCC_PD_fBVOClccPD lnd SNOW (172 s)
+OK     LCC_PD_fBVOClccPD lnd BIOGEOCHEM (209 s)
+OK     LCC_PD_fBVOClccPD lnd SURFEXCH (156 s)
+OK     LCC_PD_fBVOClccPD lnd ET (155 s)
+OK     LCC_PD_fBVOClccPD atm AERSIZE (537 s)
+OK     LCC_PD_fBVOClccPD lnd QA (154 s)
+OK     LCC_PD_fBVOClccPD atm SOA (559 s)
+OK     LCC_PD_fBVOClccPD lnd HYDRO (186 s)
+All done.
+2026-11-04 14:56:56 postprocessing done, 19 files
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (69s)
+--- cell 3 ok (49s)
+--- cell 5 ok (5s)
+--- cell 7 ok (0s)
+--- cell 9 ok (0s)
+--- cell 11 ok (0s)
+--- cell 13 ok (0s)
+--- cell 15 ok (0s)
+--- cell 17 ok (1s)
+--- cell 19 ok (0s)
+--- cell 21 ok (0s)
+--- cell 23 ok (26s)
+--- cell 25 ok (9s)
+--- cell 27 ok (24s)
+--- cell 29 ok (8s)
+--- cell 31 ok (16s)
+--- cell 33 ok (6s)
+--- cell 35 ok (16s)
+--- cell 37 ok (0s)
+--- cell 40 ok (2s)
+--- cell 42 ok (11s)
+--- cell 44 ok (4s)
+2026-11-04 15:02:09 notebook rerun
+CLAUDE.md: updated
+CLAUDE.md: updated
+run_aliases.csv: updated
+2026-11-04 15:02:10 finished

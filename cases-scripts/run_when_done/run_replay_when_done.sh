@@ -1,7 +1,7 @@
 #!/bin/bash
 # Waits for CTRL_PD_fBVOCctrlPD_HR (replay of CTRL_PD's actual 2000-2002 emissions; three 1-year jobs, auto resubmit),
 # postprocesses it from the work archive and reruns fbvoc_artefact_causes.ipynb (section H5; outputs saved in the notebook).
-# Usage (login node): nohup bash run_when_done/run_replay_when_done.sh CASENAME > run_when_done/logs/run_replay_when_done.log 2>&1 &
+# Usage (login node, from cases-scripts/): nohup bash run_when_done/run_replay_when_done.sh CASENAME > run_when_done/logs/run_replay_when_done.log 2>&1 &
 # Stop: kill the PID in run_when_done/pids/run_replay_when_done.pid.
 set -uo pipefail
 
@@ -11,7 +11,7 @@ RAW=/cluster/work/users/adelez/archive
 REPO=/cluster/home/adelez/BOREAL-FOREST-EXPANSION
 PY=/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/bin/python
 HERE=$REPO/diagnostics/fbvoc-prescription-artefact
-RWD=$HERE/run_when_done
+RWD=$REPO/cases-scripts/run_when_done   # moved from diagnostics/fbvoc-prescription-artefact/ 2026-11-04
 CASEROOT=$HOME/cases/BRL_FRST_XPSN/$CASE
 CATEGORIES="BVOC SOA CHEM CLOUDPROP RADIATIVE"
 mkdir -p "$RWD/logs" "$RWD/pids"

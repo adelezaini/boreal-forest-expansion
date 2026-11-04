@@ -8,7 +8,7 @@
 #   4. reruns how_big_artefact_is_PD.ipynb in place (its comparison years follow the processed span),
 #   5. updates the LCC_PD_fBVOClccPD (14e) row in CLAUDE.md and cases-scripts/run_aliases.csv (3 yr -> 8 yr).
 # Result: run_when_done/pids/run_14e_extension.{ok,err}; log run_when_done/logs/run_14e_extension_when_done.log.
-# Usage (login node): nohup bash run_when_done/run_14e_extension_when_done.sh RUN_JOBID ARCHIVE_JOBID >> run_when_done/logs/run_14e_extension_when_done.log 2>&1 &
+# Usage (login node, from cases-scripts/): nohup bash run_when_done/run_14e_extension_when_done.sh RUN_JOBID ARCHIVE_JOBID >> run_when_done/logs/run_14e_extension_when_done.log 2>&1 &
 # (job ids from the last 'case.submit success case.run:<id>, case.st_archive:<id>' line of the case's CaseStatus)
 # 2026-11-03: first submission 1787416 failed at start ('/usr/bin/env: python: Invalid argument', submitted from the
 # Claude/VS Code shell); resubmitted from a clean login environment: env -i HOME=$HOME USER=$USER bash -l -c './case.submit'.
@@ -27,7 +27,7 @@ PY=/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/bin/python
 PP=$REPO/data/processed-data/postprocessing
 OLD=$PP/superseded/${ALIAS}_2001-2002
 HERE=$REPO/diagnostics/fbvoc-prescription-artefact
-RWD=$HERE/run_when_done
+RWD=$REPO/cases-scripts/run_when_done   # moved from diagnostics/fbvoc-prescription-artefact/ 2026-11-04
 LOCK=/cluster/work/users/adelez/auto-launch/postprocess.lock   # shared with the auto-launcher's postprocessing
 mkdir -p "$RWD/logs" "$RWD/pids"
 echo $$ > "$RWD/pids/run_14e_extension_when_done.pid"
@@ -36,14 +36,19 @@ fail() { echo "$(date '+%F %T') ERROR: $*"; touch "$RWD/pids/run_14e_extension.e
 log() { echo "$(date '+%F %T') $*"; }
 
 # 1. Wait for the archive job; it never starts if the model run fails (afterok dependency)
+# ARCHIVE_JOB=manual: st_archive was run by hand on a login node (2026-11-04: job 1787435 died on preproc node
+# b5203, exit 126); then only the CaseStatus line + file checks below apply.
 log "waiting for $CASE (run $RUN_JOB, archive $ARCHIVE_JOB)"
-while :; do
+if [[ $ARCHIVE_JOB == manual ]]; then
+    grep -q 'st_archive success' "$HOME/cases/BRL_FRST_XPSN/$CASE/CaseStatus" || fail "no 'st_archive success' in CaseStatus"
+fi
+while [[ $ARCHIVE_JOB != manual ]]; do
     reason=$(squeue -h -j $ARCHIVE_JOB -o %r 2>/dev/null)
     [[ -z $reason ]] && break
     [[ $reason == *DependencyNeverSatisfied* ]] && fail "model run failed (archive dependency never satisfied)"
     sleep 600
 done
-state=$(sacct -n -X -j $ARCHIVE_JOB -o State | head -1 | tr -d ' ')
+state=COMPLETED; [[ $ARCHIVE_JOB == manual ]] || state=$(sacct -n -X -j $ARCHIVE_JOB -o State | head -1 | tr -d ' ')
 n=$(ls "$RAW/$CASE/atm/hist/$CASE.cam.h0."200[0-7]-*.nc 2>/dev/null | wc -l)
 log "archive job: $state, atm h0 files 2000-2007: $n"
 [[ $state == COMPLETED ]] || fail "archive job state $state"
@@ -90,7 +95,7 @@ repo = pathlib.Path(sys.argv[1])
 edits = [(repo / 'CLAUDE.md',
           'its own LCC_PD emissions prescribed; **3 yr (2000–2002)**, exception to the 15-yr rule;',
           'its own LCC_PD emissions prescribed; **8 yr (2000–2007)**: 3 yr, extended by 5 (2003–2007; user OK 2026-11-03, '
-          'automatic postprocessing + notebook rerun by `diagnostics/fbvoc-prescription-artefact/run_when_done/run_14e_extension_when_done.sh`), '
+          'automatic postprocessing + notebook rerun by `cases-scripts/run_when_done/run_14e_extension_when_done.sh`), '
           'exception to the 15-yr rule;'),
          (repo / 'CLAUDE.md',
           'the 3-yr tests CTRL_PD_fBVOCctrlPD old chain, CTRL_PD_fBVOCctrlPD_HR (14d), LCC_PD_fBVOClccPD (14e).',
