@@ -32,40 +32,44 @@ def main():
     a = p.parse_args()
 
     hist = a.hist_dir or WORK_ARCHIVE / a.testcase / "atm" / "hist"
+    # A branch run writes no record at the branch time: its files are <date>-21600.nc with
+    # 06, 12, 18 h + next day 00 h. Match every test record to the MET record of the same
+    # (date, datesec) instead of matching files by name (fixed 2026-11-04).
     start = dt.date.fromisoformat(a.start)
-    # 10 full days + record 0 of the day after (written at the stop time)
-    dates = [start + dt.timedelta(days=i) for i in range(a.days + 1)]
-    ok = True
-    n_values = 0
-    for d in dates:
-        tag = f"{d:%Y-%m-%d}-00000"
-        f_test = hist / f"{a.testcase}.cam.h1.{tag}.nc"
-        f_ref = NUDGDIR / f"{MET}.cam.h1.{tag}.nc"
-        if not f_test.exists() or not f_ref.exists():
-            print(f"MISSING {tag}: test={f_test.exists()} ref={f_ref.exists()}")
-            ok = False
-            continue
-        with xr.open_dataset(f_test, decode_times=False, mask_and_scale=False) as t, \
-             xr.open_dataset(f_ref, decode_times=False, mask_and_scale=False) as r:
-            nrec = t.sizes["time"]
-            if d == dates[-1]:
-                r = r.isel(time=slice(0, nrec))   # last day: test has only record 0
-            elif nrec != r.sizes["time"]:
-                print(f"DIFF {tag}: {nrec} records in test, {r.sizes['time']} in MET")
-                ok = False
-                continue
-            bad = []
-            for v in COORDS + VARS:
-                same = np.array_equal(t[v].values, r[v].values)
-                if not same:
-                    diff = np.abs(t[v].values.astype("f8") - r[v].values.astype("f8")).max()
-                    bad.append(f"{v} (max |diff| {diff:.3e})")
-                n_values += t[v].size
-            status = "identical" if not bad else "DIFFERENT: " + ", ".join(bad)
-            print(f"{tag}: {nrec} rec, {status}")
-            ok &= not bad
-    print(f"\n{'PASS' if ok else 'FAIL'}: {len(dates)} files, {n_values:,} values compared "
-          f"({', '.join(VARS)}; time/date/datesec)")
+    end = start + dt.timedelta(days=a.days)          # last record: end 00 h
+    ok, n_values, n_rec = True, 0, 0
+    files = sorted(hist.glob(f"{a.testcase}.cam.h1.*.nc"))
+    if not files:
+        print(f"MISSING: no h1 files in {hist}")
+        return 1
+    for f_test in files:
+        with xr.open_dataset(f_test, decode_times=False, mask_and_scale=False) as t:
+            for i in range(t.sizes["time"]):
+                d, s = int(t["date"][i]), int(t["datesec"][i])
+                day = dt.date(d // 10000, d // 100 % 100, d % 100)
+                if not (start <= day <= end):
+                    continue
+                f_ref = NUDGDIR / f"{MET}.cam.h1.{day:%Y-%m-%d}-00000.nc"
+                if not f_ref.exists():
+                    print(f"MISSING {f_ref.name}"); ok = False; continue
+                with xr.open_dataset(f_ref, decode_times=False, mask_and_scale=False) as r:
+                    j = np.flatnonzero((r["date"].values == d) & (r["datesec"].values == s))
+                    if j.size != 1:
+                        print(f"NO MATCH {d} {s}"); ok = False; continue
+                    bad = []
+                    for v in ["time"] + VARS:
+                        x, y = t[v].values[i], r[v].values[j[0]]
+                        if not np.array_equal(x, y):
+                            bad.append(f"{v} (max |diff| {np.abs(x.astype('f8') - y.astype('f8')).max():.3e})")
+                        n_values += np.size(x)
+                n_rec += 1
+                print(f"{d} {s:5d}: {'identical' if not bad else 'DIFFERENT: ' + ', '.join(bad)}")
+                ok &= not bad
+    expected = a.days * 4   # branch: no record at start 00 h; 06 h of day 1 ... 00 h of day days+1
+    if n_rec != expected:
+        print(f"expected {expected} records, compared {n_rec}"); ok = False
+    print(f"\n{'PASS' if ok else 'FAIL'}: {n_rec} records, {n_values:,} values compared "
+          f"({', '.join(VARS)}; time; matched by date/datesec)")
     return 0 if ok else 1
 
 
