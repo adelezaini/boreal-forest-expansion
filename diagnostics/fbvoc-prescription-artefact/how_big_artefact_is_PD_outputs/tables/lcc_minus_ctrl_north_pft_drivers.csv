@@ -1,0 +1,5 @@
+variable,sign,cells,mean lat [°N],median change [% of CTRL],of which LCC cells [%],largest plant-type changes [% of cell]
+SFISOP,up,172,54.46,9.67,65.7,"broadleaf deciduous boreal +8.3, needleleaf evergreen boreal -5.8, C3 arctic grass -1.8, bare -0.5"
+SFISOP,down,87,54.65,-7.34,71.26,"broadleaf deciduous boreal +9.1, needleleaf evergreen boreal -8.3, C3 arctic grass -3.9, needleleaf deciduous boreal +2.3"
+SFMTERP,up,390,59.66,8.73,71.79,"C3 arctic grass -11.8, needleleaf deciduous boreal +5.5, needleleaf evergreen boreal +5.2, broadleaf deciduous boreal +2.6"
+SFMTERP,down,253,56.12,-7.4,79.84,"broadleaf deciduous boreal +10.2, needleleaf evergreen boreal -10.1, broadleaf deciduous temperate +2.1, C3 arctic grass -1.2"
