@@ -11,10 +11,10 @@ The CLM tape-2 files (`<case>.clm2.h1.<date>.nc`, one per day) of a **CTRL and a
 ```
 PY=/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/bin/python
 $PY postprocess/megan_lmdi/reduce_megan_lmdi.py --ctrl <CTRL branch case> --lcc <LCC branch case> \
-    --label PD_2004 [--lat-min 45] [--out data/processed-data/megan-lmdi] [--delete-raw]
+    --label PD_2005 [--year 2005] [--lat-min 45] [--out data/processed-data/megan-lmdi] [--delete-raw | --delete-dry-run]
 ```
 
-- One call per year pair (CTRL_Y + LCC_Y). Speed: ≈ 9 s per model day (≈ 1 h per year) on a login node.
+- One call per year pair (CTRL_Y + LCC_Y). Speed: ≈ 31–37 s per model day with the swaps (≈ 3.5 h per year) on a login node.
 - `--delete-raw` deletes both runs' tape-2 files **only if all checks pass**. Without it nothing is deleted.
 
 ## Output
@@ -66,7 +66,45 @@ Python copies of CLM's `get_gamma_L/A/T/P` (`model/SourceMods/src.clm/VOCEmissio
 - Size: worldwide 7.3 % of monoterpene patch-steps (mostly crops); **≥ 45°N: 0.02 % (CTRL) / 0.04 % (LCC), 0.001 % of the monoterpene emission, only PFT 13 (C3 non-arctic grass), one row at 48.3°N** (5-day test, January).
 - Recoverable exactly: PAR24/240 = (FSD + FSUN·FSI)·4.6 from the previous step's FSD/FSI/FSUN 24/240 (difference 0); instantaneous PAR from the grid-cell direct/diffuse light, derived from any valid patch of the same cell (≤ 10⁻¹⁴); every stale step ≥ 45°N had one.
 
+## Driver swaps (option 1b): `megan_swaps.py` (2026-11-06)
+
+Inside the reduction (user decision 6 Nov 17:55: inside the per-year reduction; per matched patch pair, monthly; all 8 compounds; batch 2 waits for validation on the 60-day test). Method in the docstring of `megan_swaps.py`; in short, per patch pair, step and compound:
+
+ΔE = plant cover (M̄ · Δw) + CO₂ factor (γC, CLM's own) + emission factor (0 for a matched pair) + **Shapley values of the replayed γL·γA·γP·γT over the driver groups** (scaled by w̄ · ā) + replay residual (≈ round-off).
+
+| Groups | Terms (`terms4` / `terms3`) |
+|---|---|
+| 4 | `plant_cover, leaf_area, canopy_light, leaf_temperature, incoming_light, co2_factor, emission_factor, clm_safeguard, replay_residual` |
+| 3 | `plant_cover, canopy, leaf_temperature, incoming_light, co2_factor, emission_factor, clm_safeguard, replay_residual` (canopy = leaf area + canopy light as one group, its own Shapley game) |
+
+- Patch absent or weight 0 in one run → whole ΔE to `plant_cover`; CLM safeguard (γ outside [0, 100)) in either run → `clm_safeguard`.
+- **Flagged steps** → whole ΔE to `replay_residual`: the first step of a chain (its previous step is not on the tape), a cell without a patch to derive the light from, or a non-finite replayed value. Reported, must be < 10⁻³ of |ΔE|.
+- Timing as in the replay section; the previous step is carried across daily files, and for the first file it is read from the file before it if that exists (e.g. 2010-06-30 for a July start).
+- Grid-cell light now (direct, diffuse) is derived by inverting CLM's PAR formula at the patches with fresh `PAR_*` and FSUN < 1; PAR is then rebuilt for every patch, so the stale steps are repaired.
+
+**New output variables** (same file `megan_lmdi_<label>.nc`; the LMDI variables are unchanged):
+
+| Variable | Dimensions | Content |
+|---|---|---|
+| `pair_ixy`, `pair_jxy`, `pair_pft`, `pair_lat`, `pair_lon`, `pair_area`, `w_ctrl`, `w_lcc` | pair | the patch pairs (matched + one-run-only), weights (0 = absent), cell area km² |
+| `Ep_ctrl`, `Ep_lcc` | compound, month, pair | patch emission integrated over the month (kg per m² of grid-cell land) |
+| `swap4`, `swap3` | compound, term, month, pair | exact contributions to `Ep_lcc − Ep_ctrl` (same units); summed over terms = the difference |
+
+Region totals: Σ over pairs of value × `pair_area` × 10⁶ → kg; 100 · Δln E · term / ΔE for the figures' units.
+
+**Tests (6 Nov, before the new script replaced the live one):**
+
+| Test | Replayed G vs CLM | Rebuilt PAR vs CLM | Residual at replayed steps | Flagged share of \|ΔE\| | Time |
+|---|---|---|---|---|---|
+| 60-day pair, first 3 days | 1.1 × 10⁻¹⁵ | 8.0 × 10⁻¹⁴ | 6.3 × 10⁻¹⁶ | 6.4 × 10⁻³ (step 1 only) | 33 s/day |
+| 2010 pair, 1–3 July (previous step from 30 June) | 1.3 × 10⁻¹⁵ | 2.2 × 10⁻¹³ | 6.7 × 10⁻¹⁶ | 0 | 37 s/day |
+| 60-day pair, all 60 days | 1.3 × 10⁻¹⁵ | 2.2 × 10⁻¹³ | 9.8 × 10⁻¹⁶ | 2.6 × 10⁻⁴ (step 1 only) | 31 s/day (31 min) |
+
+All checks pass on the 60 days; the LMDI variables are bit-identical to the earlier LMDI-only file. The new script replaced the live one on 6 Nov 21:15; `megan_lmdi_PD_test60d.nc` rewritten with the swaps.
+
+Plausibility, 1–3 July 2010, ≥ 45°N, 100 · Δln E (3 groups vs LMDI): isoprene +2.68 = plant cover −0.84 (composition −0.73) + canopy +2.90 (γL + γA +2.89) + leaf temperature +0.54 (γT +0.58) + incoming light +0.07 + CO₂ +0.01; monoterpenes +1.30 = −2.07 (−2.02) + 2.63 (2.55) + 0.72 (0.75) + 0.02. In the 4-group split, canopy light (self-shading) is −0.22 for isoprene and −0.01 for monoterpenes.
+
 ## Still to do before production
 
-- **Replay (option 1b) inside this reduction**: γ functions done and validated (above); still to add: the driver swaps (Shapley over driver groups), PAR rebuild at stale steps, previous-step carry-over across daily files. It must run here because the per-step drivers are deleted with the raw files.
-- A batch job wrapper (sbatch) and the batch launcher (3-year batches, each gated on the previous one's reduction).
+- ~~Replay (option 1b) inside this reduction~~ done 2026-11-06 (section above).
+- ~~Batch job wrapper and launcher~~ done 2026-11-04: `reduce_year_job.sh` (sbatch, per year: identity → reduction → delete), `check_identity.py` (branch vs parent, bit for bit: 30-min CAM SFISOP/SFMTERP matched by time value, monthly CAM and CLM MEGAN fields), `--year Y` (one year of a multi-year chain case, archive only) and `--delete-dry-run` here; launcher and watcher in `cases-scripts/megan-lmdi/` (README there).
