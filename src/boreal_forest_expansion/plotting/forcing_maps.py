@@ -93,7 +93,7 @@ def figure_path(figdir: Path | None, filename: str) -> Path:
 # LCC-only FUT contrast needs LCC_FUT_fBVOCctrlFUT (all 19 MEGAN species).
 # Current set (2026-10-28): all-species fBVOC runs, 2001-2014, pre-CO2-fix chain. The old _IM files
 # (LCC_{PD,FUT}_fBVOC, 2001-2009) are in 2001-2009-pre-co2-fix/. LCC_FUT_fBVOCctrlFUT is compared with
-# fBVOCctrlPD in analysis/fut-fbvoc-emission-source.ipynb (FBVOC_SOURCE_ROWS).
+# fBVOCctrlPD in analysis/fut-fbvoc-emission-source-choice.ipynb (FBVOC_SOURCE_ROWS).
 BVOC_PAIRS = {
     "PD": {
         "lcc": "LCC_PD",
@@ -1330,7 +1330,7 @@ def contrast_sets() -> dict[str, list[tuple[str, str]]]:
     }
 
 
-# FUT fBVOC emission source (analysis/fut-fbvoc-emission-source.ipynb): row 3 = row 1 - row 2, i.e. the
+# FUT fBVOC emission source (analysis/fut-fbvoc-emission-source-choice.ipynb): row 3 = row 1 - row 2, i.e. the
 # effect of prescribing CTRL_FUT instead of CTRL_PD emissions in the same LCC_FUT setup.
 FBVOC_SOURCE_ROWS = [("LCC_FUT", "LCC_FUT_fBVOCctrlPD"), ("LCC_FUT", "LCC_FUT_fBVOCctrlFUT"),
                      ("LCC_FUT_fBVOCctrlFUT", "LCC_FUT_fBVOCctrlPD")]
@@ -1655,7 +1655,12 @@ MONTHLY_FIELDS = {
 
 def monthly_regional(alias: str, field: str, region: str, start_year: int = 2001, end_year: int = 2014,
                      boxes: bool = False) -> xr.DataArray:
-    """Regional mean (or total for *_Tg) of a monthly field, dims (year, month)."""
+    """Regional mean (or total for *_Tg) of a monthly field, dims (year, month).
+    alias may be a VirtualRun: weighted sum of its real runs' regional values (e.g. context rows)."""
+    if isinstance(alias, VirtualRun):
+        parts = [w * monthly_regional(a, field, region, start_year, end_year, boxes)
+                 for a, w in run_weights(alias).items() if w != 0]
+        return sum(parts[1:], parts[0]).rename(f"{field} {alias} {region}")
     cls, comp, f, _, _ = MONTHLY_FIELDS[field]
     ds = open_class(alias, cls, start_year, end_year, comp)
     mask = region_masks(ds, boxes=boxes)[region]
@@ -1668,7 +1673,13 @@ def monthly_regional(alias: str, field: str, region: str, start_year: int = 2001
 
 
 def monthly_difference(case1, case2, field, region, **kw) -> xr.DataArray:
-    """Paired monthly regional differences case1 - case2, dims (year, month)."""
+    """Paired monthly regional differences case1 - case2, dims (year, month).
+    case1/case2 may be VirtualRun: weighted sum of real paired differences (as in yearly_difference)."""
+    if isinstance(case1, VirtualRun) or isinstance(case2, VirtualRun):
+        terms = [(w1 * w2, a, b) for a, w1 in run_weights(case1).items()
+                 for b, w2 in run_weights(case2).items() if a != b and w1 * w2 != 0]
+        parts = [w * monthly_difference(a, b, field, region, **kw) for w, a, b in terms]
+        return sum(parts[1:], parts[0]).rename(f"{field} {case1} - {case2} {region}")
     a, b = monthly_regional(case1, field, region, **kw), monthly_regional(case2, field, region, **kw)
     if not (np.array_equal(a["year"], b["year"]) and np.array_equal(a["month"], b["month"])):
         raise ValueError(f"{case1}/{case2}: different years or months")
