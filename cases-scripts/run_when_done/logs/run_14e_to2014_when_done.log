@@ -38,3 +38,58 @@ Submitted job case.st_archive with id 1788255
 2026-11-04 14:44:43 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1788254, archive 1788255)
 --- stopped 2026-11-04 15:38:30 to move run_when_done/ to cases-scripts/ (user 2026-11-04); relaunch with 1788254 1788255
 2026-11-04 15:38:44 waiting for NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031 (run 1788254, archive 1788255)
+2026-11-05 15:28:46 archive job: COMPLETED, atm h0 files 2000-2014: 180
+2026-11-05 15:33:36 copied to NIRD
+2026-11-05 15:33:36 waiting for postprocessing lock
+2026-11-05 15:33:39 2001-2007 files moved to /cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/processed-data/postprocessing/superseded/LCC_PD_fBVOClccPD_2001-2007
+OK     LCC_PD_fBVOClccPD atm AEROPT (497 s)
+OK     LCC_PD_fBVOClccPD atm BVOC (673 s)
+OK     LCC_PD_fBVOClccPD atm BVOCOX (773 s)
+OK     LCC_PD_fBVOClccPD lnd BVOC (313 s)
+OK     LCC_PD_fBVOClccPD atm CLOUDPROP (1063 s)
+OK     LCC_PD_fBVOClccPD atm SULFATE (1118 s)
+OK     LCC_PD_fBVOClccPD atm RADIATIVE (1121 s)
+OK     LCC_PD_fBVOClccPD atm CHEM (1136 s)
+OK     LCC_PD_fBVOClccPD atm METEO (1308 s)
+OK     LCC_PD_fBVOClccPD lnd QA (467 s)
+OK     LCC_PD_fBVOClccPD atm AERSIZE (1620 s)
+OK     LCC_PD_fBVOClccPD lnd ET (532 s)
+OK     LCC_PD_fBVOClccPD lnd LAND (1066 s)
+OK     LCC_PD_fBVOClccPD lnd SURFEXCH (745 s)
+OK     LCC_PD_fBVOClccPD lnd BIOGEOCHEM (1073 s)
+OK     LCC_PD_fBVOClccPD lnd SNOW (884 s)
+OK     LCC_PD_fBVOClccPD lnd ENERGY (1272 s)
+OK     LCC_PD_fBVOClccPD atm SOA (2207 s)
+OK     LCC_PD_fBVOClccPD lnd HYDRO (1301 s)
+All done.
+2026-11-05 16:17:09 postprocessing done, 19 files
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (57s)
+--- cell 3 ok (47s)
+--- cell 5 ok (6s)
+--- cell 7 ok (0s)
+--- cell 9 ok (1s)
+--- cell 11 ok (3s)
+--- cell 13 ok (1s)
+--- cell 15 ok (1s)
+--- cell 17 ok (5s)
+--- cell 19 ok (1s)
+--- cell 21 ok (0s)
+--- cell 23 ok (25s)
+--- cell 25 ok (8s)
+--- cell 27 ok (24s)
+--- cell 29 ok (8s)
+--- cell 31 ok (16s)
+--- cell 33 ok (6s)
+--- cell 35 ok (14s)
+--- cell 37 ok (2s)
+--- cell 40 ok (3s)
+--- cell 42 ok (11s)
+--- cell 44 ok (5s)
+--- cell 46 ok (6s)
+--- cell 49 ok (53s)
+2026-11-05 16:23:05 notebook rerun
+CLAUDE.md: updated
+CLAUDE.md: updated
+run_aliases.csv: updated
+2026-11-05 16:23:08 finished

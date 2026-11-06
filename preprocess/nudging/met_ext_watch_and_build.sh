@@ -55,9 +55,11 @@ if [[ "$as" != COMPLETED ]]; then
     args=()
     if [[ -z "$queued" && "$resub" -gt 0 ]]; then args=(--resubmit); fi
     log "rerunning st_archive on the login node (RESUBMIT=$resub, queued MET runs: '${queued}', args: ${args[*]:-none})"
+    n_ok=$(grep -c 'st_archive success' CaseStatus)
     env -i HOME="$HOME" USER="$USER" bash -l -c "cd '$CASEROOT' && ./case.st_archive ${args[*]:-}" \
         > "$STATE/st_archive_login_$RUN_JOBID.log" 2>&1 || fail "st_archive on login failed (see st_archive_login_$RUN_JOBID.log)"
-    tail -n 3 CaseStatus | grep -q 'st_archive success' || fail "CaseStatus has no st_archive success"
+    # count, not tail: with --resubmit the last CaseStatus lines are the resubmission (bug 2026-11-04)
+    (( $(grep -c 'st_archive success' CaseStatus) > n_ok )) || fail "CaseStatus has no new st_archive success"
     log "st_archive on login OK"
 fi
 

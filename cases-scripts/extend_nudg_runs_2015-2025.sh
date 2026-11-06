@@ -13,8 +13,10 @@
 #   phase2  2020-01-01 -> 2026-01-01 (6 yr)  needs the MET folder through 2026-01-01 (MET done)
 # ~7 simulated yr/day -> ~17 h / ~21 h per run; ~1720 pe-h/yr -> 10 runs x 11 yr ~ 190k core-h.
 #
-# Usage: bash extend_nudg_runs_2015-2025.sh phase1|phase2 [--check]
+# Usage: bash extend_nudg_runs_2015-2025.sh phase1|phase2 [--check] [--case CASENAME]
 #   --check: all checks for every case, changes nothing, submits nothing.
+#   --case:  only that case (used by run_when_done/extend_nudg_2015-2025_when_done.sh for phase2,
+#            launched per run as soon as its phase1 is archived)
 # Without --check it SUBMITS: only with the user's OK.
 # Stops at the first case that fails a check (earlier cases stay submitted).
 
@@ -22,7 +24,16 @@ set -euo pipefail
 source cases-setup.sh
 
 PHASE="${1:-}"
-CHECK=0; [[ "${2:-}" == "--check" ]] && CHECK=1
+CHECK=0; ONLY=""
+shift || true
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --check) CHECK=1 ;;
+        --case) ONLY="${2:?--case needs a case name}"; shift ;;
+        *) echo "unknown argument $1" >&2; exit 1 ;;
+    esac
+    shift
+done
 case "$PHASE" in
     phase1) RESTDATE="2015-01-01-00000"; NYEARS=5; NEED_DAY="2020-01-01" ;;
     phase2) RESTDATE="2020-01-01-00000"; NYEARS=6; NEED_DAY="2026-01-01" ;;
@@ -32,7 +43,7 @@ esac
 export MET_END_YEAR=2026
 # All b5xxx compute nodes failed on 2026-11-03 (python 'Invalid argument', launch failures).
 # Kept in .submit_options, so it also applies to resubmits and st_archive.
-export SUBMIT_BATCH_ARGS="--exclude=b[5101,5103-5196,5207-5296]"
+export SUBMIT_BATCH_ARGS="--exclude=b[5101,5103-5196,5203-5204,5207-5296]"
 [[ $CHECK -eq 1 ]] && export CHECK_ONLY=1
 
 CASES=(
@@ -46,9 +57,13 @@ CASES=(
     "NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlFUT_f19_f19-20261031"   # LCC_FUT_fBVOCctrlFUT
     "NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOCctrlPD_f19_f19-20261031"    # LCC_FUT_fBVOCctrlPD
     "NF2100ssp585norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031"     # LCC_FUT_fBVOClccPD
-#   "NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031"     # LCC_PD_fBVOClccPD: 3-yr test, now 2003-2007; not at 2015
+    "NF2000norbc_tropstratchem_nudg_lcc_fBVOClccPD_f19_f19-20261031"     # LCC_PD_fBVOClccPD: at 2015 since 5 Nov; added (user OK 2026-11-05 18:12)
 )
 
+if [[ -n "$ONLY" ]]; then
+    printf '%s\n' "${CASES[@]}" | grep -qx -- "$ONLY" || { echo "ERROR: $ONLY is not in the case list" >&2; exit 1; }
+    CASES=("$ONLY")
+fi
 for CASENAME in "${CASES[@]}"; do
     echo "=== $CASENAME"
     # Subshells: both functions cd into the case directory

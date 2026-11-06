@@ -69,3 +69,7 @@ Suffix `_fBVOC<source run>` = run the prescribed emissions come from; `_IM` = IS
 Short model test runs (1-day, 2-day, timing). The 1-day tests of the all-species fBVOC runs keep their old numbers: `tests/14c-…` = 14b, `tests/24c-…` = 24b, `tests/24d-…` = 24c, `tests/24e-…` = 24d.
 
 - `auto_launch_new_chain.sh`: watcher that launches 13c and the nudged runs 13a/14a/23a/24a on the new (20261025) chain as each spin-up finishes (see header). It finds the scripts by number (`ls 13a-*.sh` etc.), so keep 13a, 13c, 14a, 23a, 24a unique.
+
+### Watchers for the fBVOC artefact runs (`run_when_done/`)
+Moved from `diagnostics/fbvoc-prescription-artefact/run_when_done/` on 2026-11-04 (user). Each waits for a run's archive job, then copies to NIRD, postprocesses, and reruns the matching notebook in `diagnostics/fbvoc-prescription-artefact/`. State in `pids/` (`*.ok`/`*.err`, gitignored), logs in `logs/`. Start from `cases-scripts/`: `nohup setsid bash run_when_done/<script> [args] >> run_when_done/logs/<script>.log 2>&1 &`.
+- `run_when_done.sh` (CTRL_PD_fBVOCctrlPD old-chain test, finished 29 Oct), `run_replay_when_done.sh` (14d replay, finished 30 Oct), `run_14e_extension_when_done.sh` (LCC_PD_fBVOClccPD 2003–2007, finished 4 Nov; `ARCHIVE_JOB=manual` if st_archive was run by hand), `run_14e_to2014_when_done.sh` (LCC_PD_fBVOClccPD 2008–2014: submits `extend_case`, or takes `RUN_JOBID ARCHIVE_JOBID`; running).
