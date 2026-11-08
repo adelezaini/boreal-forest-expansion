@@ -4,7 +4,7 @@ The fBVOC runs switch MEGAN off (`megan_specifier = ''`) and read biogenic emiss
 
 | Folder | Species | Source run | Used by |
 |---|---|---|---|
-| this folder | all 19 MEGAN-fed CAM species | CTRL_PD / CTRL_FUT `-20261023`, 2001–2014 (later also LCC_PD) | 14b, 24b, 24c, 24d |
+| this folder | all 19 MEGAN-fed CAM species | new chain, 2001–2014: CTRL_PD `-20261029`, CTRL_FUT `-20261028`, LCC_PD `-20261028`, LCC_FUT `-20261028` (via `LCC_FUT_HRBVOC`, merged); old chain CTRL `-20261023` files kept | 14b, 14c, 14e, 24b, 24c, 24d, 24e, 24g |
 | `prescribe-just-ISOP-MTERP/` | ISOP, MTERP | CTRL_PD `-20260925`, 2001–2009 | `just-ISOP-MTERP/` 14b, 24b (`*_fBVOCctrlPD_IM`) |
 
 `prescribe-just-ISOP-MTERP/` keeps the original scripts unchanged. Legacy: the `_IM` runs were dropped (user 2026-10-28).
@@ -27,7 +27,7 @@ source run with cam_diagnostics HR_BVOC_ALL (13a, 23a; 14a for LCC_PD)
      → /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_<case>_<y0>-<y1>_on_yr2100_<VAR>.nc
      (EMS_PREFIX in the fBVOC case scripts points to the shared folder)
   ▼
-4. plot_bvoc_emissions.ipynb      maps, totals and seasonal cycles of the files (CTRL_PD vs CTRL_FUT)
+4. plot_bvoc_emissions.ipynb      maps, totals and seasonal cycles of the files (CTRL and LCC, PD and FUT)
   ▼
 5. fBVOC case script: prescribed_bvoc_emissions_all <2000|2100> "$EMS_PREFIX"   (cases-scripts/cases-setup.sh)
 ```
@@ -59,7 +59,7 @@ bash create_bvoc_emissions_for_year_2100.sh NF2100ssp585norbc_tropstratchem_nudg
 | `create_bvoc_emissions_climatology.sh` | The same as the array, run serially on the login node. Slow; mainly for single species. |
 | `check_bvoc_climatology.py` | Per species: number of records, units, annual mean vs h0 mean (should be 1 to ~1e-7), global total in Tg/yr. Exit 1 on any failure. |
 | `create_bvoc_emissions_for_year_2100.sh` | Works in the shared folder (`EMS_DIR` overrides). Copies files with `date` + 1000000 and the time units moved to 2100 (values unchanged), for FUT runs (`srf_emis_cycle_yr = 2100`). Refuses to overwrite. |
-| `plot_bvoc_emissions.ipynb` | Annual and seasonal maps, Tg/yr table (global, >45°N, modified cells) and seasonal cycles for the 19 species, CTRL_PD vs CTRL_FUT. |
+| `plot_bvoc_emissions.ipynb` | Annual and seasonal maps, Tg/yr table (global, >45°N, modified cells) and seasonal cycles for the 19 species: CTRL_PD vs CTRL_FUT, LCC − CTRL per period (new chain). |
 | `prescribe-just-ISOP-MTERP/` | Original ISOP/MTERP-only scripts and notebook. |
 | `to-clean/` | Old material. |
 
