@@ -4,7 +4,101 @@
 
 > **Where things stand (updated every prompt)**
 >
-> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Commit messages (3 Nov, 17:45):** fill in `commit_messages.md` (repo root, gitignored): 9 commits by topic, each with its file list and a suggested message; set `Include: no` to skip one. Say "go" when done; nothing is committed or pushed before that.</span>
+> <span style="color:#999999">**Commits (8 Nov, 22:03):** all suggested commits are made, **not pushed**: sign flip, contrasts notebook, 2001–2019 set, BVOC emission plots, D1 check, docs (+ `methods-claude.tex` in the draft repo). Run `git push` in both repos when you want them online.</span>
+>
+> <span style="color:#62733B">**ISOP/MTERP time series per contrast (8 Nov, 21:58):** new notebook `preprocess/bvoc-emissions/plot_bvoc_timeseries.ipynb` (the name you gave did not exist yet). One panel per pair from your list, two lines (first run red, second navy), yearly emissions in Tg/yr, for global, north of 45°N and modified cells. **CTRL_FUT_fBVOCctrlPD does not exist**, so its panel is empty; art_CTRL_FUT uses CTRL_FUT_fBVOCctrlFUT. LCC_FUT_fBVOClccFUT is still running: 2001–2009 only.</span>
+>
+> <span style="color:#62733B">**BVOC emission plots moved to the new runs (8 Nov, 21:56):** `preprocess/bvoc-emissions/plot_bvoc_emissions.ipynb` now shows all four new-chain sources (CTRL_PD, LCC_PD, CTRL_FUT, LCC_FUT), with new maps of the forest-expansion change (LCC − CTRL) per period. The totals table and the species notebook follow it. Both notebooks are rerunning (tmux `bvocplots`).</span>
+>
+> <span style="color:#7B2FBE">**Artefact sign flipped, done (7 Nov, 01:30):** the artefact is now **interactive − prescribed** everywhere (e.g. CTRL_PD − CTRL_PD_fBVOCctrlPD ≈ −3 % SOA), and the corrected BVOC effect is (LCC − LCC_fBVOC) **− art**. The corrected BVOC numbers did not change. Docs, Methods outline and 10 notebooks updated, including the two old-chain cause notebooks. All 7 notebooks with saved results were rerun without errors and their numbers match the text; the 3 old-sign FUT Ghan figures are deleted. Not committed yet.</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **CTRL_FUT_fBVOCctrlPD (7 Nov, 00:31):** this run was never set up (no script, no run); only Fig. 3b row 2 of the new contrasts notebook needs it. It could be made from the CTRL_FUT_fBVOCctrlFUT script with the CTRL_PD emissions for 2100 (15 yr). Nothing done: your call.</span>
+>
+> <span style="color:#A84300">**All contrasts in one notebook (7 Nov, 01:08):** `analysis/simulation-contrasts.ipynb`, 9 figures. Figs. 1b, 1c, 3a, 4b now have a third row = row 2 − row 1, below a line, in orange/blue-teal (other rows stay red/blue); checked on 1b. Note: the 1c third row is mathematically the same as the 1b one. Full rerun going (~6 min). Rows waiting for LCC_FUT_fBVOClccFUT shown as PENDING.</span>
+>
+> <span style="color:#A84300">**FUT emissions notebook done, conclusions written (7 Nov, 00:25):** both notebooks now run in minutes (FUT ~5 min, was >1 h; D1 ~4 min, was ~75 min; same numbers). D1 maps hatch the non-significant cells. **FUT results (≥45°N, 2001–2014):** the future background raises emissions 2.5× (isoprene) and 4.2× (monoterpenes); forest expansion adds only +0.39 Tg/yr isoprene (+1.7 %) and no measurable monoterpene change, almost all in the changed cells. Radiation: against CTRL_PD emissions the response is −0.91 W m⁻², but that is the climate-driven emission increase; the forest-expansion part, after the artefact correction, is −0.06 W m⁻² and not distinguishable from zero. The artefact is as large as the expansion effect for SOA and droplets, so uncorrected numbers must not be used.</span>
+>
+> <span style="color:#A84300">**MEGAN batch 2 (7 Nov, 00:10):** your OK given. Batch 1 is not finished yet (2001 and CTRL 2005 still running; 2010 re-reduced with the swaps, all checks pass), so a small script waits for 2001 and 2005 to be reduced and then launches 2002, 2006, 2011 by itself (raw files kept). It does not launch if a batch-1 year fails. Deleting the raw files: on hold (your call). LMDI vs approximate split comparison: later, no rush.</span>
+>
+> <span style="color:#A84300">**Reruns (6 Nov, 22:46):** **D1 done**, no errors (contributions plot now one column per comparison, checked). **Zonal-mean plot done** in your colours. **FUT emissions notebook not done yet:** the 21:23 run failed in its last data cell because it ran an old copy of the code, and the 22:05 relaunch was killed. Runs started from a Claude window die when that window closes. Relaunched 22:42 in `tmux` (session `futnb`, independent of Claude), ~45 min; don't edit that notebook while it runs (the runner would overwrite the edits). **Why slow:** raw monthly output read one file at a time, ≈ 2,900 file opens of 104 MB files (D1: 75 min for the same reason). Faster loader waits for your OK.</span>
+>
+> <span style="color:#999999">**Commits (6 Nov, 22:30):** your 12 commits (21:47–22:15) are pushed. My 3 commits of 22:25 are **undone** at your request; their changes (workflow images, `run_all_parallel.sh`, `CLAUDE.md`, `.gitignore`) are back as uncommitted edits. Still open as well: D1 and FUT emissions notebooks (reruns unfinished), 2001–2019 folder (failed), the logs.</span>
+>
+> <span style="color:#999999">**What to commit now (6 Nov, 22:08):** 6 of the 8 commits are ready (runs/watchers, LCC_FUT emission merge, MEGAN split code, FUT emission-source notebooks, PD artefact, warming plot colours). Wait for: D1 and the FUT emissions notebook (still rerunning), the 2001–2019 folder (see below), then CLAUDE.md, .gitignore and the logs. Nothing committed yet: waiting for your OK. **Log incident 21:55:** `CLAUDE_log.md` was found empty and restored from a 21:29 copy; edits from other windows in between may be missing.</span>
+>
+> <span style="color:#A84300">**2001–2019 preparation stopped with errors (seen 22:08):** all 11 runs failed on one file type (aerosol size, `AERSIZE`) with a NetCDF/HDF write error; nothing is running any more, so the notebook has not run. The window that started it should look at it.</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **2001–2019 set (6 Nov, 22:05): stopped, my mistake.** I put its processed files in the home folder; they filled the home quota (30 GB) between ~21:50 and 22:00, so the job failed and anything else writing to home in that window may have failed too. Stopped and cleaned (home back to 14.6 GB); no processed files yet. Needs ~135–280 GB → proposed on work (no quota, deletes itself after 42 days). Also to decide: add the artefact-corrected (design B) version for 2001–2019; fix the LCC_FUT_fBVOClccFUT row (as written it would show the artefact as a BVOC effect).</span>
+>
+> <span style="color:#A84300">**MEGAN swaps explained + unit choices (6 Nov, 21:24):** the swaps were already written by the other window (21:15), so not redone. `analysis/MEGAN_ATTRIBUTION.md` now records them (option 1b, recommended path step 4) and lists 5 possible units for the headline numbers. Recommendation: Tg/yr (≥45°N) as headline, % of CTRL alongside. **Your pick needed** (no rush, nothing waits on it until results exist).</span>
+>
+> <span style="color:#7B2FBE">**FUT artefact, uncorrected vs corrected (6 Nov, 20:55):** the FUT emission-source notebook (`analysis/fut-fbvoc-emission-source-choice.ipynb`) now shows only artefact-corrected results; the side-by-side uncorrected → corrected map grid is in the new `diagnostics/fbvoc-prescription-artefact/how_big_artefact_is_FUT.ipynb`. Both have run and their figures are checked; the old source notebook is retired to `analysis/_old/`.</span>
+>
+> <span style="color:#A84300">**`radiative_forcing_2001-2019.ipynb` (6 Nov, 20:35):** a half-finished copy of `radiative_forcing.ipynb` for years 2001–2019, started 5 Nov 17:44 after you asked to analyse up to 2020 for the 9 Nov meeting; you interrupted that step and it was never finished. **Never run**: its input folder (2001–2019 postprocessed files) does not exist yet. Keep it for Monday or delete it: your call.</span>
+>
+> <span style="color:#999999">**Coordination (6 Nov, 18:14):** a note from another session about the LCC_FUT_fBVOClccFUT emission fix is handled by the session that started that fix (another window of this same session). Nothing changed here.</span>
+>
+> <span style="color:#A84300">**Evening work (6 Nov, 20:05):** LCC_FUT_fBVOClccFUT fix **finished** (re-merge checked bit-identical, 8 species recomputing, watchers restarted → run starts by itself tonight). Run list `run_aliases.csv` brought up to date (+ MEGAN runs, + LCC_FUT_fBVOClccFUT). FUT emissions notebook: its last section had crashed on 3 Nov (rounding in a check) → fixed, rerunning; conclusions follow. New notebook `analysis/fut-fbvoc-emission-source-choice.ipynb` (CTRL_PD vs CTRL_FUT vs LCC_PD emissions, with artefact correction) running. Methods draft: 5 yellow number boxes filled.</span>
+>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Status 6 Nov, 17:55: two runs stopped overnight.** (1) **LCC_FUT_fBVOClccFUT never started:** its emission climatology failed for the 8 half-hourly species. Piece 1 of LCC_FUT_HRBVOC stores each day as 00:00–23:30, pieces 2–3 as 00:30–24:00, and the script stops at 2005. Proposed fix: regroup piece 1 the same way, rerun the 8 species, restart the watcher (~1 h of work, then ~1.5 days of runs). (2) **MEGAN CTRL_PD 2005 failed at launch** (Slurm network timeout on one node); **resubmitted 18:08** (job 1791950, ~15 h). Fix for (1) in progress in session 570e9150. Rest on track: nudged runs reached 2020, 8 of 11 already continue to 2026; MEGAN 2000 and 2010 reduced; 2001 running until ~03 h tonight.</span>
+>
+> <span style="color:#AAAAAA">**When the runs end (estimate 5 Nov, 18:42; without queue waits):** nudging folder ~23:00 today → 11 nudged runs to 2020 Fri 6 Nov ~18 h, to 2025 Sat 7 Nov ~17 h. LCC_FUT_fBVOClccFUT starts ~19:45 today, 2000–2014 done Sun 8 Nov ~01 h, to 2025 Mon 9 Nov evening. MEGAN test passes ~21 h today → batch 1 runs done Sat 7 Nov ~04 h, reduced by Sat morning.</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **MEGAN driver swaps: DONE and validated (6 Nov, 21:15):** written into the reduction (your 4 answers of 17:55), all checks pass on the 60-day test and on 3 July days of 2010. Now live; 2010 being re-reduced (≈ 00:45); 2001 and 2005 get the swaps automatically. Batch 2: OK given 7 Nov 00:07 (see top). Deleting the batch-1 raw files: on hold.</span>
+>
+> <span style="color:#555555">**LCC_FUT_fBVOClccFUT on its way (5 Nov, 18:27):** LCC_FUT_HRBVOC is done and **identical** to LCC_FUT (360 monthly fields, 0 differences). Its emissions are being turned into the climatology now (19 species); a watcher then checks them, relabels them to 2100, starts LCC_FUT_fBVOClccFUT (2000–2014) and postprocesses it when done. LCC_PD_fBVOClccPD added to the extension to 2025 (11 runs now); LCC_FUT_fBVOClccFUT will follow to 2025 after its first 15 years (your OK 18:34).</span>
+>
+>
+> <span style="color:#555555">**Archives fixed, and fixed automatically from now on (5 Nov, 17:40):** new **archive guard** on login-3 reruns any failed archive job by itself every 10 min (and continues the run chain). Bad nodes b5203 + b5204 now excluded everywhere. LCC_FUT half-hourly piece 1 archived; pieces 2, 3 and the MEGAN test are next.</span>
+>
+> <span style="color:#555555">**Nudged runs to 2025: automatic (your OK, 5 Nov 17:25):** MET finished and archived (2015–2025). The 2000–2025 nudging folder had never been built (the MET watcher had stopped on a bug, now fixed); it is being built now. A watcher then submits 2015→2020 for the 10 runs, and 2020→2026 for each run once its first part is archived. All 10 runs passed the checks.</span>
+>
+>
+> <span style="color:#7B2FBE">**Why figure D shows big LCC_PD − CTRL_PD differences (4 Nov, 16:30):** **north of 45°N** they are real: they follow the plant-type changes (more boreal broadleaf → isoprene +19 %; needleleaf replacing arctic grass → monoterpenes +41 %; broadleaf replacing needleleaf → monoterpenes −11 %). **In the tropics** the land is the same and the change is tiny: typically **0.7 %** of the local emission, vs 5 % year-to-year noise. The pixels look strong only because tropical emissions are ~15 mg m⁻² day⁻¹ and the colour scale ends at 0.24. They follow small differences in leaf area, mostly in 2001–2002 (−1.4 % / −0.6 %), then ~0: the two runs start from different land restarts and need ~2 years to converge. That is why the notebook also shows 2003–2014. **Now in the notebook (16:50):** Figure D in % of CTRL_PD (tropics pale, ~0.8 %) and section 4f with the tables and a year-by-year plot. New finding: monoterpenes follow the plant types, but isoprene goes up in some cells and down in others with the same plant-type swap, so something else sets its sign (not tested yet).</span>
+>
+> <span style="color:#7B2FBE">**Is the PD artefact land-dependent? Now with 7 years (4 Nov, 15:50):** the notebook was rerun automatically on 2001–2007 (was 2 years). The ratio R (land part of the artefact ÷ BVOC effect) **dropped**: SOA global 0.54 (was 0.81), ≥45°N 0.39–0.44 (was 1.35–2.98), isoprene ~0.1, monoterpenes 0.40 (was 0.60). The global verdict still says "design A worth it", but only just (threshold 0.5). Over ≥45°N and the LCC cells, R sits between the two thresholds. SOA is still flagged "not resolved", only because 2001 has the opposite sign to the other 6 years. 2008–2014 will settle it.</span>
+>
+> <span style="color:#999999">**Watcher folder moved (4 Nov, 15:42):** `run_when_done/` is now in `cases-scripts/run_when_done/`. The one watcher still running (LCC_PD_fBVOClccPD 2008–2014) was stopped, moved and restarted on the same jobs; the run itself was not touched. The paths in the scripts, the docs and the two old-chain artefact notebooks are updated. **New rule:** I ask you before changing any old-chain notebook (was: never change them).</span>
+>
+> <span style="color:#CC0000">**MEGAN exact split: production test STARTED (your OK, 4 Nov 16:18):** CTRL_PD + LCC_PD from 2005-01-01, 2 × 30 days; builds running, then submission and automatic check + reduction (first attempt 16:16 broke because I removed its case folder by mistake; nothing was submitted). **Years now (your choice, 16:17): 2001–2002 (from 2000, 2000 discarded), 2005–2006, 2010–2011 = 6 years**; batches 2000-2001-2005-2010, then 2002-2006-2011. Background: the runs were not on hold, just not started. Found: the new-chain runs kept restarts only for **2005, 2010, 2015**, so the planned years 2002, 2004… can't be branched. Your choice: **new years 2005–2008 + 2010–2012** (two chains per run, one year per job), batches 2005-06-10, then 2007-08-11, then 2012; test from **2005-01-01**, now **2 jobs × 30 days = 2 months + 1 day** (your question, 16:14: two full months, two month boundaries and a restart like production; ≈ 2,500–2,800 core-hours). Scripts in `cases-scripts/megan-lmdi/` (README). To start the test: `bash cases-scripts/megan-lmdi/launch_megan_lmdi.sh test PD`. Still to code before production: the driver swaps (option 1b). **New (16:04):** years now 2001–2003 + 2005–2008 + 2010–2012 (2000 started from the spin-up, checked and deleted); batches 2000-2001-2005-2010, 2002-2003-2006-2011, 2007-2008-2012; each batch's end restart kept (also on NIRD).</span>
+>
+> <span style="color:#999999">**What to commit (4 Nov, 15:25):** proposed 3 commits (results reorganisation, LCC_PD_fBVOClccPD extension, logs), best after the `artefact-corrected-split.ipynb` rerun ends (~15:45). Files from other sessions (MEGAN LMDI, nudging) left out. Your new `.gitignore` line uses a full path, so it does not ignore `before_lake_fix/`.</span>
+>
+> <span style="color:#999999">**Results folder reorganised (4 Nov, 15:10):** `results/figures/` now has one folder per contrast: `LCC-CTRL/`, `CTRL_FUT-CTRL_PD/`, `fBVOC/` (design A, empty for now), `fBVOC/pre-artefact-correction/`, `fBVOC/artefact-design-B/` (was `artefact-corrected-split/`), `megan_factors/`, `timeseries/`. Tables stay flat, except `artefact-design-B/` (renamed), `pre-artefact-correction/`, and the old `2001-2014-all-bvoc-pre-co2-fix` tables now in `results/tables-2001-2014-all-bvoc-pre-co2-fix/`. The plotting code picks the folder from the figure name, so reruns land in the right place. All 196 figures kept. **My mistake:** the move broke a run of `artefact-corrected-split.ipynb` that another session had started; I restarted it at 15:07 (~35 min).</span>
+>
+> <span style="color:#A84300">**Artefact-corrected split, FUT with PD emissions (4 Nov, 14:35):** `analysis/artefact-corrected-split.ipynb` now also shows, for FUT, the corrected BVOC effect with **LCC_FUT_fBVOClccPD** (climate-driven emission change on LCC land) and **LCC_FUT_fBVOCctrlPD** (forest + climate), both corrected with the same FUT artefact. They are in every section (budget, chain table, maps). Rerun running since 14:34; first result: FUT corrected BVOC effect with PD emissions ≈ −1.0 W m⁻² globally (cloud), vs −0.02 with FUT emissions.</span>
+>
+> <span style="color:#AAAAAA">**LCC_FUT rerun with half-hourly BVOC (4 Nov, 14:32):** piece 1 (2000–04) at Dec 2003, done ~17:45; its BVOC is **identical** to LCC_FUT. Pieces 2 (2005–09) and 3 (2010–14) **resubmitted 14:30** with the right nudging start file and **past the start-up step** where they crashed before (14:33), ~16 h each → ~06:30 tomorrow.</span>
+>
+> <span style="color:#7B2FBE">**LCC_PD_fBVOClccPD to 2014 (4 Nov, 14:50):** the 2003–2007 part finished 14:35; its archive job died on a bad node, so I archived it by hand. 2003–2007 is being postprocessed now. The **2008 → 2014 run is submitted** (job 1788254, ~27 h, done ~5 Nov evening). A new watcher then postprocesses 2001–2014 and reruns the artefact notebook by itself.</span>
+>
+> <span style="color:#999999">**Commits and the `run_when_done` folder (3 Nov, 23:30):** I suggested 7 commits, one per topic. **Nothing is committed yet.** Moving `run_when_done/` out of the artefact folder: **wait**. The watcher for the 14e extension is still running and has that path written into it. All three watcher scripts rerun notebooks in that folder, so it can also just stay there.</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **MET extension + nudged runs to 2025 (4 Nov, 01:00):** MET is **running** (2015 → 2026, two pieces; first piece ends ~20:30 today). The test passed. A watcher fills the 2000–2025 nudging folder **by itself** after each piece (first fill ~22–23 h today, 2000–2020). If an archive job dies on a bad node, the watcher redoes it and starts the second piece. The extension of the **10 nudged runs** is ready but **not submitted**: part 1 = 2015–2019, can start once the first fill is done; part 2 = 2020–2025, after MET ends. Your OK is needed to submit part 1. Also: include LCC_PD_fBVOClccPD (the 3-yr test, now running to 2007)?</span>
+>
+> <span style="color:#008080">**FUT BVOC decomposition notebooks, new runs (3 Nov, 21:23):** the two `-after-co2-fix` notebooks in `diagnostics/FUT-fBVOC-background-lcc-effect-decomposition/` are built and run (new runs 2001–2014, palette, hatched non-significant cells). **Main change:** the big negative FUT expansion effect of the old runs is gone. North of 45°N, forest expansion now adds +0.29 (PD) / +0.39 (FUT) Tg/yr isoprene and about 0 monoterpenes (old: −2.6 / −3.9 in FUT). The conclusion text of the emissions notebook is not rewritten yet. Paused at your request.</span>
+>
+> <span style="color:#008080">**Contrast maps for your three questions (3 Nov, 20:20):** new notebook `diagnostics/lcc-bvoc-background-contrast-maps/contrast_maps_uncorrected.ipynb`. Map grids (rows = contrasts, columns = variables) for Q1 effect of land-cover change in PD and FUT, Q2 FUT BVOC emission source, Q3 PD → FUT. Raw differences, artefact **not** added. Done: 9 map grids + regional-mean table, the contrasts add up exactly. In FUT, switching from PD to FUT emissions gives −0.94 W m⁻² at the top of the atmosphere (≥45°N), the land-cover-driven emission change only −0.01.</span>
+>
+> <span style="color:#999999">**Mask folder moved (3 Nov, 20:20):** `lcc-modified-cells/` (the modified-cells mask) now sits directly in `diagnostics/` instead of `diagnostics/check-simulation-equilibrium/`. All notebooks and scripts that read it were updated (~30 files, incl. two plotting modules in `src/` that pointed to a wrong folder name); every path checked to exist.</span>
+>
+> <span style="color:#008080">**Nudging impact on land, new runs (3 Nov, 20:43):** `impact_of_nudging_on_land.ipynb` is on the new runs (2001–2014). Maps now hatch the non-significant cells, and a new figure shows MET and the four nudged runs on the same years. Nudging gives the land less sun (−4.6 W m⁻²) and makes it cooler (soil −0.24 K), equally in CTRL and LCC, so it cancels in LCC − CTRL. No action needed for the analysis; optional: a stricter significance test on the drift maps.</span>
+>
+> <span style="color:#A84300">**Time-series notebook (3 Nov, 20:33):** new `analysis/timeseries-responses.ipynb`: yearly values 2001–2014 of the 9 context-map variables + the Ghan terms. Part 1: differences, one figure per contrast, global line + modified-cells/≥45°N line. Part 2 (your follow-up): the actual values of every nudged run, 4 figures (PD/FUT × global/regional), one line per run. Figures in `results/figures/timeseries/`. 2000 is missing (spin-up year). Caveat: droplet radius/number are in-cloud values, so small run-to-run gaps in their global lines are not reliable.</span>
+>
+> <span style="color:#A84300">**BVOC_A emissions outside the changed cells (3 Nov, 21:00):** **decided 4 Nov: keep design A** (analyse means ≥45°N / LCC cells; no hybrid run).</span>
+>
+> <span style="color:#AAAAAA">**LCC_PD_fBVOClccPD extension running (3 Nov, 21:46):** the first two submissions died at start on 4 faulty compute nodes (python error; python works on other nodes). The third submission avoids those nodes and is running since 21:33 (2003–2007, ~17 h). The watcher then postprocesses, reruns the notebook and updates CLAUDE.md automatically.</span>
+>
+> <span style="color:#7B2FBE">**Is the PD artefact land-dependent? (3 Nov, 20:45):** `how_big_artefact_is_PD.ipynb` now has global + Arctic maps, split into artefacts (A1: art_CTRL, art_LCC, δ_PD) and BVOC estimates (A2: C, BVOC_B, BVOC_A), and verdicts over the LCC cells (3b) and north of 45°N (3c). Global δ_PD is a tropical offset of 2001–2002, not the land. Over the LCC cells: **isoprene hardly depends on the land** (ratio 0.12), **monoterpene does, moderately** (0.60, same sign both years), and **SOA is not resolved** with 2 years (the BVOC effect itself flips sign). No need to drop 2001–2002 from the main analysis (≤0.2 percentage points).</span>
+>
+> <span style="color:#A84300">**New fBVOC analyses (3 Nov, 20:27):** notebook 1 `analysis/artefact-corrected-split.ipynb` (corrected BVOC + non-BVOC split, PD and FUT) is **running** (started 20:26), outputs into `results/{figures,tables}/artefact-corrected-split/`. Old uncorrected fixed-BVOC results are in `pre-artefact-correction/`; the 27 pure LCC − CTRL figures stay. Next: read the results, then notebook 3 (artefact robustness).</span>
+>
+> <span style="color:#E58AA5">**Contrast label on the forcing-decomposition maps (4 Nov, 15:01):** done: `analysis/radiative_forcing.ipynb` rerun without errors, incl. the new **LCC_FUT_fBVOClccPD** figures, now in `results/figures/fBVOC/pre-artefact-correction/`.</span>
+>
+> <span style="color:#999999">**Git tidy (3 Nov, 18:40):** you made 18 commits; I added 4 more for what was left (palette in the diagnostics, diagnostics README, D2 on the new chain, palette rerun of 2 analysis notebooks). `main` is 10 commits ahead of GitHub, **not pushed**. Left out on purpose: D1 on the new chain (its saved run fails, ValueError) and `megan_patch_branch_5day_test.ipynb` (only re-saved, same content).</span>
+>
 >
 > <span style="color:#999999">**Conda cache in git, fixed (3 Nov, 17:33):** conda had put a 1.1 GB package cache in `docs/nird/.conda/` because `~/.condarc` used a relative path. The config now uses absolute NIRD paths (backup `~/.condarc.bak`) and the cache is deleted. The other ~320 staged files were staged by VS Code on **2 Nov 19:00**: a commit from Source Control with nothing staged runs "stage all" first (`git add -A`), then the commit stopped because the message was empty. Nothing was committed.</span>
 >
@@ -16,7 +110,7 @@
 >
 > <span style="color:#A84300">**MEGAN lake fix (3 Nov, 15:50):** fixed with your OK; figures remade (old ones in `results/figures/megan_factors/before_lake_fix/`), stale "different spin-ups" note removed. **Effect is negligible:** the split moves by only 0.05–0.07 (in % units) from activity to composition north of 45°N; locally up to ~10 in 12 tundra cells of northern Canada. Notebook: `diagnostics/megan-exact-split-test/lake_fix_effect.ipynb`.</span>
 >
-> <span style="color:#A84300">**MEGAN exact split, your decisions (3 Nov, 15:45):** 32-day test approved (runs once the production script and launcher are written; I check with you before submitting); first batch = 2002, 2008, 2014. **Later:** after PD batch 1, compare the exact split with the current maps for those 3 years before running the rest; then FUT. All in `analysis/MEGAN_ATTRIBUTION.md`.</span>
+> <span style="color:#A84300">**MEGAN exact split, your decisions (3 Nov, 15:45; years and test date replaced 4 Nov, see above):**  32-day test approved (runs once the production script and launcher are written; I check with you before submitting); first batch = 2002, 2008, 2014. **Later:** after PD batch 1, compare the exact split with the current maps for those 3 years before running the rest; then FUT. All in `analysis/MEGAN_ATTRIBUTION.md`.</span>
 >
 > <span style="color:#999999">**Old figures kept (3 Nov, 15:17):** the rerun did not overwrite the paper figures: the old 118 are in `results/figures-2001-2014-all-bvoc-pre-co2-fix/`. Only the artefact notebooks' own output folders were rewritten, and the old versions there were either a stand-in or the same old data.</span>
 >
@@ -40,7 +134,7 @@
 >
 > <span style="color:#7B2FBE">**Test runs archived (2 Nov, 17:58):** the 2001–2002 test is now `CTRL_PD_fBVOCctrlPD_test2yr` and, with the replay test, sits in `postprocessing/2001-2014-all-bvoc-pre-co2-fix/`. The three artefact notebooks read them from there.</span>
 >
-> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Methods outline (2 Nov, 18:10):** `boreal-forest-expantion-draft/methods-claude.tex` now has the LPJ-GUESS climate (CRU-NCEP observations to 2014, then bias-corrected GFDL-ESM4) and the fixed-BVOC artefact method from `analysis/FBVOC_ARTEFACT.md`, which got a short "In the paper" section. Still to decide (orange): **which emissions the main FUT fixed-BVOC run uses** and **the journal**.</span>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Methods outline (4 Nov, 14:50):** main FUT fixed-BVOC emissions **on hold** (your call): options CTRL_PD, CTRL_FUT, **LCC_PD** now in a table in `methods-claude.tex`; until decided, all three are plotted. Journal still open.</span>
 >
 > <span style="color:#AAAAAA">**Status (2 Nov, 15:58):** the four new nudged runs finished 30–31 Oct and are processed. The launcher started all 7 fixed-BVOC runs on 31 Oct; 5 are finished and processed (LCC_PD_fBVOClccPD, both FUT ctrlFUT runs, LCC_FUT_fBVOClccPD; LCC_FUT_fBVOCctrlPD is being processed now). The last two (CTRL_PD_fBVOCctrlPD, LCC_PD_fBVOCctrlPD) are in their final months of 2014 and finish this evening. **Next:** run the artefact notebook (`how_big_artefact_is_PD.ipynb`) once CTRL_PD_fBVOCctrlPD is processed; switch the analysis to the new runs and rerun; MEGAN batch 1 still needs its launcher and your OK.</span>
 >
@@ -167,9 +261,624 @@ One block per working window (a new block starts after more than 1 hour without 
 
 ---
 
+<div style="color:#7B2FBE">
+
+## 2026-11-08 · 21:57 → 22:03 (6 min) · session 4a626602
+
+**Goal:** split the uncommitted work into commits and commit it.
+
+**Done:** 6 commits in BOREAL-FOREST-EXPANSION (artefact sign flip, simulation-contrasts notebook, 2001–2019 set, BVOC emission plots, D1 far-field check, docs) and 1 in the draft repo (`methods-claude.tex`). Nothing pushed.
+
+**Open-next:** `git push` in both repos (your call).
+
+**Files changed:** none (commits only; these logs).
+
+</div>
+
+<div style="color:#62733B">
+
+## 2026-11-08 · 21:46 → 21:58 (12 min) · session c46e88fa
+
+**Goal:** time series of ISOP and MTERP emissions for each pair of runs in your list.
+
+**Done:** new notebook `preprocess/bvoc-emissions/plot_bvoc_timeseries.ipynb`, run, outputs saved. 6 figures (2 species × 3 regions), 19 pairs in 4 rows (total/background, BVOC, non-BVOC, artefacts), plus tables.
+
+**Found:** non-BVOC pairs have identical emissions (Δ = 0, same prescribed file). Interactive vs own prescribed emissions differ by only +0.05 % (PD, CTRL_FUT). Modified cells, ISOP: LCC_PD − CTRL_PD +0.24 Tg/yr (+5.8 %); CTRL_FUT − CTRL_PD +8.4 Tg/yr (+203 %).
+
+**Open-next:** CTRL_FUT_fBVOCctrlPD missing (one empty panel); switch LCC_FUT_fBVOClccFUT to its processed file when 24g is done and postprocessed, then rerun.
+
+**Files changed:** `preprocess/bvoc-emissions/plot_bvoc_timeseries.ipynb` (new).
+
+</div>
+
+<div style="color:#62733B">
+
+## 2026-11-08 · 21:47 → 21:55 (8 min) · session da0cb87f
+
+**Goal:** bring the BVOC emission plotting notebook to the new simulations (your OK: yes to all).
+
+**Found:** it still read the old-chain CTRL emissions (`-20261023`).
+
+**Done:** the notebook now reads CTRL_PD `-20261029`, CTRL_FUT, LCC_PD and LCC_FUT `-20261028`; new section with LCC − CTRL maps north of 45°N; seasonal plots show all four sources. The totals table gains the LCC columns and the % change LCC vs CTRL; the species notebook and the folder README follow.
+
+**Open-next:** check the reruns (plotting notebook, then species notebook) and report the LCC − CTRL totals.
+
+**Files changed:** `plot_bvoc_emissions.ipynb`, `bvoc_species_processes.ipynb`, `bvoc_totals_tg_per_yr.csv` (by the rerun), `README.md` in `preprocess/bvoc-emissions/`; the two logs.
+
+</div>
+
 <div style="color:#999999">
 
-## 2026-11-03 · 17:30 → 17:45 (15 min) · session a2e7f46d
+## 2026-11-08 · 21:04 → 21:06 (2 min) · session 4f89c2b2
+
+**Goal:** start MEGAN batch 2 (your request).
+
+**Done:** the plan check passed, and batch 2 (2002, 2006, 2011, raw files kept) was relaunched at 21:05 with the same launcher as batch 1.
+
+**Open-next:** confirm the jobs are in the queue and the watcher has started. Each year then takes about 14 h of model time, plus the reduction.
+
+**Files changed:** the two logs; new launch log in the work folder.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-08 · 12:51 → 12:55 (4 min) · session 4f89c2b2
+
+**Goal:** status of the runs and what is open.
+
+**Done:** checked every chain. Nothing changed.
+
+**Found:** MEGAN batch 1 is fully reduced (2001, 2005, 2010 + swaps). **Batch 2 did not start:** on 7 Nov at 09:09 the auto-launcher saw a CTRL 2005 archive job still in the queue, refused, and stopped without retrying. It would pass now. The 11 nudged runs reached 2026 and are archived. LCC_FUT_fBVOClccFUT is at Sep 2011 (segment 2011→2016, ends ~03:00 Monday), then it extends by itself to 2026.
+
+<span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> <span style="color:#CC0000">**Open / next:** relaunch MEGAN batch 2 (2002, 2006, 2011)? On hold: deleting the batch-1 raw files, main FUT fBVOC source, journal, location for the 2001–2019 analysis.</span>
+
+**Files changed:** the two logs.
+
+</div>
+
+<div style="color:#7B2FBE">
+
+## 2026-11-07 · 00:33 → 01:30 (57 min) · session cb4be630
+
+**Goal:** use one sign everywhere: artefact = interactive − prescribed.
+
+**Done:** docs, Methods outline, code comments and notebook text/code updated; the BVOC values stay the same.
+
+**Then:** you OK'd the reruns and deleting old files; old-chain cause notebooks flipped too; all 7 reruns OK, old files deleted.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-07 · 00:13 → 01:08 (55 min) · session eff577b5
+
+**Goal:** one notebook with all simulation contrasts, one figure per question.
+
+**Done:** `analysis/simulation-contrasts.ipynb` (9 map grids, same layout as the FUT artefact notebook without liquid water path); missing rows now shown as PENDING instead of being dropped (your remark on Fig. 2); third row = row 2 − row 1 in Figs. 1b, 1c, 3a, 4b, with its own colours.
+
+**Found:** CTRL_FUT_fBVOCctrlPD does not exist; LCC_FUT_fBVOClccFUT still running.
+
+**Open-next:** decide on CTRL_FUT_fBVOCctrlPD; check artefact definitions; rerun when LCC_FUT_fBVOClccFUT is processed.
+
+**Files changed:** `analysis/simulation-contrasts.ipynb`, `analysis/simulation-contrasts_outputs/`, `analysis/README.md`.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-07 · 00:10 → 00:25 (15 min) · session 83498e52
+
+**Goal:** speed up the FUT emissions notebook and D1 (your OK), hatch non-significant cells in D1 maps (your OK), finish the FUT rerun and write its conclusions.
+
+**Done:** D1 dots → hatching of non-significant cells (open since 6 Nov 20:40). Loader speed-up in both notebooks (open since 6 Nov 21:25): FUT ~5 min, D1 ~4 min, D1 numbers unchanged. FUT emissions notebook runs to the end; conclusion text of §10 and §14–17 rewritten with the new numbers (open since 3 Nov).
+
+**Found:** the FUT notebook's last section kept failing because of a too-strict tolerance for cloud droplet numbers (~10¹⁰), not the float32 issue. Forest expansion ≥45°N in FUT: isoprene +0.39 Tg/yr, monoterpenes −0.09 (not significant); corrected radiative effect −0.06 W m⁻² (not significant); artefact as large as the expansion effect for SOA and CDNUMC.
+
+**Open-next:** nothing on these three items.
+
+**Files changed:** `diagnostics/2_FUT-fBVOC-background-lcc-effect-decomposition/bvoc_emissions_decomposition-after-co2-fix.ipynb` (cells 1, 5, 25, 32, 40, 41), `diagnostics/2_other-BVOC-emission-magnitude/D1_farfield_check.ipynb` (cells 1, 6, 16, 23), logs.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-07 · 00:07 → 00:12 (5 min) · session dc82b504
+
+**Goal:** list what is waiting on your decision; act on your answers.
+
+**Done:** listed the open decisions. MEGAN batch 2 OK (open since 2026-11-06 17:55): set to launch by itself once batch 1 is reduced.
+
+**Found:** batch 1 still running (2001 both runs, CTRL 2005); 2010 re-reduced with the swaps, all checks pass.
+
+**Open-next:** batch 2 starts automatically (estimate Saturday midday). On hold: raw-file deletion, main FUT fBVOC emission source, target journal. Later: LMDI vs approximate split.
+
+**Files changed:** the two logs; new waiter script in the work folder (not in the repo).
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-06 · 21:54 → 22:30 (36 min) · session fa133924
+
+**Goal:** decide what to commit.
+
+**Done:** proposed 8 grouped commits; explained which edits are only renamed paths in text and which are code; picked the 6 ready now; you committed them, I committed the last 3 (images, `run_all_parallel.sh`, `CLAUDE.md` + `.gitignore`), then undid them at your request (changes kept).
+
+**Open-next:** your choice of commits.
+
+**Files changed:** the two logs only (`CLAUDE_log.md` restored after being emptied).
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-06 · 21:21 → 21:24 (3 min) · session a3a096fb
+
+**Goal:** write the swaps, explain them, list the unit options.
+
+**Done:** swaps were already done and validated by the other window (21:15); `MEGAN_ATTRIBUTION.md` updated (status, unit table); explanation given.
+
+**Open-next:** your pick of headline unit; batch 2 OK; later delete batch-1 raw files. 2010 re-reduction ends ~01 h.
+
+**Files changed:** `analysis/MEGAN_ATTRIBUTION.md`.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-06 · 20:33 → 22:05 (92 min) · session e28a984f
+
+**Goal:** what is `analysis/radiative_forcing_2001-2019.ipynb`; then prepare the 2001–2019 analysis in one folder you can delete.
+
+**Found:** the notebook was a half-finished copy from 5 Nov. All 11 nudged runs have 2000–2019 archived. The notebook shows BVOC effects **without** artefact correction. Its LCC_FUT_fBVOClccFUT row would show LCC_FUT − LCC_FUT_fBVOClccFUT = the artefact on LCC land, not a BVOC effect.
+
+**Done:** `analysis-2001-2019/` (README, run list, `prepare.sh`, notebook moved in and updated). Started 21:23; **failed ~21:55: processed files on home filled the home quota** (my mistake). Stopped and cleaned, home 14.6 GB.
+
+**Open-next:** where to put the processed files (work proposed); design B copy for 2001–2019; fix the design A row; then restart.
+
+**Files changed:** new `analysis-2001-2019/` (all); `analysis/radiative_forcing_2001-2019.ipynb` moved into it; logs.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-06 · 20:32 → 22:40 (128 min) · session 83498e52
+
+**Goal:** status of 7 open items; rerun FUT emissions notebook; zonal-plot colours; fix D1; why the FUT notebook is slow.
+
+**Done:** status check (already done earlier: LCC_PD_fBVOClccPD start-up (open since 3 Nov), radiative_forcing labels (done 4 Nov), push of `main` (open since 3 Nov), design A vs hybrid (decided 4 Nov)). Zonal-mean colours navy / teal / red / orange applied and rerun (open since 3 Nov). D1 duplicate-label error fixed, D1 rerun without errors (open since 3 Nov).
+
+**Found:** FUT notebook slowness = ~2,900 one-by-one opens of raw 104 MB files (0.5–1 s each), same runs reloaded in several cells; D1 loading took 75 min for the same reason. Notebook runs started from a Claude window die when that window closes (3 runs lost). The runner rewrites the whole notebook after every cell, so edits made during a run are lost (this is why one run used old code).
+
+**Open-next:** FUT notebook running in tmux `futnb` since 22:42 → then rewrite its conclusion; faster loader (your OK); D1 maps still mark significance with dots (project rule: hatch non-significant), your call.
+
+**Files changed:** `diagnostics/how-warmer-future-climate-is/how_warmer_future_climate_is.ipynb` (cell 18 colours), `diagnostics/2_other-BVOC-emission-magnitude/D1_farfield_check.ipynb` (cells 3, 16), logs.
+
+</div>
+
+<div style="color:#7B2FBE">
+
+## 2026-11-06 · 20:19 → 21:37 (78 min) · session 28813a15
+**Goal:** FUT emission-source notebook: retire the old one, corrected results only, and a separate uncorrected-vs-corrected view.
+
+**Done:**
+- Old `analysis/fut-fbvoc-emission-source.ipynb` was uncorrected by design. Its two missing parts (Ghan maps; the `fBVOCctrlFUT − fBVOCctrlPD` row) were ported to `-choice`, then it was moved to `analysis/_old/`; README, 5 notebook links, 2 code comments and CLAUDE.md now point to `-choice`.
+- `-choice` now shows **only artefact-corrected** contrasts in every section (emissions, budget, maps, Ghan maps, seasonal chain), plus the emissions-only row (needs no correction) and art_FUT itself.
+- New `diagnostics/fbvoc-prescription-artefact/how_big_artefact_is_FUT.ipynb`: the map grid with each **uncorrected row followed by its corrected one**, then emissions-only and art_FUT. When design A is processed it adds its pair automatically (its corrected row = FUT test of the design-B assumption).
+- Small code change: monthly regional differences now accept the corrected (combined) reference; checked it equals uncorrected + art_FUT exactly.
+
+- `how_big_artefact_is_FUT.ipynb` ran; figure checked. Example (≥45°N SOA burden): source CTRL_FUT −0.086 → +0.015 mg m⁻² after correction; source CTRL_PD 2.57 → 2.67.
+- `-choice` seasonal-chain figure crashed on the corrected reference; fixed in the code.
+
+- `-choice` rerun finished without errors; map grid and seasonal chain regenerated and checked.
+
+**Open-next:** section 6 ("Reading for the decision") of `-choice` is still empty. Nothing committed.
+
+**Files changed:** `analysis/fut-fbvoc-emission-source-choice.ipynb`, new `diagnostics/fbvoc-prescription-artefact/how_big_artefact_is_FUT.ipynb`, `analysis/_old/fut-fbvoc-emission-source.ipynb` (moved), `src/.../plotting/forcing_maps.py`, `analysis/README.md`, `CLAUDE.md`, markdown links in 5 analysis notebooks.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-06 · 20:26 → 21:58 (92 min) · session a54817a0
+**Goal:** recap of Wed–Fri; then (your yes, 20:32) write the MEGAN driver swaps into the reduction and test them on the 60-day pair.
+
+**Done:**
+- Recap of 4–6 Nov given in chat (from this log).
+- MEGAN swap choices: **decided 6 Nov 17:55** (open since 5 Nov 18:27), never written here; box corrected.
+- **Swaps written** (open since 4 Nov): new `postprocess/megan_lmdi/megan_swaps.py` + a new version of the reduction (`reduce_megan_lmdi.new.py`; the live script is not touched until the test passes, so the batch-1 watcher keeps using the old one).
+- First test, 3 days of the 60-day pair: replayed MEGAN = CLM to 10⁻¹⁵, rebuilt light = CLM to 10⁻¹³, terms add up exactly. Only the very first step of a run cannot be replayed (its previous step is not on the tape): 0.6 % of the change over 3 days, ≈ 0.03 % over 60 days.
+- **July 2010 test (3 days) passed every check**, nothing flagged (carry-over from 30 June works). Plausible: plant cover ≈ LMDI composition, leaf temperature ≈ γT, canopy ≈ γL + γA (isoprene +2.90 vs +2.89).
+- **60-day test passed every check** (replay = CLM to 10⁻¹⁵; only the first step of the run is flagged, 0.03 % of the change). The LMDI part is bit-identical to the earlier file.
+- **New reduction now live** (21:15); the 60-day output rewritten with the swaps. Batch-1 years reduced from now on (2001, 2005) get the swaps automatically.
+- **2010 re-reduction started** from its kept raw files (login-3, ≈ 3.5 h, nothing deleted); at 21:24 day 16 of 365, ends ≈ 00:45. How to check it: commands given in chat (log progress, PASS lines, quick totals). Whole reduction chain explained in chat (scripts, files, current plan).
+- Docs: `postprocess/megan_lmdi/README.md` (method, output, tests), status in `analysis/MEGAN_ATTRIBUTION.md`.
+
+**Open / next:** check the 2010 re-reduction (~00:45); then batch 2 (2002, 2006, 2011) **needs your OK**; deleting batch-1 raw files after re-reduction: your call.
+
+**Files changed:** new `postprocess/megan_lmdi/megan_swaps.py`; `reduce_megan_lmdi.py` (swaps added), `postprocess/megan_lmdi/README.md`, `analysis/MEGAN_ATTRIBUTION.md`; `data/processed-data/megan-lmdi/megan_lmdi_PD_test60d.nc` (rewritten); both logs.
+
+---
+
+</div>
+
+<div style="color:#7B2FBE">
+
+## 2026-11-06 · 20:16 → 20:17 (1 min) · session 28813a15
+**Goal:** add the artefact-corrected (design B) contrasts to the maps in the FUT fBVOC emission source notebook.
+
+**Done:**
+- Checked: in `analysis/fut-fbvoc-emission-source-choice.ipynb` only section 2 (radiative budget) was corrected; the maps (section 3), emissions (section 1) and seasonal chain (section 4) are uncorrected.
+- Section 3 figure now has three blocks of rows: uncorrected per source, **corrected per source (design B: uncorrected + art_FUT)**, then art_FUT. When design A (`LCC_FUT_fBVOClccFUT`) is processed it adds its own two rows automatically; its corrected row tests the design-B assumption.
+- Notebook re-running so the new figure is saved in it.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-06 · 18:02 → 20:46 (164 min) · session ffd2d7c5
+**Goal:** MEGAN case names; your OK to resubmit CTRL_PD 2005 and fix the LCC_FUT_fBVOClccFUT climatology.
+
+**Done:**
+- Listed the MEGAN case names. Renaming the LCC 2010 case to 20261105: possible in principle but not worth it (it has already run and been reduced; the scripts store the pairs by full name).
+- **CTRL_PD 2005 resubmitted** (job 1791950, ~15 h + queue), avoiding the node where it failed.
+- **Climatology fix: left to another session** that was already doing it (it is re-cutting pieces 2–3 to the CTRL convention, 1,300 of 1,825 files done at 18:10). I sent it what it needs to restart LCC_FUT_fBVOClccFUT. One of the two open windows replied that it is not that session; the other (adelez-d4 = last night's session 570e9150) confirmed it owns the fix and took the notes.
+- Explained what went wrong in the climatology: pieces 1 and 2–3 cut the days of half-hourly data 30 min apart; the script refuses to average years cut differently. My fix would have re-cut piece 1; the other session re-cuts pieces 2–3 to match the CTRL runs, which is the better choice.
+- Checked: every other run whose emissions are prescribed is one continuous run started in 2000 and cuts days 00:00–23:30. Only the two branch pieces of the LCC_FUT rerun differ.
+- Why the rerun was split in 3 (decided 4 Nov night, your OK): to finish ~2 days faster, and LCC_FUT only kept restart files for 2005 and 2010. In hindsight the two branch pieces caused two setbacks (a crash at start, ~13 h, and this climatology failure, ~1 day), so no time was gained.
+- Your call: keep splitting reruns into parallel pieces. The two pitfalls (each branch piece needs its own nudging start file; branch pieces cut days differently and must be re-cut before the climatology) are saved in my memory for next time.
+
+- 19:44 status: the other session stopped after the re-cut; the re-merge, the 8-species rerun and the watcher restart are still to do.
+
+- LCC_FUT_fBVOClccFUT climatology fix finished by me (re-merge, 8 species resubmitted, watchers restarted).
+- `run_aliases.csv` updated (18 rows corrected, 9 added).
+- FUT emissions notebook: crash in its last section fixed, rerun started.
+- New notebook comparing the three FUT emission sources, running.
+- Methods draft: 5 number boxes filled (land-cover change, capped cells, mask, artefact test, artefact size).
+- Explained step by step how LCC_FUT_fBVOClccFUT and the MEGAN runs are produced (scripts, file moves, checks).
+- New notebook `analysis/fut-fbvoc-emission-source-choice.ipynb` finished; its reading is written (below). The FUT emissions notebook is now rerun and concluded by another session, at your request.
+- Drew both workflows as diagrams: `docs/workflows/workflow_LCC_FUT_fBVOClccFUT.png`, `docs/workflows/workflow_MEGAN_LMDI.png`.
+
+**Found (FUT emission source, 2001–2014, ≥45°N, net TOA):** with CTRL_PD or LCC_PD emissions the "BVOC effect" is ≈ −1 W m⁻² but is almost all the future-climate emission increase (+14 Tg isoprene); with CTRL_FUT emissions (forest expansion only) it is ≈ 0 uncorrected and −0.06 ± 0.05 corrected, the same size as the prescription artefact (−0.09). LCC_FUT_fBVOClccFUT will test that artefact on LCC land.
+
+**Open / next:** choose the main FUT emission source (still on hold); 5 number boxes still wait for results (colonisation share, PD vegetation check, PD autocorrelation, MEGAN split closure).
+
+**Files changed:** both logs only.
+
+---
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-06 · 17:40 → 18:16 (36 min) · session ffd2d7c5
+**Goal:** status of the runs and what is open.
+
+**Found:**
+- Nudged runs: all 11 reached 2020; 8 already continue to 2026, the other 3 follow when their archives finish.
+- MEGAN batch 1: 2000 and 2010 done and reduced; 2001 running (~03 h tonight); **2005 CTRL failed at launch** (Slurm timeout), LCC 2005 done.
+- **LCC_FUT_fBVOClccFUT not started**: the emission climatology failed on a time-grouping mismatch between piece 1 and pieces 2–3.
+
+- 18:12: CTRL 2005 has been resubmitted by another session (your OK 18:08), queued as job 1791950. The LCC_FUT_fBVOClccFUT fix is being done by another session too (`rephase_branch_h1.sh`); this session leaves it alone.
+- 18:14: two other sessions (0d and d4) each assumed this session runs the rephase script. None of the three does, and its log doesn't say which session started it. **Resolved 18:16:** the owner is session 570e9150 (the 5 Nov conversation, running in parallel); it is doing the whole fix.
+
+**Open / next:** the 4 MEGAN swap choices (open since 5 Nov 18:27).
+
+**Files changed:** both logs only.
+
+---
+
+</div>
+
+<div style="color:#AAAAAA">
+
+<div style="color:#CC0000">
+
+## 2026-11-05 · 17:25 → 18:42 (77 min) · session 570e9150
+<div style="color:#555555">
+
+**Goal:** your answers: fix the archives (and automatically from now on), extend the nudged runs to 2025, MEGAN batch 1; then (18:12) LCC_PD_fBVOClccPD extension, LCC_FUT_fBVOClccFUT, batch 1 with raw files kept, decide the swaps.
+
+**Done:**
+- Failed archives fixed (open since 5 Nov 15:10): automatic archive guard (`cases-scripts/archive_guard.sh`); all 3 LCC_FUT half-hourly pieces archived, MEGAN test resumed (CTRL job 2 running, LCC being archived). Bad nodes b5203/b5204 excluded everywhere.
+- MET extension finished and archived; its watcher bug fixed; the 2000–2025 folder is being built (at Jul 2015, 18:25).
+- Nudged extension to 2025 (open since 3 Nov 23:30): automatic, now 11 runs (+ LCC_PD_fBVOClccPD, your OK 18:12); all checked OK.
+- LCC_PD_fBVOClccPD to 2014 finished, postprocessed, notebook rerun (16:23).
+- LCC_FUT_HRBVOC done and identical to LCC_FUT (open since 4 Nov 01:31); emission climatology running; LCC_FUT_fBVOClccFUT (new script 24g) starts automatically after the checks.
+- MEGAN batch 1: starts automatically when the test passes, raw files kept (`--keep-raw`).
+- LCC_FUT_fBVOClccFUT also extended to 2025 (your OK 18:34), automatic after its 2000–2014 run.
+
+**Open-next:** your 4 swap choices (saved for later; see the box); then I write the swaps. Batch 2 must also keep raw files unless the swaps are ready.
+
+**Files changed:** new `cases-scripts/archive_guard.sh`, `cases-scripts/24g-…lcc_fBVOClccFUT….sh`, `cases-scripts/run_when_done/{extend_nudg_2015-2025_when_done,run_24g_when_done,extend_24g_2015-2025_when_done,megan_batch1_when_test_ok}.sh`; edited `cases-scripts/extend_nudg_runs_2015-2025.sh`, `megan-lmdi/launch_megan_lmdi.sh`, `megan-lmdi/watch_megan_lmdi.sh`, `preprocess/nudging/met_ext_watch_and_build.sh`, `CLAUDE.md`.
+
+</div>
+
+## 2026-11-05 · 15:05 → 15:10 (5 min) · session 570e9150
+<span style="color:#AAAAAA">**Run status check.** Archive jobs fail on node b5204 (6 runs not archived, MEGAN test stuck after 30 days). LCC_PD_fBVOClccPD 2008–2014 finished and archived 15:05. MET piece 2 at Dec 2025. Nothing changed.</span>
+
+## 2026-11-04 · 14:50 → 16:21 (91 min) · session e60507d0
+**Goal:** MEGAN exact split: write the production branch script and the batch launcher (your YES, 14:50).
+
+**Done:**
+- Branch script, launcher (gated batches), watcher (reduces each year when it is archived, copies the result to NIRD), identity check, per-year reduction job (`cases-scripts/megan-lmdi/`, `postprocess/megan_lmdi/`). Production-script part of "write the code for the per-plant reruns" (open since 3 Nov).
+- Tested without running the model: identity check on the old 5-day test, 30-min emissions identical to the parent (6.6 million values, 0 differ); reduction of one year on the 5-day pair, all checks pass; case setup checked against the parent for CTRL_PD (32-day test) and LCC_FUT (2010 chain): same model, only the output differs. Launcher refuses wrong year lists and unfinished earlier batches.
+
+**Found:**
+- The four new-chain runs kept restarts only for 2005, 2010 and 2015. Your decisions: don't touch the running LCC_FUT rerun; **change the years to 2005–2008 + 2010–2012**; 32-day test from **2005-01-01**.
+- The parent was built with an extra build flag (`CAM_AEROCOM`); the script now copies it, otherwise the branch would not be the same model.
+- Your follow-ups (15:56): **restarts** are kept at the end of every year (so of every batch) and now also copied to the NIRD archive (work deletes after 42 days); **2015–2017** added as a third chain from the 2015 restart. It needs the new met data (MET run at mid-2019 now) and, for the identity check, the parents' 2015–2025 extension; the watcher waits for both.
+- Your clarification (16:04): the restart at the end of each batch is kept and the next batch continues from it (e.g. a 2005–2006 batch ends with the 2007-01-01 restart). **2000–2003 instead of 2015–2017:** a third chain that starts exactly like the parent runs (from their spin-up); 2000 is only checked and then deleted. Now **10 years: 2001–2003, 2005–2008, 2010–2012**; setup checked against CTRL_PD, same model.
+- Test length (16:15): **2 jobs × 30 days** (2 months + 1 day) instead of 32 days, so it also tests continuing a run from its restart, as every production chain does.
+- The `preproc` queue is broken today: even trivial jobs hang at start. So the per-year reduction runs on the login node, one year at a time, ≈ 3 h per year. The whole chain was tested there: start, failure, copy to NIRD.
+
+**Done (16:19):** production test started with your OK (2 × 30 days; relaunched 16:18 after my mistake at 16:16); years reduced to 6 (2001–02, 2005–06, 2010–11). **Open-next:** check the test when it ends (status: `bash cases-scripts/megan-lmdi/watch_megan_lmdi.sh PD --check`; it runs detached on login-3, safe to close VS Code); Then the driver swaps (option 1b) before batch 1. After PD batch 1: compare with the current maps for 2005, 2006, 2010.
+
+**Files changed:** new `cases-scripts/megan-lmdi/` (4 files), `postprocess/megan_lmdi/check_identity.py`, `reduce_year_job.sh`; edited `reduce_megan_lmdi.py`, `postprocess/megan_lmdi/README.md`, `analysis/MEGAN_ATTRIBUTION.md`, `CLAUDE.md`.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-04 · 14:22 → 15:04 (42 min) · session 8e206b5a
+**Goal:** add the FUT runs with present-day emissions (fBVOClccPD, fBVOCctrlPD) to the artefact-corrected split.
+
+**Done:** both added, artefact-corrected, to every section of `analysis/artefact-corrected-split.ipynb`; rerun started 14:34; budget section done, closure checks pass.
+
+**Found:** FUT, NET at top of atmosphere, global: corrected BVOC effect with PD emissions ≈ **−1.0 W m⁻²** (lccPD −1.01 ± 0.04, ctrlPD −1.04 ± 0.04), almost all cloud; vs −0.02 ± 0.04 with FUT emissions (ctrlFUT). So the big signal is the climate-driven emission rise, not the forest (lccPD vs ctrlPD differ by only 0.03).
+
+**Open-next:** rest of the rerun (chain table, maps), check new figures; then add your note to the notebook intro: these FUT numbers change with design A (provisional).
+
+**Files changed:** `analysis/artefact-corrected-split.ipynb` (+ outputs in `results/{figures,tables}/artefact-corrected-split/`).
+
+</div>
+
+## 2026-11-04 · 14:20 → 16:52 (152 min) · session ec98f95d
+
+**Goal:** run status; act on your answers.
+
+**Done:**
+- LCC_FUT half-hourly pieces 2 and 3 resubmitted (14:30) with the nudging file of their own start date (open since 4 Nov 12:05).
+- The run script now does this by itself for branch runs.
+- BVOC_A outside the changed cells: **keep design A** (open since 3 Nov 21:00).
+- LCC_PD_fBVOClccPD 2008 → 2014 submitted (job 1788254); 2003–2007 archived by hand (archive job died on a bad node) and being postprocessed.
+- Contrast-label figures: rerun started, now with LCC_FUT_fBVOClccPD too (open since 3 Nov 19:03).
+- Methods: LCC_PD emissions added as option 3 to the FUT-source table; the choice stays on hold.
+- Contrast-label rerun finished without errors (15:01).
+- LCC_PD_fBVOClccPD 2003–2007 postprocessed and artefact notebook rerun (15:02); 2008 job running.
+- `results/` reorganised by contrast (new, 4 Nov 14:56).
+- `run_when_done/` moved to `cases-scripts/` (new, 4 Nov 15:37; open since 3 Nov 23:25).
+- Figure D in % and section 4f (why LCC_PD − CTRL_PD differ) added to `how_big_artefact_is_PD.ipynb` (new, 4 Nov 16:32).
+- Rule for old-chain notebooks changed to "ask first"; two of them got the new watcher path (text only).
+
+**Found:** the LCC_PD_fBVOClccPD extension ends 1 Jan 2008, not 2010.
+
+**Open-next:**
+- Check the `artefact-corrected-split.ipynb` rerun (my folder move broke another session's run).
+- If the 2014 archive job also lands on a bad node: archive by hand and restart the watcher.
+- Methods: FUT emission source (on hold) and journal.
+
+**Files changed:** `cases-scripts/cases-setup.sh`, `cases-scripts/24f-…sh`, `cases-scripts/run_aliases.csv`; case dirs s2/s3 `user_nl_cam`; `analysis/radiative_forcing.ipynb`; `diagnostics/fbvoc-prescription-artefact/run_when_done/run_14e_{extension,to2014}_when_done.sh`; `boreal-forest-expantion-draft/methods-claude.tex`; `src/.../plotting/forcing_maps.py`; 6 analysis notebooks (paths only); `results/README.md`, `analysis/README.md`, `CLAUDE.md`.
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-04 · 11:58 → 12:05 (7 min) · session 233c5cc5
+
+<span style="color:#AAAAAA">**Run status check.** Running: MET extension (at 2018-06), LCC_PD_fBVOClccPD extension (at 2007-03, to 2010, ~18 h left), LCC_FUT half-hourly piece 1 (at 2003-04, identical BVOC). Pieces 2 and 3 of the LCC_FUT rerun crashed at start: wrong nudging start file. Nothing resubmitted.</span>
+
+## 2026-11-04 · 00:45 → 01:31 (46 min) · session 84967989
+
+**Goal:** status of LCC_FUT_fBVOClccFUT; start the LCC_FUT rerun with half-hourly BVOC now.
+
+**Found:** LCC_FUT_fBVOClccFUT is not set up. It is needed only if 14e shows that the artefact correction does not hold. LCC_FUT kept restart files only every 5 years (2005, 2010, 2015), so the rerun is split at those years.
+
+**Done:** new script `24f` (alias LCC_FUT_HRBVOC). 3 pieces of 5 years run in parallel; output = the 8 half-hourly BVOC fields + 2 monthly fields to check that it is identical to LCC_FUT. Model and settings checked against LCC_FUT before building (only output and start settings differ). Submitted 01:29 (jobs 1787708, 1787710, 1787712). Merge script for the emission files written.
+
+**Open-next:** after ~1–2 h, compare the first month with LCC_FUT (must be identical); when done, build the emission files. LCC_FUT_fBVOClccFUT itself waits for the 14e verdict.
+
+**Files changed:** `cases-scripts/cases-setup.sh` (new output mode `HR_BVOC_ONLY`), new `cases-scripts/24f-…_lcc_HRBVOC_….sh`, new `preprocess/bvoc-emissions/merge_lcc_fut_hrbvoc.sh`, `run_bvoc_climatology_array.sh` (input folder option), `run_aliases.csv`, `cases-scripts/README.md`, `CLAUDE.md`.
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-03 · 23:30 → 01:00 (90 min) · session 9e6f4132
+
+**Goal:** start the 11-year MET extension; check the test; fill the 2000–2025 folder after the first piece; prepare the extension of all nudged runs.
+
+**Done:** MET extension running since 23:43 (job 1787584) (open since 3 Nov, 21:39). Test **PASS**: 40 six-hourly records bit-identical to the old MET (MET reproduction test, open since 3 Nov, 21:39). Folder build automated: watcher `preprocess/nudging/met_ext_watch_and_build.sh` runs on login-2 and fills the folder after each MET piece. Extension script for the 10 nudged runs ready and checked (all 10 can continue from 2015-01-01), **not submitted**.
+
+**Found:** (1) the script set `BRNCH_RETAIN_CASENAME`, which this model version doesn't have; not needed, the model keeps the case name by itself. (2) The new MET files are cut 6 h later than the old ones, so they are regrouped into calendar days (checked value for value). The real 2015-01-01 replaces the patched one. (3) Each nudged run's restart remembers the exact path of the old met file. The extension rewrites that path (1 byte changes) and the namelist, otherwise the run would use the patched 2015-01-01 file and then crash. (4) The b5… compute nodes are faulty since 3 Nov; the small `preproc` nodes (b5201–5206), where archive jobs run, fail at random. The runs avoid the b5 block; the watcher redoes a failed MET archive. LCC_PD_fBVOClccPD's archive job also sits on those nodes.
+
+**Open-next:** your OK to submit nudged part 1 (2015–2019, ~17 h, 10 runs; total ≈ 190 000 core-h for 2015–2025), after the folder fill (~22–23 h today). Decide on LCC_PD_fBVOClccPD. After MET ends (~5 Nov evening): final fill, then part 2 (2020–2025). Update CLAUDE.md (met data now to 2026).
+
+**Files changed:** `cases-scripts/12d-…met_ext…sh`, `cases-scripts/cases-setup.sh` (`extend_case` options, new `switch_case_to_met_2000_2025`), new `cases-scripts/extend_nudg_runs_2015-2025.sh`, `preprocess/nudging/` (new `regroup_met_ext_days.py`, `met_ext_watch_and_build.sh`, `build_met_2000-2025_job.sh`; rewritten `copy-…-2000-2025.sh`, `check_met_reproduction.py`), `cases-scripts/README.md`, `run_aliases.csv`.
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-03 · 23:25 · session 70247179
+**Goal:** plan the commits; decide where `run_when_done/` should live. **Done:** 7-commit plan proposed. **Found:** the 14e watcher is running with hard-coded paths into that folder. **Open-next:** your go-ahead for the commits; move the folder only after the watcher finishes. **Files changed:** logs only.
+
+## 2026-11-03 · 21:01 → 21:49 (49 min) · session 8672845b
+
+**Goal:** extend MET by 11 years (2015–2025) so the nudged runs can later run to 2025.
+
+**Done:** plan agreed with you (same case name, small h0, 10-day test first, one folder for all met files). Wrote the run script `cases-scripts/12d-…met_ext…sh` (modes `test` and `production`; it checks that build and namelists match the original MET and stops if not), the test checker, the folder-building script and its checker. Checkers tested on the existing files: the old 2000–2015 folder is complete (every day, 4 records, no time gaps).
+
+**Found:** MET kept restarts only for 2005, 2010, 2015, so the test starts from 2010. Code is unchanged since MET ran. 11 years ≈ 20 000 core-hours, ~1.7 days.
+
+**Open-next:** 10-day test building/submitting since 21:49 (detached; log `/cluster/work/users/adelez/met-ext/`); when done, compare with MET → then the 11-year run → then build the `_6h_2000-2025` folder (in /cluster/shared, your OK). Later: how to extend the nudged runs.
+
+**Files changed:** `cases-scripts/12d-NF2000norbc_tropstratchem_met_ext_f19_f19.sh` (new), `cases-scripts/cases-setup.sh` (4 new functions), `preprocess/nudging/check_met_reproduction.py`, `check_nudging_dir.py`, `copy-nudging-data-to-inputForNudging-directory-2000-2025.sh` (new), `cases-scripts/README.md`, `cases-scripts/run_aliases.csv`.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-03 · 21:40 → 21:41 (1 min) · session b157c5d7
+
+**Goal:** list what we worked on today.
+
+**Done:** summary from today's log blocks. No files changed.
+
+**Files changed:** logs only.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-03 · 20:11 → 21:23 (72 min) · session bc4585e4
+
+**Goal:** move the two FUT BVOC decomposition notebooks to the new runs, palette and map style.
+
+**Done:** two new `-after-co2-fix` notebooks (2001–2014, new runs incl. all 3 fBVOC FUT runs and the FUT artefact run), both run; hatched non-significant cells; palette colours; note on the old notebooks; results text of the interaction notebook rewritten.
+
+**Found:** expansion effect on emissions ≥45°N is now small and positive for isoprene (+0.29 PD, +0.39 FUT Tg/yr), ~0 for monoterpenes; the old FUT decrease (−2.6 / −3.9) is gone, likely because it came from the CO₂-bug spin-up.
+
+**Open-next:** rewrite the conclusion text of the emissions notebook (§10, §14–17 findings) with the new numbers; check its fixed-emission and atmospheric-response outputs.
+
+**Files changed:** the 2 new notebooks (+ output folders), 1-line note in the 2 old ones.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-03 · 19:52 → 20:38 (46 min) · session 69fd7b68
+
+**Goal:** maps of the three groups of contrasts you defined (LCC effect per background, FUT emission source, PD → FUT), without the artefact correction.
+
+**Done:** notebook `diagnostics/lcc-bvoc-background-contrast-maps/contrast_maps_uncorrected.ipynb`; 9 map grids (3 questions × radiation / BVOC→SOA→cloud / surface) in `contrast_maps_uncorrected_outputs/figures/`; a table says which rows contain the artefact.
+
+**Found:** Q2: isoprene ≥45°N changes by +0.01 mg m⁻² d⁻¹ with the LCC-driven emission change, +0.52 with the PD → FUT emission change; SOA −0.001 vs +2.65 mg m⁻²; net radiation −0.01 vs −0.94 W m⁻². Total land-cover effect (≥45°N): +0.24 W m⁻² PD, +0.20 FUT.
+
+**Done (same block):** regional-mean table + additivity check (first run broke because the modified-cells mask moved during the run; rerun OK).
+
+**Open-next:** artefact-corrected version of the same maps if you want it.
+
+**Files changed:** new notebook + outputs; `diagnostics/README.md`.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-03 · 20:15 → 20:20 (5 min) · session d09b520e
+
+**Goal:** move `lcc-modified-cells/` up to `diagnostics/` and fix the paths.
+
+**Done:** folder moved; paths fixed in 11 equilibrium notebooks, 13 other notebooks, `forcing_maps.py`, `megan_maps.py`, `build_modified_cells.py` (import of `equilibrium.py`), `CLAUDE.md`, `PLOTTED_VARIABLES.md`. All paths checked.
+
+**Open-next:** none.
+
+**Files changed:** the files above, both logs
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-03 · 20:10 → 20:43 (33 min) · session db60df4e
+
+**Goal:** update the nudging-on-land notebook to the new runs and the plotting choices.
+
+**Done:** notebook switched to the new runs (CTRL_PD, LCC_PD, CTRL_FUT, LCC_FUT and their new coupled spin-ups; 2001–2014), run, summary written. The jump split now removes the land spin-up effect. Palette, Cantarell font, more colourbar ticks, dark-grey outline of the modified cells. Old outputs moved to `pre_co2_fix/`. Then: maps hatch the cells that are not significant (instead of dots), and a new figure shows MET, CTRL_PD, LCC_PD, CTRL_FUT and LCC_FUT on the same years.
+
+**Found:** the nudging effect is the same as before (global land: sun −4.6 W m⁻², soil at 1 m −0.24 K, much stronger in the tropics). Land spin-up effect small on average, but up to ~1 K cooler over Siberia. FUT jump bigger than PD (wetter boreal soils). CTRL and LCC jump alike. The drift difference flags drop from 9 to 4 of 96 (chance level); the old water/snow difference north of 45°N is gone. Cell-by-cell, the LCC − CTRL trend is significant over 18–26 % of land (5 % expected by chance), but that test is not strict.
+
+**Open-next:** optional stricter test (autocorrelation + multiple testing) on the drift maps, if you want it.
+
+**Files changed:** `diagnostics/impact-of-nudging-on-land/impact_of_nudging_on_land.ipynb` (+ outputs folder), `diagnostics/README.md`, both logs
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-03 · 19:45 → 21:03 (78 min) · session 83846750
+
+**Goal:** time series of the context-map variables and the Ghan forcing, global vs regional.
+
+**Done:** `analysis/timeseries-responses.ipynb` (run, outputs saved); 6 difference figures + 4 absolute-value figures (all nudged runs) in `results/figures/timeseries/`; tables `results/tables/timeseries_{regional_means,absolute}_2001_2014.csv`; line in `analysis/README.md`. Path fix in `src/` for the moved modified-cells file (later superseded: another session moved it again and updated the code).
+
+**Found:** NET TOA, ≥45°N: total +0.24 (PD) / +0.20 (FUT) W m⁻²; corrected BVOC −0.03 (PD) / −0.06 (FUT, CTRL_FUT emissions) W m⁻². The FUT BVOC row with CTRL_PD emissions (−1.0 W m⁻²) is dominated by the 2100 background, as expected.
+
+**Open-next:** nothing from this request.
+
+**Files changed:** `analysis/timeseries-responses.ipynb` (new), `analysis/README.md`, `src/.../plotting/forcing_maps.py`, `src/.../plotting/megan_maps.py` (path only; since changed again by another session).
+
+</div>
+
+<div style="color:#7B2FBE">
+
+## 2026-11-03 · 19:43 → 21:46 (123 min) · session ca3050fb
+
+**Goal:** show with maps whether the PD artefact depends on the land, how much, and decide on the extension of LCC_PD_fBVOClccPD.
+
+**Done:** `how_big_artefact_is_PD.ipynb`: global + Arctic maps in three figures (A1 artefacts, A2 the three BVOC estimates C / BVOC_B / BVOC_A, B why δ_PD is tropical), definitions in the titles, LCC − CTRL time series, region table, verdict sections 3b (LCC cells) and 3c (north of 45°N). Rerun with outputs saved.
+
+**Found:** the global δ_PD (+1.0 % SOA) is a tropical vegetation offset of 2001–2002, not the boreal land. Over the LCC cells: isoprene ratio 0.12 (small), monoterpene 0.60 (moderate, same sign both years), SOA not resolved. The three differences between the BVOC estimates are exactly the artefact maps: BVOC_B − C = art_CTRL, BVOC_A − C = art_LCC, BVOC_A − BVOC_B = δ_PD. Dropping 2001–2002 from the main analysis is not needed (≤0.2 percentage points).
+
+**Done (cont.):** your choice on the extension (open since 20:25): LCC_PD_fBVOClccPD continued for 2003–2007, submitted 20:48; a watcher postprocesses it, reruns the notebook and updates CLAUDE.md when it ends.
+
+**Found (cont.):** BVOC_A is not 0 outside the changed cells because the LCC_PD and CTRL_PD emission climatologies differ there too: in the tropics mostly noise and slowly diverging vegetation (net ≈ 0 after 2002), next to the changed cells a real response (33–63 % of emitting cells significant). New notebook section 4e shows this with significance maps (Figure D) and a table.
+
+**Done (cont.):** extension running since 21:33 after two failed starts on 4 faulty compute nodes (resubmitted avoiding them).
+
+**Open-next:** read the new verdicts (2001–2007) when the watcher finishes (~1 day). Decide whether to keep design A as is or use a hybrid emission file (LCC emissions only north of 45°N); the hybrid needs a new run.
+
+**Files changed:** `diagnostics/fbvoc-prescription-artefact/how_big_artefact_is_PD.ipynb` + `_outputs/` (7 figures, 6 tables); new `run_when_done/run_14e_extension_when_done.sh`; section 4e (Figure D, hatching = not significant, + `lcc_minus_ctrl_emission_significance.csv`).
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-03 · 19:38 → 20:27 (49 min) · session c650bace
+
+**Goal:** keep LCC − CTRL results, move only the fixed-BVOC ones aside.
+
+**Done:** 69 figures (incl. 10 mixed ones that also show an uncorrected fixed-BVOC contrast), the cumulative-decomposition folder and all 8 tables of 2001–2014 → `pre-artefact-correction/`. Your OK to move (open since 19:33) answered.
+
+**Open-next:** notebook 1 running (started 20:26); then fill its findings and do notebook 3.
+
+**Files changed:** `results/README.md`, `analysis/README.md`, new `analysis/artefact-corrected-split.ipynb`, files moved in `results/`.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-03 · 19:14 → 19:33 (19 min) · session c650bace
+
+**Goal:** decide what to analyse now that all new fixed-BVOC runs are done.
+
+**Done:** plan with 4 analyses, each with its own notebook and results folders; shared code for corrected contrasts ("virtual run") written and tested: total = non-BVOC + corrected BVOC exactly.
+
+**Found:** none of the paper notebooks use the artefact correction yet. The surface-albedo proxy is not exactly additive (small, expected).
+
+**Open-next:** your OK to move the uncorrected results aside; then notebook 1 (corrected split).
+
+**Files changed:** `src/boreal_forest_expansion/plotting/forcing_maps.py`.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-03 · 18:54 → 19:13 (19 min) · session d34b64e4
+
+**Goal:** show which runs are subtracted in the forcing-decomposition figures.
+
+**Done:** one label line with a bracket over the four BVOC panels (e.g. "LCC_FUT − LCC_FUT_fBVOCctrlFUT"); applies to every forcing-decomposition figure. Test versions of all 27 figures made in the sandbox.
+
+**Open-next:** your OK to rerun `analysis/radiative_forcing.ipynb`.
+
+**Files changed:** `src/boreal_forest_expansion/plotting/forcing_maps.py`, `sandbox/test_group_label.py` (new).
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-03 · 17:30 → 18:40 (70 min) · session a2e7f46d
 
 **Goal:** find out why conda files showed up as new files in git and why so many files were staged; prepare clean commits.
 
@@ -179,7 +888,9 @@ One block per working window (a new block starts after more than 1 hour without 
 
 **Done (later):** VS Code no longer stages everything without asking (`git.enableSmartCommit` off). The index was emptied at 17:35, so nothing is staged now. `.gitignore` now skips the old pre-CO₂-fix figures (`results/figures-2001-2014-all-bvoc-pre-co2-fix/`, 239 MB), watcher pid files, sandbox run logs and `commit_messages.md`. Created `commit_messages.md` with 9 commits covering all 346 changed files: housekeeping, case scripts, pre/postprocessing, plotting library, 2 diagnostics commits, analysis + tables, new figures (271 MB, kept separate), sandbox scripts.
 
-**Open-next:** you fill in the messages, then say "go". Pushing to GitHub only when you say so.
+- Commit messages file done (opened 17:45 in this block): you committed most of it yourself (18 commits, 17:45–18:29) and deleted the file. Then 4 more commits from me: `2f2e672` diagnostics palette (16 files, notebooks not rerun, so their saved figures keep the old colours), `a51c46d` diagnostics README, `684be41` D2 MEGAN budget on the new chain (notebook + 13 outputs), `615a07e` palette rerun of `cumulative_radiative_decomposition` + `fut-fbvoc-emission-source` (+ 3 figures, log).
+
+**Open-next:** push to GitHub when you say so (`main` is 10 ahead). D1 new-chain notebook: fix the ValueError in `plot_contributions`, rerun, commit. `megan_patch_branch_5day_test.ipynb`: discard the re-save (`git restore`) or commit it.
 
 **Files changed:** `~/.condarc` and new `~/.vscode-server/data/Machine/settings.json` (both outside the repo); `.gitignore`; new `commit_messages.md` (gitignored); `docs/nird/` deleted.
 
