@@ -62,6 +62,11 @@ FIG_FBVOC_B = FIG_FBVOC / "artefact-design-B"           # analysis/artefact-corr
 TABLE_DIR = REPO_DIR / "results" / "tables"
 TABLE_FBVOC_PRE = TABLE_DIR / "pre-artefact-correction"
 TABLE_FBVOC_B = TABLE_DIR / "artefact-design-B"
+# Layout since 2026-11-08 (user): one folder per contrast category (CATEGORIES below), figures and
+# tables. The folders above hold the pre-2026-11-08 sets; they were moved to results/*-pre-reorg-20261108/.
+CATEGORIES = ("interactive", "fBVOC", "non-BVOC", "artefacts")
+FIG_CATEGORY = {c: FIGURE_DIR / c for c in CATEGORIES}
+TABLE_CATEGORY = {c: TABLE_DIR / c for c in CATEGORIES}
 
 
 def figure_path(figdir: Path | None, filename: str) -> Path:
@@ -79,6 +84,7 @@ def figure_path(figdir: Path | None, filename: str) -> Path:
         else:
             figdir = FIG_FBVOC_PRE
     figdir = Path(figdir)
+    figdir.mkdir(parents=True, exist_ok=True)
     return figdir / filename
 
 
@@ -159,6 +165,126 @@ def corrected_fbvoc(period: str, source: str | None = None) -> VirtualRun:
 # corrected reference, so lcc - fbvoc = corrected BVOC effect and lcc - ctrl = total. The non-BVOC part
 # is LCC_P^ctrlP - CTRL_P^ctrlP (real runs). Used in analysis/artefact-corrected-split.ipynb.
 CORRECTED_PAIRS = {p: {**roles, "fbvoc": corrected_fbvoc(p)} for p, roles in BVOC_PAIRS.items()}
+
+
+# =============================================================================
+# Contrast categories (user 2026-11-08): the only contrasts of the analysis
+# =============================================================================
+
+# LCC_FUT_fBVOClccFUT (24g, design A) is not processed yet -> design-B stand-in (user 2026-11-08,
+# "TO BE REPLACED LATER"): LCC_FUT − art_CTRL_FUT = LCC_FUT − CTRL_FUT + CTRL_FUT_fBVOCctrlFUT, i.e. it
+# assumes art(LCC land) = art(CTRL land). Set to False once the run is postprocessed, then rerun analysis/.
+LCC_FUT_FBVOCLCCFUT_DESIGN_B = True
+LCC_FUT_FBVOCLCCFUT = (VirtualRun("LCC_FUT_fBVOClccFUT[design B]",
+                                  {"LCC_FUT": 1.0, "CTRL_FUT": -1.0, "CTRL_FUT_fBVOCctrlFUT": 1.0})
+                       if LCC_FUT_FBVOCLCCFUT_DESIGN_B else "LCC_FUT_fBVOClccFUT")
+
+
+@dataclass(frozen=True)
+class Contrast:
+    """One contrast case1 − case2. key = file-name tag, label = short name (row labels), question = what it answers."""
+    category: str
+    key: str
+    case1: str
+    case2: str
+    label: str
+    question: str
+
+    @property
+    def pair(self) -> tuple[str, str]:
+        return self.case1, self.case2
+
+    @property
+    def design_b(self) -> bool:
+        return isinstance(self.case1, VirtualRun) or isinstance(self.case2, VirtualRun)
+
+    @property
+    def one_line(self) -> str:
+        """label on one line (tables, legends), e.g. "LCC_PD_fBVOC [lccPD − ctrlPD]"."""
+        return self.label.replace("\n", " ") + (" (design B)" if self.design_b else "")
+
+    @property
+    def row_label(self) -> str:
+        return self.label + ("\n(design B)" if self.design_b else "")
+
+
+def _contrasts():
+    lccfut = LCC_FUT_FBVOCLCCFUT
+    rows = {
+        "interactive": [
+            ("LCC_FUT-CTRL_PD", "LCC_FUT", "CTRL_PD", "LCC_FUT − CTRL_PD",
+             "combined effect of land-cover change and climate change"),
+            ("LCC-CTRL_PD", "LCC_PD", "CTRL_PD", "[LCC − CTRL]_PD", "total effect of LCC, PD climate"),
+            ("LCC-CTRL_FUT", "LCC_FUT", "CTRL_FUT", "[LCC − CTRL]_FUT", "total effect of LCC, FUT climate"),
+            ("CTRL_FUT-PD", "CTRL_FUT", "CTRL_PD", "CTRL_[FUT − PD]",
+             "background climate change, current vegetation (PV)"),
+            ("LCC_FUT-PD", "LCC_FUT", "LCC_PD", "LCC_[FUT − PD]",
+             "background climate change, future vegetation (FV)"),
+        ],
+        "fBVOC": [
+            ("fBVOC_PD_lccPD-ctrlPD", "LCC_PD_fBVOClccPD", "LCC_PD_fBVOCctrlPD", "LCC_PD_fBVOC\n[lccPD − ctrlPD]",
+             "BVOC emission change from LCC, PD climate"),
+            ("fBVOC_FUT_lccFUT-ctrlFUT", lccfut, "LCC_FUT_fBVOCctrlFUT", "LCC_FUT_fBVOC\n[lccFUT − ctrlFUT]",
+             "BVOC emission change from LCC, FUT climate"),
+            ("fBVOC_FUT_lccFUT-lccPD", lccfut, "LCC_FUT_fBVOClccPD", "LCC_FUT_fBVOC\n[lccFUT − lccPD]",
+             "BVOC emission change from climate change, perturbed vegetation"),
+            ("fBVOC_FUT_lccFUT-ctrlPD", lccfut, "LCC_FUT_fBVOCctrlPD", "LCC_FUT_fBVOC\n[lccFUT − ctrlPD]",
+             "BVOC emission change from LCC and climate change together"),
+            ("fBVOC_FUT_ctrlFUT-ctrlPD", "LCC_FUT_fBVOCctrlFUT", "LCC_FUT_fBVOCctrlPD",
+             "LCC_FUT_fBVOC\n[ctrlFUT − ctrlPD]",
+             "BVOC emission change from climate change, current vegetation"),
+            ("fBVOC_FUT_lccPD-ctrlPD", "LCC_FUT_fBVOClccPD", "LCC_FUT_fBVOCctrlPD", "LCC_FUT_fBVOC\n[lccPD − ctrlPD]",
+             "BVOC emission change from LCC (PD emissions), FUT climate; not really physical"),
+        ],
+        "non-BVOC": [
+            ("nonBVOC_LCC-CTRL_PD", "LCC_PD_fBVOCctrlPD", "CTRL_PD_fBVOCctrlPD", "[LCC_PD − CTRL_PD]\n_fBVOCctrlPD",
+             "non-BVOC effect of LCC, PD climate"),
+            ("nonBVOC_LCC-CTRL_FUT", "LCC_FUT_fBVOCctrlFUT", "CTRL_FUT_fBVOCctrlFUT",
+             "[LCC_FUT − CTRL_FUT]\n_fBVOCctrlFUT", "non-BVOC effect of LCC, FUT climate"),
+            ("nonBVOC_LCC_FUT-PD", "LCC_FUT_fBVOCctrlPD", "LCC_PD_fBVOCctrlPD", "[LCC_FUT − LCC_PD]\n_fBVOCctrlPD",
+             "non-BVOC effect of climate change, perturbed vegetation"),
+            ("nonBVOC_LCC_FUT-CTRL_PD", "LCC_FUT_fBVOCctrlPD", "CTRL_PD_fBVOCctrlPD",
+             "[LCC_FUT − CTRL_PD]\n_fBVOCctrlPD", "non-BVOC effect of LCC and climate change together"),
+        ],
+        "artefacts": [
+            ("art_LCC_PD", "LCC_PD", "LCC_PD_fBVOCctrlPD", "art_LCC_PD",
+             "LCC land, PD: interactive − CTRL_PD emissions prescribed"),
+            ("art_LCC_FUT", "LCC_FUT", "LCC_FUT_fBVOCctrlFUT", "art_LCC_FUT",
+             "LCC land, FUT: interactive − CTRL_FUT emissions prescribed"),
+            ("art_CTRL_PD", "CTRL_PD", "CTRL_PD_fBVOCctrlPD", "art_CTRL_PD",
+             "CTRL land, PD: interactive − own emissions prescribed"),
+            ("art_CTRL_FUT", "CTRL_FUT", "CTRL_FUT_fBVOCctrlFUT", "art_CTRL_FUT",
+             "CTRL land, FUT: interactive − own emissions prescribed"),
+        ],
+    }
+    return {cat: [Contrast(cat, *r) for r in rs] for cat, rs in rows.items()}
+
+
+CONTRASTS = _contrasts()
+
+
+def contrast(key: str) -> Contrast:
+    """Contrast by its key, e.g. contrast("LCC-CTRL_PD")."""
+    for rows in CONTRASTS.values():
+        for c in rows:
+            if c.key == key:
+                return c
+    raise KeyError(key)
+
+
+def budget_groups(categories=CATEGORIES) -> dict[str, list[tuple[str, str, str]]]:
+    """{category: [(one-line label, case1, case2), ...]}: the `groups` argument of the budget tables/figures."""
+    return {cat: [(c.one_line, c.case1, c.case2) for c in CONTRASTS[cat]] for cat in categories}
+
+
+def tick_label(label: str) -> str:
+    """Contrast label wrapped for axis ticks: "LCC_PD_fBVOC [lccPD − ctrlPD]" -> two lines."""
+    return label.replace(" [", "\n[").replace("] _", "]\n_").replace(" (design B)", "\n(design B)")
+
+
+def category_aliases(categories=CATEGORIES) -> list[str]:
+    """Real runs behind the contrasts of `categories` (design-B stand-ins expanded)."""
+    return sorted({a for cat in categories for c in CONTRASTS[cat] for x in c.pair for a in run_weights(x)})
 
 
 @dataclass(frozen=True)
@@ -1205,7 +1331,10 @@ GHAN_TITLES = {"toa": r"$\mathbf{F}_{\mathbf{TOTAL}}$", "dir": r"$\mathbf{F}_{\m
                "cloud": r"$\mathbf{F}_{\mathbf{CLOUD}}$", "rest": r"$\mathbf{F}_{\mathbf{REST}}$"}
 # Figure-title names of the contrast tags (tags stay short in file names)
 CONTRAST_LABELS = {"LCC-CTRL": "LCC − CTRL", "LCC-fBVOC": "LCC − LCC_fBVOC", "CTRLFUT-CTRLPD": "CTRL_FUT − CTRL_PD",
-                   "FUT-fBVOC-source": "LCC_FUT vs the two FUT fBVOC runs"}
+                   "FUT-fBVOC-source": "LCC_FUT vs the two FUT fBVOC runs",
+                   "interactive": "interactive runs", "fBVOC": "fBVOC runs, only the prescribed emissions differ",
+                   "non-BVOC": "non-BVOC, same prescribed emissions",
+                   "artefacts": "artefacts, interactive − prescribed"}
 
 
 def ghan_panels(band: str = "NET", case1_role: str = "lcc", case2_role: str = "ctrl",
@@ -1256,9 +1385,12 @@ def make_ghan_figure(
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
     pairs: dict | None = None,
+    label: str | None = None,
+    stem: str | None = None,
 ):
     """
     Ghan decomposition of one contrast: total + ARI + cloud + clear-clean, one shared scale.
+    label/stem: title name of the contrast and file-name stem (used by make_ghan_contrast_figure).
 
     contrast: "total" (LCC - CTRL), "bvoc" (LCC - LCC_fBVOC) or "background" (CTRL_FUT - CTRL_PD,
     experiment "FUT" only); roles from BVOC_PAIRS.
@@ -1294,16 +1426,28 @@ def make_ghan_figure(
 
     c1, c2 = pairs[role1], pairs[role2]
     kind = "seasonal " if seasonal else ""
-    add_suptitle(fig, f"{kind}Ghan decomposition, {band}: {c1} − {c2} ({start_year}–{end_year})",
+    add_suptitle(fig, f"{kind}Ghan decomposition, {band}: {label or f'{c1} − {c2}'} ({start_year}–{end_year})",
                  mean_lat_min, y=_suptitle_y(fig))
     if save:
         if contrast == "bvoc":   # name the fBVOC run, e.g. LCC-fBVOCctrlPD (user 2026-10-28)
             tag = f"{short_alias(c1)}-{short_alias(c2)}"
-        stem = f"{experiment}_ghan_{'seasonal_' if seasonal else ''}{tag}_{band}_{start_year}_{end_year}.png"
+        stem = (f"{stem}.png" if stem else
+                f"{experiment}_ghan_{'seasonal_' if seasonal else ''}{tag}_{band}_{start_year}_{end_year}.png")
         path = figure_path(figdir, stem)
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
+
+
+def make_ghan_contrast_figure(c: Contrast, band: str = "NET", start_year: int = 2001, end_year: int = 2014,
+                              seasonal: bool = False, figdir: Path | None = None, **kw):
+    """Ghan decomposition of one contrast of CONTRASTS (case1 − case2), saved in its category folder as
+    ghan[_seasonal]_<key>_<band>_<years>.png."""
+    label = c.one_line
+    return make_ghan_figure(c.category, "total", band, start_year, end_year, seasonal=seasonal,
+                            pairs={"lcc": c.case1, "ctrl": c.case2}, label=label,
+                            stem=f"ghan_{'seasonal_' if seasonal else ''}{c.key}_{band}_{start_year}_{end_year}",
+                            figdir=figdir or FIG_CATEGORY[c.category], **kw)
 
 
 # =============================================================================
@@ -1417,13 +1561,19 @@ def make_contrast_grid_figure(
     stipple: bool | str = True,
     fdr_alpha: float = 0.10,
     rows: list[tuple[str, str]] | None = None,
+    labels: list[str] | None = None,
 ):
     """
-    Grid of maps: one row per contrast of `contrast_set` ("LCC-CTRL" or "LCC-fBVOC", see
+    Grid of maps: one row per contrast of `contrast_set` (a category of CONTRASTS, saved in its folder
+    FIG_CATEGORY, rows labelled with the short contrast names; or legacy "LCC-CTRL" / "LCC-fBVOC", see
     contrast_sets), one column per panel. Each panel has its own colourbar, because the
     rows differ a lot in size (LCC_FUT - CTRL_PD contains the whole 2100 background change).
     rows: (case1, case2) list overriding contrast_sets()[contrast_set] (contrast_set is then a label).
     """
+    if rows is None and contrast_set in CONTRASTS:
+        rows = [c.pair for c in CONTRASTS[contrast_set]]
+        labels = labels or [c.row_label for c in CONTRASTS[contrast_set]]
+        figdir = figdir or FIG_CATEGORY[contrast_set]
     rows = rows or contrast_sets()[contrast_set]
     panels = [replace(p, case1_role="case1", case2_role="case2") for p in panels]
     fig, axes = map_grid(len(rows), len(panels), left=2.0, map_size=GRID_MAP_SIZE if map_size is None else map_size)
@@ -1444,7 +1594,7 @@ def make_contrast_grid_figure(
                 ax.title.set_fontsize(GRID_TITLE_FONTSIZE)
                 ax.title.set_text(textwrap.fill(ax.get_title(), GRID_TITLE_WRAP))
             if j == 0:
-                ax.text(-0.08, 0.5, f"{c1}\n−\n{c2}", transform=ax.transAxes, rotation=0,
+                ax.text(-0.08, 0.5, labels[i] if labels else f"{c1}\n−\n{c2}", transform=ax.transAxes, rotation=0,
                         ha="right", va="center", fontsize=10, fontweight="bold")
 
     title = "BVOC/SOA/cloud" if name == "context" else name
@@ -1498,23 +1648,28 @@ def water_budget_regions(ds: xr.Dataset, lat_min: float = 45.0) -> dict[str, xr.
             f"unmodified land ≥{lat_min:g}°N": land & ~modified & (ds["lat"] >= lat_min)}
 
 
-def water_budget_table(start_year: int = 2001, end_year: int = 2014, conf: float = 0.95):
+def water_budget_table(start_year: int = 2001, end_year: int = 2014, conf: float = 0.95, sets=None):
     """
     Regional water budget of every contrast in contrast_sets(): yearly area x landfrac weighted
     means, case values and paired difference with a t-interval across years. mm yr-1.
     """
     import pandas as pd
 
-    aliases = sorted({a for rows in contrast_sets().values() for pair in rows for a in pair})
+    # sets: {name: [(case1, case2)]}; default legacy contrast_sets(); categories: {c: [x.pair for x in CONTRASTS[c]]}
+    sets = sets or contrast_sets()
+    aliases = sorted({a for rows in sets.values() for pair in rows for x in pair for a in run_weights(x)})
     data = {a: _water_budget_fields(a, start_year, end_year) for a in aliases}
     regions = water_budget_regions(data[aliases[0]][2])
 
-    def regional(alias, term, mask):
-        terms, w, _ = data[alias]
-        return terms[term].weighted(w.where(mask, 0.0)).mean(("lat", "lon"))
+    def regional(alias, term, mask):   # VirtualRun (design-B stand-in): weighted sum of its real runs
+        out = 0
+        for a, k in run_weights(alias).items():
+            terms, w, _ = data[a]
+            out = out + k * terms[term].weighted(w.where(mask, 0.0)).mean(("lat", "lon"))
+        return out
 
     rows = []
-    for cset, pairs in contrast_sets().items():
+    for cset, pairs in sets.items():
         for c1, c2 in pairs:
             for rname, mask in regions.items():
                 for term in WATER_BUDGET_TERMS:
@@ -1727,7 +1882,7 @@ GHAN_TERMS = ("toa", "dir", "cloud", "rest")
 
 
 def radiative_budget_table(start_year: int = 2001, end_year: int = 2014,
-                           regions=("≥45°N", "modified cells")):
+                           regions=("≥45°N", "modified cells"), groups=None):
     """Long table of yearly regional means: period, region, contrast, band, term, year, value [W m-2].
 
     term = toa / dir / cloud / rest (Ghan) or albedo_proxy (SW, surface, not a budget term).
@@ -1735,11 +1890,15 @@ def radiative_budget_table(start_year: int = 2001, end_year: int = 2014,
     """
     import pandas as pd
 
+    # groups: {group: [(label, case1, case2)]}, e.g. budget_groups() (categories; stored in the column "period");
+    # default = the legacy PD/FUT budget_contrasts
+    groups = groups or {p: budget_contrasts(p) for p in BVOC_PAIRS}
     rows = []
-    for period in BVOC_PAIRS:
-        ref = open_class(BVOC_PAIRS[period]["ctrl"], "RADIATIVE", start_year, end_year)
+    for period, group in groups.items():
+        ref = open_class(BVOC_PAIRS[period]["ctrl"] if period in BVOC_PAIRS else "CTRL_PD", "RADIATIVE",
+                         start_year, end_year)   # masks only depend on the grid
         masks = region_masks(ref)
-        for label, c1, c2 in budget_contrasts(period):
+        for label, c1, c2 in group:
             fields = {(b, t): yearly_difference(c1, c2, "RADIATIVE", f"{b}_{t}", start_year, end_year)
                       for b in ("NET", "SW", "LW") for t in GHAN_TERMS}
             fields[("SW", "albedo_proxy")] = yearly_difference(c1, c2, "RADIATIVE", "SFC_ALBEDO_FORCING_CLEAR",
@@ -1777,14 +1936,18 @@ TERM_STYLE = {"toa": (GHAN_TITLES["toa"], pal.TOTAL_COLOR), "dir": (GHAN_TITLES[
 
 
 def make_radiative_budget_figure(t, save=True, figdir: Path | None = None, dpi=200,
-                                 start_year=2001, end_year=2014):
-    """Bars: rows = region x period, columns = NET / SW / LW; groups = budget_contrasts(period); ± 95 % CI."""
+                                 start_year=2001, end_year=2014, groups=None, name="radiative_budget_contrasts",
+                                 title=None):
+    """Bars: rows = region x group (period or category), columns = NET / SW / LW; bar groups = contrasts; ± 95 % CI.
+    groups as in radiative_budget_table (default: PD/FUT budget_contrasts)."""
+    groups = groups or {p: budget_contrasts(p) for p in BVOC_PAIRS}
+    t = t[t.period.isin(groups)]
     s = summarize_years(t, ["period", "region", "contrast", "band", "term"])
-    rows = [(r, p) for r in dict.fromkeys(t.region) for p in BVOC_PAIRS]
+    rows = [(r, p) for r in dict.fromkeys(t.region) for p in groups]
     fig, axes = plt.subplots(len(rows), 3, figsize=(15, 3.9 * len(rows)), squeeze=False, constrained_layout=True)
     fig.get_layout_engine().set(h_pad=0.12)   # room between a row's tick labels and the next row's titles
     for i, (region, period) in enumerate(rows):
-        contrasts = [c for c, _, _ in budget_contrasts(period)]
+        contrasts = [c for c, _, _ in groups[period]]
         for j, band in enumerate(("NET", "SW", "LW")):
             ax = axes[i, j]
             terms = list(GHAN_TERMS) + (["albedo_proxy"] if band == "SW" else [])
@@ -1806,44 +1969,49 @@ def make_radiative_budget_figure(t, save=True, figdir: Path | None = None, dpi=2
                                 va="bottom" if m >= 0 else "top", fontsize=6.5)
             ax.axhline(0, color="black", lw=0.6)
             ax.margins(y=0.18)   # room for the value labels above/below the total bars
-            ax.set_xticks(range(len(contrasts)), contrasts, fontsize=8)
+            ax.set_xticks(range(len(contrasts)), [tick_label(c) for c in contrasts], fontsize=8 if len(contrasts) < 5 else 6.5)
             ax.set_title(f"{period}, {region}: {band}", fontsize=9.5, fontweight="semibold")
             ax.tick_params(labelsize=7)
             if j == 0:
                 ax.set_ylabel("W m$^{-2}$", fontsize=8)
     axes[0, 1].legend(fontsize=7, ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.35))
-    fig.suptitle(f"Radiative budget: LCC − CTRL, LCC − LCC_fBVOC, CTRL_FUT − CTRL_PD; mean ± 95 % CI over years "
+    title = title or "LCC − CTRL, LCC − LCC_fBVOC, CTRL_FUT − CTRL_PD"
+    fig.suptitle(f"Radiative budget: {title}; mean ± 95 % CI over years "
                  f"({start_year}–{end_year})", fontsize=12, fontweight="bold")
     if save:
-        path = figure_path(figdir, f"radiative_budget_contrasts_{start_year}_{end_year}.png")
+        path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
 
 
 def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir: Path | None = None, dpi=200,
-                             start_year=2001, end_year=2014):
-    """Strip plot: each yearly regional difference (dot) + mean ± 95 % CI, per Ghan term and contrast."""
+                             start_year=2001, end_year=2014, groups=None, name="paired_years"):
+    """Strip plot: each yearly regional difference (dot) + mean ± 95 % CI, per Ghan term and contrast.
+    groups as in radiative_budget_table (default: PD/FUT budget_contrasts; dots blue PD / red FUT, else navy)."""
+    groups = groups or {p: budget_contrasts(p) for p in BVOC_PAIRS}
     sub = t[(t.region == region) & (t.band == band) & t.term.isin(GHAN_TERMS)]
     s = summarize_years(sub, ["period", "contrast", "term"])
-    cols = [(p, c) for p in BVOC_PAIRS for c, _, _ in budget_contrasts(p)]
+    cols = [(p, c) for p in groups for c, _, _ in groups[p]]
     fig, axes = plt.subplots(1, len(GHAN_TERMS), figsize=(18, 4.4), sharey=False, constrained_layout=True)
     for ax, term in zip(axes, GHAN_TERMS):
         for x, (p, c) in enumerate(cols):
             v = sub[(sub.period == p) & (sub.contrast == c) & (sub.term == term)].sort_values("year")
-            color = PERIOD_COLORS[p]
+            color = PERIOD_COLORS.get(p, pal.NAVY)
             ax.scatter(np.full(len(v), x) + np.linspace(-0.15, 0.15, len(v)), v["value"], s=10, color=color, alpha=0.7)
             m = s[(s.period == p) & (s.contrast == c) & (s.term == term)].iloc[0]
             ax.errorbar(x + 0.3, m["mean"], yerr=m["ci95"], fmt="D", color="black", ms=4, capsize=3, lw=1)
         ax.axhline(0, color="black", lw=0.5)
-        ax.set_xticks(range(len(cols)), [f"{p}\n{c.replace(' − ', chr(10) + '− ')}" for p, c in cols], fontsize=7)
+        ax.set_xticks(range(len(cols)), [f"{p}\n{c.replace(' − ', chr(10) + '− ')}" if p in BVOC_PAIRS else tick_label(c)
+                                         for p, c in cols], fontsize=7 if len(cols) < 5 else 6)
         ax.set_title(f"{TERM_STYLE[term][0]} ({band})", fontsize=10, fontweight="semibold")
         ax.tick_params(labelsize=7)
     axes[0].set_ylabel(f"{region} difference [W m$^{{-2}}$]", fontsize=8)
+    colours = "(blue PD, red FUT)" if set(groups) <= set(BVOC_PAIRS) else f"({', '.join(groups)})"
     fig.suptitle(f"Paired yearly regional means ({region}, {start_year}–{end_year}): dots = years "
-                 f"(blue PD, red FUT), diamond = mean ± 95 % t-interval", fontsize=11, fontweight="bold")
+                 f"{colours}, diamond = mean ± 95 % t-interval", fontsize=11, fontweight="bold")
     if save:
-        path = figure_path(figdir, f"paired_years_{band}_{start_year}_{end_year}.png")
+        path = figure_path(figdir, f"{name}_{band}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1852,10 +2020,12 @@ def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir
 # ---------------------------------------------------------------- B: emissions / LAI origin
 
 def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMMA_isoprene", "GAMMAL"),
-                                save=True, figdir: Path | None = None, dpi=200, start_year=2001, end_year=2014):
+                                save=True, figdir: Path | None = None, dpi=200, start_year=2001, end_year=2014,
+                                groups=None, name="emission_origin_monthly"):
     """Monthly differences, modified vs unmodified land >=45N, early vs late years.
     Columns = period x budget_contrasts (LCC-CTRL, LCC-fBVOC; FUT also CTRL_FUT - CTRL_PD); MEGAN factors only exist with MEGAN on (not in fBVOC)."""
-    cols = [(p, lab, c1, c2) for p in BVOC_PAIRS for lab, c1, c2 in budget_contrasts(p)]
+    groups = groups or {p: budget_contrasts(p) for p in BVOC_PAIRS}   # as in radiative_budget_table
+    cols = [(p, lab, c1, c2) for p in groups for lab, c1, c2 in groups[p]]
     regions = REGION_COLORS
     fig, axes = plt.subplots(len(fields), len(cols), figsize=(4 * len(cols), 2.4 * len(fields)),
                              squeeze=False, constrained_layout=True, sharex=True)
@@ -1874,7 +2044,7 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
                 ax.set_yticks([])   # no empty 0-1 axis
             _month_axes(ax)
             if i == 0:
-                ax.set_title(f"{p}: {c1} − {c2}", fontsize=9, fontweight="semibold")
+                ax.set_title(f"{p}: {c1} − {c2}" if p in BVOC_PAIRS else tick_label(lab), fontsize=9, fontweight="semibold")
             if j == 0:
                 ax.set_ylabel(f"Δ {label}\n[{units}]", fontsize=7.5)
     axes[0, 0].legend(fontsize=6.5, loc="best")
@@ -1882,7 +2052,7 @@ def make_emission_origin_figure(fields=("SFISOP_Tg", "SFMTERP_Tg", "TLAI", "GAMM
                  f"solid {EARLY_YEARS[0]}–{EARLY_YEARS[1]} (± 95 % CI), dashed {LATE_YEARS[0]}–{LATE_YEARS[1]}",
                  fontsize=11, fontweight="bold")
     if save:
-        path = figure_path(figdir, f"emission_origin_monthly_{start_year}_{end_year}.png")
+        path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1933,7 +2103,13 @@ CLOUD_BANDS_HPA = (700.0, 400.0)   # CAM CLDLOW / CLDMED / CLDHGH limits
 
 def zonal_profile_difference(case1, case2, var, start_year=2001, end_year=2014, lat_min=45.0,
                              months=None) -> xr.DataArray:
-    """Paired yearly zonal-mean (all longitudes) differences case1 - case2 of a 3-D field, dims (year, lev, lat)."""
+    """Paired yearly zonal-mean (all longitudes) differences case1 - case2 of a 3-D field, dims (year, lev, lat).
+    case1/case2 may be VirtualRun: weighted sum of real paired differences."""
+    if isinstance(case1, VirtualRun) or isinstance(case2, VirtualRun):
+        terms = [(w1 * w2, a, b) for a, w1 in run_weights(case1).items()
+                 for b, w2 in run_weights(case2).items() if a != b and w1 * w2 != 0]
+        parts = [w * zonal_profile_difference(a, b, var, start_year, end_year, lat_min, months) for w, a, b in terms]
+        return sum(parts[1:], parts[0])
     scale = PROFILE_FIELDS[var][0]
     ds1, ds2 = (open_class(a, "CLOUDPROP", start_year, end_year) for a in (case1, case2))
     if not np.array_equal(ds1["time"].values, ds2["time"].values):
@@ -1946,7 +2122,8 @@ def zonal_profile_difference(case1, case2, var, start_year=2001, end_year=2014, 
 
 def make_cloud_profile_figure(rows=None, fields=tuple(PROFILE_FIELDS), name="cloud_profile", months=None,
                               season="ANN", start_year=2001, end_year=2014, lat_min=45.0, p_top=150.0,
-                              fdr_alpha=0.10, save=True, figdir: Path | None = None, dpi=200):
+                              fdr_alpha=0.10, save=True, figdir: Path | None = None, dpi=200,
+                              labels: list[str] | None = None):
     """Rows = (case1, case2) contrasts, columns = 3-D cloud fields: latitude x pressure of the zonal-mean
     difference (mean over years). Hatched = NOT FDR-significant (paired yearly t-test, alpha_FDR within the panel).
     Dashed lines = the 700 / 400 hPa limits of low / mid / high cloud. Each panel has its own colourbar."""
@@ -1977,7 +2154,7 @@ def make_cloud_profile_figure(rows=None, fields=tuple(PROFILE_FIELDS), name="clo
             if i == 0:
                 ax.set_title(PROFILE_FIELDS[var][2], fontsize=10, fontweight="semibold")
             if j == 0:
-                ax.set_ylabel(f"{c1}\n− {c2}\n\npressure [hPa]", fontsize=7.5)
+                ax.set_ylabel(f"{labels[i] if labels else f'{c1}{chr(10)}− {c2}'}\n\npressure [hPa]", fontsize=7.5)
             if i == len(rows) - 1:
                 ax.set_xlabel("latitude [°N]", fontsize=7.5)
     axes[0, 0].set_ylim(1000, p_top)   # shared y, pressure decreasing upwards
@@ -1999,9 +2176,33 @@ BASELINE_FIELDS = {   # yearly field name (YEARLY_DERIVED / raw), category, unit
 }
 
 
-def baseline_table(region="≥45°N", start_year=2001, end_year=2014):
-    """CTRL and fBVOC baselines (annual and JJA, regional mean), FUT-PD change, BVOC contrast as % of baseline."""
+def baseline_table(region="≥45°N", start_year=2001, end_year=2014, contrasts=None):
+    """CTRL and fBVOC baselines (annual and JJA, regional mean), FUT-PD change, BVOC contrast as % of baseline.
+    contrasts: {period: (case1, case2)} -> columns "<period> contrast" (case1 − case2, may be a VirtualRun) and its %
+    of the case2 baseline, instead of the legacy LCC − fBVOC columns (user reorganisation 2026-11-08)."""
     import pandas as pd
+
+    if contrasts is not None:
+        rows = []
+        for var, (cls, units) in BASELINE_FIELDS.items():
+            for season, months in (("ANN", None), ("JJA", SEASONS["JJA"])):
+                r = dict(variable=var, units=units, season=season)
+                for p in ("PD", "FUT"):
+                    ds = open_class(f"CTRL_{p}", cls, start_year, end_year)
+                    r[f"CTRL_{p}"] = float(regional(yearly_field(ds, var, months), ds, region_masks(ds)[region]).mean())
+                r["CTRL_FUT−PD"] = r["CTRL_FUT"] - r["CTRL_PD"]
+                r["CTRL_FUT−PD_%"] = 100 * r["CTRL_FUT−PD"] / r["CTRL_PD"]
+                for p, (c1, c2) in contrasts.items():
+                    ds = open_class(c2, cls, start_year, end_year)
+                    mask = region_masks(ds)[region]
+                    base = float(regional(yearly_field(ds, var, months), ds, mask).mean())
+                    d = float(regional(yearly_difference(c1, c2, cls, var, start_year, end_year, months=months),
+                                       ds, mask).mean())
+                    r[f"{p} baseline ({c2})"] = base
+                    r[f"{p} contrast"] = d
+                    r[f"{p} contrast_%"] = 100 * d / base
+                rows.append(r)
+        return pd.DataFrame(rows)
 
     rows = []
     for var, (cls, units) in BASELINE_FIELDS.items():
@@ -2034,26 +2235,31 @@ PERCENT_PANELS = [   # (yearly field, category, title, minimum baseline for the 
 
 
 def make_percent_change_figure(start_year=2001, end_year=2014, extent_lat=45.0, save=True,
-                               figdir: Path | None = None, dpi=200, stipple=True, fdr_alpha=0.10):
+                               figdir: Path | None = None, dpi=200, stipple=True, fdr_alpha=0.10,
+                               rows=None, name="bvoc_percent_change_maps", title=None):
     """BVOC contrast (LCC - fBVOC) as % of the fBVOC baseline mean; rows PD/FUT. Cells with a baseline
-    below the panel threshold are blank. Marked cells = not significant (paired t-test of the yearly % values, FDR)."""
-    fig, axes = map_grid(2, len(PERCENT_PANELS), left=2.0)
-    for i, (p, roles) in enumerate(BVOC_PAIRS.items()):
+    below the panel threshold are blank. Marked cells = not significant (paired t-test of the yearly % values, FDR).
+    rows: [(label, case1, case2)] instead (e.g. fBVOC-category contrasts, user 2026-11-08): case1 − case2 as % of case2."""
+    items = ([(f"{p}\n{r['lcc']}\n− {r['fbvoc']}", {"lcc": r["lcc"], "fbvoc": r["fbvoc"]}) for p, r in BVOC_PAIRS.items()]
+             if rows is None else [(lab, {"lcc": c1, "fbvoc": c2}) for lab, c1, c2 in rows])
+    fig, axes = map_grid(len(items), len(PERCENT_PANELS), left=2.0)
+    for i, (row_label, roles) in enumerate(items):
         for j, (var, cls, title, vmin_base) in enumerate(PERCENT_PANELS):
             d = yearly_difference(roles["lcc"], roles["fbvoc"], cls, var, start_year, end_year)
             base = yearly_field(open_class(roles["fbvoc"], cls, start_year, end_year), var).mean("year")
             pct = (100 * d / base).where(abs(base) >= vmin_base)
             panel = MapPanel(key=var, title=title if i == 0 else "", variable_class=cls, variable=var,
                              case1_role="lcc", case2_role="fbvoc", units="%",
-                             long_label=f"{var}: (LCC − LCC_fBVOC) / LCC_fBVOC")
+                             long_label=f"{var}: (LCC − LCC_fBVOC) / LCC_fBVOC" if rows is None
+                             else f"{var}: (case1 − case2) / case2")
             _plot_panel(axes[i, j], panel, roles, start_year, end_year, extent_lat, extent_lat,
                         stipple, fdr_alpha, d=pct, add_cbar=True)
-        axes[i, 0].text(-0.08, 0.5, f"{p}\n{roles['lcc']}\n− {roles['fbvoc']}", transform=axes[i, 0].transAxes,
+        axes[i, 0].text(-0.08, 0.5, row_label, transform=axes[i, 0].transAxes,
                         ha="right", va="center", fontsize=9, fontweight="bold")
-    add_suptitle(fig, f"LCC − LCC_fBVOC relative to LCC_fBVOC [%] ({start_year}–{end_year})",
+    add_suptitle(fig, f"{title or 'LCC − LCC_fBVOC relative to LCC_fBVOC'} [%] ({start_year}–{end_year})",
                  extent_lat, fontsize=13, y=_suptitle_y(fig))
     if save:
-        path = figure_path(figdir, f"bvoc_percent_change_maps_{start_year}_{end_year}.png")
+        path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
