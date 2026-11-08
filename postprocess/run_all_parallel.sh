@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 
 PYTHON="${PYTHON:-/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/bin/python}"
 RAW_PATH="${RAW_PATH:-/cluster/work/users/adelez/archive}"   # work archive: postprocess as soon as a run is done (user 2026-10-28); NIRD copy = ~/BRL-FRST-XPSN_archive
-OUT_PATH="/cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/processed-data/postprocessing"
+OUT_PATH="${OUT_PATH:-/cluster/home/adelez/BOREAL-FOREST-EXPANSION/data/processed-data/postprocessing}"   # override: 2001-2019 set (2026-11-05)
 SPINUP_MONTHS=12
 NJOBS="${1:-24}"
 LOG_DIR="$OUT_PATH/logs"
