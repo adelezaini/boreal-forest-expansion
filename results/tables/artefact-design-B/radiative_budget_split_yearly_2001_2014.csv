@@ -2015,510 +2015,510 @@ PD,modified cells,BVOC uncorrected,LW,rest,2011,0.007048196393266641
 PD,modified cells,BVOC uncorrected,LW,rest,2012,-0.05138579817104935
 PD,modified cells,BVOC uncorrected,LW,rest,2013,-0.0007027457533638383
 PD,modified cells,BVOC uncorrected,LW,rest,2014,-0.03189413778590813
-PD,global,artefact art_CTRL,NET,toa,2001,-0.006927573166601749
-PD,global,artefact art_CTRL,NET,toa,2002,-0.09827851318649966
-PD,global,artefact art_CTRL,NET,toa,2003,-0.06301268877739699
-PD,global,artefact art_CTRL,NET,toa,2004,-0.03408697339074784
-PD,global,artefact art_CTRL,NET,toa,2005,-0.03867576440728478
-PD,global,artefact art_CTRL,NET,toa,2006,0.005654751987672317
-PD,global,artefact art_CTRL,NET,toa,2007,-0.07539820499051017
-PD,global,artefact art_CTRL,NET,toa,2008,-0.055623325592152176
-PD,global,artefact art_CTRL,NET,toa,2009,-0.0300950819090521
-PD,global,artefact art_CTRL,NET,toa,2010,-0.02538655165373031
-PD,global,artefact art_CTRL,NET,toa,2011,-0.039263918512538167
-PD,global,artefact art_CTRL,NET,toa,2012,-0.11488793982360257
-PD,global,artefact art_CTRL,NET,toa,2013,7.984104702676197e-05
-PD,global,artefact art_CTRL,NET,toa,2014,-0.11569351888505024
-PD,≥45°N,artefact art_CTRL,NET,toa,2001,-0.02855539663432138
-PD,≥45°N,artefact art_CTRL,NET,toa,2002,-0.07936027466387628
-PD,≥45°N,artefact art_CTRL,NET,toa,2003,-0.004408252806951997
-PD,≥45°N,artefact art_CTRL,NET,toa,2004,-0.04289620236769484
-PD,≥45°N,artefact art_CTRL,NET,toa,2005,-0.0441484923572926
-PD,≥45°N,artefact art_CTRL,NET,toa,2006,-0.04072013233353898
-PD,≥45°N,artefact art_CTRL,NET,toa,2007,-0.08104995830302578
-PD,≥45°N,artefact art_CTRL,NET,toa,2008,-0.12717104305146396
-PD,≥45°N,artefact art_CTRL,NET,toa,2009,-0.12058937114460892
-PD,≥45°N,artefact art_CTRL,NET,toa,2010,-0.12601058801384768
-PD,≥45°N,artefact art_CTRL,NET,toa,2011,-0.10872602049995952
-PD,≥45°N,artefact art_CTRL,NET,toa,2012,0.003622644349660294
-PD,≥45°N,artefact art_CTRL,NET,toa,2013,0.03163110367021328
-PD,≥45°N,artefact art_CTRL,NET,toa,2014,-0.004394466477324216
-PD,modified cells,artefact art_CTRL,NET,toa,2001,-0.1135056802808862
-PD,modified cells,artefact art_CTRL,NET,toa,2002,-0.07391796075993497
-PD,modified cells,artefact art_CTRL,NET,toa,2003,-0.048401008501514256
-PD,modified cells,artefact art_CTRL,NET,toa,2004,-0.0910170217620307
-PD,modified cells,artefact art_CTRL,NET,toa,2005,-0.09513831315550565
-PD,modified cells,artefact art_CTRL,NET,toa,2006,0.013367730034982999
-PD,modified cells,artefact art_CTRL,NET,toa,2007,-0.05351240708046736
-PD,modified cells,artefact art_CTRL,NET,toa,2008,-0.08943143009931795
-PD,modified cells,artefact art_CTRL,NET,toa,2009,-0.13102839858639237
-PD,modified cells,artefact art_CTRL,NET,toa,2010,-0.1679617452936885
-PD,modified cells,artefact art_CTRL,NET,toa,2011,-0.1685082496745686
-PD,modified cells,artefact art_CTRL,NET,toa,2012,-0.08169553298968915
-PD,modified cells,artefact art_CTRL,NET,toa,2013,0.019255552012370305
-PD,modified cells,artefact art_CTRL,NET,toa,2014,-0.08771769663094149
-PD,global,artefact art_CTRL,NET,dir,2001,0.0026283924688445147
-PD,global,artefact art_CTRL,NET,dir,2002,-0.018832325321659866
-PD,global,artefact art_CTRL,NET,dir,2003,-0.019307289638027164
-PD,global,artefact art_CTRL,NET,dir,2004,-0.0035551945853966077
-PD,global,artefact art_CTRL,NET,dir,2005,-0.004836294051249381
-PD,global,artefact art_CTRL,NET,dir,2006,-0.004127663628378662
-PD,global,artefact art_CTRL,NET,dir,2007,-0.003060760213886518
-PD,global,artefact art_CTRL,NET,dir,2008,-0.002466116282370917
-PD,global,artefact art_CTRL,NET,dir,2009,0.004129726755059085
-PD,global,artefact art_CTRL,NET,dir,2010,-0.020002972225746842
-PD,global,artefact art_CTRL,NET,dir,2011,0.0010489209756862354
-PD,global,artefact art_CTRL,NET,dir,2012,0.0015693895109764459
-PD,global,artefact art_CTRL,NET,dir,2013,0.004486304929210377
-PD,global,artefact art_CTRL,NET,dir,2014,-0.03137398617539981
-PD,≥45°N,artefact art_CTRL,NET,dir,2001,0.00016728714924207262
-PD,≥45°N,artefact art_CTRL,NET,dir,2002,-0.023488065417730058
-PD,≥45°N,artefact art_CTRL,NET,dir,2003,-0.004179989285865552
-PD,≥45°N,artefact art_CTRL,NET,dir,2004,-0.012953549288285321
-PD,≥45°N,artefact art_CTRL,NET,dir,2005,-0.006944980504501126
-PD,≥45°N,artefact art_CTRL,NET,dir,2006,0.006346454204816648
-PD,≥45°N,artefact art_CTRL,NET,dir,2007,-0.0019439724942980174
-PD,≥45°N,artefact art_CTRL,NET,dir,2008,0.00363736091193198
-PD,≥45°N,artefact art_CTRL,NET,dir,2009,-0.0026359692636745706
-PD,≥45°N,artefact art_CTRL,NET,dir,2010,-0.020819256506807132
-PD,≥45°N,artefact art_CTRL,NET,dir,2011,-0.005948472611236735
-PD,≥45°N,artefact art_CTRL,NET,dir,2012,0.0060172128202069155
-PD,≥45°N,artefact art_CTRL,NET,dir,2013,0.0015361592968192914
-PD,≥45°N,artefact art_CTRL,NET,dir,2014,0.006003250876320018
-PD,modified cells,artefact art_CTRL,NET,dir,2001,0.0023689351818800574
-PD,modified cells,artefact art_CTRL,NET,dir,2002,-0.018966062261818902
-PD,modified cells,artefact art_CTRL,NET,dir,2003,-0.0032980811229570742
-PD,modified cells,artefact art_CTRL,NET,dir,2004,-0.011086611633003816
-PD,modified cells,artefact art_CTRL,NET,dir,2005,-0.0011444578903342948
-PD,modified cells,artefact art_CTRL,NET,dir,2006,0.00223150834620167
-PD,modified cells,artefact art_CTRL,NET,dir,2007,-0.0010557463096303806
-PD,modified cells,artefact art_CTRL,NET,dir,2008,0.003044427419603792
-PD,modified cells,artefact art_CTRL,NET,dir,2009,-0.0006843204792408679
-PD,modified cells,artefact art_CTRL,NET,dir,2010,-0.018290665735658622
-PD,modified cells,artefact art_CTRL,NET,dir,2011,0.00263433363361779
-PD,modified cells,artefact art_CTRL,NET,dir,2012,0.0010147293136771648
-PD,modified cells,artefact art_CTRL,NET,dir,2013,-0.000348197173004847
-PD,modified cells,artefact art_CTRL,NET,dir,2014,0.009274457836194608
-PD,global,artefact art_CTRL,NET,cloud,2001,-0.019874065770606415
-PD,global,artefact art_CTRL,NET,cloud,2002,-0.0828100984071387
-PD,global,artefact art_CTRL,NET,cloud,2003,-0.033881804697452236
-PD,global,artefact art_CTRL,NET,cloud,2004,-0.01920513726543981
-PD,global,artefact art_CTRL,NET,cloud,2005,-0.021275872588196458
-PD,global,artefact art_CTRL,NET,cloud,2006,0.026783640917009525
-PD,global,artefact art_CTRL,NET,cloud,2007,-0.037960247216486755
-PD,global,artefact art_CTRL,NET,cloud,2008,-0.045979087174525146
-PD,global,artefact art_CTRL,NET,cloud,2009,-0.04146325839707174
-PD,global,artefact art_CTRL,NET,cloud,2010,-0.017894309760229415
-PD,global,artefact art_CTRL,NET,cloud,2011,-0.02999077613343568
-PD,global,artefact art_CTRL,NET,cloud,2012,-0.0962196063917831
-PD,global,artefact art_CTRL,NET,cloud,2013,-0.01369821947813595
-PD,global,artefact art_CTRL,NET,cloud,2014,-0.043216697766660234
-PD,≥45°N,artefact art_CTRL,NET,cloud,2001,-0.03242515517404949
-PD,≥45°N,artefact art_CTRL,NET,cloud,2002,-0.05416255089425638
-PD,≥45°N,artefact art_CTRL,NET,cloud,2003,-0.016084987777278528
-PD,≥45°N,artefact art_CTRL,NET,cloud,2004,-0.03315886909405536
-PD,≥45°N,artefact art_CTRL,NET,cloud,2005,-0.04426469830011671
-PD,≥45°N,artefact art_CTRL,NET,cloud,2006,-0.029024607580947073
-PD,≥45°N,artefact art_CTRL,NET,cloud,2007,-0.05284981834486999
-PD,≥45°N,artefact art_CTRL,NET,cloud,2008,-0.1127204468461943
-PD,≥45°N,artefact art_CTRL,NET,cloud,2009,-0.09239331344884222
-PD,≥45°N,artefact art_CTRL,NET,cloud,2010,-0.12111070865872046
-PD,≥45°N,artefact art_CTRL,NET,cloud,2011,-0.09559002953417844
-PD,≥45°N,artefact art_CTRL,NET,cloud,2012,-0.02393244121152874
-PD,≥45°N,artefact art_CTRL,NET,cloud,2013,0.0360690131377109
-PD,≥45°N,artefact art_CTRL,NET,cloud,2014,-0.005890468916414678
-PD,modified cells,artefact art_CTRL,NET,cloud,2001,-0.12571761176828625
-PD,modified cells,artefact art_CTRL,NET,cloud,2002,-0.0621817814739285
-PD,modified cells,artefact art_CTRL,NET,cloud,2003,-0.06863051059797261
-PD,modified cells,artefact art_CTRL,NET,cloud,2004,-0.08977817243861258
-PD,modified cells,artefact art_CTRL,NET,cloud,2005,-0.09136007644177149
-PD,modified cells,artefact art_CTRL,NET,cloud,2006,0.04621650924987502
-PD,modified cells,artefact art_CTRL,NET,cloud,2007,-0.013627614027306058
-PD,modified cells,artefact art_CTRL,NET,cloud,2008,-0.07164046003634678
-PD,modified cells,artefact art_CTRL,NET,cloud,2009,-0.08553426446051107
-PD,modified cells,artefact art_CTRL,NET,cloud,2010,-0.20824842881330322
-PD,modified cells,artefact art_CTRL,NET,cloud,2011,-0.1191149344194861
-PD,modified cells,artefact art_CTRL,NET,cloud,2012,-0.09870263804225798
-PD,modified cells,artefact art_CTRL,NET,cloud,2013,0.01755945086003603
-PD,modified cells,artefact art_CTRL,NET,cloud,2014,-0.06589411009937296
-PD,global,artefact art_CTRL,NET,rest,2001,0.010318105195109816
-PD,global,artefact art_CTRL,NET,rest,2002,0.0033639110535651252
-PD,global,artefact art_CTRL,NET,rest,2003,-0.009823595370804915
-PD,global,artefact art_CTRL,NET,rest,2004,-0.011326637326292386
-PD,global,artefact art_CTRL,NET,rest,2005,-0.012563592454782795
-PD,global,artefact art_CTRL,NET,rest,2006,-0.017001220912865097
-PD,global,artefact art_CTRL,NET,rest,2007,-0.034377196710333714
-PD,global,artefact art_CTRL,NET,rest,2008,-0.007178120375672523
-PD,global,artefact art_CTRL,NET,rest,2009,0.007238460934478932
-PD,global,artefact art_CTRL,NET,rest,2010,0.012510717859122507
-PD,global,artefact art_CTRL,NET,rest,2011,-0.010322050990850406
-PD,global,artefact art_CTRL,NET,rest,2012,-0.020237708593578124
-PD,global,artefact art_CTRL,NET,rest,2013,0.009291759184205035
-PD,global,artefact art_CTRL,NET,rest,2014,-0.04110284496326784
-PD,≥45°N,artefact art_CTRL,NET,rest,2001,0.0037024648435404406
-PD,≥45°N,artefact art_CTRL,NET,rest,2002,-0.0017096360647775072
-PD,≥45°N,artefact art_CTRL,NET,rest,2003,0.015856723835443936
-PD,≥45°N,artefact art_CTRL,NET,rest,2004,0.0032162115111338666
-PD,≥45°N,artefact art_CTRL,NET,rest,2005,0.0070612204864390574
-PD,≥45°N,artefact art_CTRL,NET,rest,2006,-0.018041914621767487
-PD,≥45°N,artefact art_CTRL,NET,rest,2007,-0.026256173919400525
-PD,≥45°N,artefact art_CTRL,NET,rest,2008,-0.01808796195444292
-PD,≥45°N,artefact art_CTRL,NET,rest,2009,-0.025560065857159666
-PD,≥45°N,artefact art_CTRL,NET,rest,2010,0.015919329110425776
-PD,≥45°N,artefact art_CTRL,NET,rest,2011,-0.007187482916031914
-PD,≥45°N,artefact art_CTRL,NET,rest,2012,0.021537911523352517
-PD,≥45°N,artefact art_CTRL,NET,rest,2013,-0.005974060724638071
-PD,≥45°N,artefact art_CTRL,NET,rest,2014,-0.0045073106598051355
-PD,modified cells,artefact art_CTRL,NET,rest,2001,0.009843014382714612
-PD,modified cells,artefact art_CTRL,NET,rest,2002,0.007229896014703145
-PD,modified cells,artefact art_CTRL,NET,rest,2003,0.02352757901356881
-PD,modified cells,artefact art_CTRL,NET,rest,2004,0.009847706529540118
-PD,modified cells,artefact art_CTRL,NET,rest,2005,-0.002633725574830828
-PD,modified cells,artefact art_CTRL,NET,rest,2006,-0.0350802738644892
-PD,modified cells,artefact art_CTRL,NET,rest,2007,-0.038829036617876726
-PD,modified cells,artefact art_CTRL,NET,rest,2008,-0.02083532492133127
-PD,modified cells,artefact art_CTRL,NET,rest,2009,-0.04480977139765742
-PD,modified cells,artefact art_CTRL,NET,rest,2010,0.05857728356074156
-PD,modified cells,artefact art_CTRL,NET,rest,2011,-0.05202760395124587
-PD,modified cells,artefact art_CTRL,NET,rest,2012,0.01599237202257219
-PD,modified cells,artefact art_CTRL,NET,rest,2013,0.0020443062578101297
-PD,modified cells,artefact art_CTRL,NET,rest,2014,-0.031098093325266345
-PD,global,artefact art_CTRL,SW,toa,2001,-0.021629014709636303
-PD,global,artefact art_CTRL,SW,toa,2002,-0.08304480402582912
-PD,global,artefact art_CTRL,SW,toa,2003,-0.01423918025335552
-PD,global,artefact art_CTRL,SW,toa,2004,-0.011065061437712022
-PD,global,artefact art_CTRL,SW,toa,2005,-0.05717720399532764
-PD,global,artefact art_CTRL,SW,toa,2006,0.026529083907845148
-PD,global,artefact art_CTRL,SW,toa,2007,0.03366917769347276
-PD,global,artefact art_CTRL,SW,toa,2008,-0.08711932804904934
-PD,global,artefact art_CTRL,SW,toa,2009,-0.005486224099287779
-PD,global,artefact art_CTRL,SW,toa,2010,-0.0996312995251224
-PD,global,artefact art_CTRL,SW,toa,2011,0.019085926788741932
-PD,global,artefact art_CTRL,SW,toa,2012,-0.01069654634820394
-PD,global,artefact art_CTRL,SW,toa,2013,-0.013142565626884957
-PD,global,artefact art_CTRL,SW,toa,2014,-0.04755326517394932
-PD,≥45°N,artefact art_CTRL,SW,toa,2001,0.09408445027054924
-PD,≥45°N,artefact art_CTRL,SW,toa,2002,-0.11858396907786868
-PD,≥45°N,artefact art_CTRL,SW,toa,2003,-0.20215730604998286
-PD,≥45°N,artefact art_CTRL,SW,toa,2004,-0.11598036622513185
-PD,≥45°N,artefact art_CTRL,SW,toa,2005,0.03952886840488733
-PD,≥45°N,artefact art_CTRL,SW,toa,2006,-0.1202007991152622
-PD,≥45°N,artefact art_CTRL,SW,toa,2007,-0.05148512245387685
-PD,≥45°N,artefact art_CTRL,SW,toa,2008,-0.15202808915999208
-PD,≥45°N,artefact art_CTRL,SW,toa,2009,-0.07845033989771431
-PD,≥45°N,artefact art_CTRL,SW,toa,2010,-0.22253374610491924
-PD,≥45°N,artefact art_CTRL,SW,toa,2011,-0.1716175807120207
-PD,≥45°N,artefact art_CTRL,SW,toa,2012,-0.16420842218007095
-PD,≥45°N,artefact art_CTRL,SW,toa,2013,0.050864873607932425
-PD,≥45°N,artefact art_CTRL,SW,toa,2014,-0.010278661999997838
-PD,modified cells,artefact art_CTRL,SW,toa,2001,0.05818405525669968
-PD,modified cells,artefact art_CTRL,SW,toa,2002,-0.16491931488562975
-PD,modified cells,artefact art_CTRL,SW,toa,2003,-0.25157549329167483
-PD,modified cells,artefact art_CTRL,SW,toa,2004,-0.12237292430215999
-PD,modified cells,artefact art_CTRL,SW,toa,2005,-0.04013635918193403
-PD,modified cells,artefact art_CTRL,SW,toa,2006,-0.05743553634366836
-PD,modified cells,artefact art_CTRL,SW,toa,2007,-0.08146407459373445
-PD,modified cells,artefact art_CTRL,SW,toa,2008,-0.1378598568071318
-PD,modified cells,artefact art_CTRL,SW,toa,2009,-0.13596440259558415
-PD,modified cells,artefact art_CTRL,SW,toa,2010,-0.2759593351389269
-PD,modified cells,artefact art_CTRL,SW,toa,2011,-0.30238587235156805
-PD,modified cells,artefact art_CTRL,SW,toa,2012,-0.20244941238402725
-PD,modified cells,artefact art_CTRL,SW,toa,2013,0.07473849391920274
-PD,modified cells,artefact art_CTRL,SW,toa,2014,-0.06445648201493341
-PD,global,artefact art_CTRL,SW,dir,2001,0.0025203681485523894
-PD,global,artefact art_CTRL,SW,dir,2002,-0.020218109247033954
-PD,global,artefact art_CTRL,SW,dir,2003,-0.02097547382835946
-PD,global,artefact art_CTRL,SW,dir,2004,-0.004851303240054651
-PD,global,artefact art_CTRL,SW,dir,2005,-0.00498921788752361
-PD,global,artefact art_CTRL,SW,dir,2006,-0.004591987767515519
-PD,global,artefact art_CTRL,SW,dir,2007,-0.004008127949718964
-PD,global,artefact art_CTRL,SW,dir,2008,-0.0025668771656198754
-PD,global,artefact art_CTRL,SW,dir,2009,0.00459684147637248
-PD,global,artefact art_CTRL,SW,dir,2010,-0.022206929446084815
-PD,global,artefact art_CTRL,SW,dir,2011,0.0006881021454480301
-PD,global,artefact art_CTRL,SW,dir,2012,0.001649661259938928
-PD,global,artefact art_CTRL,SW,dir,2013,0.003899793717263943
-PD,global,artefact art_CTRL,SW,dir,2014,-0.03399942385080618
-PD,≥45°N,artefact art_CTRL,SW,dir,2001,0.0002336781607769978
-PD,≥45°N,artefact art_CTRL,SW,dir,2002,-0.025826453851908588
-PD,≥45°N,artefact art_CTRL,SW,dir,2003,-0.00487047187142323
-PD,≥45°N,artefact art_CTRL,SW,dir,2004,-0.01530410626889235
-PD,≥45°N,artefact art_CTRL,SW,dir,2005,-0.007187387673131259
-PD,≥45°N,artefact art_CTRL,SW,dir,2006,0.006049622070559207
-PD,≥45°N,artefact art_CTRL,SW,dir,2007,-0.0023957970989685108
-PD,≥45°N,artefact art_CTRL,SW,dir,2008,0.003501154571118743
-PD,≥45°N,artefact art_CTRL,SW,dir,2009,-0.0028951533714571946
-PD,≥45°N,artefact art_CTRL,SW,dir,2010,-0.024003076000296365
-PD,≥45°N,artefact art_CTRL,SW,dir,2011,-0.007023961178258045
-PD,≥45°N,artefact art_CTRL,SW,dir,2012,0.0066144346612595495
-PD,≥45°N,artefact art_CTRL,SW,dir,2013,0.002271947148360537
-PD,≥45°N,artefact art_CTRL,SW,dir,2014,0.007177457908975495
-PD,modified cells,artefact art_CTRL,SW,dir,2001,0.002455808964722812
-PD,modified cells,artefact art_CTRL,SW,dir,2002,-0.021002347415607563
-PD,modified cells,artefact art_CTRL,SW,dir,2003,-0.0040289502176785365
-PD,modified cells,artefact art_CTRL,SW,dir,2004,-0.013486865183609184
-PD,modified cells,artefact art_CTRL,SW,dir,2005,-0.0012691714634651922
-PD,modified cells,artefact art_CTRL,SW,dir,2006,0.0016887611144434658
-PD,modified cells,artefact art_CTRL,SW,dir,2007,-0.0013475402628143295
-PD,modified cells,artefact art_CTRL,SW,dir,2008,0.0029495774595441723
-PD,modified cells,artefact art_CTRL,SW,dir,2009,-0.0008381197331228774
-PD,modified cells,artefact art_CTRL,SW,dir,2010,-0.02130458615471411
-PD,modified cells,artefact art_CTRL,SW,dir,2011,0.002238852117064993
-PD,modified cells,artefact art_CTRL,SW,dir,2012,0.0008155141512491203
-PD,modified cells,artefact art_CTRL,SW,dir,2013,0.00036533024285628654
-PD,modified cells,artefact art_CTRL,SW,dir,2014,0.010309043153461895
-PD,global,artefact art_CTRL,SW,cloud,2001,-0.02181542917165968
-PD,global,artefact art_CTRL,SW,cloud,2002,-0.06602388699758001
-PD,global,artefact art_CTRL,SW,cloud,2003,0.00843396824108156
-PD,global,artefact art_CTRL,SW,cloud,2004,-0.0020522885494023767
-PD,global,artefact art_CTRL,SW,cloud,2005,-0.050519675639186815
-PD,global,artefact art_CTRL,SW,cloud,2006,0.03914461966606083
-PD,global,artefact art_CTRL,SW,cloud,2007,0.04523148680143472
-PD,global,artefact art_CTRL,SW,cloud,2008,-0.0815866374223063
-PD,global,artefact art_CTRL,SW,cloud,2009,-0.008089338643403074
-PD,global,artefact art_CTRL,SW,cloud,2010,-0.07364654413858182
-PD,global,artefact art_CTRL,SW,cloud,2011,0.029294176919202483
-PD,global,artefact art_CTRL,SW,cloud,2012,-0.007245389773961502
-PD,global,artefact art_CTRL,SW,cloud,2013,-0.015845227563761423
-PD,global,artefact art_CTRL,SW,cloud,2014,-0.0066599112213614675
-PD,≥45°N,artefact art_CTRL,SW,cloud,2001,0.08891194084661243
-PD,≥45°N,artefact art_CTRL,SW,cloud,2002,-0.10786579169067853
-PD,≥45°N,artefact art_CTRL,SW,cloud,2003,-0.18231126512782758
-PD,≥45°N,artefact art_CTRL,SW,cloud,2004,-0.08212888478963327
-PD,≥45°N,artefact art_CTRL,SW,cloud,2005,0.034653165787924885
-PD,≥45°N,artefact art_CTRL,SW,cloud,2006,-0.09447502620049489
-PD,≥45°N,artefact art_CTRL,SW,cloud,2007,-0.025655483149082118
-PD,≥45°N,artefact art_CTRL,SW,cloud,2008,-0.14040460376220806
-PD,≥45°N,artefact art_CTRL,SW,cloud,2009,-0.05456063783529883
-PD,≥45°N,artefact art_CTRL,SW,cloud,2010,-0.1982128736793819
-PD,≥45°N,artefact art_CTRL,SW,cloud,2011,-0.11740082094008372
-PD,≥45°N,artefact art_CTRL,SW,cloud,2012,-0.15616824923600287
-PD,≥45°N,artefact art_CTRL,SW,cloud,2013,0.06078618678458143
-PD,≥45°N,artefact art_CTRL,SW,cloud,2014,0.0032666053322265567
-PD,modified cells,artefact art_CTRL,SW,cloud,2001,0.054291058626749295
-PD,modified cells,artefact art_CTRL,SW,cloud,2002,-0.1673329095102348
-PD,modified cells,artefact art_CTRL,SW,cloud,2003,-0.2381889841739221
-PD,modified cells,artefact art_CTRL,SW,cloud,2004,-0.09222654977525208
-PD,modified cells,artefact art_CTRL,SW,cloud,2005,-0.03180835655006394
-PD,modified cells,artefact art_CTRL,SW,cloud,2006,-0.01725022260272088
-PD,modified cells,artefact art_CTRL,SW,cloud,2007,-0.03876835677554284
-PD,modified cells,artefact art_CTRL,SW,cloud,2008,-0.11891878251514
-PD,modified cells,artefact art_CTRL,SW,cloud,2009,-0.09098766436094312
-PD,modified cells,artefact art_CTRL,SW,cloud,2010,-0.2873155239592983
-PD,modified cells,artefact art_CTRL,SW,cloud,2011,-0.1958040827214638
-PD,modified cells,artefact art_CTRL,SW,cloud,2012,-0.16999418726457163
-PD,modified cells,artefact art_CTRL,SW,cloud,2013,0.07510201471586142
-PD,modified cells,artefact art_CTRL,SW,cloud,2014,-0.013638024167501662
-PD,global,artefact art_CTRL,SW,rest,2001,-0.002333953616569386
-PD,global,artefact art_CTRL,SW,rest,2002,0.0031971922187850016
-PD,global,artefact art_CTRL,SW,rest,2003,-0.0016976746660778094
-PD,global,artefact art_CTRL,SW,rest,2004,-0.0041614696653241474
-PD,global,artefact art_CTRL,SW,rest,2005,-0.0016683104686168533
-PD,global,artefact art_CTRL,SW,rest,2006,-0.008023547990700099
-PD,global,artefact art_CTRL,SW,rest,2007,-0.0075541809476409845
-PD,global,artefact art_CTRL,SW,rest,2008,-0.002965813394014968
-PD,global,artefact art_CTRL,SW,rest,2009,-0.0019937267948873486
-PD,global,artefact art_CTRL,SW,rest,2010,-0.003777826010415215
-PD,global,artefact art_CTRL,SW,rest,2011,-0.01089635227590852
-PD,global,artefact art_CTRL,SW,rest,2012,-0.005100817781239397
-PD,global,artefact art_CTRL,SW,rest,2013,-0.0011971317803874098
-PD,global,artefact art_CTRL,SW,rest,2014,-0.006893929791351395
-PD,≥45°N,artefact art_CTRL,SW,rest,2001,0.004938831263159821
-PD,≥45°N,artefact art_CTRL,SW,rest,2002,0.015108276464718278
-PD,≥45°N,artefact art_CTRL,SW,rest,2003,-0.01497556905073176
-PD,≥45°N,artefact art_CTRL,SW,rest,2004,-0.018547375285525507
-PD,≥45°N,artefact art_CTRL,SW,rest,2005,0.012063090290094008
-PD,≥45°N,artefact art_CTRL,SW,rest,2006,-0.031775394985326486
-PD,≥45°N,artefact art_CTRL,SW,rest,2007,-0.023433842205826085
-PD,≥45°N,artefact art_CTRL,SW,rest,2008,-0.015124639968903295
-PD,≥45°N,artefact art_CTRL,SW,rest,2009,-0.020994548690958396
-PD,≥45°N,artefact art_CTRL,SW,rest,2010,-0.00031779642524129646
-PD,≥45°N,artefact art_CTRL,SW,rest,2011,-0.04719279859367932
-PD,≥45°N,artefact art_CTRL,SW,rest,2012,-0.014654607236485047
-PD,≥45°N,artefact art_CTRL,SW,rest,2013,-0.012193260325009085
-PD,≥45°N,artefact art_CTRL,SW,rest,2014,-0.02072272524119993
-PD,modified cells,artefact art_CTRL,SW,rest,2001,0.0014371876652274072
-PD,modified cells,artefact art_CTRL,SW,rest,2002,0.023415942040212686
-PD,modified cells,artefact art_CTRL,SW,rest,2003,-0.009357558900073445
-PD,modified cells,artefact art_CTRL,SW,rest,2004,-0.016659509343299156
-PD,modified cells,artefact art_CTRL,SW,rest,2005,-0.0070588311684049694
-PD,modified cells,artefact art_CTRL,SW,rest,2006,-0.04187407485539076
-PD,modified cells,artefact art_CTRL,SW,rest,2007,-0.04134817755537673
-PD,modified cells,artefact art_CTRL,SW,rest,2008,-0.02189065175153609
-PD,modified cells,artefact art_CTRL,SW,rest,2009,-0.04413861850151908
-PD,modified cells,artefact art_CTRL,SW,rest,2010,0.03266077497508523
-PD,modified cells,artefact art_CTRL,SW,rest,2011,-0.10882064174716996
-PD,modified cells,artefact art_CTRL,SW,rest,2012,-0.03327073833557056
-PD,modified cells,artefact art_CTRL,SW,rest,2013,-0.0007288510395149758
-PD,modified cells,artefact art_CTRL,SW,rest,2014,-0.06112750100089354
-PD,global,artefact art_CTRL,LW,toa,2001,0.014701452166561763
-PD,global,artefact art_CTRL,LW,toa,2002,-0.015233701308845646
-PD,global,artefact art_CTRL,LW,toa,2003,-0.0487735153503606
-PD,global,artefact art_CTRL,LW,toa,2004,-0.023021905636004425
-PD,global,artefact art_CTRL,LW,toa,2005,0.018501440676241498
-PD,global,artefact art_CTRL,LW,toa,2006,-0.020874335698953913
-PD,global,artefact art_CTRL,LW,toa,2007,-0.10906738100665708
-PD,global,artefact art_CTRL,LW,toa,2008,0.031496003473491414
-PD,global,artefact art_CTRL,LW,toa,2009,-0.02460885260286784
-PD,global,artefact art_CTRL,LW,toa,2010,0.07424474024121956
-PD,global,artefact art_CTRL,LW,toa,2011,-0.05834983715471833
-PD,global,artefact art_CTRL,LW,toa,2012,-0.10419138704706801
-PD,global,artefact art_CTRL,LW,toa,2013,0.013222412569770676
-PD,global,artefact art_CTRL,LW,toa,2014,-0.06814026404358305
-PD,≥45°N,artefact art_CTRL,LW,toa,2001,-0.12263980902515907
-PD,≥45°N,artefact art_CTRL,LW,toa,2002,0.03922373843535545
-PD,≥45°N,artefact art_CTRL,LW,toa,2003,0.19774902557765398
-PD,≥45°N,artefact art_CTRL,LW,toa,2004,0.07308417603952899
-PD,≥45°N,artefact art_CTRL,LW,toa,2005,-0.08367735075485369
-PD,≥45°N,artefact art_CTRL,LW,toa,2006,0.07948069283843608
-PD,≥45°N,artefact art_CTRL,LW,toa,2007,-0.029564849918503205
-PD,≥45°N,artefact art_CTRL,LW,toa,2008,0.02485705961393464
-PD,≥45°N,artefact art_CTRL,LW,toa,2009,-0.04213903008775299
-PD,≥45°N,artefact art_CTRL,LW,toa,2010,0.09652313390442897
-PD,≥45°N,artefact art_CTRL,LW,toa,2011,0.06289157257934513
-PD,≥45°N,artefact art_CTRL,LW,toa,2012,0.16783106064254377
-PD,≥45°N,artefact art_CTRL,LW,toa,2013,-0.01923374316128869
-PD,≥45°N,artefact art_CTRL,LW,toa,2014,0.005884163959641113
-PD,modified cells,artefact art_CTRL,LW,toa,2001,-0.17168967317834713
-PD,modified cells,artefact art_CTRL,LW,toa,2002,0.09100140284627303
-PD,modified cells,artefact art_CTRL,LW,toa,2003,0.20317444466042664
-PD,modified cells,artefact art_CTRL,LW,toa,2004,0.03135588591866693
-PD,modified cells,artefact art_CTRL,LW,toa,2005,-0.05500191707383242
-PD,modified cells,artefact art_CTRL,LW,toa,2006,0.07080327033871457
-PD,modified cells,artefact art_CTRL,LW,toa,2007,0.027951627039906817
-PD,modified cells,artefact art_CTRL,LW,toa,2008,0.04842846613692349
-PD,modified cells,artefact art_CTRL,LW,toa,2009,0.004935985675392432
-PD,modified cells,artefact art_CTRL,LW,toa,2010,0.10799753805637381
-PD,modified cells,artefact art_CTRL,LW,toa,2011,0.13387762767630315
-PD,modified cells,artefact art_CTRL,LW,toa,2012,0.12075384561610698
-PD,modified cells,artefact art_CTRL,LW,toa,2013,-0.055482901681400895
-PD,modified cells,artefact art_CTRL,LW,toa,2014,-0.023261238399410425
-PD,global,artefact art_CTRL,LW,dir,2001,0.00010802431993199787
-PD,global,artefact art_CTRL,LW,dir,2002,0.0013857839247417333
-PD,global,artefact art_CTRL,LW,dir,2003,0.001668184190365813
-PD,global,artefact art_CTRL,LW,dir,2004,0.0012961086545531183
-PD,global,artefact art_CTRL,LW,dir,2005,0.00015292383626284138
-PD,global,artefact art_CTRL,LW,dir,2006,0.0004643241388570451
-PD,global,artefact art_CTRL,LW,dir,2007,0.0009473677358050293
-PD,global,artefact art_CTRL,LW,dir,2008,0.00010076088328029227
-PD,global,artefact art_CTRL,LW,dir,2009,-0.0004671147211078208
-PD,global,artefact art_CTRL,LW,dir,2010,0.0022039572204085047
-PD,global,artefact art_CTRL,LW,dir,2011,0.00036081883010377435
-PD,global,artefact art_CTRL,LW,dir,2012,-8.02717500787559e-05
-PD,global,artefact art_CTRL,LW,dir,2013,0.0005865112117456777
-PD,global,artefact art_CTRL,LW,dir,2014,0.0026254376757434417
-PD,≥45°N,artefact art_CTRL,LW,dir,2001,-6.639101475796678e-05
-PD,≥45°N,artefact art_CTRL,LW,dir,2002,0.0023383884315895586
-PD,≥45°N,artefact art_CTRL,LW,dir,2003,0.0006904825870679323
-PD,≥45°N,artefact art_CTRL,LW,dir,2004,0.002350556980125078
-PD,≥45°N,artefact art_CTRL,LW,dir,2005,0.0002424071687916187
-PD,≥45°N,artefact art_CTRL,LW,dir,2006,0.0002968321336868007
-PD,≥45°N,artefact art_CTRL,LW,dir,2007,0.00045182460569684427
-PD,≥45°N,artefact art_CTRL,LW,dir,2008,0.00013620634186874625
-PD,≥45°N,artefact art_CTRL,LW,dir,2009,0.0002591841080827101
-PD,≥45°N,artefact art_CTRL,LW,dir,2010,0.0031838194938571627
-PD,≥45°N,artefact art_CTRL,LW,dir,2011,0.001075488567017767
-PD,≥45°N,artefact art_CTRL,LW,dir,2012,-0.0005972218459118811
-PD,≥45°N,artefact art_CTRL,LW,dir,2013,-0.0007357878519903125
-PD,≥45°N,artefact art_CTRL,LW,dir,2014,-0.0011742070316787144
-PD,modified cells,artefact art_CTRL,LW,dir,2001,-8.687378308304668e-05
-PD,modified cells,artefact art_CTRL,LW,dir,2002,0.0020362851529641362
-PD,modified cells,artefact art_CTRL,LW,dir,2003,0.000730869096869768
-PD,modified cells,artefact art_CTRL,LW,dir,2004,0.0024002535552103267
-PD,modified cells,artefact art_CTRL,LW,dir,2005,0.0001247135749436826
-PD,modified cells,artefact art_CTRL,LW,dir,2006,0.0005427472310909209
-PD,modified cells,artefact art_CTRL,LW,dir,2007,0.00029179395078319045
-PD,modified cells,artefact art_CTRL,LW,dir,2008,9.48499581675223e-05
-PD,modified cells,artefact art_CTRL,LW,dir,2009,0.00015379925514664536
-PD,modified cells,artefact art_CTRL,LW,dir,2010,0.003013920419061108
-PD,modified cells,artefact art_CTRL,LW,dir,2011,0.0003954815157268872
-PD,modified cells,artefact art_CTRL,LW,dir,2012,0.000199215156818413
-PD,modified cells,artefact art_CTRL,LW,dir,2013,-0.0007135274200353469
-PD,modified cells,artefact art_CTRL,LW,dir,2014,-0.0010345853151145377
-PD,global,artefact art_CTRL,LW,cloud,2001,0.0019413631056099019
-PD,global,artefact art_CTRL,LW,cloud,2002,-0.01678621155462972
-PD,global,artefact art_CTRL,LW,cloud,2003,-0.042315773058449656
-PD,global,artefact art_CTRL,LW,cloud,2004,-0.01715284870436542
-PD,global,artefact art_CTRL,LW,cloud,2005,0.029243803216211523
-PD,global,artefact art_CTRL,LW,cloud,2006,-0.012360978967154504
-PD,global,artefact art_CTRL,LW,cloud,2007,-0.08319173406902229
-PD,global,artefact art_CTRL,LW,cloud,2008,0.03560755028571303
-PD,global,artefact art_CTRL,LW,cloud,2009,-0.03337392039536963
-PD,global,artefact art_CTRL,LW,cloud,2010,0.055752234231667704
-PD,global,artefact art_CTRL,LW,cloud,2011,-0.05928495242747933
-PD,global,artefact art_CTRL,LW,cloud,2012,-0.08897421662776621
-PD,global,artefact art_CTRL,LW,cloud,2013,0.0021470079654099103
-PD,global,artefact art_CTRL,LW,cloud,2014,-0.03655678668643356
-PD,≥45°N,artefact art_CTRL,LW,cloud,2001,-0.12133709694459154
-PD,≥45°N,artefact art_CTRL,LW,cloud,2002,0.05370324089327749
-PD,≥45°N,artefact art_CTRL,LW,cloud,2003,0.16622627754810887
-PD,≥45°N,artefact art_CTRL,LW,cloud,2004,0.04897001414005733
-PD,≥45°N,artefact art_CTRL,LW,cloud,2005,-0.07891786296800994
-PD,≥45°N,artefact art_CTRL,LW,cloud,2006,0.06545041901276016
-PD,≥45°N,artefact art_CTRL,LW,cloud,2007,-0.027194337210185097
-PD,≥45°N,artefact art_CTRL,LW,cloud,2008,0.027684157354494483
-PD,≥45°N,artefact art_CTRL,LW,cloud,2009,-0.03783267834912565
-PD,≥45°N,artefact art_CTRL,LW,cloud,2010,0.07710216518785476
-PD,≥45°N,artefact art_CTRL,LW,cloud,2011,0.021810792486952432
-PD,≥45°N,artefact art_CTRL,LW,cloud,2012,0.13223580794252204
-PD,≥45°N,artefact art_CTRL,LW,cloud,2013,-0.024717171461614278
-PD,≥45°N,artefact art_CTRL,LW,cloud,2014,-0.009157074978679517
-PD,modified cells,artefact art_CTRL,LW,cloud,2001,-0.1800086728222398
-PD,modified cells,artefact art_CTRL,LW,cloud,2002,0.10515112778162666
-PD,modified cells,artefact art_CTRL,LW,cloud,2003,0.1695584731983517
-PD,modified cells,artefact art_CTRL,LW,cloud,2004,0.0024483786451243612
-PD,modified cells,artefact art_CTRL,LW,cloud,2005,-0.05955171879559312
-PD,modified cells,artefact art_CTRL,LW,cloud,2006,0.06346673221319976
-PD,modified cells,artefact art_CTRL,LW,cloud,2007,0.025140741182743242
-PD,modified cells,artefact art_CTRL,LW,cloud,2008,0.04727832012258798
-PD,modified cells,artefact art_CTRL,LW,cloud,2009,0.00545339860781473
-PD,modified cells,artefact art_CTRL,LW,cloud,2010,0.0790670952972531
-PD,modified cells,artefact art_CTRL,LW,cloud,2011,0.07668914892573567
-PD,modified cells,artefact art_CTRL,LW,cloud,2012,0.07129154702781455
-PD,modified cells,artefact art_CTRL,LW,cloud,2013,-0.057542563454016926
-PD,modified cells,artefact art_CTRL,LW,cloud,2014,-0.052256087960572385
-PD,global,artefact art_CTRL,LW,rest,2001,0.012652064741020024
-PD,global,artefact art_CTRL,LW,rest,2002,0.00016672632104217604
-PD,global,artefact art_CTRL,LW,rest,2003,-0.008125926482276826
-PD,global,artefact art_CTRL,LW,rest,2004,-0.007165165660581592
-PD,global,artefact art_CTRL,LW,rest,2005,-0.010895286443203235
-PD,global,artefact art_CTRL,LW,rest,2006,-0.008977680870656281
-PD,global,artefact art_CTRL,LW,rest,2007,-0.026823014673440407
-PD,global,artefact art_CTRL,LW,rest,2008,-0.004212307695502024
-PD,global,artefact art_CTRL,LW,rest,2009,0.009232182513609872
-PD,global,artefact art_CTRL,LW,rest,2010,0.016288548789143594
-PD,global,artefact art_CTRL,LW,rest,2011,0.0005742964426573397
-PD,global,artefact art_CTRL,LW,rest,2012,-0.015136898669223086
-PD,global,artefact art_CTRL,LW,rest,2013,0.010488893392614848
-PD,global,artefact art_CTRL,LW,rest,2014,-0.03420891503289285
-PD,≥45°N,artefact art_CTRL,LW,rest,2001,-0.0012363210658100211
-PD,≥45°N,artefact art_CTRL,LW,rest,2002,-0.016817890889512313
-PD,≥45°N,artefact art_CTRL,LW,rest,2003,0.030832265442476366
-PD,≥45°N,artefact art_CTRL,LW,rest,2004,0.02176360491934719
-PD,≥45°N,artefact art_CTRL,LW,rest,2005,-0.005001894955634975
-PD,≥45°N,artefact art_CTRL,LW,rest,2006,0.013733441691989074
-PD,≥45°N,artefact art_CTRL,LW,rest,2007,-0.0028223373140150903
-PD,≥45°N,artefact art_CTRL,LW,rest,2008,-0.0029633040824291377
-PD,≥45°N,artefact art_CTRL,LW,rest,2009,-0.004565535846710363
-PD,≥45°N,artefact art_CTRL,LW,rest,2010,0.016237149222717677
-PD,≥45°N,artefact art_CTRL,LW,rest,2011,0.0400052915253751
-PD,≥45°N,artefact art_CTRL,LW,rest,2012,0.036192474545933565
-PD,≥45°N,artefact art_CTRL,LW,rest,2013,0.006219216152315869
-PD,≥45°N,artefact art_CTRL,LW,rest,2014,0.016215445969999354
-PD,modified cells,artefact art_CTRL,LW,rest,2001,0.008405873426974972
-PD,modified cells,artefact art_CTRL,LW,rest,2002,-0.016186010088318138
-PD,modified cells,artefact art_CTRL,LW,rest,2003,0.0328851023652047
-PD,modified cells,artefact art_CTRL,LW,rest,2004,0.02650725371833268
-PD,modified cells,artefact art_CTRL,LW,rest,2005,0.004425088146816984
-PD,modified cells,artefact art_CTRL,LW,rest,2006,0.00679379089442377
-PD,modified cells,artefact art_CTRL,LW,rest,2007,0.002519091906380096
-PD,modified cells,artefact art_CTRL,LW,rest,2008,0.0010552960561673677
-PD,modified cells,artefact art_CTRL,LW,rest,2009,-0.0006712121875684376
-PD,modified cells,artefact art_CTRL,LW,rest,2010,0.025916522340060675
-PD,modified cells,artefact art_CTRL,LW,rest,2011,0.056792997234840284
-PD,modified cells,artefact art_CTRL,LW,rest,2012,0.04926308343147379
-PD,modified cells,artefact art_CTRL,LW,rest,2013,0.002773189192651572
-PD,modified cells,artefact art_CTRL,LW,rest,2014,0.0300294348762764
+PD,global,artefact art_CTRL,NET,toa,2001,0.006927573166601749
+PD,global,artefact art_CTRL,NET,toa,2002,0.09827851318649966
+PD,global,artefact art_CTRL,NET,toa,2003,0.06301268877739699
+PD,global,artefact art_CTRL,NET,toa,2004,0.03408697339074784
+PD,global,artefact art_CTRL,NET,toa,2005,0.03867576440728478
+PD,global,artefact art_CTRL,NET,toa,2006,-0.005654751987672317
+PD,global,artefact art_CTRL,NET,toa,2007,0.07539820499051017
+PD,global,artefact art_CTRL,NET,toa,2008,0.055623325592152176
+PD,global,artefact art_CTRL,NET,toa,2009,0.0300950819090521
+PD,global,artefact art_CTRL,NET,toa,2010,0.02538655165373031
+PD,global,artefact art_CTRL,NET,toa,2011,0.039263918512538167
+PD,global,artefact art_CTRL,NET,toa,2012,0.11488793982360257
+PD,global,artefact art_CTRL,NET,toa,2013,-7.984104702676197e-05
+PD,global,artefact art_CTRL,NET,toa,2014,0.11569351888505024
+PD,≥45°N,artefact art_CTRL,NET,toa,2001,0.02855539663432138
+PD,≥45°N,artefact art_CTRL,NET,toa,2002,0.07936027466387628
+PD,≥45°N,artefact art_CTRL,NET,toa,2003,0.004408252806951997
+PD,≥45°N,artefact art_CTRL,NET,toa,2004,0.04289620236769484
+PD,≥45°N,artefact art_CTRL,NET,toa,2005,0.0441484923572926
+PD,≥45°N,artefact art_CTRL,NET,toa,2006,0.04072013233353898
+PD,≥45°N,artefact art_CTRL,NET,toa,2007,0.08104995830302578
+PD,≥45°N,artefact art_CTRL,NET,toa,2008,0.12717104305146396
+PD,≥45°N,artefact art_CTRL,NET,toa,2009,0.12058937114460892
+PD,≥45°N,artefact art_CTRL,NET,toa,2010,0.12601058801384768
+PD,≥45°N,artefact art_CTRL,NET,toa,2011,0.10872602049995952
+PD,≥45°N,artefact art_CTRL,NET,toa,2012,-0.003622644349660294
+PD,≥45°N,artefact art_CTRL,NET,toa,2013,-0.03163110367021328
+PD,≥45°N,artefact art_CTRL,NET,toa,2014,0.004394466477324216
+PD,modified cells,artefact art_CTRL,NET,toa,2001,0.1135056802808862
+PD,modified cells,artefact art_CTRL,NET,toa,2002,0.07391796075993497
+PD,modified cells,artefact art_CTRL,NET,toa,2003,0.048401008501514256
+PD,modified cells,artefact art_CTRL,NET,toa,2004,0.0910170217620307
+PD,modified cells,artefact art_CTRL,NET,toa,2005,0.09513831315550565
+PD,modified cells,artefact art_CTRL,NET,toa,2006,-0.013367730034982999
+PD,modified cells,artefact art_CTRL,NET,toa,2007,0.05351240708046736
+PD,modified cells,artefact art_CTRL,NET,toa,2008,0.08943143009931795
+PD,modified cells,artefact art_CTRL,NET,toa,2009,0.13102839858639237
+PD,modified cells,artefact art_CTRL,NET,toa,2010,0.1679617452936885
+PD,modified cells,artefact art_CTRL,NET,toa,2011,0.1685082496745686
+PD,modified cells,artefact art_CTRL,NET,toa,2012,0.08169553298968915
+PD,modified cells,artefact art_CTRL,NET,toa,2013,-0.019255552012370305
+PD,modified cells,artefact art_CTRL,NET,toa,2014,0.08771769663094149
+PD,global,artefact art_CTRL,NET,dir,2001,-0.0026283924688445147
+PD,global,artefact art_CTRL,NET,dir,2002,0.018832325321659866
+PD,global,artefact art_CTRL,NET,dir,2003,0.019307289638027164
+PD,global,artefact art_CTRL,NET,dir,2004,0.0035551945853966077
+PD,global,artefact art_CTRL,NET,dir,2005,0.004836294051249381
+PD,global,artefact art_CTRL,NET,dir,2006,0.004127663628378662
+PD,global,artefact art_CTRL,NET,dir,2007,0.003060760213886518
+PD,global,artefact art_CTRL,NET,dir,2008,0.002466116282370917
+PD,global,artefact art_CTRL,NET,dir,2009,-0.004129726755059085
+PD,global,artefact art_CTRL,NET,dir,2010,0.020002972225746842
+PD,global,artefact art_CTRL,NET,dir,2011,-0.0010489209756862354
+PD,global,artefact art_CTRL,NET,dir,2012,-0.0015693895109764459
+PD,global,artefact art_CTRL,NET,dir,2013,-0.004486304929210377
+PD,global,artefact art_CTRL,NET,dir,2014,0.03137398617539981
+PD,≥45°N,artefact art_CTRL,NET,dir,2001,-0.00016728714924207262
+PD,≥45°N,artefact art_CTRL,NET,dir,2002,0.023488065417730058
+PD,≥45°N,artefact art_CTRL,NET,dir,2003,0.004179989285865552
+PD,≥45°N,artefact art_CTRL,NET,dir,2004,0.012953549288285321
+PD,≥45°N,artefact art_CTRL,NET,dir,2005,0.006944980504501126
+PD,≥45°N,artefact art_CTRL,NET,dir,2006,-0.006346454204816648
+PD,≥45°N,artefact art_CTRL,NET,dir,2007,0.0019439724942980174
+PD,≥45°N,artefact art_CTRL,NET,dir,2008,-0.00363736091193198
+PD,≥45°N,artefact art_CTRL,NET,dir,2009,0.0026359692636745706
+PD,≥45°N,artefact art_CTRL,NET,dir,2010,0.020819256506807132
+PD,≥45°N,artefact art_CTRL,NET,dir,2011,0.005948472611236735
+PD,≥45°N,artefact art_CTRL,NET,dir,2012,-0.0060172128202069155
+PD,≥45°N,artefact art_CTRL,NET,dir,2013,-0.0015361592968192914
+PD,≥45°N,artefact art_CTRL,NET,dir,2014,-0.006003250876320018
+PD,modified cells,artefact art_CTRL,NET,dir,2001,-0.0023689351818800574
+PD,modified cells,artefact art_CTRL,NET,dir,2002,0.018966062261818902
+PD,modified cells,artefact art_CTRL,NET,dir,2003,0.0032980811229570742
+PD,modified cells,artefact art_CTRL,NET,dir,2004,0.011086611633003816
+PD,modified cells,artefact art_CTRL,NET,dir,2005,0.0011444578903342948
+PD,modified cells,artefact art_CTRL,NET,dir,2006,-0.00223150834620167
+PD,modified cells,artefact art_CTRL,NET,dir,2007,0.0010557463096303806
+PD,modified cells,artefact art_CTRL,NET,dir,2008,-0.003044427419603792
+PD,modified cells,artefact art_CTRL,NET,dir,2009,0.0006843204792408679
+PD,modified cells,artefact art_CTRL,NET,dir,2010,0.018290665735658622
+PD,modified cells,artefact art_CTRL,NET,dir,2011,-0.00263433363361779
+PD,modified cells,artefact art_CTRL,NET,dir,2012,-0.0010147293136771648
+PD,modified cells,artefact art_CTRL,NET,dir,2013,0.000348197173004847
+PD,modified cells,artefact art_CTRL,NET,dir,2014,-0.009274457836194608
+PD,global,artefact art_CTRL,NET,cloud,2001,0.019874065770606415
+PD,global,artefact art_CTRL,NET,cloud,2002,0.0828100984071387
+PD,global,artefact art_CTRL,NET,cloud,2003,0.033881804697452236
+PD,global,artefact art_CTRL,NET,cloud,2004,0.01920513726543981
+PD,global,artefact art_CTRL,NET,cloud,2005,0.021275872588196458
+PD,global,artefact art_CTRL,NET,cloud,2006,-0.026783640917009525
+PD,global,artefact art_CTRL,NET,cloud,2007,0.037960247216486755
+PD,global,artefact art_CTRL,NET,cloud,2008,0.045979087174525146
+PD,global,artefact art_CTRL,NET,cloud,2009,0.04146325839707174
+PD,global,artefact art_CTRL,NET,cloud,2010,0.017894309760229415
+PD,global,artefact art_CTRL,NET,cloud,2011,0.02999077613343568
+PD,global,artefact art_CTRL,NET,cloud,2012,0.0962196063917831
+PD,global,artefact art_CTRL,NET,cloud,2013,0.01369821947813595
+PD,global,artefact art_CTRL,NET,cloud,2014,0.043216697766660234
+PD,≥45°N,artefact art_CTRL,NET,cloud,2001,0.03242515517404949
+PD,≥45°N,artefact art_CTRL,NET,cloud,2002,0.05416255089425638
+PD,≥45°N,artefact art_CTRL,NET,cloud,2003,0.016084987777278528
+PD,≥45°N,artefact art_CTRL,NET,cloud,2004,0.03315886909405536
+PD,≥45°N,artefact art_CTRL,NET,cloud,2005,0.04426469830011671
+PD,≥45°N,artefact art_CTRL,NET,cloud,2006,0.029024607580947073
+PD,≥45°N,artefact art_CTRL,NET,cloud,2007,0.05284981834486999
+PD,≥45°N,artefact art_CTRL,NET,cloud,2008,0.1127204468461943
+PD,≥45°N,artefact art_CTRL,NET,cloud,2009,0.09239331344884222
+PD,≥45°N,artefact art_CTRL,NET,cloud,2010,0.12111070865872046
+PD,≥45°N,artefact art_CTRL,NET,cloud,2011,0.09559002953417844
+PD,≥45°N,artefact art_CTRL,NET,cloud,2012,0.02393244121152874
+PD,≥45°N,artefact art_CTRL,NET,cloud,2013,-0.0360690131377109
+PD,≥45°N,artefact art_CTRL,NET,cloud,2014,0.005890468916414678
+PD,modified cells,artefact art_CTRL,NET,cloud,2001,0.12571761176828625
+PD,modified cells,artefact art_CTRL,NET,cloud,2002,0.0621817814739285
+PD,modified cells,artefact art_CTRL,NET,cloud,2003,0.06863051059797261
+PD,modified cells,artefact art_CTRL,NET,cloud,2004,0.08977817243861258
+PD,modified cells,artefact art_CTRL,NET,cloud,2005,0.09136007644177149
+PD,modified cells,artefact art_CTRL,NET,cloud,2006,-0.04621650924987502
+PD,modified cells,artefact art_CTRL,NET,cloud,2007,0.013627614027306058
+PD,modified cells,artefact art_CTRL,NET,cloud,2008,0.07164046003634678
+PD,modified cells,artefact art_CTRL,NET,cloud,2009,0.08553426446051107
+PD,modified cells,artefact art_CTRL,NET,cloud,2010,0.20824842881330322
+PD,modified cells,artefact art_CTRL,NET,cloud,2011,0.1191149344194861
+PD,modified cells,artefact art_CTRL,NET,cloud,2012,0.09870263804225798
+PD,modified cells,artefact art_CTRL,NET,cloud,2013,-0.01755945086003603
+PD,modified cells,artefact art_CTRL,NET,cloud,2014,0.06589411009937296
+PD,global,artefact art_CTRL,NET,rest,2001,-0.010318105195109816
+PD,global,artefact art_CTRL,NET,rest,2002,-0.0033639110535651252
+PD,global,artefact art_CTRL,NET,rest,2003,0.009823595370804915
+PD,global,artefact art_CTRL,NET,rest,2004,0.011326637326292386
+PD,global,artefact art_CTRL,NET,rest,2005,0.012563592454782795
+PD,global,artefact art_CTRL,NET,rest,2006,0.017001220912865097
+PD,global,artefact art_CTRL,NET,rest,2007,0.034377196710333714
+PD,global,artefact art_CTRL,NET,rest,2008,0.007178120375672523
+PD,global,artefact art_CTRL,NET,rest,2009,-0.007238460934478932
+PD,global,artefact art_CTRL,NET,rest,2010,-0.012510717859122507
+PD,global,artefact art_CTRL,NET,rest,2011,0.010322050990850406
+PD,global,artefact art_CTRL,NET,rest,2012,0.020237708593578124
+PD,global,artefact art_CTRL,NET,rest,2013,-0.009291759184205035
+PD,global,artefact art_CTRL,NET,rest,2014,0.04110284496326784
+PD,≥45°N,artefact art_CTRL,NET,rest,2001,-0.0037024648435404406
+PD,≥45°N,artefact art_CTRL,NET,rest,2002,0.0017096360647775072
+PD,≥45°N,artefact art_CTRL,NET,rest,2003,-0.015856723835443936
+PD,≥45°N,artefact art_CTRL,NET,rest,2004,-0.0032162115111338666
+PD,≥45°N,artefact art_CTRL,NET,rest,2005,-0.0070612204864390574
+PD,≥45°N,artefact art_CTRL,NET,rest,2006,0.018041914621767487
+PD,≥45°N,artefact art_CTRL,NET,rest,2007,0.026256173919400525
+PD,≥45°N,artefact art_CTRL,NET,rest,2008,0.01808796195444292
+PD,≥45°N,artefact art_CTRL,NET,rest,2009,0.025560065857159666
+PD,≥45°N,artefact art_CTRL,NET,rest,2010,-0.015919329110425776
+PD,≥45°N,artefact art_CTRL,NET,rest,2011,0.007187482916031914
+PD,≥45°N,artefact art_CTRL,NET,rest,2012,-0.021537911523352517
+PD,≥45°N,artefact art_CTRL,NET,rest,2013,0.005974060724638071
+PD,≥45°N,artefact art_CTRL,NET,rest,2014,0.0045073106598051355
+PD,modified cells,artefact art_CTRL,NET,rest,2001,-0.009843014382714612
+PD,modified cells,artefact art_CTRL,NET,rest,2002,-0.007229896014703145
+PD,modified cells,artefact art_CTRL,NET,rest,2003,-0.02352757901356881
+PD,modified cells,artefact art_CTRL,NET,rest,2004,-0.009847706529540118
+PD,modified cells,artefact art_CTRL,NET,rest,2005,0.002633725574830828
+PD,modified cells,artefact art_CTRL,NET,rest,2006,0.0350802738644892
+PD,modified cells,artefact art_CTRL,NET,rest,2007,0.038829036617876726
+PD,modified cells,artefact art_CTRL,NET,rest,2008,0.02083532492133127
+PD,modified cells,artefact art_CTRL,NET,rest,2009,0.04480977139765742
+PD,modified cells,artefact art_CTRL,NET,rest,2010,-0.05857728356074156
+PD,modified cells,artefact art_CTRL,NET,rest,2011,0.05202760395124587
+PD,modified cells,artefact art_CTRL,NET,rest,2012,-0.01599237202257219
+PD,modified cells,artefact art_CTRL,NET,rest,2013,-0.0020443062578101297
+PD,modified cells,artefact art_CTRL,NET,rest,2014,0.031098093325266345
+PD,global,artefact art_CTRL,SW,toa,2001,0.021629014709636303
+PD,global,artefact art_CTRL,SW,toa,2002,0.08304480402582912
+PD,global,artefact art_CTRL,SW,toa,2003,0.01423918025335552
+PD,global,artefact art_CTRL,SW,toa,2004,0.011065061437712022
+PD,global,artefact art_CTRL,SW,toa,2005,0.05717720399532764
+PD,global,artefact art_CTRL,SW,toa,2006,-0.026529083907845148
+PD,global,artefact art_CTRL,SW,toa,2007,-0.03366917769347276
+PD,global,artefact art_CTRL,SW,toa,2008,0.08711932804904934
+PD,global,artefact art_CTRL,SW,toa,2009,0.005486224099287779
+PD,global,artefact art_CTRL,SW,toa,2010,0.0996312995251224
+PD,global,artefact art_CTRL,SW,toa,2011,-0.019085926788741932
+PD,global,artefact art_CTRL,SW,toa,2012,0.01069654634820394
+PD,global,artefact art_CTRL,SW,toa,2013,0.013142565626884957
+PD,global,artefact art_CTRL,SW,toa,2014,0.04755326517394932
+PD,≥45°N,artefact art_CTRL,SW,toa,2001,-0.09408445027054924
+PD,≥45°N,artefact art_CTRL,SW,toa,2002,0.11858396907786868
+PD,≥45°N,artefact art_CTRL,SW,toa,2003,0.20215730604998286
+PD,≥45°N,artefact art_CTRL,SW,toa,2004,0.11598036622513185
+PD,≥45°N,artefact art_CTRL,SW,toa,2005,-0.03952886840488733
+PD,≥45°N,artefact art_CTRL,SW,toa,2006,0.1202007991152622
+PD,≥45°N,artefact art_CTRL,SW,toa,2007,0.05148512245387685
+PD,≥45°N,artefact art_CTRL,SW,toa,2008,0.15202808915999208
+PD,≥45°N,artefact art_CTRL,SW,toa,2009,0.07845033989771431
+PD,≥45°N,artefact art_CTRL,SW,toa,2010,0.22253374610491924
+PD,≥45°N,artefact art_CTRL,SW,toa,2011,0.1716175807120207
+PD,≥45°N,artefact art_CTRL,SW,toa,2012,0.16420842218007095
+PD,≥45°N,artefact art_CTRL,SW,toa,2013,-0.050864873607932425
+PD,≥45°N,artefact art_CTRL,SW,toa,2014,0.010278661999997838
+PD,modified cells,artefact art_CTRL,SW,toa,2001,-0.05818405525669968
+PD,modified cells,artefact art_CTRL,SW,toa,2002,0.16491931488562975
+PD,modified cells,artefact art_CTRL,SW,toa,2003,0.25157549329167483
+PD,modified cells,artefact art_CTRL,SW,toa,2004,0.12237292430215999
+PD,modified cells,artefact art_CTRL,SW,toa,2005,0.04013635918193403
+PD,modified cells,artefact art_CTRL,SW,toa,2006,0.05743553634366836
+PD,modified cells,artefact art_CTRL,SW,toa,2007,0.08146407459373445
+PD,modified cells,artefact art_CTRL,SW,toa,2008,0.1378598568071318
+PD,modified cells,artefact art_CTRL,SW,toa,2009,0.13596440259558415
+PD,modified cells,artefact art_CTRL,SW,toa,2010,0.2759593351389269
+PD,modified cells,artefact art_CTRL,SW,toa,2011,0.30238587235156805
+PD,modified cells,artefact art_CTRL,SW,toa,2012,0.20244941238402725
+PD,modified cells,artefact art_CTRL,SW,toa,2013,-0.07473849391920274
+PD,modified cells,artefact art_CTRL,SW,toa,2014,0.06445648201493341
+PD,global,artefact art_CTRL,SW,dir,2001,-0.0025203681485523894
+PD,global,artefact art_CTRL,SW,dir,2002,0.020218109247033954
+PD,global,artefact art_CTRL,SW,dir,2003,0.02097547382835946
+PD,global,artefact art_CTRL,SW,dir,2004,0.004851303240054651
+PD,global,artefact art_CTRL,SW,dir,2005,0.00498921788752361
+PD,global,artefact art_CTRL,SW,dir,2006,0.004591987767515519
+PD,global,artefact art_CTRL,SW,dir,2007,0.004008127949718964
+PD,global,artefact art_CTRL,SW,dir,2008,0.0025668771656198754
+PD,global,artefact art_CTRL,SW,dir,2009,-0.00459684147637248
+PD,global,artefact art_CTRL,SW,dir,2010,0.022206929446084815
+PD,global,artefact art_CTRL,SW,dir,2011,-0.0006881021454480301
+PD,global,artefact art_CTRL,SW,dir,2012,-0.001649661259938928
+PD,global,artefact art_CTRL,SW,dir,2013,-0.003899793717263943
+PD,global,artefact art_CTRL,SW,dir,2014,0.03399942385080618
+PD,≥45°N,artefact art_CTRL,SW,dir,2001,-0.0002336781607769978
+PD,≥45°N,artefact art_CTRL,SW,dir,2002,0.025826453851908588
+PD,≥45°N,artefact art_CTRL,SW,dir,2003,0.00487047187142323
+PD,≥45°N,artefact art_CTRL,SW,dir,2004,0.01530410626889235
+PD,≥45°N,artefact art_CTRL,SW,dir,2005,0.007187387673131259
+PD,≥45°N,artefact art_CTRL,SW,dir,2006,-0.006049622070559207
+PD,≥45°N,artefact art_CTRL,SW,dir,2007,0.0023957970989685108
+PD,≥45°N,artefact art_CTRL,SW,dir,2008,-0.003501154571118743
+PD,≥45°N,artefact art_CTRL,SW,dir,2009,0.0028951533714571946
+PD,≥45°N,artefact art_CTRL,SW,dir,2010,0.024003076000296365
+PD,≥45°N,artefact art_CTRL,SW,dir,2011,0.007023961178258045
+PD,≥45°N,artefact art_CTRL,SW,dir,2012,-0.0066144346612595495
+PD,≥45°N,artefact art_CTRL,SW,dir,2013,-0.002271947148360537
+PD,≥45°N,artefact art_CTRL,SW,dir,2014,-0.007177457908975495
+PD,modified cells,artefact art_CTRL,SW,dir,2001,-0.002455808964722812
+PD,modified cells,artefact art_CTRL,SW,dir,2002,0.021002347415607563
+PD,modified cells,artefact art_CTRL,SW,dir,2003,0.0040289502176785365
+PD,modified cells,artefact art_CTRL,SW,dir,2004,0.013486865183609184
+PD,modified cells,artefact art_CTRL,SW,dir,2005,0.0012691714634651922
+PD,modified cells,artefact art_CTRL,SW,dir,2006,-0.0016887611144434658
+PD,modified cells,artefact art_CTRL,SW,dir,2007,0.0013475402628143295
+PD,modified cells,artefact art_CTRL,SW,dir,2008,-0.0029495774595441723
+PD,modified cells,artefact art_CTRL,SW,dir,2009,0.0008381197331228774
+PD,modified cells,artefact art_CTRL,SW,dir,2010,0.02130458615471411
+PD,modified cells,artefact art_CTRL,SW,dir,2011,-0.002238852117064993
+PD,modified cells,artefact art_CTRL,SW,dir,2012,-0.0008155141512491203
+PD,modified cells,artefact art_CTRL,SW,dir,2013,-0.00036533024285628654
+PD,modified cells,artefact art_CTRL,SW,dir,2014,-0.010309043153461895
+PD,global,artefact art_CTRL,SW,cloud,2001,0.02181542917165968
+PD,global,artefact art_CTRL,SW,cloud,2002,0.06602388699758001
+PD,global,artefact art_CTRL,SW,cloud,2003,-0.00843396824108156
+PD,global,artefact art_CTRL,SW,cloud,2004,0.0020522885494023767
+PD,global,artefact art_CTRL,SW,cloud,2005,0.050519675639186815
+PD,global,artefact art_CTRL,SW,cloud,2006,-0.03914461966606083
+PD,global,artefact art_CTRL,SW,cloud,2007,-0.04523148680143472
+PD,global,artefact art_CTRL,SW,cloud,2008,0.0815866374223063
+PD,global,artefact art_CTRL,SW,cloud,2009,0.008089338643403074
+PD,global,artefact art_CTRL,SW,cloud,2010,0.07364654413858182
+PD,global,artefact art_CTRL,SW,cloud,2011,-0.029294176919202483
+PD,global,artefact art_CTRL,SW,cloud,2012,0.007245389773961502
+PD,global,artefact art_CTRL,SW,cloud,2013,0.015845227563761423
+PD,global,artefact art_CTRL,SW,cloud,2014,0.0066599112213614675
+PD,≥45°N,artefact art_CTRL,SW,cloud,2001,-0.08891194084661243
+PD,≥45°N,artefact art_CTRL,SW,cloud,2002,0.10786579169067853
+PD,≥45°N,artefact art_CTRL,SW,cloud,2003,0.18231126512782758
+PD,≥45°N,artefact art_CTRL,SW,cloud,2004,0.08212888478963327
+PD,≥45°N,artefact art_CTRL,SW,cloud,2005,-0.034653165787924885
+PD,≥45°N,artefact art_CTRL,SW,cloud,2006,0.09447502620049489
+PD,≥45°N,artefact art_CTRL,SW,cloud,2007,0.025655483149082118
+PD,≥45°N,artefact art_CTRL,SW,cloud,2008,0.14040460376220806
+PD,≥45°N,artefact art_CTRL,SW,cloud,2009,0.05456063783529883
+PD,≥45°N,artefact art_CTRL,SW,cloud,2010,0.1982128736793819
+PD,≥45°N,artefact art_CTRL,SW,cloud,2011,0.11740082094008372
+PD,≥45°N,artefact art_CTRL,SW,cloud,2012,0.15616824923600287
+PD,≥45°N,artefact art_CTRL,SW,cloud,2013,-0.06078618678458143
+PD,≥45°N,artefact art_CTRL,SW,cloud,2014,-0.0032666053322265567
+PD,modified cells,artefact art_CTRL,SW,cloud,2001,-0.054291058626749295
+PD,modified cells,artefact art_CTRL,SW,cloud,2002,0.1673329095102348
+PD,modified cells,artefact art_CTRL,SW,cloud,2003,0.2381889841739221
+PD,modified cells,artefact art_CTRL,SW,cloud,2004,0.09222654977525208
+PD,modified cells,artefact art_CTRL,SW,cloud,2005,0.03180835655006394
+PD,modified cells,artefact art_CTRL,SW,cloud,2006,0.01725022260272088
+PD,modified cells,artefact art_CTRL,SW,cloud,2007,0.03876835677554284
+PD,modified cells,artefact art_CTRL,SW,cloud,2008,0.11891878251514
+PD,modified cells,artefact art_CTRL,SW,cloud,2009,0.09098766436094312
+PD,modified cells,artefact art_CTRL,SW,cloud,2010,0.2873155239592983
+PD,modified cells,artefact art_CTRL,SW,cloud,2011,0.1958040827214638
+PD,modified cells,artefact art_CTRL,SW,cloud,2012,0.16999418726457163
+PD,modified cells,artefact art_CTRL,SW,cloud,2013,-0.07510201471586142
+PD,modified cells,artefact art_CTRL,SW,cloud,2014,0.013638024167501662
+PD,global,artefact art_CTRL,SW,rest,2001,0.002333953616569386
+PD,global,artefact art_CTRL,SW,rest,2002,-0.0031971922187850016
+PD,global,artefact art_CTRL,SW,rest,2003,0.0016976746660778094
+PD,global,artefact art_CTRL,SW,rest,2004,0.0041614696653241474
+PD,global,artefact art_CTRL,SW,rest,2005,0.0016683104686168533
+PD,global,artefact art_CTRL,SW,rest,2006,0.008023547990700099
+PD,global,artefact art_CTRL,SW,rest,2007,0.0075541809476409845
+PD,global,artefact art_CTRL,SW,rest,2008,0.002965813394014968
+PD,global,artefact art_CTRL,SW,rest,2009,0.0019937267948873486
+PD,global,artefact art_CTRL,SW,rest,2010,0.003777826010415215
+PD,global,artefact art_CTRL,SW,rest,2011,0.01089635227590852
+PD,global,artefact art_CTRL,SW,rest,2012,0.005100817781239397
+PD,global,artefact art_CTRL,SW,rest,2013,0.0011971317803874098
+PD,global,artefact art_CTRL,SW,rest,2014,0.006893929791351395
+PD,≥45°N,artefact art_CTRL,SW,rest,2001,-0.004938831263159821
+PD,≥45°N,artefact art_CTRL,SW,rest,2002,-0.015108276464718278
+PD,≥45°N,artefact art_CTRL,SW,rest,2003,0.01497556905073176
+PD,≥45°N,artefact art_CTRL,SW,rest,2004,0.018547375285525507
+PD,≥45°N,artefact art_CTRL,SW,rest,2005,-0.012063090290094008
+PD,≥45°N,artefact art_CTRL,SW,rest,2006,0.031775394985326486
+PD,≥45°N,artefact art_CTRL,SW,rest,2007,0.023433842205826085
+PD,≥45°N,artefact art_CTRL,SW,rest,2008,0.015124639968903295
+PD,≥45°N,artefact art_CTRL,SW,rest,2009,0.020994548690958396
+PD,≥45°N,artefact art_CTRL,SW,rest,2010,0.00031779642524129646
+PD,≥45°N,artefact art_CTRL,SW,rest,2011,0.04719279859367932
+PD,≥45°N,artefact art_CTRL,SW,rest,2012,0.014654607236485047
+PD,≥45°N,artefact art_CTRL,SW,rest,2013,0.012193260325009085
+PD,≥45°N,artefact art_CTRL,SW,rest,2014,0.02072272524119993
+PD,modified cells,artefact art_CTRL,SW,rest,2001,-0.0014371876652274072
+PD,modified cells,artefact art_CTRL,SW,rest,2002,-0.023415942040212686
+PD,modified cells,artefact art_CTRL,SW,rest,2003,0.009357558900073445
+PD,modified cells,artefact art_CTRL,SW,rest,2004,0.016659509343299156
+PD,modified cells,artefact art_CTRL,SW,rest,2005,0.0070588311684049694
+PD,modified cells,artefact art_CTRL,SW,rest,2006,0.04187407485539076
+PD,modified cells,artefact art_CTRL,SW,rest,2007,0.04134817755537673
+PD,modified cells,artefact art_CTRL,SW,rest,2008,0.02189065175153609
+PD,modified cells,artefact art_CTRL,SW,rest,2009,0.04413861850151908
+PD,modified cells,artefact art_CTRL,SW,rest,2010,-0.03266077497508523
+PD,modified cells,artefact art_CTRL,SW,rest,2011,0.10882064174716996
+PD,modified cells,artefact art_CTRL,SW,rest,2012,0.03327073833557056
+PD,modified cells,artefact art_CTRL,SW,rest,2013,0.0007288510395149758
+PD,modified cells,artefact art_CTRL,SW,rest,2014,0.06112750100089354
+PD,global,artefact art_CTRL,LW,toa,2001,-0.014701452166561763
+PD,global,artefact art_CTRL,LW,toa,2002,0.015233701308845646
+PD,global,artefact art_CTRL,LW,toa,2003,0.0487735153503606
+PD,global,artefact art_CTRL,LW,toa,2004,0.023021905636004425
+PD,global,artefact art_CTRL,LW,toa,2005,-0.018501440676241498
+PD,global,artefact art_CTRL,LW,toa,2006,0.020874335698953913
+PD,global,artefact art_CTRL,LW,toa,2007,0.10906738100665708
+PD,global,artefact art_CTRL,LW,toa,2008,-0.031496003473491414
+PD,global,artefact art_CTRL,LW,toa,2009,0.02460885260286784
+PD,global,artefact art_CTRL,LW,toa,2010,-0.07424474024121956
+PD,global,artefact art_CTRL,LW,toa,2011,0.05834983715471833
+PD,global,artefact art_CTRL,LW,toa,2012,0.10419138704706801
+PD,global,artefact art_CTRL,LW,toa,2013,-0.013222412569770676
+PD,global,artefact art_CTRL,LW,toa,2014,0.06814026404358305
+PD,≥45°N,artefact art_CTRL,LW,toa,2001,0.12263980902515907
+PD,≥45°N,artefact art_CTRL,LW,toa,2002,-0.03922373843535545
+PD,≥45°N,artefact art_CTRL,LW,toa,2003,-0.19774902557765398
+PD,≥45°N,artefact art_CTRL,LW,toa,2004,-0.07308417603952899
+PD,≥45°N,artefact art_CTRL,LW,toa,2005,0.08367735075485369
+PD,≥45°N,artefact art_CTRL,LW,toa,2006,-0.07948069283843608
+PD,≥45°N,artefact art_CTRL,LW,toa,2007,0.029564849918503205
+PD,≥45°N,artefact art_CTRL,LW,toa,2008,-0.02485705961393464
+PD,≥45°N,artefact art_CTRL,LW,toa,2009,0.04213903008775299
+PD,≥45°N,artefact art_CTRL,LW,toa,2010,-0.09652313390442897
+PD,≥45°N,artefact art_CTRL,LW,toa,2011,-0.06289157257934513
+PD,≥45°N,artefact art_CTRL,LW,toa,2012,-0.16783106064254377
+PD,≥45°N,artefact art_CTRL,LW,toa,2013,0.01923374316128869
+PD,≥45°N,artefact art_CTRL,LW,toa,2014,-0.005884163959641113
+PD,modified cells,artefact art_CTRL,LW,toa,2001,0.17168967317834713
+PD,modified cells,artefact art_CTRL,LW,toa,2002,-0.09100140284627303
+PD,modified cells,artefact art_CTRL,LW,toa,2003,-0.20317444466042664
+PD,modified cells,artefact art_CTRL,LW,toa,2004,-0.03135588591866693
+PD,modified cells,artefact art_CTRL,LW,toa,2005,0.05500191707383242
+PD,modified cells,artefact art_CTRL,LW,toa,2006,-0.07080327033871457
+PD,modified cells,artefact art_CTRL,LW,toa,2007,-0.027951627039906817
+PD,modified cells,artefact art_CTRL,LW,toa,2008,-0.04842846613692349
+PD,modified cells,artefact art_CTRL,LW,toa,2009,-0.004935985675392432
+PD,modified cells,artefact art_CTRL,LW,toa,2010,-0.10799753805637381
+PD,modified cells,artefact art_CTRL,LW,toa,2011,-0.13387762767630315
+PD,modified cells,artefact art_CTRL,LW,toa,2012,-0.12075384561610698
+PD,modified cells,artefact art_CTRL,LW,toa,2013,0.055482901681400895
+PD,modified cells,artefact art_CTRL,LW,toa,2014,0.023261238399410425
+PD,global,artefact art_CTRL,LW,dir,2001,-0.00010802431993199787
+PD,global,artefact art_CTRL,LW,dir,2002,-0.0013857839247417333
+PD,global,artefact art_CTRL,LW,dir,2003,-0.001668184190365813
+PD,global,artefact art_CTRL,LW,dir,2004,-0.0012961086545531183
+PD,global,artefact art_CTRL,LW,dir,2005,-0.00015292383626284138
+PD,global,artefact art_CTRL,LW,dir,2006,-0.0004643241388570451
+PD,global,artefact art_CTRL,LW,dir,2007,-0.0009473677358050293
+PD,global,artefact art_CTRL,LW,dir,2008,-0.00010076088328029227
+PD,global,artefact art_CTRL,LW,dir,2009,0.0004671147211078208
+PD,global,artefact art_CTRL,LW,dir,2010,-0.0022039572204085047
+PD,global,artefact art_CTRL,LW,dir,2011,-0.00036081883010377435
+PD,global,artefact art_CTRL,LW,dir,2012,8.02717500787559e-05
+PD,global,artefact art_CTRL,LW,dir,2013,-0.0005865112117456777
+PD,global,artefact art_CTRL,LW,dir,2014,-0.0026254376757434417
+PD,≥45°N,artefact art_CTRL,LW,dir,2001,6.639101475796678e-05
+PD,≥45°N,artefact art_CTRL,LW,dir,2002,-0.0023383884315895586
+PD,≥45°N,artefact art_CTRL,LW,dir,2003,-0.0006904825870679323
+PD,≥45°N,artefact art_CTRL,LW,dir,2004,-0.002350556980125078
+PD,≥45°N,artefact art_CTRL,LW,dir,2005,-0.0002424071687916187
+PD,≥45°N,artefact art_CTRL,LW,dir,2006,-0.0002968321336868007
+PD,≥45°N,artefact art_CTRL,LW,dir,2007,-0.00045182460569684427
+PD,≥45°N,artefact art_CTRL,LW,dir,2008,-0.00013620634186874625
+PD,≥45°N,artefact art_CTRL,LW,dir,2009,-0.0002591841080827101
+PD,≥45°N,artefact art_CTRL,LW,dir,2010,-0.0031838194938571627
+PD,≥45°N,artefact art_CTRL,LW,dir,2011,-0.001075488567017767
+PD,≥45°N,artefact art_CTRL,LW,dir,2012,0.0005972218459118811
+PD,≥45°N,artefact art_CTRL,LW,dir,2013,0.0007357878519903125
+PD,≥45°N,artefact art_CTRL,LW,dir,2014,0.0011742070316787144
+PD,modified cells,artefact art_CTRL,LW,dir,2001,8.687378308304668e-05
+PD,modified cells,artefact art_CTRL,LW,dir,2002,-0.0020362851529641362
+PD,modified cells,artefact art_CTRL,LW,dir,2003,-0.000730869096869768
+PD,modified cells,artefact art_CTRL,LW,dir,2004,-0.0024002535552103267
+PD,modified cells,artefact art_CTRL,LW,dir,2005,-0.0001247135749436826
+PD,modified cells,artefact art_CTRL,LW,dir,2006,-0.0005427472310909209
+PD,modified cells,artefact art_CTRL,LW,dir,2007,-0.00029179395078319045
+PD,modified cells,artefact art_CTRL,LW,dir,2008,-9.48499581675223e-05
+PD,modified cells,artefact art_CTRL,LW,dir,2009,-0.00015379925514664536
+PD,modified cells,artefact art_CTRL,LW,dir,2010,-0.003013920419061108
+PD,modified cells,artefact art_CTRL,LW,dir,2011,-0.0003954815157268872
+PD,modified cells,artefact art_CTRL,LW,dir,2012,-0.000199215156818413
+PD,modified cells,artefact art_CTRL,LW,dir,2013,0.0007135274200353469
+PD,modified cells,artefact art_CTRL,LW,dir,2014,0.0010345853151145377
+PD,global,artefact art_CTRL,LW,cloud,2001,-0.0019413631056099019
+PD,global,artefact art_CTRL,LW,cloud,2002,0.01678621155462972
+PD,global,artefact art_CTRL,LW,cloud,2003,0.042315773058449656
+PD,global,artefact art_CTRL,LW,cloud,2004,0.01715284870436542
+PD,global,artefact art_CTRL,LW,cloud,2005,-0.029243803216211523
+PD,global,artefact art_CTRL,LW,cloud,2006,0.012360978967154504
+PD,global,artefact art_CTRL,LW,cloud,2007,0.08319173406902229
+PD,global,artefact art_CTRL,LW,cloud,2008,-0.03560755028571303
+PD,global,artefact art_CTRL,LW,cloud,2009,0.03337392039536963
+PD,global,artefact art_CTRL,LW,cloud,2010,-0.055752234231667704
+PD,global,artefact art_CTRL,LW,cloud,2011,0.05928495242747933
+PD,global,artefact art_CTRL,LW,cloud,2012,0.08897421662776621
+PD,global,artefact art_CTRL,LW,cloud,2013,-0.0021470079654099103
+PD,global,artefact art_CTRL,LW,cloud,2014,0.03655678668643356
+PD,≥45°N,artefact art_CTRL,LW,cloud,2001,0.12133709694459154
+PD,≥45°N,artefact art_CTRL,LW,cloud,2002,-0.05370324089327749
+PD,≥45°N,artefact art_CTRL,LW,cloud,2003,-0.16622627754810887
+PD,≥45°N,artefact art_CTRL,LW,cloud,2004,-0.04897001414005733
+PD,≥45°N,artefact art_CTRL,LW,cloud,2005,0.07891786296800994
+PD,≥45°N,artefact art_CTRL,LW,cloud,2006,-0.06545041901276016
+PD,≥45°N,artefact art_CTRL,LW,cloud,2007,0.027194337210185097
+PD,≥45°N,artefact art_CTRL,LW,cloud,2008,-0.027684157354494483
+PD,≥45°N,artefact art_CTRL,LW,cloud,2009,0.03783267834912565
+PD,≥45°N,artefact art_CTRL,LW,cloud,2010,-0.07710216518785476
+PD,≥45°N,artefact art_CTRL,LW,cloud,2011,-0.021810792486952432
+PD,≥45°N,artefact art_CTRL,LW,cloud,2012,-0.13223580794252204
+PD,≥45°N,artefact art_CTRL,LW,cloud,2013,0.024717171461614278
+PD,≥45°N,artefact art_CTRL,LW,cloud,2014,0.009157074978679517
+PD,modified cells,artefact art_CTRL,LW,cloud,2001,0.1800086728222398
+PD,modified cells,artefact art_CTRL,LW,cloud,2002,-0.10515112778162666
+PD,modified cells,artefact art_CTRL,LW,cloud,2003,-0.1695584731983517
+PD,modified cells,artefact art_CTRL,LW,cloud,2004,-0.0024483786451243612
+PD,modified cells,artefact art_CTRL,LW,cloud,2005,0.05955171879559312
+PD,modified cells,artefact art_CTRL,LW,cloud,2006,-0.06346673221319976
+PD,modified cells,artefact art_CTRL,LW,cloud,2007,-0.025140741182743242
+PD,modified cells,artefact art_CTRL,LW,cloud,2008,-0.04727832012258798
+PD,modified cells,artefact art_CTRL,LW,cloud,2009,-0.00545339860781473
+PD,modified cells,artefact art_CTRL,LW,cloud,2010,-0.0790670952972531
+PD,modified cells,artefact art_CTRL,LW,cloud,2011,-0.07668914892573567
+PD,modified cells,artefact art_CTRL,LW,cloud,2012,-0.07129154702781455
+PD,modified cells,artefact art_CTRL,LW,cloud,2013,0.057542563454016926
+PD,modified cells,artefact art_CTRL,LW,cloud,2014,0.052256087960572385
+PD,global,artefact art_CTRL,LW,rest,2001,-0.012652064741020024
+PD,global,artefact art_CTRL,LW,rest,2002,-0.00016672632104217604
+PD,global,artefact art_CTRL,LW,rest,2003,0.008125926482276826
+PD,global,artefact art_CTRL,LW,rest,2004,0.007165165660581592
+PD,global,artefact art_CTRL,LW,rest,2005,0.010895286443203235
+PD,global,artefact art_CTRL,LW,rest,2006,0.008977680870656281
+PD,global,artefact art_CTRL,LW,rest,2007,0.026823014673440407
+PD,global,artefact art_CTRL,LW,rest,2008,0.004212307695502024
+PD,global,artefact art_CTRL,LW,rest,2009,-0.009232182513609872
+PD,global,artefact art_CTRL,LW,rest,2010,-0.016288548789143594
+PD,global,artefact art_CTRL,LW,rest,2011,-0.0005742964426573397
+PD,global,artefact art_CTRL,LW,rest,2012,0.015136898669223086
+PD,global,artefact art_CTRL,LW,rest,2013,-0.010488893392614848
+PD,global,artefact art_CTRL,LW,rest,2014,0.03420891503289285
+PD,≥45°N,artefact art_CTRL,LW,rest,2001,0.0012363210658100211
+PD,≥45°N,artefact art_CTRL,LW,rest,2002,0.016817890889512313
+PD,≥45°N,artefact art_CTRL,LW,rest,2003,-0.030832265442476366
+PD,≥45°N,artefact art_CTRL,LW,rest,2004,-0.02176360491934719
+PD,≥45°N,artefact art_CTRL,LW,rest,2005,0.005001894955634975
+PD,≥45°N,artefact art_CTRL,LW,rest,2006,-0.013733441691989074
+PD,≥45°N,artefact art_CTRL,LW,rest,2007,0.0028223373140150903
+PD,≥45°N,artefact art_CTRL,LW,rest,2008,0.0029633040824291377
+PD,≥45°N,artefact art_CTRL,LW,rest,2009,0.004565535846710363
+PD,≥45°N,artefact art_CTRL,LW,rest,2010,-0.016237149222717677
+PD,≥45°N,artefact art_CTRL,LW,rest,2011,-0.0400052915253751
+PD,≥45°N,artefact art_CTRL,LW,rest,2012,-0.036192474545933565
+PD,≥45°N,artefact art_CTRL,LW,rest,2013,-0.006219216152315869
+PD,≥45°N,artefact art_CTRL,LW,rest,2014,-0.016215445969999354
+PD,modified cells,artefact art_CTRL,LW,rest,2001,-0.008405873426974972
+PD,modified cells,artefact art_CTRL,LW,rest,2002,0.016186010088318138
+PD,modified cells,artefact art_CTRL,LW,rest,2003,-0.0328851023652047
+PD,modified cells,artefact art_CTRL,LW,rest,2004,-0.02650725371833268
+PD,modified cells,artefact art_CTRL,LW,rest,2005,-0.004425088146816984
+PD,modified cells,artefact art_CTRL,LW,rest,2006,-0.00679379089442377
+PD,modified cells,artefact art_CTRL,LW,rest,2007,-0.002519091906380096
+PD,modified cells,artefact art_CTRL,LW,rest,2008,-0.0010552960561673677
+PD,modified cells,artefact art_CTRL,LW,rest,2009,0.0006712121875684376
+PD,modified cells,artefact art_CTRL,LW,rest,2010,-0.025916522340060675
+PD,modified cells,artefact art_CTRL,LW,rest,2011,-0.056792997234840284
+PD,modified cells,artefact art_CTRL,LW,rest,2012,-0.04926308343147379
+PD,modified cells,artefact art_CTRL,LW,rest,2013,-0.002773189192651572
+PD,modified cells,artefact art_CTRL,LW,rest,2014,-0.0300294348762764
 FUT,global,Total,NET,toa,2001,0.00647845062188811
 FUT,global,Total,NET,toa,2002,0.04993787135697619
 FUT,global,Total,NET,toa,2003,0.03924368497604382
@@ -4535,510 +4535,510 @@ FUT,modified cells,BVOC uncorrected,LW,rest,2011,-0.038776043314983105
 FUT,modified cells,BVOC uncorrected,LW,rest,2012,0.007283862456174347
 FUT,modified cells,BVOC uncorrected,LW,rest,2013,-0.012930628528614796
 FUT,modified cells,BVOC uncorrected,LW,rest,2014,0.03205136068047323
-FUT,global,artefact art_CTRL,NET,toa,2001,-0.05019362935960334
-FUT,global,artefact art_CTRL,NET,toa,2002,-0.12592112506232703
-FUT,global,artefact art_CTRL,NET,toa,2003,-0.022507861746571108
-FUT,global,artefact art_CTRL,NET,toa,2004,-0.06629046485738306
-FUT,global,artefact art_CTRL,NET,toa,2005,0.023965811072980358
-FUT,global,artefact art_CTRL,NET,toa,2006,-0.0015853938313480371
-FUT,global,artefact art_CTRL,NET,toa,2007,-0.11126841161672035
-FUT,global,artefact art_CTRL,NET,toa,2008,0.015529571480292458
-FUT,global,artefact art_CTRL,NET,toa,2009,-0.03445360895581353
-FUT,global,artefact art_CTRL,NET,toa,2010,-0.05835945783922948
-FUT,global,artefact art_CTRL,NET,toa,2011,-0.00306035504811187
-FUT,global,artefact art_CTRL,NET,toa,2012,-0.10329817203325323
-FUT,global,artefact art_CTRL,NET,toa,2013,-0.007313637266914622
-FUT,global,artefact art_CTRL,NET,toa,2014,-0.003692689653245368
-FUT,≥45°N,artefact art_CTRL,NET,toa,2001,-0.1190627036360864
-FUT,≥45°N,artefact art_CTRL,NET,toa,2002,-0.23630234061497457
-FUT,≥45°N,artefact art_CTRL,NET,toa,2003,-0.04499745778982001
-FUT,≥45°N,artefact art_CTRL,NET,toa,2004,-0.07538952766557486
-FUT,≥45°N,artefact art_CTRL,NET,toa,2005,0.03237949158693844
-FUT,≥45°N,artefact art_CTRL,NET,toa,2006,-0.031065491532355292
-FUT,≥45°N,artefact art_CTRL,NET,toa,2007,-0.05547286640521988
-FUT,≥45°N,artefact art_CTRL,NET,toa,2008,-0.04382536108283885
-FUT,≥45°N,artefact art_CTRL,NET,toa,2009,-0.1719722648282557
-FUT,≥45°N,artefact art_CTRL,NET,toa,2010,-0.1452411686023138
-FUT,≥45°N,artefact art_CTRL,NET,toa,2011,-0.1768247142652969
-FUT,≥45°N,artefact art_CTRL,NET,toa,2012,-0.09356999806518941
-FUT,≥45°N,artefact art_CTRL,NET,toa,2013,-0.10584491494385614
-FUT,≥45°N,artefact art_CTRL,NET,toa,2014,0.043860459700103764
-FUT,modified cells,artefact art_CTRL,NET,toa,2001,-0.08510032100182427
-FUT,modified cells,artefact art_CTRL,NET,toa,2002,-0.30904953111846756
-FUT,modified cells,artefact art_CTRL,NET,toa,2003,-0.00910514890991834
-FUT,modified cells,artefact art_CTRL,NET,toa,2004,-0.11520652393281845
-FUT,modified cells,artefact art_CTRL,NET,toa,2005,0.07356974358837765
-FUT,modified cells,artefact art_CTRL,NET,toa,2006,-0.07229624057484593
-FUT,modified cells,artefact art_CTRL,NET,toa,2007,-0.06426905261773033
-FUT,modified cells,artefact art_CTRL,NET,toa,2008,-0.03726991053522367
-FUT,modified cells,artefact art_CTRL,NET,toa,2009,-0.14595146745803783
-FUT,modified cells,artefact art_CTRL,NET,toa,2010,-0.1334791515580854
-FUT,modified cells,artefact art_CTRL,NET,toa,2011,-0.1927959784923667
-FUT,modified cells,artefact art_CTRL,NET,toa,2012,-0.1946616148915089
-FUT,modified cells,artefact art_CTRL,NET,toa,2013,-0.12865217316169913
-FUT,modified cells,artefact art_CTRL,NET,toa,2014,0.020174013122398762
-FUT,global,artefact art_CTRL,NET,dir,2001,0.014427132890030987
-FUT,global,artefact art_CTRL,NET,dir,2002,0.033640256905329464
-FUT,global,artefact art_CTRL,NET,dir,2003,-0.001308403326927157
-FUT,global,artefact art_CTRL,NET,dir,2004,-0.012481680339964081
-FUT,global,artefact art_CTRL,NET,dir,2005,-0.003766015940426827
-FUT,global,artefact art_CTRL,NET,dir,2006,0.0022062559970494307
-FUT,global,artefact art_CTRL,NET,dir,2007,-0.012176408725400304
-FUT,global,artefact art_CTRL,NET,dir,2008,0.007856528024229845
-FUT,global,artefact art_CTRL,NET,dir,2009,-0.026193929544050584
-FUT,global,artefact art_CTRL,NET,dir,2010,-0.015939822933604127
-FUT,global,artefact art_CTRL,NET,dir,2011,0.0022725905836479283
-FUT,global,artefact art_CTRL,NET,dir,2012,-0.040608988519211305
-FUT,global,artefact art_CTRL,NET,dir,2013,-0.01622002795698002
-FUT,global,artefact art_CTRL,NET,dir,2014,-0.00887928725606698
-FUT,≥45°N,artefact art_CTRL,NET,dir,2001,-0.002676958478398089
-FUT,≥45°N,artefact art_CTRL,NET,dir,2002,0.002001867902391525
-FUT,≥45°N,artefact art_CTRL,NET,dir,2003,0.014017984488986761
-FUT,≥45°N,artefact art_CTRL,NET,dir,2004,0.0020912767182712025
-FUT,≥45°N,artefact art_CTRL,NET,dir,2005,-0.012276979973096474
-FUT,≥45°N,artefact art_CTRL,NET,dir,2006,0.012157682895934808
-FUT,≥45°N,artefact art_CTRL,NET,dir,2007,-0.010210940705812774
-FUT,≥45°N,artefact art_CTRL,NET,dir,2008,0.018950342741505616
-FUT,≥45°N,artefact art_CTRL,NET,dir,2009,-0.012334458816701449
-FUT,≥45°N,artefact art_CTRL,NET,dir,2010,-0.01120967326455195
-FUT,≥45°N,artefact art_CTRL,NET,dir,2011,-0.0005322109638842324
-FUT,≥45°N,artefact art_CTRL,NET,dir,2012,-0.013884452682370464
-FUT,≥45°N,artefact art_CTRL,NET,dir,2013,0.005913418151143851
-FUT,≥45°N,artefact art_CTRL,NET,dir,2014,0.0060513321620822525
-FUT,modified cells,artefact art_CTRL,NET,dir,2001,-0.0037469762898577077
-FUT,modified cells,artefact art_CTRL,NET,dir,2002,-0.010180021337458007
-FUT,modified cells,artefact art_CTRL,NET,dir,2003,0.008310857004087567
-FUT,modified cells,artefact art_CTRL,NET,dir,2004,0.007351709382073307
-FUT,modified cells,artefact art_CTRL,NET,dir,2005,-0.010139057785022044
-FUT,modified cells,artefact art_CTRL,NET,dir,2006,0.015810092776791886
-FUT,modified cells,artefact art_CTRL,NET,dir,2007,-0.007008777778652599
-FUT,modified cells,artefact art_CTRL,NET,dir,2008,0.018109935309104205
-FUT,modified cells,artefact art_CTRL,NET,dir,2009,-0.011076342898136948
-FUT,modified cells,artefact art_CTRL,NET,dir,2010,-0.006516235183861103
-FUT,modified cells,artefact art_CTRL,NET,dir,2011,0.009515073416398321
-FUT,modified cells,artefact art_CTRL,NET,dir,2012,-0.013325694933697249
-FUT,modified cells,artefact art_CTRL,NET,dir,2013,0.010103550906876937
-FUT,modified cells,artefact art_CTRL,NET,dir,2014,0.008638824136717104
-FUT,global,artefact art_CTRL,NET,cloud,2001,-0.07988410735702121
-FUT,global,artefact art_CTRL,NET,cloud,2002,-0.13703208509054374
-FUT,global,artefact art_CTRL,NET,cloud,2003,-0.0413708046813359
-FUT,global,artefact art_CTRL,NET,cloud,2004,-0.021356220990826565
-FUT,global,artefact art_CTRL,NET,cloud,2005,-0.014970991674789647
-FUT,global,artefact art_CTRL,NET,cloud,2006,-0.005259748019683615
-FUT,global,artefact art_CTRL,NET,cloud,2007,-0.05741520497476808
-FUT,global,artefact art_CTRL,NET,cloud,2008,0.023112627740703086
-FUT,global,artefact art_CTRL,NET,cloud,2009,-0.02733249725652695
-FUT,global,artefact art_CTRL,NET,cloud,2010,-0.028625762522346183
-FUT,global,artefact art_CTRL,NET,cloud,2011,-0.02278841672939865
-FUT,global,artefact art_CTRL,NET,cloud,2012,-0.02172642755970661
-FUT,global,artefact art_CTRL,NET,cloud,2013,0.0010159841547434931
-FUT,global,artefact art_CTRL,NET,cloud,2014,0.01021155622251361
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2001,-0.14084667150264896
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2002,-0.24532191921493968
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2003,-0.08695858493301342
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2004,-0.058820485366744515
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2005,0.010369285812593275
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2006,-0.048199223195063264
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2007,-0.06306111891364355
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2008,-0.05751537906554536
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2009,-0.13587683354916769
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2010,-0.09708111608421953
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2011,-0.15090272937162202
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2012,-0.048963695320860076
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2013,-0.09837250265329849
-FUT,≥45°N,artefact art_CTRL,NET,cloud,2014,0.04852551237842611
-FUT,modified cells,artefact art_CTRL,NET,cloud,2001,-0.11477626985141821
-FUT,modified cells,artefact art_CTRL,NET,cloud,2002,-0.2880928227901975
-FUT,modified cells,artefact art_CTRL,NET,cloud,2003,-0.04199014343578126
-FUT,modified cells,artefact art_CTRL,NET,cloud,2004,-0.112849009329606
-FUT,modified cells,artefact art_CTRL,NET,cloud,2005,0.039647077843170876
-FUT,modified cells,artefact art_CTRL,NET,cloud,2006,-0.09116263240540406
-FUT,modified cells,artefact art_CTRL,NET,cloud,2007,-0.07980968179163025
-FUT,modified cells,artefact art_CTRL,NET,cloud,2008,-0.0779137772345105
-FUT,modified cells,artefact art_CTRL,NET,cloud,2009,-0.1250506662724325
-FUT,modified cells,artefact art_CTRL,NET,cloud,2010,-0.10173178339314971
-FUT,modified cells,artefact art_CTRL,NET,cloud,2011,-0.18648970901093456
-FUT,modified cells,artefact art_CTRL,NET,cloud,2012,-0.15650315580770227
-FUT,modified cells,artefact art_CTRL,NET,cloud,2013,-0.1388188120153275
-FUT,modified cells,artefact art_CTRL,NET,cloud,2014,0.02173050395044126
-FUT,global,artefact art_CTRL,NET,rest,2001,0.015263346344124021
-FUT,global,artefact art_CTRL,NET,rest,2002,-0.02252928967050895
-FUT,global,artefact art_CTRL,NET,rest,2003,0.020171340785869626
-FUT,global,artefact art_CTRL,NET,rest,2004,-0.03245256459488572
-FUT,global,artefact art_CTRL,NET,rest,2005,0.04270282030172439
-FUT,global,artefact art_CTRL,NET,rest,2006,0.0014681141003068797
-FUT,global,artefact art_CTRL,NET,rest,2007,-0.041676787408500574
-FUT,global,artefact art_CTRL,NET,rest,2008,-0.0154395944287144
-FUT,global,artefact art_CTRL,NET,rest,2009,0.01907281907069911
-FUT,global,artefact art_CTRL,NET,rest,2010,-0.013793874134151972
-FUT,global,artefact art_CTRL,NET,rest,2011,0.017455464982337958
-FUT,global,artefact art_CTRL,NET,rest,2012,-0.040962756774725245
-FUT,global,artefact art_CTRL,NET,rest,2013,0.007890403966528212
-FUT,global,artefact art_CTRL,NET,rest,2014,-0.005024952740043019
-FUT,≥45°N,artefact art_CTRL,NET,rest,2001,0.024460900520655554
-FUT,≥45°N,artefact art_CTRL,NET,rest,2002,0.007017762696694665
-FUT,≥45°N,artefact art_CTRL,NET,rest,2003,0.027943144420952734
-FUT,≥45°N,artefact art_CTRL,NET,rest,2004,-0.01866033771200375
-FUT,≥45°N,artefact art_CTRL,NET,rest,2005,0.03428717272062765
-FUT,≥45°N,artefact art_CTRL,NET,rest,2006,0.004976095287030101
-FUT,≥45°N,artefact art_CTRL,NET,rest,2007,0.01779920451948301
-FUT,≥45°N,artefact art_CTRL,NET,rest,2008,-0.005260326783210439
-FUT,≥45°N,artefact art_CTRL,NET,rest,2009,-0.023760941820286822
-FUT,≥45°N,artefact art_CTRL,NET,rest,2010,-0.036950408232522096
-FUT,≥45°N,artefact art_CTRL,NET,rest,2011,-0.025389760448537305
-FUT,≥45°N,artefact art_CTRL,NET,rest,2012,-0.030721857769910522
-FUT,≥45°N,artefact art_CTRL,NET,rest,2013,-0.013385832278973407
-FUT,≥45°N,artefact art_CTRL,NET,rest,2014,-0.010716359192093496
-FUT,modified cells,artefact art_CTRL,NET,rest,2001,0.03342292005096196
-FUT,modified cells,artefact art_CTRL,NET,rest,2002,-0.010776622005243897
-FUT,modified cells,artefact art_CTRL,NET,rest,2003,0.024574197473629596
-FUT,modified cells,artefact art_CTRL,NET,rest,2004,-0.0097092110787252
-FUT,modified cells,artefact art_CTRL,NET,rest,2005,0.044061646093169364
-FUT,modified cells,artefact art_CTRL,NET,rest,2006,0.003056369101071484
-FUT,modified cells,artefact art_CTRL,NET,rest,2007,0.02254943425623006
-FUT,modified cells,artefact art_CTRL,NET,rest,2008,0.022533909310248887
-FUT,modified cells,artefact art_CTRL,NET,rest,2009,-0.009824394815393725
-FUT,modified cells,artefact art_CTRL,NET,rest,2010,-0.025231207861879896
-FUT,modified cells,artefact art_CTRL,NET,rest,2011,-0.015821358492500652
-FUT,modified cells,artefact art_CTRL,NET,rest,2012,-0.024832788161682336
-FUT,modified cells,artefact art_CTRL,NET,rest,2013,6.310906783411348e-05
-FUT,modified cells,artefact art_CTRL,NET,rest,2014,-0.010195272569933142
-FUT,global,artefact art_CTRL,SW,toa,2001,-0.0672335991853688
-FUT,global,artefact art_CTRL,SW,toa,2002,-0.08241895684286933
-FUT,global,artefact art_CTRL,SW,toa,2003,-0.05421713960249
-FUT,global,artefact art_CTRL,SW,toa,2004,0.012114515440715633
-FUT,global,artefact art_CTRL,SW,toa,2005,-0.1737606470633797
-FUT,global,artefact art_CTRL,SW,toa,2006,-0.026851990589140007
-FUT,global,artefact art_CTRL,SW,toa,2007,0.10603674684421151
-FUT,global,artefact art_CTRL,SW,toa,2008,0.025395430181329587
-FUT,global,artefact art_CTRL,SW,toa,2009,-0.20406473145209425
-FUT,global,artefact art_CTRL,SW,toa,2010,-0.08769477772321933
-FUT,global,artefact art_CTRL,SW,toa,2011,-0.10819451078525157
-FUT,global,artefact art_CTRL,SW,toa,2012,-0.05551453723100588
-FUT,global,artefact art_CTRL,SW,toa,2013,-0.012746868868915878
-FUT,global,artefact art_CTRL,SW,toa,2014,0.050168723573166915
-FUT,≥45°N,artefact art_CTRL,SW,toa,2001,-0.012368099114307588
-FUT,≥45°N,artefact art_CTRL,SW,toa,2002,-0.17509993639022026
-FUT,≥45°N,artefact art_CTRL,SW,toa,2003,-0.006052629810529582
-FUT,≥45°N,artefact art_CTRL,SW,toa,2004,-0.11826298568304833
-FUT,≥45°N,artefact art_CTRL,SW,toa,2005,0.012687204363145993
-FUT,≥45°N,artefact art_CTRL,SW,toa,2006,-0.0983718781502846
-FUT,≥45°N,artefact art_CTRL,SW,toa,2007,-0.14340071469042845
-FUT,≥45°N,artefact art_CTRL,SW,toa,2008,0.05153520666824943
-FUT,≥45°N,artefact art_CTRL,SW,toa,2009,-0.0048647654758804965
-FUT,≥45°N,artefact art_CTRL,SW,toa,2010,-0.11558382536942288
-FUT,≥45°N,artefact art_CTRL,SW,toa,2011,-0.12736968714638378
-FUT,≥45°N,artefact art_CTRL,SW,toa,2012,-0.045732184259156115
-FUT,≥45°N,artefact art_CTRL,SW,toa,2013,-0.12188667362637709
-FUT,≥45°N,artefact art_CTRL,SW,toa,2014,0.0021495893009928716
-FUT,modified cells,artefact art_CTRL,SW,toa,2001,0.019820960713666617
-FUT,modified cells,artefact art_CTRL,SW,toa,2002,-0.1891423682007387
-FUT,modified cells,artefact art_CTRL,SW,toa,2003,0.08358804053540753
-FUT,modified cells,artefact art_CTRL,SW,toa,2004,-0.16341943762234368
-FUT,modified cells,artefact art_CTRL,SW,toa,2005,0.025967820937967047
-FUT,modified cells,artefact art_CTRL,SW,toa,2006,-0.13033071673736432
-FUT,modified cells,artefact art_CTRL,SW,toa,2007,-0.22429872253371383
-FUT,modified cells,artefact art_CTRL,SW,toa,2008,0.08416619715412203
-FUT,modified cells,artefact art_CTRL,SW,toa,2009,-0.035604974442015644
-FUT,modified cells,artefact art_CTRL,SW,toa,2010,-0.09638808229334359
-FUT,modified cells,artefact art_CTRL,SW,toa,2011,-0.19291894510667504
-FUT,modified cells,artefact art_CTRL,SW,toa,2012,-0.22625314502974425
-FUT,modified cells,artefact art_CTRL,SW,toa,2013,-0.16345102742584175
-FUT,modified cells,artefact art_CTRL,SW,toa,2014,0.0003497855162015643
-FUT,global,artefact art_CTRL,SW,dir,2001,0.014743658942954848
-FUT,global,artefact art_CTRL,SW,dir,2002,0.03385762503229949
-FUT,global,artefact art_CTRL,SW,dir,2003,-0.002018811983012006
-FUT,global,artefact art_CTRL,SW,dir,2004,-0.014756993772287742
-FUT,global,artefact art_CTRL,SW,dir,2005,-0.0051264671163075
-FUT,global,artefact art_CTRL,SW,dir,2006,0.001866879237529198
-FUT,global,artefact art_CTRL,SW,dir,2007,-0.014487559510152778
-FUT,global,artefact art_CTRL,SW,dir,2008,0.008135075944047094
-FUT,global,artefact art_CTRL,SW,dir,2009,-0.02852653511446114
-FUT,global,artefact art_CTRL,SW,dir,2010,-0.018140794853265682
-FUT,global,artefact art_CTRL,SW,dir,2011,0.000784627842055549
-FUT,global,artefact art_CTRL,SW,dir,2012,-0.04358534677120739
-FUT,global,artefact art_CTRL,SW,dir,2013,-0.0189319562633238
-FUT,global,artefact art_CTRL,SW,dir,2014,-0.01054091298584985
-FUT,≥45°N,artefact art_CTRL,SW,dir,2001,-0.0033251774588094057
-FUT,≥45°N,artefact art_CTRL,SW,dir,2002,0.0008061644649463836
-FUT,≥45°N,artefact art_CTRL,SW,dir,2003,0.01435020636770191
-FUT,≥45°N,artefact art_CTRL,SW,dir,2004,0.001307863645677239
-FUT,≥45°N,artefact art_CTRL,SW,dir,2005,-0.015055992646301725
-FUT,≥45°N,artefact art_CTRL,SW,dir,2006,0.012662372364790937
-FUT,≥45°N,artefact art_CTRL,SW,dir,2007,-0.012184115224584574
-FUT,≥45°N,artefact art_CTRL,SW,dir,2008,0.019232540781994434
-FUT,≥45°N,artefact art_CTRL,SW,dir,2009,-0.01377794427499365
-FUT,≥45°N,artefact art_CTRL,SW,dir,2010,-0.013535026833400798
-FUT,≥45°N,artefact art_CTRL,SW,dir,2011,-0.0018892561835730497
-FUT,≥45°N,artefact art_CTRL,SW,dir,2012,-0.016024062124186902
-FUT,≥45°N,artefact art_CTRL,SW,dir,2013,0.0046776435959557175
-FUT,≥45°N,artefact art_CTRL,SW,dir,2014,0.005335999579162467
-FUT,modified cells,artefact art_CTRL,SW,dir,2001,-0.00440916718674318
-FUT,modified cells,artefact art_CTRL,SW,dir,2002,-0.011779266668821198
-FUT,modified cells,artefact art_CTRL,SW,dir,2003,0.00846374496200239
-FUT,modified cells,artefact art_CTRL,SW,dir,2004,0.006572797986669469
-FUT,modified cells,artefact art_CTRL,SW,dir,2005,-0.012490888292162996
-FUT,modified cells,artefact art_CTRL,SW,dir,2006,0.016363232307650154
-FUT,modified cells,artefact art_CTRL,SW,dir,2007,-0.008507126868804454
-FUT,modified cells,artefact art_CTRL,SW,dir,2008,0.018309143487492675
-FUT,modified cells,artefact art_CTRL,SW,dir,2009,-0.012116847647369006
-FUT,modified cells,artefact art_CTRL,SW,dir,2010,-0.00859171725952532
-FUT,modified cells,artefact art_CTRL,SW,dir,2011,0.008449106645008059
-FUT,modified cells,artefact art_CTRL,SW,dir,2012,-0.014979451613057339
-FUT,modified cells,artefact art_CTRL,SW,dir,2013,0.009130858435934355
-FUT,modified cells,artefact art_CTRL,SW,dir,2014,0.007600533848660754
-FUT,global,artefact art_CTRL,SW,cloud,2001,-0.08285069908778607
-FUT,global,artefact art_CTRL,SW,cloud,2002,-0.11600157738046714
-FUT,global,artefact art_CTRL,SW,cloud,2003,-0.05457093200867831
-FUT,global,artefact art_CTRL,SW,cloud,2004,0.03444935353275481
-FUT,global,artefact art_CTRL,SW,cloud,2005,-0.17111161127685973
-FUT,global,artefact art_CTRL,SW,cloud,2006,-0.03087420592527972
-FUT,global,artefact art_CTRL,SW,cloud,2007,0.12811170162696867
-FUT,global,artefact art_CTRL,SW,cloud,2008,0.021970068286032287
-FUT,global,artefact art_CTRL,SW,cloud,2009,-0.1727819686444534
-FUT,global,artefact art_CTRL,SW,cloud,2010,-0.06841594368338419
-FUT,global,artefact art_CTRL,SW,cloud,2011,-0.10918075998343034
-FUT,global,artefact art_CTRL,SW,cloud,2012,-0.00804878317213254
-FUT,global,artefact art_CTRL,SW,cloud,2013,0.011973563930479691
-FUT,global,artefact art_CTRL,SW,cloud,2014,0.06380518839885227
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2001,-0.012531346738525056
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2002,-0.16872223011529724
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2003,-0.027041362349082443
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2004,-0.09238409044952847
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2005,0.0036502711042384426
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2006,-0.11233987235488123
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2007,-0.11368833403684683
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2008,0.04624359039774783
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2009,0.007091275835578054
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2010,-0.08394283708607098
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2011,-0.09298431014196432
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2012,-0.01654718216688958
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2013,-0.10417559893134146
-FUT,≥45°N,artefact art_CTRL,SW,cloud,2014,0.017193086948452972
-FUT,modified cells,artefact art_CTRL,SW,cloud,2001,0.01763220361286282
-FUT,modified cells,artefact art_CTRL,SW,cloud,2002,-0.147712746504768
-FUT,modified cells,artefact art_CTRL,SW,cloud,2003,0.05854004528888483
-FUT,modified cells,artefact art_CTRL,SW,cloud,2004,-0.15154361486143206
-FUT,modified cells,artefact art_CTRL,SW,cloud,2005,0.00305404115801117
-FUT,modified cells,artefact art_CTRL,SW,cloud,2006,-0.14395873358082212
-FUT,modified cells,artefact art_CTRL,SW,cloud,2007,-0.17967456607965712
-FUT,modified cells,artefact art_CTRL,SW,cloud,2008,0.06562344815260306
-FUT,modified cells,artefact art_CTRL,SW,cloud,2009,-0.03179670112554528
-FUT,modified cells,artefact art_CTRL,SW,cloud,2010,-0.05692415070220114
-FUT,modified cells,artefact art_CTRL,SW,cloud,2011,-0.1627825886354021
-FUT,modified cells,artefact art_CTRL,SW,cloud,2012,-0.18663389233451788
-FUT,modified cells,artefact art_CTRL,SW,cloud,2013,-0.15347755019933798
-FUT,modified cells,artefact art_CTRL,SW,cloud,2014,0.018839240065784215
-FUT,global,artefact art_CTRL,SW,rest,2001,0.0008734409594624634
-FUT,global,artefact art_CTRL,SW,rest,2002,-0.00027500449470119225
-FUT,global,artefact art_CTRL,SW,rest,2003,0.002372604389200201
-FUT,global,artefact art_CTRL,SW,rest,2004,-0.0075778443492672855
-FUT,global,artefact art_CTRL,SW,rest,2005,0.00247743128556762
-FUT,global,artefact art_CTRL,SW,rest,2006,0.0021553360256170552
-FUT,global,artefact art_CTRL,SW,rest,2007,-0.007587395272604749
-FUT,global,artefact art_CTRL,SW,rest,2008,-0.004709714082869267
-FUT,global,artefact art_CTRL,SW,rest,2009,-0.002756227693179621
-FUT,global,artefact art_CTRL,SW,rest,2010,-0.001138039186569412
-FUT,global,artefact art_CTRL,SW,rest,2011,0.00020162130454001918
-FUT,global,artefact art_CTRL,SW,rest,2012,-0.003880407287666336
-FUT,global,artefact art_CTRL,SW,rest,2013,-0.005788476536071966
-FUT,global,artefact art_CTRL,SW,rest,2014,-0.0030955519897550594
-FUT,≥45°N,artefact art_CTRL,SW,rest,2001,0.0034884250830271523
-FUT,≥45°N,artefact art_CTRL,SW,rest,2002,-0.00718387073987008
-FUT,≥45°N,artefact art_CTRL,SW,rest,2003,0.006638526170850956
-FUT,≥45°N,artefact art_CTRL,SW,rest,2004,-0.027186759084830453
-FUT,≥45°N,artefact art_CTRL,SW,rest,2005,0.024092925597138038
-FUT,≥45°N,artefact art_CTRL,SW,rest,2006,0.0013056213312696706
-FUT,≥45°N,artefact art_CTRL,SW,rest,2007,-0.017528265428997356
-FUT,≥45°N,artefact art_CTRL,SW,rest,2008,-0.01394092474920148
-FUT,≥45°N,artefact art_CTRL,SW,rest,2009,0.001821902963535373
-FUT,≥45°N,artefact art_CTRL,SW,rest,2010,-0.018105961449950882
-FUT,≥45°N,artefact art_CTRL,SW,rest,2011,-0.03249612118021998
-FUT,≥45°N,artefact art_CTRL,SW,rest,2012,-0.013160939968079976
-FUT,≥45°N,artefact art_CTRL,SW,rest,2013,-0.022388718290991635
-FUT,≥45°N,artefact art_CTRL,SW,rest,2014,-0.020379497447714362
-FUT,modified cells,artefact art_CTRL,SW,rest,2001,0.0065979242875469106
-FUT,modified cells,artefact art_CTRL,SW,rest,2002,-0.029650355027150115
-FUT,modified cells,artefact art_CTRL,SW,rest,2003,0.016584250284520458
-FUT,modified cells,artefact art_CTRL,SW,rest,2004,-0.018448620747580687
-FUT,modified cells,artefact art_CTRL,SW,rest,2005,0.0354046680721196
-FUT,modified cells,artefact art_CTRL,SW,rest,2006,-0.0027352154641922836
-FUT,modified cells,artefact art_CTRL,SW,rest,2007,-0.03611702958525224
-FUT,modified cells,artefact art_CTRL,SW,rest,2008,0.000233605170401214
-FUT,modified cells,artefact art_CTRL,SW,rest,2009,0.008308574330898887
-FUT,modified cells,artefact art_CTRL,SW,rest,2010,-0.030872214331617357
-FUT,modified cells,artefact art_CTRL,SW,rest,2011,-0.03858546311628152
-FUT,modified cells,artefact art_CTRL,SW,rest,2012,-0.024639801082168872
-FUT,modified cells,artefact art_CTRL,SW,rest,2013,-0.01910433566243775
-FUT,modified cells,artefact art_CTRL,SW,rest,2014,-0.026089988398242645
-FUT,global,artefact art_CTRL,LW,toa,2001,0.017039973282537556
-FUT,global,artefact art_CTRL,LW,toa,2002,-0.043502168978754745
-FUT,global,artefact art_CTRL,LW,toa,2003,0.031709277531530716
-FUT,global,artefact art_CTRL,LW,toa,2004,-0.07840498243281052
-FUT,global,artefact art_CTRL,LW,toa,2005,0.19772646270644742
-FUT,global,artefact art_CTRL,LW,toa,2006,0.025266609288668272
-FUT,global,artefact art_CTRL,LW,toa,2007,-0.21730514928193181
-FUT,global,artefact art_CTRL,LW,toa,2008,-0.009865860831134278
-FUT,global,artefact art_CTRL,LW,toa,2009,0.16961111634472092
-FUT,global,artefact art_CTRL,LW,toa,2010,0.029335315271915886
-FUT,global,artefact art_CTRL,LW,toa,2011,0.10513414473866378
-FUT,global,artefact art_CTRL,LW,toa,2012,-0.047783634358416385
-FUT,global,artefact art_CTRL,LW,toa,2013,0.0054332252838155265
-FUT,global,artefact art_CTRL,LW,toa,2014,-0.05386140877535874
-FUT,≥45°N,artefact art_CTRL,LW,toa,2001,-0.10669462864454528
-FUT,≥45°N,artefact art_CTRL,LW,toa,2002,-0.06120239289989545
-FUT,≥45°N,artefact art_CTRL,LW,toa,2003,-0.03894482591535298
-FUT,≥45°N,artefact art_CTRL,LW,toa,2004,0.04287347103442392
-FUT,≥45°N,artefact art_CTRL,LW,toa,2005,0.019692292819622332
-FUT,≥45°N,artefact art_CTRL,LW,toa,2006,0.06730640678483991
-FUT,≥45°N,artefact art_CTRL,LW,toa,2007,0.08792785830222147
-FUT,≥45°N,artefact art_CTRL,LW,toa,2008,-0.09536058043951298
-FUT,≥45°N,artefact art_CTRL,LW,toa,2009,-0.16710751988693837
-FUT,≥45°N,artefact art_CTRL,LW,toa,2010,-0.029657388522594717
-FUT,≥45°N,artefact art_CTRL,LW,toa,2011,-0.0494550581219067
-FUT,≥45°N,artefact art_CTRL,LW,toa,2012,-0.04783780010533517
-FUT,≥45°N,artefact art_CTRL,LW,toa,2013,0.01604174770564368
-FUT,≥45°N,artefact art_CTRL,LW,toa,2014,0.041710877078947564
-FUT,modified cells,artefact art_CTRL,LW,toa,2001,-0.10492132071733169
-FUT,modified cells,artefact art_CTRL,LW,toa,2002,-0.11990716439387622
-FUT,modified cells,artefact art_CTRL,LW,toa,2003,-0.09269318521878996
-FUT,modified cells,artefact art_CTRL,LW,toa,2004,0.04821294432979675
-FUT,modified cells,artefact art_CTRL,LW,toa,2005,0.04760188046548055
-FUT,modified cells,artefact art_CTRL,LW,toa,2006,0.05803450790766983
-FUT,modified cells,artefact art_CTRL,LW,toa,2007,0.1600297046649257
-FUT,modified cells,artefact art_CTRL,LW,toa,2008,-0.12143615010428374
-FUT,modified cells,artefact art_CTRL,LW,toa,2009,-0.110346523314179
-FUT,modified cells,artefact art_CTRL,LW,toa,2010,-0.03709114208370098
-FUT,modified cells,artefact art_CTRL,LW,toa,2011,0.0001229514729050784
-FUT,modified cells,artefact art_CTRL,LW,toa,2012,0.03159152426491311
-FUT,modified cells,artefact art_CTRL,LW,toa,2013,0.034798817780379826
-FUT,modified cells,artefact art_CTRL,LW,toa,2014,0.01982428134826594
-FUT,global,artefact art_CTRL,LW,dir,2001,-0.00031652605272965053
-FUT,global,artefact art_CTRL,LW,dir,2002,-0.0002173681271006246
-FUT,global,artefact art_CTRL,LW,dir,2003,0.0007104086557301895
-FUT,global,artefact art_CTRL,LW,dir,2004,0.002275313432444395
-FUT,global,artefact art_CTRL,LW,dir,2005,0.001360451175652481
-FUT,global,artefact art_CTRL,LW,dir,2006,0.0003393767594337281
-FUT,global,artefact art_CTRL,LW,dir,2007,0.0023111507841382137
-FUT,global,artefact art_CTRL,LW,dir,2008,-0.00027854792004456915
-FUT,global,artefact art_CTRL,LW,dir,2009,0.0023326055705507635
-FUT,global,artefact art_CTRL,LW,dir,2010,0.002200971919643145
-FUT,global,artefact art_CTRL,LW,dir,2011,0.0014879627416133523
-FUT,global,artefact art_CTRL,LW,dir,2012,0.0029763582523712603
-FUT,global,artefact art_CTRL,LW,dir,2013,0.0027119283057996948
-FUT,global,artefact art_CTRL,LW,dir,2014,0.0016616257298236205
-FUT,≥45°N,artefact art_CTRL,LW,dir,2001,0.0006482189806291797
-FUT,≥45°N,artefact art_CTRL,LW,dir,2002,0.001195703436547302
-FUT,≥45°N,artefact art_CTRL,LW,dir,2003,-0.00033222187951830194
-FUT,≥45°N,artefact art_CTRL,LW,dir,2004,0.0007834130735684912
-FUT,≥45°N,artefact art_CTRL,LW,dir,2005,0.00277901267299152
-FUT,≥45°N,artefact art_CTRL,LW,dir,2006,-0.0005046894703045107
-FUT,≥45°N,artefact art_CTRL,LW,dir,2007,0.0019731745150747522
-FUT,≥45°N,artefact art_CTRL,LW,dir,2008,-0.0002821980401995258
-FUT,≥45°N,artefact art_CTRL,LW,dir,2009,0.001443485459144607
-FUT,≥45°N,artefact art_CTRL,LW,dir,2010,0.0023253535709089456
-FUT,≥45°N,artefact art_CTRL,LW,dir,2011,0.001357045220174139
-FUT,≥45°N,artefact art_CTRL,LW,dir,2012,0.0021396094434750043
-FUT,≥45°N,artefact art_CTRL,LW,dir,2013,0.0012357745518545389
-FUT,≥45°N,artefact art_CTRL,LW,dir,2014,0.0007153325834780341
-FUT,modified cells,artefact art_CTRL,LW,dir,2001,0.0006621908996795152
-FUT,modified cells,artefact art_CTRL,LW,dir,2002,0.0015992453298276622
-FUT,modified cells,artefact art_CTRL,LW,dir,2003,-0.00015288796034039246
-FUT,modified cells,artefact art_CTRL,LW,dir,2004,0.0007789113976422212
-FUT,modified cells,artefact art_CTRL,LW,dir,2005,0.0023518305075309826
-FUT,modified cells,artefact art_CTRL,LW,dir,2006,-0.0005531395324223629
-FUT,modified cells,artefact art_CTRL,LW,dir,2007,0.0014983490898182062
-FUT,modified cells,artefact art_CTRL,LW,dir,2008,-0.0001992081781816197
-FUT,modified cells,artefact art_CTRL,LW,dir,2009,0.001040504751879655
-FUT,modified cells,artefact art_CTRL,LW,dir,2010,0.0020754820753832023
-FUT,modified cells,artefact art_CTRL,LW,dir,2011,0.0010659667721583954
-FUT,modified cells,artefact art_CTRL,LW,dir,2012,0.0016537566798086464
-FUT,modified cells,artefact art_CTRL,LW,dir,2013,0.0009726924638551937
-FUT,modified cells,artefact art_CTRL,LW,dir,2014,0.0010382902874866602
-FUT,global,artefact art_CTRL,LW,cloud,2001,0.0029665914248230923
-FUT,global,artefact art_CTRL,LW,cloud,2002,-0.02103050766044079
-FUT,global,artefact art_CTRL,LW,cloud,2003,0.013200127208709726
-FUT,global,artefact art_CTRL,LW,cloud,2004,-0.05580557439578267
-FUT,global,artefact art_CTRL,LW,cloud,2005,0.15614061946701338
-FUT,global,artefact art_CTRL,LW,cloud,2006,0.02561445763814033
-FUT,global,artefact art_CTRL,LW,cloud,2007,-0.18552690651262105
-FUT,global,artefact art_CTRL,LW,cloud,2008,0.0011425598201384379
-FUT,global,artefact art_CTRL,LW,cloud,2009,0.14544947149680162
-FUT,global,artefact art_CTRL,LW,cloud,2010,0.03979018138501476
-FUT,global,artefact art_CTRL,LW,cloud,2011,0.08639234336808263
-FUT,global,artefact art_CTRL,LW,cloud,2012,-0.013677644567901468
-FUT,global,artefact art_CTRL,LW,cloud,2013,-0.010957579621699135
-FUT,global,artefact art_CTRL,LW,cloud,2014,-0.05359363205264798
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2001,-0.12831532622612216
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2002,-0.07659968906603208
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2003,-0.05991722262252246
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2004,0.03356360593619682
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2005,0.006719015330940572
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2006,0.06414064823139436
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2007,0.05062721448650671
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2008,-0.10375896850381017
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2009,-0.14296810977294772
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2010,-0.013138276624565915
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2011,-0.05791842014207991
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2012,-0.03241651423734392
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2013,0.005803097451738897
-FUT,≥45°N,artefact art_CTRL,LW,cloud,2014,0.03133242674909358
-FUT,modified cells,artefact art_CTRL,LW,cloud,2001,-0.1324084764334415
-FUT,modified cells,artefact art_CTRL,LW,cloud,2002,-0.1403800765397776
-FUT,modified cells,artefact art_CTRL,LW,cloud,2003,-0.10053018856105495
-FUT,modified cells,artefact art_CTRL,LW,cloud,2004,0.03869460673170078
-FUT,modified cells,artefact art_CTRL,LW,cloud,2005,0.03659303769147281
-FUT,modified cells,artefact art_CTRL,LW,cloud,2006,0.05279609959033339
-FUT,modified cells,artefact art_CTRL,LW,cloud,2007,0.0998648844572116
-FUT,modified cells,artefact art_CTRL,LW,cloud,2008,-0.14353722477936268
-FUT,modified cells,artefact art_CTRL,LW,cloud,2009,-0.09325396563986371
-FUT,modified cells,artefact art_CTRL,LW,cloud,2010,-0.0448076319137986
-FUT,modified cells,artefact art_CTRL,LW,cloud,2011,-0.023707119975371758
-FUT,modified cells,artefact art_CTRL,LW,cloud,2012,0.030130736037387654
-FUT,modified cells,artefact art_CTRL,LW,cloud,2013,0.01465873737734889
-FUT,modified cells,artefact art_CTRL,LW,cloud,2014,0.002891265237283879
-FUT,global,artefact art_CTRL,LW,rest,2001,0.014389907992970295
-FUT,global,artefact art_CTRL,LW,rest,2002,-0.022254293191213366
-FUT,global,artefact art_CTRL,LW,rest,2003,0.017798741799109494
-FUT,global,artefact art_CTRL,LW,rest,2004,-0.02487472146947314
-FUT,global,artefact art_CTRL,LW,rest,2005,0.04022539206378111
-FUT,global,artefact art_CTRL,LW,rest,2006,-0.0006872251089054132
-FUT,global,artefact art_CTRL,LW,rest,2007,-0.03408939355344868
-FUT,global,artefact art_CTRL,LW,rest,2008,-0.010729872731227833
-FUT,global,artefact art_CTRL,LW,rest,2009,0.021829039277369927
-FUT,global,artefact art_CTRL,LW,rest,2010,-0.01265583803274196
-FUT,global,artefact art_CTRL,LW,rest,2011,0.017253838628967802
-FUT,global,artefact art_CTRL,LW,rest,2012,-0.037082348042887035
-FUT,global,artefact art_CTRL,LW,rest,2013,0.01367887659971453
-FUT,global,artefact art_CTRL,LW,rest,2014,-0.0019294024525345758
-FUT,≥45°N,artefact art_CTRL,LW,rest,2001,0.020972478600946975
-FUT,≥45°N,artefact art_CTRL,LW,rest,2002,0.014201592729589128
-FUT,≥45°N,artefact art_CTRL,LW,rest,2003,0.021304618586687373
-FUT,≥45°N,artefact art_CTRL,LW,rest,2004,0.008526452024657818
-FUT,≥45°N,artefact art_CTRL,LW,rest,2005,0.010194264815690343
-FUT,≥45°N,artefact art_CTRL,LW,rest,2006,0.003670448023750478
-FUT,≥45°N,artefact art_CTRL,LW,rest,2007,0.03532746930064026
-FUT,≥45°N,artefact art_CTRL,LW,rest,2008,0.008680586104496547
-FUT,≥45°N,artefact art_CTRL,LW,rest,2009,-0.02558289557313609
-FUT,≥45°N,artefact art_CTRL,LW,rest,2010,-0.018844465468937862
-FUT,≥45°N,artefact art_CTRL,LW,rest,2011,0.007106316799998822
-FUT,≥45°N,artefact art_CTRL,LW,rest,2012,-0.017560895311466318
-FUT,≥45°N,artefact art_CTRL,LW,rest,2013,0.009002875702050384
-FUT,≥45°N,artefact art_CTRL,LW,rest,2014,0.00966311774637632
-FUT,modified cells,artefact art_CTRL,LW,rest,2001,0.026824964816429778
-FUT,modified cells,artefact art_CTRL,LW,rest,2002,0.01887366681607385
-FUT,modified cells,artefact art_CTRL,LW,rest,2003,0.007989891302605419
-FUT,modified cells,artefact art_CTRL,LW,rest,2004,0.008739426200452578
-FUT,modified cells,artefact art_CTRL,LW,rest,2005,0.008657012266477027
-FUT,modified cells,artefact art_CTRL,LW,rest,2006,0.00579154784975934
-FUT,modified cells,artefact art_CTRL,LW,rest,2007,0.05866647111789598
-FUT,modified cells,artefact art_CTRL,LW,rest,2008,0.022300282853260828
-FUT,modified cells,artefact art_CTRL,LW,rest,2009,-0.01813306242619521
-FUT,modified cells,artefact art_CTRL,LW,rest,2010,0.005641007754713744
-FUT,modified cells,artefact art_CTRL,LW,rest,2011,0.02276410467611802
-FUT,modified cells,artefact art_CTRL,LW,rest,2012,-0.00019296845228385938
-FUT,modified cells,artefact art_CTRL,LW,rest,2013,0.01916738793917595
-FUT,modified cells,artefact art_CTRL,LW,rest,2014,0.015894725823495277
+FUT,global,artefact art_CTRL,NET,toa,2001,0.05019362935960334
+FUT,global,artefact art_CTRL,NET,toa,2002,0.12592112506232703
+FUT,global,artefact art_CTRL,NET,toa,2003,0.022507861746571108
+FUT,global,artefact art_CTRL,NET,toa,2004,0.06629046485738306
+FUT,global,artefact art_CTRL,NET,toa,2005,-0.023965811072980358
+FUT,global,artefact art_CTRL,NET,toa,2006,0.0015853938313480371
+FUT,global,artefact art_CTRL,NET,toa,2007,0.11126841161672035
+FUT,global,artefact art_CTRL,NET,toa,2008,-0.015529571480292458
+FUT,global,artefact art_CTRL,NET,toa,2009,0.03445360895581353
+FUT,global,artefact art_CTRL,NET,toa,2010,0.05835945783922948
+FUT,global,artefact art_CTRL,NET,toa,2011,0.00306035504811187
+FUT,global,artefact art_CTRL,NET,toa,2012,0.10329817203325323
+FUT,global,artefact art_CTRL,NET,toa,2013,0.007313637266914622
+FUT,global,artefact art_CTRL,NET,toa,2014,0.003692689653245368
+FUT,≥45°N,artefact art_CTRL,NET,toa,2001,0.1190627036360864
+FUT,≥45°N,artefact art_CTRL,NET,toa,2002,0.23630234061497457
+FUT,≥45°N,artefact art_CTRL,NET,toa,2003,0.04499745778982001
+FUT,≥45°N,artefact art_CTRL,NET,toa,2004,0.07538952766557486
+FUT,≥45°N,artefact art_CTRL,NET,toa,2005,-0.03237949158693844
+FUT,≥45°N,artefact art_CTRL,NET,toa,2006,0.031065491532355292
+FUT,≥45°N,artefact art_CTRL,NET,toa,2007,0.05547286640521988
+FUT,≥45°N,artefact art_CTRL,NET,toa,2008,0.04382536108283885
+FUT,≥45°N,artefact art_CTRL,NET,toa,2009,0.1719722648282557
+FUT,≥45°N,artefact art_CTRL,NET,toa,2010,0.1452411686023138
+FUT,≥45°N,artefact art_CTRL,NET,toa,2011,0.1768247142652969
+FUT,≥45°N,artefact art_CTRL,NET,toa,2012,0.09356999806518941
+FUT,≥45°N,artefact art_CTRL,NET,toa,2013,0.10584491494385614
+FUT,≥45°N,artefact art_CTRL,NET,toa,2014,-0.043860459700103764
+FUT,modified cells,artefact art_CTRL,NET,toa,2001,0.08510032100182427
+FUT,modified cells,artefact art_CTRL,NET,toa,2002,0.30904953111846756
+FUT,modified cells,artefact art_CTRL,NET,toa,2003,0.00910514890991834
+FUT,modified cells,artefact art_CTRL,NET,toa,2004,0.11520652393281845
+FUT,modified cells,artefact art_CTRL,NET,toa,2005,-0.07356974358837765
+FUT,modified cells,artefact art_CTRL,NET,toa,2006,0.07229624057484593
+FUT,modified cells,artefact art_CTRL,NET,toa,2007,0.06426905261773033
+FUT,modified cells,artefact art_CTRL,NET,toa,2008,0.03726991053522367
+FUT,modified cells,artefact art_CTRL,NET,toa,2009,0.14595146745803783
+FUT,modified cells,artefact art_CTRL,NET,toa,2010,0.1334791515580854
+FUT,modified cells,artefact art_CTRL,NET,toa,2011,0.1927959784923667
+FUT,modified cells,artefact art_CTRL,NET,toa,2012,0.1946616148915089
+FUT,modified cells,artefact art_CTRL,NET,toa,2013,0.12865217316169913
+FUT,modified cells,artefact art_CTRL,NET,toa,2014,-0.020174013122398762
+FUT,global,artefact art_CTRL,NET,dir,2001,-0.014427132890030987
+FUT,global,artefact art_CTRL,NET,dir,2002,-0.033640256905329464
+FUT,global,artefact art_CTRL,NET,dir,2003,0.001308403326927157
+FUT,global,artefact art_CTRL,NET,dir,2004,0.012481680339964081
+FUT,global,artefact art_CTRL,NET,dir,2005,0.003766015940426827
+FUT,global,artefact art_CTRL,NET,dir,2006,-0.0022062559970494307
+FUT,global,artefact art_CTRL,NET,dir,2007,0.012176408725400304
+FUT,global,artefact art_CTRL,NET,dir,2008,-0.007856528024229845
+FUT,global,artefact art_CTRL,NET,dir,2009,0.026193929544050584
+FUT,global,artefact art_CTRL,NET,dir,2010,0.015939822933604127
+FUT,global,artefact art_CTRL,NET,dir,2011,-0.0022725905836479283
+FUT,global,artefact art_CTRL,NET,dir,2012,0.040608988519211305
+FUT,global,artefact art_CTRL,NET,dir,2013,0.01622002795698002
+FUT,global,artefact art_CTRL,NET,dir,2014,0.00887928725606698
+FUT,≥45°N,artefact art_CTRL,NET,dir,2001,0.002676958478398089
+FUT,≥45°N,artefact art_CTRL,NET,dir,2002,-0.002001867902391525
+FUT,≥45°N,artefact art_CTRL,NET,dir,2003,-0.014017984488986761
+FUT,≥45°N,artefact art_CTRL,NET,dir,2004,-0.0020912767182712025
+FUT,≥45°N,artefact art_CTRL,NET,dir,2005,0.012276979973096474
+FUT,≥45°N,artefact art_CTRL,NET,dir,2006,-0.012157682895934808
+FUT,≥45°N,artefact art_CTRL,NET,dir,2007,0.010210940705812774
+FUT,≥45°N,artefact art_CTRL,NET,dir,2008,-0.018950342741505616
+FUT,≥45°N,artefact art_CTRL,NET,dir,2009,0.012334458816701449
+FUT,≥45°N,artefact art_CTRL,NET,dir,2010,0.01120967326455195
+FUT,≥45°N,artefact art_CTRL,NET,dir,2011,0.0005322109638842324
+FUT,≥45°N,artefact art_CTRL,NET,dir,2012,0.013884452682370464
+FUT,≥45°N,artefact art_CTRL,NET,dir,2013,-0.005913418151143851
+FUT,≥45°N,artefact art_CTRL,NET,dir,2014,-0.0060513321620822525
+FUT,modified cells,artefact art_CTRL,NET,dir,2001,0.0037469762898577077
+FUT,modified cells,artefact art_CTRL,NET,dir,2002,0.010180021337458007
+FUT,modified cells,artefact art_CTRL,NET,dir,2003,-0.008310857004087567
+FUT,modified cells,artefact art_CTRL,NET,dir,2004,-0.007351709382073307
+FUT,modified cells,artefact art_CTRL,NET,dir,2005,0.010139057785022044
+FUT,modified cells,artefact art_CTRL,NET,dir,2006,-0.015810092776791886
+FUT,modified cells,artefact art_CTRL,NET,dir,2007,0.007008777778652599
+FUT,modified cells,artefact art_CTRL,NET,dir,2008,-0.018109935309104205
+FUT,modified cells,artefact art_CTRL,NET,dir,2009,0.011076342898136948
+FUT,modified cells,artefact art_CTRL,NET,dir,2010,0.006516235183861103
+FUT,modified cells,artefact art_CTRL,NET,dir,2011,-0.009515073416398321
+FUT,modified cells,artefact art_CTRL,NET,dir,2012,0.013325694933697249
+FUT,modified cells,artefact art_CTRL,NET,dir,2013,-0.010103550906876937
+FUT,modified cells,artefact art_CTRL,NET,dir,2014,-0.008638824136717104
+FUT,global,artefact art_CTRL,NET,cloud,2001,0.07988410735702121
+FUT,global,artefact art_CTRL,NET,cloud,2002,0.13703208509054374
+FUT,global,artefact art_CTRL,NET,cloud,2003,0.0413708046813359
+FUT,global,artefact art_CTRL,NET,cloud,2004,0.021356220990826565
+FUT,global,artefact art_CTRL,NET,cloud,2005,0.014970991674789647
+FUT,global,artefact art_CTRL,NET,cloud,2006,0.005259748019683615
+FUT,global,artefact art_CTRL,NET,cloud,2007,0.05741520497476808
+FUT,global,artefact art_CTRL,NET,cloud,2008,-0.023112627740703086
+FUT,global,artefact art_CTRL,NET,cloud,2009,0.02733249725652695
+FUT,global,artefact art_CTRL,NET,cloud,2010,0.028625762522346183
+FUT,global,artefact art_CTRL,NET,cloud,2011,0.02278841672939865
+FUT,global,artefact art_CTRL,NET,cloud,2012,0.02172642755970661
+FUT,global,artefact art_CTRL,NET,cloud,2013,-0.0010159841547434931
+FUT,global,artefact art_CTRL,NET,cloud,2014,-0.01021155622251361
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2001,0.14084667150264896
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2002,0.24532191921493968
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2003,0.08695858493301342
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2004,0.058820485366744515
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2005,-0.010369285812593275
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2006,0.048199223195063264
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2007,0.06306111891364355
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2008,0.05751537906554536
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2009,0.13587683354916769
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2010,0.09708111608421953
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2011,0.15090272937162202
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2012,0.048963695320860076
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2013,0.09837250265329849
+FUT,≥45°N,artefact art_CTRL,NET,cloud,2014,-0.04852551237842611
+FUT,modified cells,artefact art_CTRL,NET,cloud,2001,0.11477626985141821
+FUT,modified cells,artefact art_CTRL,NET,cloud,2002,0.2880928227901975
+FUT,modified cells,artefact art_CTRL,NET,cloud,2003,0.04199014343578126
+FUT,modified cells,artefact art_CTRL,NET,cloud,2004,0.112849009329606
+FUT,modified cells,artefact art_CTRL,NET,cloud,2005,-0.039647077843170876
+FUT,modified cells,artefact art_CTRL,NET,cloud,2006,0.09116263240540406
+FUT,modified cells,artefact art_CTRL,NET,cloud,2007,0.07980968179163025
+FUT,modified cells,artefact art_CTRL,NET,cloud,2008,0.0779137772345105
+FUT,modified cells,artefact art_CTRL,NET,cloud,2009,0.1250506662724325
+FUT,modified cells,artefact art_CTRL,NET,cloud,2010,0.10173178339314971
+FUT,modified cells,artefact art_CTRL,NET,cloud,2011,0.18648970901093456
+FUT,modified cells,artefact art_CTRL,NET,cloud,2012,0.15650315580770227
+FUT,modified cells,artefact art_CTRL,NET,cloud,2013,0.1388188120153275
+FUT,modified cells,artefact art_CTRL,NET,cloud,2014,-0.02173050395044126
+FUT,global,artefact art_CTRL,NET,rest,2001,-0.015263346344124021
+FUT,global,artefact art_CTRL,NET,rest,2002,0.02252928967050895
+FUT,global,artefact art_CTRL,NET,rest,2003,-0.020171340785869626
+FUT,global,artefact art_CTRL,NET,rest,2004,0.03245256459488572
+FUT,global,artefact art_CTRL,NET,rest,2005,-0.04270282030172439
+FUT,global,artefact art_CTRL,NET,rest,2006,-0.0014681141003068797
+FUT,global,artefact art_CTRL,NET,rest,2007,0.041676787408500574
+FUT,global,artefact art_CTRL,NET,rest,2008,0.0154395944287144
+FUT,global,artefact art_CTRL,NET,rest,2009,-0.01907281907069911
+FUT,global,artefact art_CTRL,NET,rest,2010,0.013793874134151972
+FUT,global,artefact art_CTRL,NET,rest,2011,-0.017455464982337958
+FUT,global,artefact art_CTRL,NET,rest,2012,0.040962756774725245
+FUT,global,artefact art_CTRL,NET,rest,2013,-0.007890403966528212
+FUT,global,artefact art_CTRL,NET,rest,2014,0.005024952740043019
+FUT,≥45°N,artefact art_CTRL,NET,rest,2001,-0.024460900520655554
+FUT,≥45°N,artefact art_CTRL,NET,rest,2002,-0.007017762696694665
+FUT,≥45°N,artefact art_CTRL,NET,rest,2003,-0.027943144420952734
+FUT,≥45°N,artefact art_CTRL,NET,rest,2004,0.01866033771200375
+FUT,≥45°N,artefact art_CTRL,NET,rest,2005,-0.03428717272062765
+FUT,≥45°N,artefact art_CTRL,NET,rest,2006,-0.004976095287030101
+FUT,≥45°N,artefact art_CTRL,NET,rest,2007,-0.01779920451948301
+FUT,≥45°N,artefact art_CTRL,NET,rest,2008,0.005260326783210439
+FUT,≥45°N,artefact art_CTRL,NET,rest,2009,0.023760941820286822
+FUT,≥45°N,artefact art_CTRL,NET,rest,2010,0.036950408232522096
+FUT,≥45°N,artefact art_CTRL,NET,rest,2011,0.025389760448537305
+FUT,≥45°N,artefact art_CTRL,NET,rest,2012,0.030721857769910522
+FUT,≥45°N,artefact art_CTRL,NET,rest,2013,0.013385832278973407
+FUT,≥45°N,artefact art_CTRL,NET,rest,2014,0.010716359192093496
+FUT,modified cells,artefact art_CTRL,NET,rest,2001,-0.03342292005096196
+FUT,modified cells,artefact art_CTRL,NET,rest,2002,0.010776622005243897
+FUT,modified cells,artefact art_CTRL,NET,rest,2003,-0.024574197473629596
+FUT,modified cells,artefact art_CTRL,NET,rest,2004,0.0097092110787252
+FUT,modified cells,artefact art_CTRL,NET,rest,2005,-0.044061646093169364
+FUT,modified cells,artefact art_CTRL,NET,rest,2006,-0.003056369101071484
+FUT,modified cells,artefact art_CTRL,NET,rest,2007,-0.02254943425623006
+FUT,modified cells,artefact art_CTRL,NET,rest,2008,-0.022533909310248887
+FUT,modified cells,artefact art_CTRL,NET,rest,2009,0.009824394815393725
+FUT,modified cells,artefact art_CTRL,NET,rest,2010,0.025231207861879896
+FUT,modified cells,artefact art_CTRL,NET,rest,2011,0.015821358492500652
+FUT,modified cells,artefact art_CTRL,NET,rest,2012,0.024832788161682336
+FUT,modified cells,artefact art_CTRL,NET,rest,2013,-6.310906783411348e-05
+FUT,modified cells,artefact art_CTRL,NET,rest,2014,0.010195272569933142
+FUT,global,artefact art_CTRL,SW,toa,2001,0.0672335991853688
+FUT,global,artefact art_CTRL,SW,toa,2002,0.08241895684286933
+FUT,global,artefact art_CTRL,SW,toa,2003,0.05421713960249
+FUT,global,artefact art_CTRL,SW,toa,2004,-0.012114515440715633
+FUT,global,artefact art_CTRL,SW,toa,2005,0.1737606470633797
+FUT,global,artefact art_CTRL,SW,toa,2006,0.026851990589140007
+FUT,global,artefact art_CTRL,SW,toa,2007,-0.10603674684421151
+FUT,global,artefact art_CTRL,SW,toa,2008,-0.025395430181329587
+FUT,global,artefact art_CTRL,SW,toa,2009,0.20406473145209425
+FUT,global,artefact art_CTRL,SW,toa,2010,0.08769477772321933
+FUT,global,artefact art_CTRL,SW,toa,2011,0.10819451078525157
+FUT,global,artefact art_CTRL,SW,toa,2012,0.05551453723100588
+FUT,global,artefact art_CTRL,SW,toa,2013,0.012746868868915878
+FUT,global,artefact art_CTRL,SW,toa,2014,-0.050168723573166915
+FUT,≥45°N,artefact art_CTRL,SW,toa,2001,0.012368099114307588
+FUT,≥45°N,artefact art_CTRL,SW,toa,2002,0.17509993639022026
+FUT,≥45°N,artefact art_CTRL,SW,toa,2003,0.006052629810529582
+FUT,≥45°N,artefact art_CTRL,SW,toa,2004,0.11826298568304833
+FUT,≥45°N,artefact art_CTRL,SW,toa,2005,-0.012687204363145993
+FUT,≥45°N,artefact art_CTRL,SW,toa,2006,0.0983718781502846
+FUT,≥45°N,artefact art_CTRL,SW,toa,2007,0.14340071469042845
+FUT,≥45°N,artefact art_CTRL,SW,toa,2008,-0.05153520666824943
+FUT,≥45°N,artefact art_CTRL,SW,toa,2009,0.0048647654758804965
+FUT,≥45°N,artefact art_CTRL,SW,toa,2010,0.11558382536942288
+FUT,≥45°N,artefact art_CTRL,SW,toa,2011,0.12736968714638378
+FUT,≥45°N,artefact art_CTRL,SW,toa,2012,0.045732184259156115
+FUT,≥45°N,artefact art_CTRL,SW,toa,2013,0.12188667362637709
+FUT,≥45°N,artefact art_CTRL,SW,toa,2014,-0.0021495893009928716
+FUT,modified cells,artefact art_CTRL,SW,toa,2001,-0.019820960713666617
+FUT,modified cells,artefact art_CTRL,SW,toa,2002,0.1891423682007387
+FUT,modified cells,artefact art_CTRL,SW,toa,2003,-0.08358804053540753
+FUT,modified cells,artefact art_CTRL,SW,toa,2004,0.16341943762234368
+FUT,modified cells,artefact art_CTRL,SW,toa,2005,-0.025967820937967047
+FUT,modified cells,artefact art_CTRL,SW,toa,2006,0.13033071673736432
+FUT,modified cells,artefact art_CTRL,SW,toa,2007,0.22429872253371383
+FUT,modified cells,artefact art_CTRL,SW,toa,2008,-0.08416619715412203
+FUT,modified cells,artefact art_CTRL,SW,toa,2009,0.035604974442015644
+FUT,modified cells,artefact art_CTRL,SW,toa,2010,0.09638808229334359
+FUT,modified cells,artefact art_CTRL,SW,toa,2011,0.19291894510667504
+FUT,modified cells,artefact art_CTRL,SW,toa,2012,0.22625314502974425
+FUT,modified cells,artefact art_CTRL,SW,toa,2013,0.16345102742584175
+FUT,modified cells,artefact art_CTRL,SW,toa,2014,-0.0003497855162015643
+FUT,global,artefact art_CTRL,SW,dir,2001,-0.014743658942954848
+FUT,global,artefact art_CTRL,SW,dir,2002,-0.03385762503229949
+FUT,global,artefact art_CTRL,SW,dir,2003,0.002018811983012006
+FUT,global,artefact art_CTRL,SW,dir,2004,0.014756993772287742
+FUT,global,artefact art_CTRL,SW,dir,2005,0.0051264671163075
+FUT,global,artefact art_CTRL,SW,dir,2006,-0.001866879237529198
+FUT,global,artefact art_CTRL,SW,dir,2007,0.014487559510152778
+FUT,global,artefact art_CTRL,SW,dir,2008,-0.008135075944047094
+FUT,global,artefact art_CTRL,SW,dir,2009,0.02852653511446114
+FUT,global,artefact art_CTRL,SW,dir,2010,0.018140794853265682
+FUT,global,artefact art_CTRL,SW,dir,2011,-0.000784627842055549
+FUT,global,artefact art_CTRL,SW,dir,2012,0.04358534677120739
+FUT,global,artefact art_CTRL,SW,dir,2013,0.0189319562633238
+FUT,global,artefact art_CTRL,SW,dir,2014,0.01054091298584985
+FUT,≥45°N,artefact art_CTRL,SW,dir,2001,0.0033251774588094057
+FUT,≥45°N,artefact art_CTRL,SW,dir,2002,-0.0008061644649463836
+FUT,≥45°N,artefact art_CTRL,SW,dir,2003,-0.01435020636770191
+FUT,≥45°N,artefact art_CTRL,SW,dir,2004,-0.001307863645677239
+FUT,≥45°N,artefact art_CTRL,SW,dir,2005,0.015055992646301725
+FUT,≥45°N,artefact art_CTRL,SW,dir,2006,-0.012662372364790937
+FUT,≥45°N,artefact art_CTRL,SW,dir,2007,0.012184115224584574
+FUT,≥45°N,artefact art_CTRL,SW,dir,2008,-0.019232540781994434
+FUT,≥45°N,artefact art_CTRL,SW,dir,2009,0.01377794427499365
+FUT,≥45°N,artefact art_CTRL,SW,dir,2010,0.013535026833400798
+FUT,≥45°N,artefact art_CTRL,SW,dir,2011,0.0018892561835730497
+FUT,≥45°N,artefact art_CTRL,SW,dir,2012,0.016024062124186902
+FUT,≥45°N,artefact art_CTRL,SW,dir,2013,-0.0046776435959557175
+FUT,≥45°N,artefact art_CTRL,SW,dir,2014,-0.005335999579162467
+FUT,modified cells,artefact art_CTRL,SW,dir,2001,0.00440916718674318
+FUT,modified cells,artefact art_CTRL,SW,dir,2002,0.011779266668821198
+FUT,modified cells,artefact art_CTRL,SW,dir,2003,-0.00846374496200239
+FUT,modified cells,artefact art_CTRL,SW,dir,2004,-0.006572797986669469
+FUT,modified cells,artefact art_CTRL,SW,dir,2005,0.012490888292162996
+FUT,modified cells,artefact art_CTRL,SW,dir,2006,-0.016363232307650154
+FUT,modified cells,artefact art_CTRL,SW,dir,2007,0.008507126868804454
+FUT,modified cells,artefact art_CTRL,SW,dir,2008,-0.018309143487492675
+FUT,modified cells,artefact art_CTRL,SW,dir,2009,0.012116847647369006
+FUT,modified cells,artefact art_CTRL,SW,dir,2010,0.00859171725952532
+FUT,modified cells,artefact art_CTRL,SW,dir,2011,-0.008449106645008059
+FUT,modified cells,artefact art_CTRL,SW,dir,2012,0.014979451613057339
+FUT,modified cells,artefact art_CTRL,SW,dir,2013,-0.009130858435934355
+FUT,modified cells,artefact art_CTRL,SW,dir,2014,-0.007600533848660754
+FUT,global,artefact art_CTRL,SW,cloud,2001,0.08285069908778607
+FUT,global,artefact art_CTRL,SW,cloud,2002,0.11600157738046714
+FUT,global,artefact art_CTRL,SW,cloud,2003,0.05457093200867831
+FUT,global,artefact art_CTRL,SW,cloud,2004,-0.03444935353275481
+FUT,global,artefact art_CTRL,SW,cloud,2005,0.17111161127685973
+FUT,global,artefact art_CTRL,SW,cloud,2006,0.03087420592527972
+FUT,global,artefact art_CTRL,SW,cloud,2007,-0.12811170162696867
+FUT,global,artefact art_CTRL,SW,cloud,2008,-0.021970068286032287
+FUT,global,artefact art_CTRL,SW,cloud,2009,0.1727819686444534
+FUT,global,artefact art_CTRL,SW,cloud,2010,0.06841594368338419
+FUT,global,artefact art_CTRL,SW,cloud,2011,0.10918075998343034
+FUT,global,artefact art_CTRL,SW,cloud,2012,0.00804878317213254
+FUT,global,artefact art_CTRL,SW,cloud,2013,-0.011973563930479691
+FUT,global,artefact art_CTRL,SW,cloud,2014,-0.06380518839885227
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2001,0.012531346738525056
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2002,0.16872223011529724
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2003,0.027041362349082443
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2004,0.09238409044952847
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2005,-0.0036502711042384426
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2006,0.11233987235488123
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2007,0.11368833403684683
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2008,-0.04624359039774783
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2009,-0.007091275835578054
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2010,0.08394283708607098
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2011,0.09298431014196432
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2012,0.01654718216688958
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2013,0.10417559893134146
+FUT,≥45°N,artefact art_CTRL,SW,cloud,2014,-0.017193086948452972
+FUT,modified cells,artefact art_CTRL,SW,cloud,2001,-0.01763220361286282
+FUT,modified cells,artefact art_CTRL,SW,cloud,2002,0.147712746504768
+FUT,modified cells,artefact art_CTRL,SW,cloud,2003,-0.05854004528888483
+FUT,modified cells,artefact art_CTRL,SW,cloud,2004,0.15154361486143206
+FUT,modified cells,artefact art_CTRL,SW,cloud,2005,-0.00305404115801117
+FUT,modified cells,artefact art_CTRL,SW,cloud,2006,0.14395873358082212
+FUT,modified cells,artefact art_CTRL,SW,cloud,2007,0.17967456607965712
+FUT,modified cells,artefact art_CTRL,SW,cloud,2008,-0.06562344815260306
+FUT,modified cells,artefact art_CTRL,SW,cloud,2009,0.03179670112554528
+FUT,modified cells,artefact art_CTRL,SW,cloud,2010,0.05692415070220114
+FUT,modified cells,artefact art_CTRL,SW,cloud,2011,0.1627825886354021
+FUT,modified cells,artefact art_CTRL,SW,cloud,2012,0.18663389233451788
+FUT,modified cells,artefact art_CTRL,SW,cloud,2013,0.15347755019933798
+FUT,modified cells,artefact art_CTRL,SW,cloud,2014,-0.018839240065784215
+FUT,global,artefact art_CTRL,SW,rest,2001,-0.0008734409594624634
+FUT,global,artefact art_CTRL,SW,rest,2002,0.00027500449470119225
+FUT,global,artefact art_CTRL,SW,rest,2003,-0.002372604389200201
+FUT,global,artefact art_CTRL,SW,rest,2004,0.0075778443492672855
+FUT,global,artefact art_CTRL,SW,rest,2005,-0.00247743128556762
+FUT,global,artefact art_CTRL,SW,rest,2006,-0.0021553360256170552
+FUT,global,artefact art_CTRL,SW,rest,2007,0.007587395272604749
+FUT,global,artefact art_CTRL,SW,rest,2008,0.004709714082869267
+FUT,global,artefact art_CTRL,SW,rest,2009,0.002756227693179621
+FUT,global,artefact art_CTRL,SW,rest,2010,0.001138039186569412
+FUT,global,artefact art_CTRL,SW,rest,2011,-0.00020162130454001918
+FUT,global,artefact art_CTRL,SW,rest,2012,0.003880407287666336
+FUT,global,artefact art_CTRL,SW,rest,2013,0.005788476536071966
+FUT,global,artefact art_CTRL,SW,rest,2014,0.0030955519897550594
+FUT,≥45°N,artefact art_CTRL,SW,rest,2001,-0.0034884250830271523
+FUT,≥45°N,artefact art_CTRL,SW,rest,2002,0.00718387073987008
+FUT,≥45°N,artefact art_CTRL,SW,rest,2003,-0.006638526170850956
+FUT,≥45°N,artefact art_CTRL,SW,rest,2004,0.027186759084830453
+FUT,≥45°N,artefact art_CTRL,SW,rest,2005,-0.024092925597138038
+FUT,≥45°N,artefact art_CTRL,SW,rest,2006,-0.0013056213312696706
+FUT,≥45°N,artefact art_CTRL,SW,rest,2007,0.017528265428997356
+FUT,≥45°N,artefact art_CTRL,SW,rest,2008,0.01394092474920148
+FUT,≥45°N,artefact art_CTRL,SW,rest,2009,-0.001821902963535373
+FUT,≥45°N,artefact art_CTRL,SW,rest,2010,0.018105961449950882
+FUT,≥45°N,artefact art_CTRL,SW,rest,2011,0.03249612118021998
+FUT,≥45°N,artefact art_CTRL,SW,rest,2012,0.013160939968079976
+FUT,≥45°N,artefact art_CTRL,SW,rest,2013,0.022388718290991635
+FUT,≥45°N,artefact art_CTRL,SW,rest,2014,0.020379497447714362
+FUT,modified cells,artefact art_CTRL,SW,rest,2001,-0.0065979242875469106
+FUT,modified cells,artefact art_CTRL,SW,rest,2002,0.029650355027150115
+FUT,modified cells,artefact art_CTRL,SW,rest,2003,-0.016584250284520458
+FUT,modified cells,artefact art_CTRL,SW,rest,2004,0.018448620747580687
+FUT,modified cells,artefact art_CTRL,SW,rest,2005,-0.0354046680721196
+FUT,modified cells,artefact art_CTRL,SW,rest,2006,0.0027352154641922836
+FUT,modified cells,artefact art_CTRL,SW,rest,2007,0.03611702958525224
+FUT,modified cells,artefact art_CTRL,SW,rest,2008,-0.000233605170401214
+FUT,modified cells,artefact art_CTRL,SW,rest,2009,-0.008308574330898887
+FUT,modified cells,artefact art_CTRL,SW,rest,2010,0.030872214331617357
+FUT,modified cells,artefact art_CTRL,SW,rest,2011,0.03858546311628152
+FUT,modified cells,artefact art_CTRL,SW,rest,2012,0.024639801082168872
+FUT,modified cells,artefact art_CTRL,SW,rest,2013,0.01910433566243775
+FUT,modified cells,artefact art_CTRL,SW,rest,2014,0.026089988398242645
+FUT,global,artefact art_CTRL,LW,toa,2001,-0.017039973282537556
+FUT,global,artefact art_CTRL,LW,toa,2002,0.043502168978754745
+FUT,global,artefact art_CTRL,LW,toa,2003,-0.031709277531530716
+FUT,global,artefact art_CTRL,LW,toa,2004,0.07840498243281052
+FUT,global,artefact art_CTRL,LW,toa,2005,-0.19772646270644742
+FUT,global,artefact art_CTRL,LW,toa,2006,-0.025266609288668272
+FUT,global,artefact art_CTRL,LW,toa,2007,0.21730514928193181
+FUT,global,artefact art_CTRL,LW,toa,2008,0.009865860831134278
+FUT,global,artefact art_CTRL,LW,toa,2009,-0.16961111634472092
+FUT,global,artefact art_CTRL,LW,toa,2010,-0.029335315271915886
+FUT,global,artefact art_CTRL,LW,toa,2011,-0.10513414473866378
+FUT,global,artefact art_CTRL,LW,toa,2012,0.047783634358416385
+FUT,global,artefact art_CTRL,LW,toa,2013,-0.0054332252838155265
+FUT,global,artefact art_CTRL,LW,toa,2014,0.05386140877535874
+FUT,≥45°N,artefact art_CTRL,LW,toa,2001,0.10669462864454528
+FUT,≥45°N,artefact art_CTRL,LW,toa,2002,0.06120239289989545
+FUT,≥45°N,artefact art_CTRL,LW,toa,2003,0.03894482591535298
+FUT,≥45°N,artefact art_CTRL,LW,toa,2004,-0.04287347103442392
+FUT,≥45°N,artefact art_CTRL,LW,toa,2005,-0.019692292819622332
+FUT,≥45°N,artefact art_CTRL,LW,toa,2006,-0.06730640678483991
+FUT,≥45°N,artefact art_CTRL,LW,toa,2007,-0.08792785830222147
+FUT,≥45°N,artefact art_CTRL,LW,toa,2008,0.09536058043951298
+FUT,≥45°N,artefact art_CTRL,LW,toa,2009,0.16710751988693837
+FUT,≥45°N,artefact art_CTRL,LW,toa,2010,0.029657388522594717
+FUT,≥45°N,artefact art_CTRL,LW,toa,2011,0.0494550581219067
+FUT,≥45°N,artefact art_CTRL,LW,toa,2012,0.04783780010533517
+FUT,≥45°N,artefact art_CTRL,LW,toa,2013,-0.01604174770564368
+FUT,≥45°N,artefact art_CTRL,LW,toa,2014,-0.041710877078947564
+FUT,modified cells,artefact art_CTRL,LW,toa,2001,0.10492132071733169
+FUT,modified cells,artefact art_CTRL,LW,toa,2002,0.11990716439387622
+FUT,modified cells,artefact art_CTRL,LW,toa,2003,0.09269318521878996
+FUT,modified cells,artefact art_CTRL,LW,toa,2004,-0.04821294432979675
+FUT,modified cells,artefact art_CTRL,LW,toa,2005,-0.04760188046548055
+FUT,modified cells,artefact art_CTRL,LW,toa,2006,-0.05803450790766983
+FUT,modified cells,artefact art_CTRL,LW,toa,2007,-0.1600297046649257
+FUT,modified cells,artefact art_CTRL,LW,toa,2008,0.12143615010428374
+FUT,modified cells,artefact art_CTRL,LW,toa,2009,0.110346523314179
+FUT,modified cells,artefact art_CTRL,LW,toa,2010,0.03709114208370098
+FUT,modified cells,artefact art_CTRL,LW,toa,2011,-0.0001229514729050784
+FUT,modified cells,artefact art_CTRL,LW,toa,2012,-0.03159152426491311
+FUT,modified cells,artefact art_CTRL,LW,toa,2013,-0.034798817780379826
+FUT,modified cells,artefact art_CTRL,LW,toa,2014,-0.01982428134826594
+FUT,global,artefact art_CTRL,LW,dir,2001,0.00031652605272965053
+FUT,global,artefact art_CTRL,LW,dir,2002,0.0002173681271006246
+FUT,global,artefact art_CTRL,LW,dir,2003,-0.0007104086557301895
+FUT,global,artefact art_CTRL,LW,dir,2004,-0.002275313432444395
+FUT,global,artefact art_CTRL,LW,dir,2005,-0.001360451175652481
+FUT,global,artefact art_CTRL,LW,dir,2006,-0.0003393767594337281
+FUT,global,artefact art_CTRL,LW,dir,2007,-0.0023111507841382137
+FUT,global,artefact art_CTRL,LW,dir,2008,0.00027854792004456915
+FUT,global,artefact art_CTRL,LW,dir,2009,-0.0023326055705507635
+FUT,global,artefact art_CTRL,LW,dir,2010,-0.002200971919643145
+FUT,global,artefact art_CTRL,LW,dir,2011,-0.0014879627416133523
+FUT,global,artefact art_CTRL,LW,dir,2012,-0.0029763582523712603
+FUT,global,artefact art_CTRL,LW,dir,2013,-0.0027119283057996948
+FUT,global,artefact art_CTRL,LW,dir,2014,-0.0016616257298236205
+FUT,≥45°N,artefact art_CTRL,LW,dir,2001,-0.0006482189806291797
+FUT,≥45°N,artefact art_CTRL,LW,dir,2002,-0.001195703436547302
+FUT,≥45°N,artefact art_CTRL,LW,dir,2003,0.00033222187951830194
+FUT,≥45°N,artefact art_CTRL,LW,dir,2004,-0.0007834130735684912
+FUT,≥45°N,artefact art_CTRL,LW,dir,2005,-0.00277901267299152
+FUT,≥45°N,artefact art_CTRL,LW,dir,2006,0.0005046894703045107
+FUT,≥45°N,artefact art_CTRL,LW,dir,2007,-0.0019731745150747522
+FUT,≥45°N,artefact art_CTRL,LW,dir,2008,0.0002821980401995258
+FUT,≥45°N,artefact art_CTRL,LW,dir,2009,-0.001443485459144607
+FUT,≥45°N,artefact art_CTRL,LW,dir,2010,-0.0023253535709089456
+FUT,≥45°N,artefact art_CTRL,LW,dir,2011,-0.001357045220174139
+FUT,≥45°N,artefact art_CTRL,LW,dir,2012,-0.0021396094434750043
+FUT,≥45°N,artefact art_CTRL,LW,dir,2013,-0.0012357745518545389
+FUT,≥45°N,artefact art_CTRL,LW,dir,2014,-0.0007153325834780341
+FUT,modified cells,artefact art_CTRL,LW,dir,2001,-0.0006621908996795152
+FUT,modified cells,artefact art_CTRL,LW,dir,2002,-0.0015992453298276622
+FUT,modified cells,artefact art_CTRL,LW,dir,2003,0.00015288796034039246
+FUT,modified cells,artefact art_CTRL,LW,dir,2004,-0.0007789113976422212
+FUT,modified cells,artefact art_CTRL,LW,dir,2005,-0.0023518305075309826
+FUT,modified cells,artefact art_CTRL,LW,dir,2006,0.0005531395324223629
+FUT,modified cells,artefact art_CTRL,LW,dir,2007,-0.0014983490898182062
+FUT,modified cells,artefact art_CTRL,LW,dir,2008,0.0001992081781816197
+FUT,modified cells,artefact art_CTRL,LW,dir,2009,-0.001040504751879655
+FUT,modified cells,artefact art_CTRL,LW,dir,2010,-0.0020754820753832023
+FUT,modified cells,artefact art_CTRL,LW,dir,2011,-0.0010659667721583954
+FUT,modified cells,artefact art_CTRL,LW,dir,2012,-0.0016537566798086464
+FUT,modified cells,artefact art_CTRL,LW,dir,2013,-0.0009726924638551937
+FUT,modified cells,artefact art_CTRL,LW,dir,2014,-0.0010382902874866602
+FUT,global,artefact art_CTRL,LW,cloud,2001,-0.0029665914248230923
+FUT,global,artefact art_CTRL,LW,cloud,2002,0.02103050766044079
+FUT,global,artefact art_CTRL,LW,cloud,2003,-0.013200127208709726
+FUT,global,artefact art_CTRL,LW,cloud,2004,0.05580557439578267
+FUT,global,artefact art_CTRL,LW,cloud,2005,-0.15614061946701338
+FUT,global,artefact art_CTRL,LW,cloud,2006,-0.02561445763814033
+FUT,global,artefact art_CTRL,LW,cloud,2007,0.18552690651262105
+FUT,global,artefact art_CTRL,LW,cloud,2008,-0.0011425598201384379
+FUT,global,artefact art_CTRL,LW,cloud,2009,-0.14544947149680162
+FUT,global,artefact art_CTRL,LW,cloud,2010,-0.03979018138501476
+FUT,global,artefact art_CTRL,LW,cloud,2011,-0.08639234336808263
+FUT,global,artefact art_CTRL,LW,cloud,2012,0.013677644567901468
+FUT,global,artefact art_CTRL,LW,cloud,2013,0.010957579621699135
+FUT,global,artefact art_CTRL,LW,cloud,2014,0.05359363205264798
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2001,0.12831532622612216
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2002,0.07659968906603208
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2003,0.05991722262252246
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2004,-0.03356360593619682
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2005,-0.006719015330940572
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2006,-0.06414064823139436
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2007,-0.05062721448650671
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2008,0.10375896850381017
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2009,0.14296810977294772
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2010,0.013138276624565915
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2011,0.05791842014207991
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2012,0.03241651423734392
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2013,-0.005803097451738897
+FUT,≥45°N,artefact art_CTRL,LW,cloud,2014,-0.03133242674909358
+FUT,modified cells,artefact art_CTRL,LW,cloud,2001,0.1324084764334415
+FUT,modified cells,artefact art_CTRL,LW,cloud,2002,0.1403800765397776
+FUT,modified cells,artefact art_CTRL,LW,cloud,2003,0.10053018856105495
+FUT,modified cells,artefact art_CTRL,LW,cloud,2004,-0.03869460673170078
+FUT,modified cells,artefact art_CTRL,LW,cloud,2005,-0.03659303769147281
+FUT,modified cells,artefact art_CTRL,LW,cloud,2006,-0.05279609959033339
+FUT,modified cells,artefact art_CTRL,LW,cloud,2007,-0.0998648844572116
+FUT,modified cells,artefact art_CTRL,LW,cloud,2008,0.14353722477936268
+FUT,modified cells,artefact art_CTRL,LW,cloud,2009,0.09325396563986371
+FUT,modified cells,artefact art_CTRL,LW,cloud,2010,0.0448076319137986
+FUT,modified cells,artefact art_CTRL,LW,cloud,2011,0.023707119975371758
+FUT,modified cells,artefact art_CTRL,LW,cloud,2012,-0.030130736037387654
+FUT,modified cells,artefact art_CTRL,LW,cloud,2013,-0.01465873737734889
+FUT,modified cells,artefact art_CTRL,LW,cloud,2014,-0.002891265237283879
+FUT,global,artefact art_CTRL,LW,rest,2001,-0.014389907992970295
+FUT,global,artefact art_CTRL,LW,rest,2002,0.022254293191213366
+FUT,global,artefact art_CTRL,LW,rest,2003,-0.017798741799109494
+FUT,global,artefact art_CTRL,LW,rest,2004,0.02487472146947314
+FUT,global,artefact art_CTRL,LW,rest,2005,-0.04022539206378111
+FUT,global,artefact art_CTRL,LW,rest,2006,0.0006872251089054132
+FUT,global,artefact art_CTRL,LW,rest,2007,0.03408939355344868
+FUT,global,artefact art_CTRL,LW,rest,2008,0.010729872731227833
+FUT,global,artefact art_CTRL,LW,rest,2009,-0.021829039277369927
+FUT,global,artefact art_CTRL,LW,rest,2010,0.01265583803274196
+FUT,global,artefact art_CTRL,LW,rest,2011,-0.017253838628967802
+FUT,global,artefact art_CTRL,LW,rest,2012,0.037082348042887035
+FUT,global,artefact art_CTRL,LW,rest,2013,-0.01367887659971453
+FUT,global,artefact art_CTRL,LW,rest,2014,0.0019294024525345758
+FUT,≥45°N,artefact art_CTRL,LW,rest,2001,-0.020972478600946975
+FUT,≥45°N,artefact art_CTRL,LW,rest,2002,-0.014201592729589128
+FUT,≥45°N,artefact art_CTRL,LW,rest,2003,-0.021304618586687373
+FUT,≥45°N,artefact art_CTRL,LW,rest,2004,-0.008526452024657818
+FUT,≥45°N,artefact art_CTRL,LW,rest,2005,-0.010194264815690343
+FUT,≥45°N,artefact art_CTRL,LW,rest,2006,-0.003670448023750478
+FUT,≥45°N,artefact art_CTRL,LW,rest,2007,-0.03532746930064026
+FUT,≥45°N,artefact art_CTRL,LW,rest,2008,-0.008680586104496547
+FUT,≥45°N,artefact art_CTRL,LW,rest,2009,0.02558289557313609
+FUT,≥45°N,artefact art_CTRL,LW,rest,2010,0.018844465468937862
+FUT,≥45°N,artefact art_CTRL,LW,rest,2011,-0.007106316799998822
+FUT,≥45°N,artefact art_CTRL,LW,rest,2012,0.017560895311466318
+FUT,≥45°N,artefact art_CTRL,LW,rest,2013,-0.009002875702050384
+FUT,≥45°N,artefact art_CTRL,LW,rest,2014,-0.00966311774637632
+FUT,modified cells,artefact art_CTRL,LW,rest,2001,-0.026824964816429778
+FUT,modified cells,artefact art_CTRL,LW,rest,2002,-0.01887366681607385
+FUT,modified cells,artefact art_CTRL,LW,rest,2003,-0.007989891302605419
+FUT,modified cells,artefact art_CTRL,LW,rest,2004,-0.008739426200452578
+FUT,modified cells,artefact art_CTRL,LW,rest,2005,-0.008657012266477027
+FUT,modified cells,artefact art_CTRL,LW,rest,2006,-0.00579154784975934
+FUT,modified cells,artefact art_CTRL,LW,rest,2007,-0.05866647111789598
+FUT,modified cells,artefact art_CTRL,LW,rest,2008,-0.022300282853260828
+FUT,modified cells,artefact art_CTRL,LW,rest,2009,0.01813306242619521
+FUT,modified cells,artefact art_CTRL,LW,rest,2010,-0.005641007754713744
+FUT,modified cells,artefact art_CTRL,LW,rest,2011,-0.02276410467611802
+FUT,modified cells,artefact art_CTRL,LW,rest,2012,0.00019296845228385938
+FUT,modified cells,artefact art_CTRL,LW,rest,2013,-0.01916738793917595
+FUT,modified cells,artefact art_CTRL,LW,rest,2014,-0.015894725823495277
 FUT,global,BVOC corr (lccPD),NET,toa,2001,-1.0066148739355372
 FUT,global,BVOC corr (lccPD),NET,toa,2002,-0.9683789087501086
 FUT,global,BVOC corr (lccPD),NET,toa,2003,-0.9799657445446099

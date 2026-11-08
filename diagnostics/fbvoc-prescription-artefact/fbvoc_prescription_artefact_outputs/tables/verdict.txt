@@ -1,5 +1,5 @@
-Global    SOA_cb: A = +3.03 %, E = +0.07 %, C = -4.89 %, C+A = -1.85 %  -> the artefact makes up 62 % of C
-90–30°S   SOA_cb: A = +3.55 %, E = +0.27 %, C = -4.77 %, C+A = -1.22 %  -> the artefact makes up 74 % of C
-45–90°N   SOA_cb: A = +2.99 %, E = +0.02 %, C = -4.24 %, C+A = -1.25 %  -> the artefact makes up 71 % of C
+Global    SOA_cb: A = -3.03 %, E = +0.07 %, C = -4.89 %, C−A = -1.85 %  -> the artefact makes up 62 % of C
+90–30°S   SOA_cb: A = -3.55 %, E = +0.27 %, C = -4.77 %, C−A = -1.22 %  -> the artefact makes up 74 % of C
+45–90°N   SOA_cb: A = -2.99 %, E = +0.02 %, C = -4.24 %, C−A = -1.25 %  -> the artefact makes up 71 % of C
 
 ARTEFACT CONFIRMED: prescribing the emissions alone raises SOA

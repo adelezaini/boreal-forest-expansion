@@ -122,7 +122,8 @@ class VirtualRun(str):
 
     Example (design B, analysis/FBVOC_ARTEFACT.md): with
         V = LCC_P^ctrlP - CTRL_P^ctrlP + CTRL_P
-    LCC_P - V = (LCC_P - LCC_P^ctrlP) + (CTRL_P^ctrlP - CTRL_P), the artefact-corrected BVOC effect.
+    LCC_P - V = (LCC_P - LCC_P^ctrlP) - (CTRL_P - CTRL_P^ctrlP) = (LCC_P - LCC_P^ctrlP) - art_CTRL,P,
+    the artefact-corrected BVOC effect (artefact = interactive - prescribed, user 2026-11-07).
     """
 
     def __new__(cls, label: str, weights: dict[str, float]):
@@ -142,7 +143,8 @@ def run_weights(alias: str) -> dict[str, float]:
 def corrected_fbvoc(period: str, source: str | None = None) -> VirtualRun:
     """
     Artefact-corrected fBVOC reference of `period` (design B): LCC_P^E - CTRL_P^ctrlP + CTRL_P,
-    so that LCC_P - result = (LCC_P - LCC_P^E) + art_CTRL,P. `source` = E (default ctrl<P>),
+    so that LCC_P - result = (LCC_P - LCC_P^E) - art_CTRL,P, with art_CTRL,P = CTRL_P - CTRL_P^ctrlP
+    (interactive - prescribed, user 2026-11-07). `source` = E (default ctrl<P>),
     e.g. "ctrlPD", "ctrlFUT", "lccPD"; the artefact is always measured on CTRL land of the period.
     """
     source = source or f"ctrl{period}"

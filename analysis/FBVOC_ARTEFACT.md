@@ -14,15 +14,17 @@ The fBVOC runs switch MEGAN off and prescribe all 19 MEGAN species from a 2001�
 
 Prescribing the emissions changes SOA by itself, even when they are the run's own emissions.
 
+**Sign convention (user 2026-11-07):** artefact = **interactive − prescribed** (own emissions), art = CTRL_PD − CTRL_PD_fBVOCctrlPD. The corrected BVOC effect is then (LCC_P − LCC_P^E) **−** art. Before 2026-11-07 the opposite sign was used (fBVOC − interactive, corrected = … + art); the corrected BVOC values are the same, only the artefact's sign flips. Notebooks and logs from before that date show the old sign.
+
 **Old chain, SOA_cb, % of CTRL_PD** (`fbvoc_prescription_artefact_outputs/tables/verdict.txt`) (a):
 
 | Contrast | Meaning | Years | Global | 45–90°N |
 |---|---|---|---|---|
-| A = CTRL_PD_fBVOCctrlPD − CTRL_PD | artefact (same land, own emissions) | 2001–02 | **+3.03 %** | +2.99 % |
+| A = CTRL_PD − CTRL_PD_fBVOCctrlPD | artefact (same land, own emissions) | 2001–02 | **−3.03 %** | −2.99 % |
 | C = LCC_PD − LCC_PD_fBVOCctrlPD | uncorrected `BVOC_PD` | 2001–02 | −4.89 % | −4.24 % |
-| C + A | corrected BVOC effect | 2001–02 | −1.85 % | −1.25 % |
+| C − A | corrected BVOC effect | 2001–02 | −1.85 % | −1.25 % |
 
-The artefact accounts for 62 % of C globally and 71 % at 45–90°N. Before the artefact run existed, the hint was already there (a): with the same emissions, LCC_PD_fBVOCctrlPD had +3 % SOA vs CTRL_PD in every band, every season and 14 of 14 years.
+The artefact (|A|) accounts for 62 % of C globally and 71 % at 45–90°N. Before the artefact run existed, the hint was already there (a): with the same emissions, LCC_PD_fBVOCctrlPD had +3 % SOA vs CTRL_PD in every band, every season and 14 of 14 years.
 
 ## 2. Cause (`fbvoc_artefact_causes.ipynb`, old-chain PD runs)
 
@@ -30,9 +32,9 @@ The artefact accounts for 62 % of C globally and 71 % at 45–90°N. Before the 
 |---|---|
 | H1 missing species | **rejected** (a): the 19 prescribed species = `megan_specifier`; coupler fields identical except `Fall_voc*` |
 | H2 diurnal timing | **rejected** (a): the prescribed file has the same diurnal phase as the CTRL_PD h1 output |
-| H3 emission–weather link | real for the precursors (a): A τ_ISOP +10–28 % at 45–90°N. Not correlated with A SOA_cb (a) |
-| H4 SOA budget | production unchanged (−0.02 %); **lifetime +3 %** (7.02 → 7.24 d); the extra SOA is at 400–100 hPa (a) |
-| H5 replay with actual yearly emissions (CTRL_PD_fBVOCctrlPD_HR) | R = +0.49 % vs A = +3.03 % → **the climatology is the cause** (a) |
+| H3 emission–weather link | real for the precursors (a): τ_ISOP +10–28 % at 45–90°N in the prescribed run. Not correlated with the SOA_cb artefact (a) |
+| H4 SOA budget | prescribed vs interactive: production unchanged (−0.02 %); **lifetime +3 %** (7.02 → 7.24 d); the extra SOA is at 400–100 hPa (a) |
+| H5 replay with actual yearly emissions (CTRL_PD_fBVOCctrlPD_HR) | R = CTRL_PD − replay = −0.49 % vs A = −3.03 % → **the climatology is the cause** (a) |
 
 **Mechanism (b):** in the climatology, emissions no longer follow day-to-day weather. For example, they are also released on convective days, lifted, and form SOA higher up, where it lives longer.
 
@@ -50,15 +52,15 @@ In LCC_PD_fBVOCctrlPD the newly forested cells keep CTRL's (tundra/grass) emissi
 
 - X_P^E = land X (LCC, CTRL), period P (PD, FUT), emissions E prescribed.
 - X_P = interactive MEGAN.
-- art_X,P = X_P^xP − X_P (own emissions prescribed − interactive).
+- art_X,P = X_P − X_P^xP (interactive − own emissions prescribed).
 
 **A: prescribed pairs.** Same land, both runs prescribed, only the emissions differ:
 
 $$\text{BVOC}^{A}_{P} = \text{LCC}_P^{\,\text{lcc}P} - \text{LCC}_P^{\,E_\text{ref}}$$
 
-**B: matched baseline.** The interactive contrast plus the artefact measured on CTRL land:
+**B: matched baseline.** The interactive contrast minus the artefact measured on CTRL land:
 
-$$\text{BVOC}^{B}_{P} = \left(\text{LCC}_P - \text{LCC}_P^{\,E_\text{ref}}\right) + \text{art}_{\text{CTRL},P}, \qquad \text{art}_{\text{CTRL},P} = \text{CTRL}_P^{\,\text{ctrl}P} - \text{CTRL}_P$$
+$$\text{BVOC}^{B}_{P} = \left(\text{LCC}_P - \text{LCC}_P^{\,E_\text{ref}}\right) - \text{art}_{\text{CTRL},P}, \qquad \text{art}_{\text{CTRL},P} = \text{CTRL}_P - \text{CTRL}_P^{\,\text{ctrl}P}$$
 
 With E_ref = ctrlP, B gives a closed split:
 
@@ -66,7 +68,7 @@ $$\underbrace{\text{LCC}_P - \text{CTRL}_P}_{\text{total (no artefact)}} = \unde
 
 **Link between A and B:**
 
-$$\text{BVOC}^{A}_{P} - \text{BVOC}^{B}_{P} = \delta_P = \text{art}_{\text{LCC},P} - \text{art}_{\text{CTRL},P}$$
+$$\text{BVOC}^{B}_{P} - \text{BVOC}^{A}_{P} = \delta_P = \text{art}_{\text{LCC},P} - \text{art}_{\text{CTRL},P}$$
 
 This is exact for absolute changes and first order for % changes. δ_P is the same for every contrast of a period, so differences between contrasts are identical in A and B.
 
@@ -76,7 +78,7 @@ This is exact for absolute changes and first order for % changes. δ_P is the sa
 
 **Where the artefact sits (b, from H5).** H5 shows that the artefact is the loss of the day-to-day emission–weather covariance of the **interactive** run. A prescribed run X_P^E differs from X_P by two things: (i) the mean emissions, E instead of X's own; (ii) the lost covariance of X_P, ≈ art_X,P whatever E is. So
 
-$$X_P^{E} pprox X_P + 	ext{effect of } (E - E_{X,P}) + 	ext{art}_{X,P}$$
+$$X_P^{E} \approx X_P + \text{effect of } (E - E_{X,P}) - \text{art}_{X,P}$$
 
 and the artefact belongs to the land/period of the run, not to the prescribed source. One baseline per period therefore corrects every contrast of that period, including PD emissions in FUT weather. Only second-order terms depend on E (e.g. the SOA response to the lost covariance may scale with the emission level) (c).
 
@@ -86,10 +88,10 @@ and the artefact belongs to the land/period of the run, not to the prescribed so
 
 | Meaning | A | B |
 |---|---|---|
-| PD BVOC effect (forest) | LCC_PD^lccPD − LCC_PD^ctrlPD | (LCC_PD − LCC_PD^ctrlPD) + art_CTRL,PD |
-| FUT BVOC effect (forest) | LCC_FUT^lccFUT − LCC_FUT^ctrlFUT | (LCC_FUT − LCC_FUT^ctrlFUT) + art_CTRL,FUT |
-| Climate-driven emission change, LCC land | LCC_FUT^lccFUT − LCC_FUT^lccPD | (LCC_FUT − LCC_FUT^lccPD) + art_CTRL,FUT |
-| Forest + climate | LCC_FUT^lccFUT − LCC_FUT^ctrlPD | (LCC_FUT − LCC_FUT^ctrlPD) + art_CTRL,FUT |
+| PD BVOC effect (forest) | LCC_PD^lccPD − LCC_PD^ctrlPD | (LCC_PD − LCC_PD^ctrlPD) − art_CTRL,PD |
+| FUT BVOC effect (forest) | LCC_FUT^lccFUT − LCC_FUT^ctrlFUT | (LCC_FUT − LCC_FUT^ctrlFUT) − art_CTRL,FUT |
+| Climate-driven emission change, LCC land | LCC_FUT^lccFUT − LCC_FUT^lccPD | (LCC_FUT − LCC_FUT^lccPD) − art_CTRL,FUT |
+| Forest + climate | LCC_FUT^lccFUT − LCC_FUT^ctrlPD | (LCC_FUT − LCC_FUT^ctrlPD) − art_CTRL,FUT |
 
 ### Pros and cons
 
@@ -105,7 +107,7 @@ and the artefact belongs to the land/period of the run, not to the prescribed so
 
 **Design B for PD and FUT, plus one design-A run in PD to measure δ_PD:**
 
-$$\delta_\text{PD} = \left(\text{LCC}_\text{PD}^{\,\text{lccPD}} - \text{LCC}_\text{PD}\right) - \left(\text{CTRL}_\text{PD}^{\,\text{ctrlPD}} - \text{CTRL}_\text{PD}\right)$$
+$$\delta_\text{PD} = \left(\text{LCC}_\text{PD} - \text{LCC}_\text{PD}^{\,\text{lccPD}}\right) - \left(\text{CTRL}_\text{PD} - \text{CTRL}_\text{PD}^{\,\text{ctrlPD}}\right)$$
 
 If δ_PD is small compared with BVOC_B, B is supported in FUT too. If it is large, design A in FUT is worth its 2 runs.
 
@@ -127,15 +129,15 @@ All three are new-chain runs (`-20261031`), launched and postprocessed by `cases
 
 | Artefact | Years | Global | 90–30°S | 30°S–30°N | 45–90°N |
 |---|---|---|---|---|---|
-| art_LCC,PD = LCC_PD_fBVOClccPD − LCC_PD | 2001–02 | +3.64 (+3.04 / +4.25) | +4.01 | +3.86 | +2.97 (+1.41 / +4.52) |
-| art_CTRL,FUT = CTRL_FUT_fBVOCctrlFUT − CTRL_FUT | 2001–14 | +2.78 (SD 1.37) | +3.33 | +2.73 | +2.64 (SD 2.19) |
-| art_CTRL,FUT | 2001–02 | +4.76 | +5.17 | +4.79 | +4.85 |
+| art_LCC,PD = LCC_PD − LCC_PD_fBVOClccPD | 2001–02 | −3.64 (−3.04 / −4.25) | −4.01 | −3.86 | −2.97 (−1.41 / −4.52) |
+| art_CTRL,FUT = CTRL_FUT − CTRL_FUT_fBVOCctrlFUT | 2001–14 | −2.78 (SD 1.37) | −3.33 | −2.73 | −2.64 (SD 2.19) |
+| art_CTRL,FUT | 2001–02 | −4.76 | −5.17 | −4.79 | −4.85 |
 
-**FUT yearly, global:** +4.3, +5.2, +4.9, +2.4, +2.5, +1.1, +2.9, +2.0, +3.0, +0.8, +2.5, +3.7, +1.4, +2.1 (trend −1.9 %/decade).
+**FUT yearly, global:** −4.3, −5.2, −4.9, −2.4, −2.5, −1.1, −2.9, −2.0, −3.0, −0.8, −2.5, −3.7, −1.4, −2.1 (trend +1.9 %/decade, i.e. shrinking in size).
 
-- The FUT artefact is larger in the first years, so a 2-year mean is not representative of the 15-year mean.
+- The FUT artefact is larger (in size) in the first years, so a 2-year mean is not representative of the 15-year mean.
 - δ_PD pairs the same years on both land covers, so a shared early-year excess cancels (b). Check that art_CTRL,PD (CTRL_PD_fBVOCctrlPD) shows the same early-year pattern.
-- Do not compare these numbers with the old-chain +3.03 %: different chains.
+- Do not compare these numbers with the old-chain −3.03 %: different chains.
 
 **Pending:** δ_PD and the verdict, once CTRL_PD_fBVOCctrlPD is postprocessed (`how_big_artefact_is_PD.ipynb`, rerun by hand).
 
@@ -144,7 +146,7 @@ All three are new-chain runs (`-20261031`), launched and postprocessed by `cases
 - **BVOC effect = the emission change between LCC and CTRL with interactive MEGAN.** That includes the new vegetation and MEGAN's response to the changed climate. The MEGAN split (`MEGAN_ATTRIBUTION.md`) separates them.
 - The non-BVOC part (LCC^ctrl − CTRL^ctrl) includes every land effect not going through BVOC emissions: albedo, evapotranspiration, dry deposition, and possibly dust (c).
 - **Never mix chains in one contrast.** All runs of a formula must come from the new chain.
-- The 15-year runs (CTRL_PD_fBVOCctrlPD, CTRL_FUT_fBVOCctrlFUT) match the 2001–2014 climatology years. In the old 2-year test, part of A came from 2001–02 not being an average year (A − R = +2.55 % mixes both effects).
+- The 15-year runs (CTRL_PD_fBVOCctrlPD, CTRL_FUT_fBVOCctrlFUT) match the 2001–2014 climatology years. In the old 2-year test, part of A came from 2001–02 not being an average year (CTRL_PD_fBVOCctrlPD − replay = +2.55 % mixes both effects).
 
 ## 8. In the paper (Methods)
 

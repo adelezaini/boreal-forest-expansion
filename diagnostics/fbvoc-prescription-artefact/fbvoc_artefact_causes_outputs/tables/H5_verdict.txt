@@ -1,1 +1,1 @@
-SOA_cb global: A = +3.03 %, R = +0.49 % -> the artefact comes from the CLIMATOLOGY
+SOA_cb global: A = -3.03 %, R = -0.49 % -> the artefact comes from the CLIMATOLOGY
