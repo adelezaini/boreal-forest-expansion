@@ -4,3 +4,9 @@
 --- cell 5 ok (4s)
 --- cell 7 ok (365s)
 --- cell 8 ok (310s)
+--- cell 10 ok (161s)
+--- cell 12 ok (250s)
+--- cell 13 ok (93s)
+--- cell 15 ok (5s)
+--- cell 17 ok (240s)
+EXIT 0
