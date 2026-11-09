@@ -1,0 +1,176 @@
+Preparing restart files...
+Restart files already in /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000
+Compset longname is 2000_CAM60%NORESM%NORBC%TROPSTRATCHEM_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV
+Compset specification file is /cluster/home/adelez/NorESM2.3_beta01/cime/../components/cam//cime_config/config_compsets.xml
+Compset forcing is 1972-2004
+ATM component is CAM cam6 physics:
+LND component is clm5.0:BGC (vert. resol. CN and methane) with prognostic crop:
+ICE component is Sea ICE (cice) model version 5 :prescribed cice
+OCN component is DOCN   prescribed ocean mode
+ROF component is MOSART: MOdel for Scale Adaptive River Transport
+GLC component is Stub glacier (land ice) component
+WAV component is Stub wave component
+ESP component is 
+Pes     specification file is /cluster/home/adelez/NorESM2.3_beta01/cime/../components/cam//cime_config/config_pes.xml
+Could not find machine match for 'login-2.betzy' or 'login-2'
+Machine is betzy
+Pes setting: machine match is betzy 
+Pes setting: grid          is a%1.9x2.5_l%1.9x2.5_oi%1.9x2.5_r%r05_g%null_w%null_m%tnx1v4 
+Pes setting: compset       is 2000_CAM60%NORESM%NORBC%TROPSTRATCHEM_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
+Pes setting: tasks       is {'NTASKS_ATM': -4, 'NTASKS_LND': -4, 'NTASKS_ROF': -4, 'NTASKS_ICE': -4, 'NTASKS_OCN': -4, 'NTASKS_GLC': -4, 'NTASKS_WAV': -4, 'NTASKS_CPL': -4} 
+Pes setting: threads     is {'NTHRDS_ATM': 1, 'NTHRDS_LND': 1, 'NTHRDS_ROF': 1, 'NTHRDS_ICE': 1, 'NTHRDS_OCN': 1, 'NTHRDS_GLC': 1, 'NTHRDS_WAV': 1, 'NTHRDS_CPL': 1} 
+Pes setting: rootpe      is {'ROOTPE_ATM': 0, 'ROOTPE_LND': 0, 'ROOTPE_ROF': 0, 'ROOTPE_ICE': 0, 'ROOTPE_OCN': 0, 'ROOTPE_GLC': 0, 'ROOTPE_WAV': 0, 'ROOTPE_CPL': 0} 
+Pes setting: pstrid      is {} 
+Pes other settings: {}
+Pes comments: none
+ Compset is: 2000_CAM60%NORESM%NORBC%TROPSTRATCHEM_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV 
+ Grid is: a%1.9x2.5_l%1.9x2.5_oi%1.9x2.5_r%r05_g%null_w%null_m%tnx1v4 
+ Components in compset are: ['cam', 'clm', 'cice', 'docn', 'mosart', 'sglc', 'swav', 'sesp', 'drv', 'dart'] 
+No charge_account info available, using value from PROJECT
+No project info available
+cesm model version found: noresm2_3_beta01
+Batch_system_type is slurm_nor
+job is case.run USER_REQUESTED_WALLTIME None USER_REQUESTED_QUEUE None
+job is case.st_archive USER_REQUESTED_WALLTIME None USER_REQUESTED_QUEUE None
+ Creating Case directory /cluster/home/adelez/cases/BRL_FRST_XPSN/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109
+Case NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109 created with compset NF2000norbc_tropstratchem and resolution f19_f19
+Setting resource.RLIMIT_STACK to -1 from (8388608, -1)
+/cluster/home/adelez/cases/BRL_FRST_XPSN/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/env_mach_specific.xml already exists, delete to replace
+job is case.run USER_REQUESTED_WALLTIME 08:00:00 USER_REQUESTED_QUEUE normal
+Creating batch scripts
+Writing case.run script from input template /cluster/home/adelez/NorESM2.3_beta01/cime/config/cesm/machines/template.case.run
+Creating file .case.run
+Writing case.st_archive script from input template /cluster/home/adelez/NorESM2.3_beta01/cime/config/cesm/machines/template.st_archive
+Creating file case.st_archive
+Creating user_nl_xxx files for components and cpl
+If an old case build already exists, might want to run 'case.build --clean' before building
+You can now run './preview_run' to get more info on how your case will be run
+Installed CLM SourceMod:
+  /cluster/home/adelez/cases/BRL_FRST_XPSN//NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/SourceMods/src.clm/VOCEmissionMod.F90
+Patched: SourceMods/src.cam/mo_srf_emissions.F90
+Backup:  SourceMods/src.cam/mo_srf_emissions.F90.before_fbvoc
+Building case in directory /cluster/projects/nn9188k/adelez/cases/BRL_FRST_XPSN/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109
+sharedlib_only is False
+model_only is False
+Setting resource.RLIMIT_STACK to -1 from (8388608, -1)
+Generating component namelists as part of build
+ - Prestaging REFCASE (/cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000) to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/run
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.atm
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.ocn
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.ice
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.drv
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.rof
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.lnd
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.cpl.r.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.cam.rs.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.cam.r.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.mosart.rh0.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.clm2.h0.0020-12.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.docn.rs1.0021-01-01-00000.bin
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.mosart.r.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.clm2.rh0.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.mosart.h0.0020-12.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.cam.h0.0020-12.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.cam.i.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.cice.r.0021-01-01-00000.nc
+Staging file /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/NF2000norbc_tropstratchem_spinup_f19_f19.clm2.r.0021-01-01-00000.nc
+Creating component namelists
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/cam//cime_config/buildnml
+     ...calling cam buildcpp to set build time options
+cam_aerocom is True
+CAM namelist copy: file1 /cluster/home/adelez/cases/BRL_FRST_XPSN/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/Buildconf/camconf/atm_in file2 /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/run/atm_in 
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/clm//cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/cice//cime_config/buildnml
+     ...calling cice buildcpp to set build time options
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/data_comps/docn/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/mosart//cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/stub_comps/sglc/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/stub_comps/swav/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/stub_comps/sesp/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/drivers/mct/cime_config/buildnml
+   NOTE: ignoring setting of rof2ocn_ice_rmapname=idmap in seq_maps.rc
+   NOTE: ignoring setting of rof2ocn_liq_rmapname=idmap in seq_maps.rc
+Finished creating component namelists
+Building gptl with output to file /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/gptl.bldlog.261109-013038
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/build_scripts/buildlib.gptl
+Component gptl build complete with 1 warnings
+Building mct with output to file /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/mct.bldlog.261109-013038
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/build_scripts/buildlib.mct
+Building pio with output to file /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/pio.bldlog.261109-013038
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/build_scripts/buildlib.pio
+Component pio build complete with 5 warnings
+Building csm_share with output to file /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/csm_share.bldlog.261109-013038
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/build_scripts/buildlib.csm_share
+Component csm_share build complete with 20 warnings
+         - Building clm4_5/clm5_0 Library 
+Building lnd with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/lnd.bldlog.261109-013038
+Component lnd build complete with 8 warnings
+clm built in 166.767499 seconds
+Building atm with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/atm.bldlog.261109-013038
+Building ice with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/ice.bldlog.261109-013038
+Building ocn with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/ocn.bldlog.261109-013038
+Building rof with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/rof.bldlog.261109-013038
+Building glc with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/glc.bldlog.261109-013038
+Building wav with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/wav.bldlog.261109-013038
+Building esp with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/esp.bldlog.261109-013038
+swav built in 9.336552 seconds
+sesp built in 9.728707 seconds
+sglc built in 9.910187 seconds
+docn built in 11.577543 seconds
+mosart built in 25.475244 seconds
+Component ice build complete with 1 warnings
+cice built in 116.866375 seconds
+Component atm build complete with 13 warnings
+cam built in 273.026178 seconds
+Building cesm with output to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/bld/cesm.bldlog.261109-013038 
+Component cesm exe build complete with 2 warnings
+Time spent not building: 28.309059 sec
+Time spent building: 635.260074 sec
+MODEL BUILD HAS FINISHED SUCCESSFULLY
+Setting resource.RLIMIT_STACK to -1 from (-1, -1)
+ - Prestaging REFCASE (/cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000) to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/run
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.atm
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.ocn
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.ice
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.drv
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.rof
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.lnd
+Creating component namelists
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/cam//cime_config/buildnml
+CAM namelist copy: file1 /cluster/home/adelez/cases/BRL_FRST_XPSN/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/Buildconf/camconf/atm_in file2 /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/run/atm_in 
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/clm//cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/cice//cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/data_comps/docn/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/components/mosart//cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/stub_comps/sglc/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/stub_comps/swav/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/components/stub_comps/sesp/cime_config/buildnml
+   Calling /cluster/home/adelez/NorESM2.3_beta01/cime/src/drivers/mct/cime_config/buildnml
+   NOTE: ignoring setting of rof2ocn_ice_rmapname=idmap in seq_maps.rc
+   NOTE: ignoring setting of rof2ocn_liq_rmapname=idmap in seq_maps.rc
+Finished creating component namelists
+Checking that inputdata is available as part of case submission
+Setting resource.RLIMIT_STACK to -1 from (-1, -1)
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cam.input_data_list'
+Loading input file list: 'Buildconf/clm.input_data_list'
+Loading input file list: 'Buildconf/docn.input_data_list'
+Loading input file list: 'Buildconf/cice.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+ - Prestaging REFCASE (/cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000) to /cluster/work/users/adelez/noresm/NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109/run
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.atm
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.ocn
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.ice
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.drv
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.rof
+Copy rpointer /cluster/home/adelez/restart/NF2000norbc_tropstratchem_spinup_f19_f19/0021-01-01-00000/rpointer.lnd
+Check case OK
+submit_jobs case.run
+Submit job case.run
+Submitting job script sbatch --time 08:00:00 --account nn9188k .case.run --resubmit
+Submitted job id is 1795302
+Submit job case.st_archive
+Submitting job script sbatch --time 03:00:00 --account nn9188k  --dependency=afterok:1795302 case.st_archive --resubmit
+Submitted job id is 1795303
+Submitted job case.run with id 1795302
+Submitted job case.st_archive with id 1795303

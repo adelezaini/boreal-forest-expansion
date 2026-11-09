@@ -1,0 +1,11 @@
+Mon  9 Nov 01:27:00 CET 2026 climatology job 1795283 left the queue; files: 19
+Mon  9 Nov 01:29:50 CET 2026 climatology check OK
+Mon  9 Nov 01:42:10 CET 2026 submitted NF2000norbc_tropstratchem_nudg_ctrl_fBVOCctrlPD_C0102_f19_f19-20261109
+Mon  9 Nov 13:42:18 CET 2026 run archived, atm h0 files 2000-2002: 36
+data/processed-data/postprocessing/2001-2014-all-bvoc-pre-co2-fix/CTRL_PD_fBVOCctrlPD_C0102_atm_BVOC_2001-2002.nc
+data/processed-data/postprocessing/2001-2014-all-bvoc-pre-co2-fix/CTRL_PD_fBVOCctrlPD_C0102_atm_SOA_2001-2002.nc
+data/processed-data/postprocessing/2001-2014-all-bvoc-pre-co2-fix/CTRL_PD_fBVOCctrlPD_C0102_atm_CHEM_2001-2002.nc
+data/processed-data/postprocessing/2001-2014-all-bvoc-pre-co2-fix/CTRL_PD_fBVOCctrlPD_C0102_atm_CLOUDPROP_2001-2002.nc
+data/processed-data/postprocessing/2001-2014-all-bvoc-pre-co2-fix/CTRL_PD_fBVOCctrlPD_C0102_atm_RADIATIVE_2001-2002.nc
+Mon  9 Nov 13:48:57 CET 2026 postprocessing done
+Mon  9 Nov 13:58:13 CET 2026 notebook EXIT 0; finished

@@ -1,0 +1,5 @@
+"mean pressure shift vs CTRL_PD, 30°S–30°N [hPa] (negative = higher up)",climatology run,replay run
+ISOP,-16.38,-0.3
+MTERP,-9.54,-0.01
+SOA_LV,-8.36,0.28
+SOA aerosol,-6.56,-0.37
