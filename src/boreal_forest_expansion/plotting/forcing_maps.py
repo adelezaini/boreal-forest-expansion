@@ -18,6 +18,7 @@ t-interval across the yearly regional means.
 
 from __future__ import annotations
 
+from collections import Counter
 import re
 import textwrap
 
@@ -1545,6 +1546,54 @@ FSDS_SPLIT_PANELS = [
 ]
 
 
+VISIBLE_FRACTION = 0.3   # a panel "shows something" if its 98th-percentile |diff| reaches 30 % of its bar
+SCALE_STEPS = (1, 2, 5)  # reduction factors 1, 2, 5, 10, 20, 50, ...
+REDUCED_SCALE_COLOUR = "#8A3A0A"
+
+
+def _scale_ladder():
+    return [s * 10 ** e for e in range(12) for s in SCALE_STEPS]
+
+
+def column_scales(diffs, n_cols, extent_lat, visible=VISIBLE_FRACTION):
+    """
+    {(row, col): (vmax, factor)} for a contrast grid. Column scale V = largest 98th-percentile |mean diff|
+    (lat >= extent_lat) of the rows; a row whose own value v < visible * V gets V / factor with the
+    smallest factor in 1, 2, 5, 10, 20, ... such that v >= visible * V / factor. Rows are taken from
+    largest to smallest and keep the previous row's factor while still visible with it, so reduced
+    rows of similar size share one scale too.
+    Then one factor per row where possible (user 2026-11-09): M = the row's most common factor (tie:
+    the smaller); smaller factors are raised towards M as far as the panel's own v still fits in the bar
+    (v <= vmax, so noisy fields don't saturate), larger ones are capped at 2 M.
+    """
+    own = {k: symmetric_vmax(d.mean("year").where(d["lat"] >= extent_lat), fallback=np.nan)
+           for k, d in diffs.items()}
+    col_max, factors_ij = {}, {}
+    for j in range(n_cols):
+        col = sorted(((v, k) for k, v in own.items() if k[1] == j and np.isfinite(v)), reverse=True)
+        if not col:
+            continue
+        V, factor = col[0][0], 1
+        col_max[j] = V
+        for v, k in col:
+            if v < visible * V / factor:
+                factors = (s * 10 ** e for e in range(12) for s in SCALE_STEPS)
+                factor = next(f for f in factors if v >= visible * V / f or f >= 1e11)
+            factors_ij[k] = factor
+    out = {}
+    for i in {k[0] for k in factors_ij}:
+        row = {k: f for k, f in factors_ij.items() if k[0] == i}
+        counts = Counter(row.values())
+        M = min(f for f, n in counts.items() if n == max(counts.values()))
+        for k, f in row.items():
+            if f < M:   # raise towards M, but only while the panel's own v still fits in the bar (no noise blow-up)
+                fit = col_max[k[1]] / own[k]
+                f = max([f] + [g for g in _scale_ladder() if g <= min(M, fit)])
+            f = min(f, 2 * M)
+            out[k] = (col_max[k[1]] / f, f)
+    return out
+
+
 def make_contrast_grid_figure(
     contrast_set: str,
     panels: Iterable[MapPanel],
@@ -1562,12 +1611,15 @@ def make_contrast_grid_figure(
     fdr_alpha: float = 0.10,
     rows: list[tuple[str, str]] | None = None,
     labels: list[str] | None = None,
+    scale: str = "column",   # user OK 2026-11-09
 ):
     """
     Grid of maps: one row per contrast of `contrast_set` (a category of CONTRASTS, saved in its folder
     FIG_CATEGORY, rows labelled with the short contrast names; or legacy "LCC-CTRL" / "LCC-fBVOC", see
     contrast_sets), one column per panel. Each panel has its own colourbar, because the
     rows differ a lot in size (LCC_FUT - CTRL_PD contains the whole 2100 background change).
+    scale: "panel" = each panel scaled to itself; "column" = one scale per column so rows can be
+    compared, reduced by a nice factor (marked "scale ÷N") only where a row would look blank.
     rows: (case1, case2) list overriding contrast_sets()[contrast_set] (contrast_set is then a label).
     """
     if rows is None and contrast_set in CONTRASTS:
@@ -1577,13 +1629,31 @@ def make_contrast_grid_figure(
     rows = rows or contrast_sets()[contrast_set]
     panels = [replace(p, case1_role="case1", case2_role="case2") for p in panels]
     fig, axes = map_grid(len(rows), len(panels), left=2.0, map_size=GRID_MAP_SIZE if map_size is None else map_size)
+
+    # scale="column": compute every panel first, then one colour scale per column (see column_scales)
+    diffs, errors, scales = {}, {}, {}
+    if scale == "column":
+        for i, (c1, c2) in enumerate(rows):
+            for j, panel in enumerate(panels):
+                try:
+                    diffs[i, j] = panel_difference(panel, {"case1": c1, "case2": c2}, start_year, end_year)
+                except (FileNotFoundError, KeyError) as exc:
+                    errors[i, j] = exc
+        scales = column_scales(diffs, len(panels), extent_lat)
+
     for i, (c1, c2) in enumerate(rows):
         pairs = {"case1": c1, "case2": c2}
         for j, (ax, panel) in enumerate(zip(axes[i], panels)):
             try:
+                if (i, j) in errors:
+                    raise errors[i, j]
+                vmax, factor = scales.get((i, j), (None, 1))
                 _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min,
-                            stipple, fdr_alpha, cmap=cmap, add_cbar=True,
+                            stipple, fdr_alpha, vmax=vmax, d=diffs.get((i, j)), cmap=cmap, add_cbar=True,
                             mean_fontsize=GRID_MEAN_FONTSIZE)
+                if factor > 1:   # this panel is NOT on the column's common scale
+                    ax.text(1.0, 1.0, f"scale ÷{factor:g}", transform=ax.transAxes, ha="right", va="top",
+                            fontsize=9, fontweight="bold", color=REDUCED_SCALE_COLOUR)
             except (FileNotFoundError, KeyError) as exc:
                 ax.set_axis_off()
                 ax.set_title(f"{panel.title}\nmissing", fontsize=9)
@@ -1719,7 +1789,7 @@ def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir
 # =============================================================================
 
 EARTH_RADIUS = 6.371e6   # m
-EARLY_YEARS, LATE_YEARS = (2001, 2007), (2008, 2014)
+EARLY_YEARS, LATE_YEARS = (2001, 2014), (2015, 2025)   # user 2026-11-08: early = fBVOC climatology years, late = years outside it (was 2001-2007 / 2008-2014)
 SOURCE_BOXES = {          # lat_min, lat_max, lon_min, lon_max (degrees east; lon_min > lon_max wraps)
     "Alaska/W Canada": (50, 72, 190, 245),
     "E Canada": (45, 65, 245, 300),
