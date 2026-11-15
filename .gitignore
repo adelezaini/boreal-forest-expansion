@@ -46,11 +46,6 @@ results/figures/megan_factors/before_lake_fix/
 *.pid
 sandbox/*_outputs.log
 
-# 2001-2019 set: raw-output symlinks and generated files (rebuilt by analysis-2001-2019/prepare.sh)
-analysis-2001-2019/raw-links/
-analysis-2001-2019/processed/
-analysis-2001-2019/logs/
-
 # Archived 2001-2014 and design-B stand-in outputs (local only, ~1.2 GB)
 results/figures-2001-2014/
 results/tables-2001-2014/
