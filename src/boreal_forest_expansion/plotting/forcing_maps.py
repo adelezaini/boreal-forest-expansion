@@ -1419,11 +1419,11 @@ def make_ghan_figure(
             if seasonal:
                 ax.set_title(f"{season}: {panel.title}", fontsize=9.5, fontweight="semibold", pad=TITLE_PAD)
         sm = plt.cm.ScalarMappable(norm=mcolors.TwoSlopeNorm(vmin=-vmax, vcenter=0.0, vmax=vmax), cmap=cmap)
-        label = f"{band} radiative effect difference [W m$^{{-2}}$]"
+        cbar_label = f"{band} radiative effect difference [W m$^{{-2}}$]"   # was `label`: overwrote the title arg (fixed 2026-11-15)
         if seasonal:
-            _cbar_right(fig, axes[i], sm, label.replace(" [", "\n["))
+            _cbar_right(fig, axes[i], sm, cbar_label.replace(" [", "\n["))
         else:
-            _cbar_below(fig, axes[i, 1:3], sm, label, CBAR_LABELSIZE_SHARED, shrink=1.0)
+            _cbar_below(fig, axes[i, 1:3], sm, cbar_label, CBAR_LABELSIZE_SHARED, shrink=1.0)
 
     c1, c2 = pairs[role1], pairs[role2]
     kind = "seasonal " if seasonal else ""
