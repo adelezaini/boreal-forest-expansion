@@ -13,6 +13,8 @@
 to-do.txt
 generate_env_yml.py
 **/__pycache__
+**.pptx
+!results/pptx/cicero_template.pptx
 
 *.egg-info/
 
@@ -48,3 +50,9 @@ sandbox/*_outputs.log
 analysis-2001-2019/raw-links/
 analysis-2001-2019/processed/
 analysis-2001-2019/logs/
+
+# Archived 2001-2014 and design-B stand-in outputs (local only, ~1.2 GB)
+results/figures-2001-2014/
+results/tables-2001-2014/
+results/figures-designB-standin-20261111/
+results/tables-designB-standin-20261111/
