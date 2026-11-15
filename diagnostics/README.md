@@ -61,3 +61,10 @@ Their results describe those runs and are **not** results for the current setup.
 | `lcc-bvoc-background-contrast-maps/contrast_maps_uncorrected.ipynb` | processed files 2001–2014, new chain: CTRL_PD `-20261029`; LCC_PD, CTRL_FUT, LCC_FUT `-20261028`; LCC_PD_fBVOCctrlPD, LCC_FUT_fBVOC{ctrlPD,ctrlFUT,lccPD} `-20261031` | map grids (rows = contrasts, columns = radiation / BVOC→SOA→cloud / surface variables) for Q1 LCC effect in each background (6 contrasts), Q2 FUT BVOC emission source (4), Q3 PD → FUT (3); **raw differences, no artefact correction**; regional-mean table and additivity check of the contrast identities |
 
 **Moved to the new chain (2026-11-03, user request):** `impact-of-nudging-on-land/impact_of_nudging_on_land.ipynb` now reads CTRL_PD `-20261029`, LCC_PD/CTRL_FUT/LCC_FUT `-20261028`, their coupled spin-ups (`-20261025/26`), MET and the shared spin-ups; 2001–2014. The old-chain version (CTRL `-20260925`, LCC `-20261005`, 2001–2009) is in git (commit `2f2e672`), its outputs in `impact_of_nudging_on_land_outputs/pre_co2_fix/`.
+
+## Background aerosol PD vs FUT (2026-11-09)
+
+| Notebook | Runs / inputs read | What |
+|---|---|---|
+| `background-aerosol-pd-fut/background_aerosol_pd_fut.ipynb` | resolved `CaseDocs/atm_in` + all 83+83 emission files of CTRL_PD `-20261029` (CMIP6 hist, year 2000) and CTRL_FUT `-20261028` (SSP5-8.5, year 2100); ocean DMS files; processed CTRL_PD/CTRL_FUT atm 2001–2014 | prescribed emission totals by sector, PD/FUT/diff maps, time series of the whole files (year read marked), model AOD, sulfate, CDNC, surface SO₂/DMS/NOx/O₃/CO. SOx 70.6 → 29.7 Tg S (half volcanic in FUT), BC −56 %, NOx −23 %, NH3 +48 %, fires ±20 %; global AOD +6 % despite sulfate −39 % |
+
