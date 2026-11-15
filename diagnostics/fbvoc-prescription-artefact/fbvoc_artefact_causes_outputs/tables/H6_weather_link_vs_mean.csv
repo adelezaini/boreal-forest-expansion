@@ -3,4 +3,4 @@ A = CTRL_PD − clim2001-14,-3.034,0.022,-3.057
 R = CTRL_PD − replay,-0.488,0.041,-0.529
 W = CTRL_PD − clim2001-02,-1.561,0.051,-1.613
 W − R = replay − clim2001-02 (weather link),-1.073,0.01,-1.084
-A − W = clim2001-02 − clim2001-14 (wrong mean),-1.473,-0.029,-1.444
+A − W = clim2001-02 − clim2001-14 (wrong mean + extra smoothing),-1.473,-0.029,-1.444

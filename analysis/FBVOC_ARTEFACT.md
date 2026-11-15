@@ -3,7 +3,7 @@
 Notebooks:
 
 - `diagnostics/fbvoc-prescription-artefact/fbvoc_prescription_artefact.ipynb`: is there an artefact?
-- `fbvoc_artefact_causes.ipynb`: why, hypotheses H1–H5. Old-chain PD runs on CTRL land, kept on purpose (user 2026-11-02): the CO₂ bug was in the FUT land spin-up, and both runs of each contrast share land and restart.
+- `fbvoc_artefact_causes.ipynb`: why, hypotheses H1–H6. Old-chain PD runs on CTRL land, kept on purpose (user 2026-11-02): the CO₂ bug was in the FUT land spin-up, and both runs of each contrast share land and restart.
 - `how_big_artefact_is_PD.ipynb`: does it depend on the land cover?
 
 Evidence tags: **(a)** verified in output, **(b)** inference, **(c)** unverified.
@@ -35,8 +35,39 @@ The artefact (|A|) accounts for 62 % of C globally and 71 % at 45–90°N. Befor
 | H3 emission–weather link | real for the precursors (a): τ_ISOP +10–28 % at 45–90°N in the prescribed run. Not correlated with the SOA_cb artefact (a) |
 | H4 SOA budget | prescribed vs interactive: production unchanged (−0.02 %); **lifetime +3 %** (7.02 → 7.24 d); the extra SOA is at 400–100 hPa (a) |
 | H5 replay with actual yearly emissions (CTRL_PD_fBVOCctrlPD_HR) | R = CTRL_PD − replay = −0.49 % vs A = −3.03 % → **the climatology is the cause** (a) |
+| H6 2-yr climatology with the right mean (CTRL_PD_fBVOCctrlPD_C0102) | W = CTRL_PD − C0102 = −1.56 %: **the lost weather link is the cause, not the wrong mean** (a); details below |
 
-**Mechanism (b):** in the climatology, emissions no longer follow day-to-day weather. For example, they are also released on convective days, lifted, and form SOA higher up, where it lives longer.
+**Mechanism:** in the climatology, emissions no longer follow day-to-day weather. They are also released on convective days, lifted, and form SOA higher up, where it lives longer. Measured (a): in the tropics the prescribed run has isoprene +18 % and monoterpenes +12 % at 400–100 hPa, isoprene −18 % at 850–700 hPa, SOA higher up, OH and O₃ within 0.8 %; nothing of this in the replay run. The convection step itself is (b): there are no daily convection fields to show it.
+
+### H6: weather link or wrong mean? (2026-11-09, `fbvoc_artefact_causes.ipynb` cells 59–63)
+
+The 2001–2014 climatology differs from the 2001–2002 emissions of the compared years in two ways: it averages away day-to-day weather, and its mean is different (ISOP −5.8 % at 30–45°N, +5.0 % at 45–60°N; tropics +0.1 %). `CTRL_PD_fBVOCctrlPD_C0102` prescribes a **2001–2002** climatology of CTRL_PD's emissions: right mean, weather link still lost.
+
+Global SOA burden `SOA_cb`, 2001–2002, % of CTRL_PD (negative = more SOA in the run that is subtracted) (a; `fbvoc_artefact_causes_outputs/tables/H6_weather_link_vs_mean.csv`):
+
+| Run (emissions) | SOA_cb [mg m⁻²] | vs CTRL_PD | ISOP lifted, tropics |
+|---|---|---|---|
+| CTRL_PD (interactive MEGAN) | 2.438 | — | — |
+| replay `_HR` (actual 30-min fluxes) | 2.449 | R = −0.49 % | −0.3 hPa |
+| `_C0102` (2-yr climatology) | 2.476 | W = −1.56 % | −9.8 hPa |
+| `fBVOCctrlPD` (14-yr climatology) | 2.512 | A = −3.03 % | −16.4 hPa |
+
+SOA production is the same in all four runs (within 0.05 %); the whole change is in the lifetime.
+
+**Split of A = −3.03 %:**
+
+| Part | Contrast | % | Tag |
+|---|---|---|---|
+| prescription path | R | −0.5 | (a) value; (c) may be noise |
+| weather link, 2-yr climatology | W − R | −1.1 | (a); lower bound, a 2-yr mean still keeps some weather |
+| extra smoothing 14-yr vs 2-yr + wrong mean | A − W | −1.5 | (a) |
+| of which wrong mean | — | ≈ 0 globally | (b) |
+
+**Verdict:**
+- **About 2.5 of the 3 % is the lost weather link (a/b).** A − W is −1.6 % in the tropics, where the two climatologies have the same mean (within 0.1 %), so there it can only be the extra smoothing of a 14-yr average (removed day-to-day ISOP variability 23 % vs 17 % for the 2-yr file).
+- **The wrong mean moves SOA production between 30–45°N and 45–60°N (P +4.2 % / −3.1 %) and cancels globally (a).** It changes the north–south pattern of production, not the global burden.
+- **Dose–response (a):** the more variability the file removes, the higher the precursors go and the more SOA there is (replay → 2-yr → 14-yr: ISOP −0.3 → −9.8 → −16.4 hPa, SOA burden −0.5 → −1.6 → −3.0 %).
+- **Consequence for the design:** a climatology matched to the analysed years does **not** remove the artefact. It is a property of prescribing a climatology at all, so it has to be corrected by a contrast (design A: prescribed − prescribed; design B: matched baseline), not by a better emission file. Only replay-type emissions (each year's actual fluxes) avoid it.
 
 ## 3. Fixed BVOC ≠ MEGAN off
 
@@ -146,7 +177,7 @@ All three are new-chain runs (`-20261031`), launched and postprocessed by `cases
 - **BVOC effect = the emission change between LCC and CTRL with interactive MEGAN.** That includes the new vegetation and MEGAN's response to the changed climate. The MEGAN split (`MEGAN_ATTRIBUTION.md`) separates them.
 - The non-BVOC part (LCC^ctrl − CTRL^ctrl) includes every land effect not going through BVOC emissions: albedo, evapotranspiration, dry deposition, and possibly dust (c).
 - **Never mix chains in one contrast.** All runs of a formula must come from the new chain.
-- The 15-year runs (CTRL_PD_fBVOCctrlPD, CTRL_FUT_fBVOCctrlFUT) match the 2001–2014 climatology years. In the old 2-year test, part of A came from 2001–02 not being an average year (CTRL_PD_fBVOCctrlPD − replay = +2.55 % mixes both effects).
+- The 15-year runs (CTRL_PD_fBVOCctrlPD, CTRL_FUT_fBVOCctrlFUT) match the 2001–2014 climatology years, so their mean emissions are right. H6 shows that this does not remove the artefact: in the old 2-year test, the wrong mean of 2001–02 added ≈ 0 to the global burden (it shifted production between 30–60°N bands), and the artefact is mostly the lost weather link.
 
 ## 8. In the paper (Methods)
 
@@ -155,12 +186,12 @@ Outline: `/cluster/home/adelez/boreal-forest-expantion-draft/methods-claude.tex`
 | Point | Where |
 |---|---|
 | Frozen, not zero emissions (§3), and why | main |
-| Artefact: what it is, one sentence on the mechanism (§2, lifetime +3 %, 400–100 hPa) | main |
+| Artefact: what it is, one sentence on the mechanism (§2, lifetime +3 %, 400–100 hPa; lost weather link, not the climatology's mean, H6) | main |
 | Design B closed split, total = non-BVOC + BVOC (§4) | main |
 | Assumptions (artefact independent of the emission source; δ ≈ 0) + δ_PD test and the R rule (§5) | main |
 | What the BVOC and non-BVOC terms contain (§7) | main |
 | Artefact size, new chain, PD and FUT, yearly FUT series (§6) | SI |
-| Cause analysis H1–H5 (§2): old-chain PD runs on CTRL land; say so in one line (CO₂ bug was in the FUT land spin-up) | SI |
+| Cause analysis H1–H6 (§2): old-chain PD runs on CTRL land; say so in one line (CO₂ bug was in the FUT land spin-up) | SI |
 | Design A and why B was chosen (§4 pros and cons) | SI |
 
 Still open for the text: δ_PD and R (§5 pending); main FUT emission source (CTRL_PD vs CTRL_FUT, on hold). When §5 or §6 get new numbers, update the yellow `\NUM` boxes in M4.
