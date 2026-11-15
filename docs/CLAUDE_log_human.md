@@ -4,11 +4,19 @@
 
 > **Where things stand (updated every prompt)**
 >
+> <span style="color:#999999">**`analysis-2001-2019/` deleted (15 Nov, 18:43):** the failed temporary 2001–2019 set is gone, and its mentions in `.gitignore`, `CLAUDE.md`, `analysis/README.md` and one script comment are removed. Not committed yet.</span>
+>
 > <span style="color:#999999">**Palette check (15 Nov, 16:57):** the project palette is option Q1 (not P): teal, navy, plum, red `#BC423E`, orange, gold (gold = totals). Nothing changed.</span>
 >
 > <span style="color:#999999">**Plans list (11 Nov, 15:44):** `~/.claude/plans/INDEX.md` lists all Claude plans by date with their status, and now stays in order by itself. Still open: Methods rewrite, MET + nudged runs 2026–2040, MEGAN comparison + FUT batches (raw deletion on hold).</span>
 >
-> <span style="color:#7B2FBE">**Design A and B in one notebook (15 Nov, 17:58):** `artefact-corrected-split` and `cumulative_radiative_decomposition` now show both designs side by side (B = A + δ, checked), with a comparison table and figure. Running; NIRD has read errors, a script retries every 15 min.</span>
+> <span style="color:#AAAAAA">**FUT MEGAN branch runs (15 Nov, 18:37):** the 2000–2001 chain is queued; the launch was interrupted before the 2005 and 2010 chains, so it is being resumed (≈ 30–40 min). Batch 2 (2002, 2006, 2011) starts by itself later. Raw files kept, as for PD.</span>
+>
+> <span style="color:#555555">**Small time shift in MEGAN years 2001–2002 (15 Nov):** the runs started from the spin-up write their daily files 30 min earlier, so each month in the exact split of 2001 and 2002 is shifted by one half-hour step (≤ 0.3 % on monthly emissions at a few cells). The raw files still exist, so it can be redone if you want.</span>
+>
+> <span style="color:#A84300">**Bug in the MEGAN annual maps (15 Nov):** "ANN" years were Dec of the year before + Jan–Nov, and the first year was dropped. Fixed in the code; the existing ANN maps of `megan_factor_maps.ipynb` are not redone yet (your call).</span>
+>
+> <span style="color:#7B2FBE">**Design A and B in one notebook, done (15 Nov, 18:52):** both notebooks ran without errors and show the two designs side by side. δ (the part where they differ) is ≈ 0: PD −0.002 ± 0.030, FUT +0.014 ± 0.025 W m⁻² (≥45°N), now in the Methods outline.</span>
 >
 > <span style="color:#555555">**MEGAN raw files checked against the reduced files (15 Nov, 17:58):** a new independent check recomputes emissions and per-patch totals from the raw files: 2005 passes exactly; the other 5 years are running. The new comparison notebook (exact vs approximate split) is running too. No extra copy made.</span>
 >
@@ -24,7 +32,7 @@
 >
 > <span style="color:#008080">**Background aerosol PD vs FUT (9 Nov, 17:00):** FUT repeats the **year 2100 of SSP5-8.5** for all prescribed emissions (industry, traffic, aircraft, fires, volcanic degassing), plus ocean DMS and SST of 2090–2100; the stratospheric volcanic background is the same file in PD and FUT. Note: the present-day DMS file set in the CTRL_FUT `user_nl_cam` is **ignored** (wrong format), so FUT uses the 2090–2100 DMS. New notebook `diagnostics/background-aerosol-pd-fut/background_aerosol_pd_fut.ipynb` is done. Year read, global: sulfur emissions 70.6 → 29.7 Tg S (in FUT half is volcanic), black carbon −56 %, NOx −23 %, ammonia +48 %, fires within ±20 %. In the model: sulfate −39 %, surface NOx −36 %, ozone +3 %, yet AOD +6 % (more dust/sea salt, likely).</span>
 >
-> <span style="color:#999999">**Commits made (15 Nov, 18:05):** 10 commits on `main` (not pushed): Ghan title fix; LCC_FUT_fBVOClccFUT → design A; `.gitignore` (archive folders and built decks stay local, CICERO template kept); analysis reruns 2001–2025; results 2001–2014 → 2001–2025; fBVOC artefact H6; background aerosol; watcher scripts; pptx builders; READMEs + logs. **Left out on purpose:** `artefact-corrected-split`, `cumulative_radiative_decomposition` and their outputs, the two `*-designA` notebooks (another session is rerunning them), the new `megan-lmdi-vs-approx.ipynb` (another session, just started), `sandbox/final_palette.png`. (Was “Commits + PowerPoint folder”, waiting since 9 Nov.)</span>
+> <span style="color:#999999">**Commits made (15 Nov, 18:01):** 11 commits on `main` (not pushed): Ghan title fix; LCC_FUT_fBVOClccFUT → design A; `.gitignore` (archive folders and built decks stay local, CICERO template kept); analysis reruns 2001–2025; results 2001–2014 → 2001–2025; fBVOC artefact H6; background aerosol; watcher scripts; pptx builders; READMEs + logs. **Left out on purpose:** `artefact-corrected-split`, `cumulative_radiative_decomposition` and their outputs, the two `*-designA` notebooks (another session is rerunning them), the new `megan-lmdi-vs-approx.ipynb` (another session, just started), `sandbox/final_palette.png`. (Was “Commits + PowerPoint folder”, waiting since 9 Nov.)</span>
 >
 > <span style="color:#A84300">**Land carbon and water plots (9 Nov, 17:20):** as you asked, `analysis/land-carbon-water.ipynb` now writes to `results/` like the other notebooks (grids in `results/figures/<category>/`, seasonal cycle in `results/figures/interactive/`, tables in `results/tables/`); rerun done, no errors, same numbers; old `_outputs/` folder removed. Results: GPP −3 % (PD) / −5 % (FUT), vegetation carbon +3.8 / +8.3 PgC, net CO₂ flux unchanged in PD, +50 TgC/yr in FUT; ET +2–3 mm/yr from ground evaporation. The PowerPoint builder will need these 9 new figures added.</span>
 >
@@ -321,17 +329,36 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
-## 2026-11-15 · 17:54 → 18:05 (11 min) · session 7559c0c6
+## 2026-11-15 · 18:39 → 18:43 (4 min) · session 08562175
+**Goal:** remove the old temporary folder `analysis-2001-2019/`.
+
+**Found:** its 6 Nov preparation had failed, so it held no data or figures; nothing depended on it.
+
+**Done:** folder deleted (your OK); mentions removed from `.gitignore`, `CLAUDE.md`, `analysis/README.md`, `postprocess/run_all_parallel.sh`.
+
+**Open / next:** commit the deletion.
+
+**Files changed:** the four files above; `analysis-2001-2019/` removed.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-15 · 17:54 → 18:48 (54 min) · session 7559c0c6
 
 **Goal:** suggest commits for the ~600 uncommitted changes, then make them.
 
 **Done:**
-- 10 commits on `main` (not pushed): 2 code fixes, `.gitignore`, analysis reruns, results 2001–2014 → 2001–2025, 2 diagnostics, watcher scripts, pptx builders, docs (commits open since 2026-11-09 16:46).
+- 11 commits on `main` (not pushed): 2 code fixes, `.gitignore`, analysis reruns, results 2001–2014 → 2001–2025, 2 diagnostics, watcher scripts, pptx builders, docs (commits open since 2026-11-09 16:46).
 - `.gitignore`: the 2001–2014 and design-B archive folders (~1.2 GB) stay local; `cicero_template.pptx` is now in git.
 
 **Found:** another session is rerunning `artefact-corrected-split` and `cumulative_radiative_decomposition` and started `megan-lmdi-vs-approx.ipynb`, so those were left out.
 
-**Open-next:** commit those notebooks and their outputs once their runs finish; push when you want.
+**Found (push):** GitHub refused the push: `analysis/radiative_forcing.ipynb` is 112 MB (130 embedded figures; limit 100 MB). It is the only file over the limit. Re-encoding the embedded figures as 256-colour PNGs brings it to ~42 MB; quality check done: no visible difference (average change < 1 % of a colour step range, side-by-side crop identical by eye).
+
+**Done (push fix):** you chose “shrink + keep it small”. New `results/tables/logs/shrink_nb_images.py`; `run_nb_inplace.py` now shrinks notebooks over 20 MB after each run. 10 notebooks shrunk (radiative_forcing 112 → 42 MB, others now 8–17 MB). Commit `3e643af` rewritten with the 3 shrunk analysis notebooks (now `fccaeb8`; later commits, incl. your “final palette”, re-hashed, content unchanged); the other 7 in a new commit. No file over 50 MB left in the push.
+
+**Open-next:** push again (`git push`); commit the held-back notebooks once their runs finish.
 
 **Files changed:** `.gitignore`, git history, these logs.
 
@@ -341,14 +368,16 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#AAAAAA">
 
-## 2026-11-15 · 16:57 → 17:58 (62 min) · session 1b77ec0b
+## 2026-11-15 · 16:57 → 18:53 (116 min) · session 1b77ec0b
 
 **Goal:** status; then design A/B notebooks, Methods update, MEGAN questions.
 
 **Done:**
 - Switch to design A finished (open since 2026-11-11 12:33).
 - Design A and B side by side in `artefact-corrected-split` and `cumulative_radiative_decomposition` (design-B notebooks open since 2026-11-11 12:33); running.
-- Raw-vs-reduced MEGAN check written; 2005 passes. LMDI-vs-approx notebook written (LMDI comparison open since 2026-11-07); running.
+- MEGAN raw files checked (open since 2026-11-07): all 6 PD years match the reduced files exactly, and re-reducing July 2005 from the raw files gives a bit-identical result.
+- FUT MEGAN batches launched (open since 2026-11-07).
+- ANN season bug in `megan_maps` fixed. LMDI-vs-approx notebook written (LMDI comparison open since 2026-11-07); running.
 - Methods outline rewritten (open since 2026-11-11, plan #29); "main FUT emission source" and journal no longer on hold (open since 2026-11-02).
 - Ghan figure title bug fixed.
 
