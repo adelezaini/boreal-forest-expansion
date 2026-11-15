@@ -3,6 +3,7 @@
 Usage: python run_nb_inplace.py path/to/nb.ipynb [--kernel lcc-env] [--timeout 3600]
 Same idea as `jupyter nbconvert --execute --inplace`, which is not installed (no nbformat/nbclient).
 Stops at the first error; the error is saved in that cell's output.
+At the end, notebooks over 20 MB get their embedded figures shrunk (shrink_nb_images.py).
 """
 import argparse, json, os, queue, time
 from jupyter_client.manager import start_new_kernel
@@ -61,4 +62,10 @@ try:
 finally:
     kc.stop_channels()
     km.shutdown_kernel(now=True)
+    # keep the .ipynb under GitHub's 100 MB limit (see shrink_nb_images.py); never fail the run for this
+    try:
+        from shrink_nb_images import shrink
+        shrink(path)
+    except Exception as e:
+        print(f'shrink_nb_images skipped: {e}', flush=True)
 raise SystemExit(1 if failed else 0)
