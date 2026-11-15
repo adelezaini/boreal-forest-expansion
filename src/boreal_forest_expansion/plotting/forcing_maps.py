@@ -175,7 +175,7 @@ CORRECTED_PAIRS = {p: {**roles, "fbvoc": corrected_fbvoc(p)} for p, roles in BVO
 # LCC_FUT_fBVOClccFUT (24g, design A) is not processed yet -> design-B stand-in (user 2026-11-08,
 # "TO BE REPLACED LATER"): LCC_FUT − art_CTRL_FUT = LCC_FUT − CTRL_FUT + CTRL_FUT_fBVOCctrlFUT, i.e. it
 # assumes art(LCC land) = art(CTRL land). Set to False once the run is postprocessed, then rerun analysis/.
-LCC_FUT_FBVOCLCCFUT_DESIGN_B = True
+LCC_FUT_FBVOCLCCFUT_DESIGN_B = False   # user 2026-11-11: real 24g run (design A), 2001-2025 processed
 LCC_FUT_FBVOCLCCFUT = (VirtualRun("LCC_FUT_fBVOClccFUT[design B]",
                                   {"LCC_FUT": 1.0, "CTRL_FUT": -1.0, "CTRL_FUT_fBVOCctrlFUT": 1.0})
                        if LCC_FUT_FBVOCLCCFUT_DESIGN_B else "LCC_FUT_fBVOClccFUT")
