@@ -145,63 +145,70 @@ extend_case() {
     fi
 }
 
-##------ switch a nudged case to the 2000-2025 MET folder (extension past 2015)
-# The 2015-01-01 restart of every nudged run stores the met file it is reading as a
-# FULL PATH (global attribute current_metdata_filename of cam.r, metdata.F90
-# read_met_restart_pio); on restart CAM ignores met_data_file and looks this exact
-# path up in met_filenames_list. So both must move to the new folder:
-#   1. user_nl_cam met_data_file / met_filenames_list: _6h_2000-2015 -> _6h_2000-2025
-#      (backup user_nl_cam.before_met2025); preview_namelists; atm_in checked;
-#   2. cam.r.<restdate> in the RUN DIR: current/next_metdata_filename -> new folder
-#      (same path length). The archived restart is the untouched original.
-# Idempotent. Log: <caseroot>/met2025_switch.log.
-# Usage: switch_case_to_met_2000_2025 <casename> <restdate YYYY-MM-DD-00000> <last met day needed YYYY-MM-DD>
+##------ switch a nudged case to another MET file list (extensions past 2015 and past 2026)
+# One function for every met-data switch (user 2026-11-15; replaces switch_case_to_met_2000_2025).
+# On a restart CAM ignores met_data_file: it takes the met file it was reading from the
+# restart (global attributes current/next_metdata_filename of cam.r, FULL PATHS, metdata.F90
+# read_met_restart_pio) and looks that exact path up in met_filenames_list. So:
+#   1. the new list must reach <need_day>, and the restart's files must be in it under the
+#      new folder name (same file name);
+#   2. user_nl_cam met_filenames_list -> <new list>, met_data_file -> same file name in the new
+#      folder (backup user_nl_cam.before_<new folder>); preview_namelists; atm_in checked;
+#   3. cam.r.<restdate> in the RUN DIR: current/next_metdata_filename -> new folder (ncatted),
+#      only if they differ. The archived restart stays the untouched original.
+# Uses: 2015 (_6h_2000-2015 -> _6h_2000-2025/...cam.h1_filelist.txt) and 2026
+#       (_6h_2000-2025 -> _6h_2000-2040/...cam.h1_filelist_2000-2040.txt; docs/met-nudg-2026-2040.md).
+# Idempotent. Log: <caseroot>/met_switch.log (2015 switches: met2025_switch.log).
+# Usage: switch_case_to_met_list <casename> <restdate YYYY-MM-DD-00000> <last met day needed YYYY-MM-DD> <new list>
 # CHECK_ONLY=1: checks only.
-switch_case_to_met_2000_2025() {
-    local casename="$1" restdate="$2" need_day="$3"
-    local met=NF2000norbc_tropstratchem_met_f19_f19_20260422
-    local az=/cluster/shared/noresm/inputdata/noresm-only/inputForNudging/AZ
-    local olddir="$az/${met}_6h_2000-2015" newdir="$az/${met}_6h_2000-2025"
-    local newlist="$newdir/${met}.cam.h1_filelist.txt"
+switch_case_to_met_list() {
+    local casename="$1" restdate="$2" need_day="$3" newlist="$4"
+    local newdir; newdir=$(dirname "$newlist")
     local caseroot="$HOME/cases/BRL_FRST_XPSN/$casename"
     cd "$caseroot" || return 1
     local rundir; rundir=$(./xmlquery --value RUNDIR)
     local rfile="$rundir/$casename.cam.r.$restdate.nc"
-    local log="$caseroot/met2025_switch.log"
+    local log="$caseroot/met_switch.log"
 
     [[ -f "$newlist" ]] || { echo "ERROR: missing $newlist (MET folder not built yet)" >&2; return 1; }
     local last; last=$(tail -n 1 "$newlist" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}-00000\.nc$' | cut -c1-10)
     [[ -n "$last" && ! "$last" < "$need_day" ]] || {
         echo "ERROR: $newlist ends at '$last', run needs $need_day" >&2; return 1; }
     [[ -f "$rfile" ]] || { echo "ERROR: missing run-dir restart $rfile" >&2; return 1; }
-    grep -q "_6h_2000-20[12]5/" user_nl_cam || { echo "ERROR: no met paths in user_nl_cam" >&2; return 1; }
+    local old_df; old_df=$(sed -n "s/^ *met_data_file *= *'\(.*\)'.*/\1/p" user_nl_cam)
+    grep -q "^ *met_filenames_list *=" user_nl_cam && [[ -n "$old_df" ]] \
+        || { echo "ERROR: no met_data_file/met_filenames_list in user_nl_cam" >&2; return 1; }
+    local new_df="$newdir/$(basename "$old_df")"
+    [[ -f "$new_df" ]] || { echo "ERROR: $new_df does not exist" >&2; return 1; }
 
     module load NCO/5.2.9-foss-2024a >/dev/null 2>&1 || true
     command -v ncks >/dev/null || { echo "ERROR: NCO not available" >&2; return 1; }
     local cur nxt
     cur=$(ncks -M "$rfile" | sed -n 's/.*current_metdata_filename = "\(.*\)".*/\1/p')
     nxt=$(ncks -M "$rfile" | sed -n 's/.*next_metdata_filename = "\(.*\)".*/\1/p')
-    case "$cur" in
-        "$olddir"/*|"$newdir"/*) ;;
-        *) echo "ERROR: unexpected current_metdata_filename '$cur' in $rfile" >&2; return 1 ;;
-    esac
-    local cur_new="${cur/$olddir/$newdir}" nxt_new="${nxt/$olddir/$newdir}"
-    [[ -f "$cur_new" ]] || { echo "ERROR: $cur_new not in the new folder" >&2; return 1; }
-    [[ -z "$nxt_new" || -f "$nxt_new" ]] || { echo "ERROR: $nxt_new not in the new folder" >&2; return 1; }
+    [[ -n "$cur" ]] || { echo "ERROR: no current_metdata_filename in $rfile" >&2; return 1; }
+    local cur_new="$newdir/$(basename "$cur")" nxt_new=""
+    [[ -n "$nxt" ]] && nxt_new="$newdir/$(basename "$nxt")"
+    for f in "$cur_new" $nxt_new; do
+        [[ -f "$f" ]] || { echo "ERROR: $f does not exist" >&2; return 1; }
+        grep -Fxq -- "$f" "$newlist" || { echo "ERROR: $f is not in $newlist" >&2; return 1; }
+    done
     if [[ -n "${CHECK_ONLY:-}" ]]; then
         echo "CHECK OK: $casename met switch possible (restart reads $(basename "$cur"); list ends $last)"
         return 0
     fi
 
     {
-        echo "== $(date '+%F %T') switch to $newdir (restart $restdate)"
+        echo "== $(date '+%F %T') switch to $newlist (restart $restdate)"
         echo "restart before: current='$cur' next='$nxt'"
+        echo "user_nl_cam before: $(grep -E '^ *met_(data_file|filenames_list)' user_nl_cam | tr -s ' ' | tr '\n' ' ')"
     } >> "$log"
-    [[ -f user_nl_cam.before_met2025 ]] || cp -p user_nl_cam user_nl_cam.before_met2025
-    sed -i "/^ *met_\(data_file\|filenames_list\)/ s|_6h_2000-2015/|_6h_2000-2025/|" user_nl_cam
+    local tag; tag=$(basename "$newdir"); tag=${tag##*_6h_}
+    [[ -f "user_nl_cam.before_met$tag" ]] || cp -p user_nl_cam "user_nl_cam.before_met$tag"
+    sed -i -E "s|^( *met_filenames_list *= *).*|\1'$newlist'|; s|^( *met_data_file *= *).*|\1'$new_df'|" user_nl_cam
     ./preview_namelists > /dev/null || return 1
-    grep -q "_6h_2000-2015" CaseDocs/atm_in && { echo "ERROR: atm_in still has the old folder" >&2; return 1; }
-    [[ $(grep -c "_6h_2000-2025/" CaseDocs/atm_in) -eq 2 ]] || { echo "ERROR: atm_in met paths not switched" >&2; return 1; }
+    grep -q "met_filenames_list *= *'$newlist'" CaseDocs/atm_in || { echo "ERROR: atm_in met_filenames_list not switched" >&2; return 1; }
+    grep -q "met_data_file *= *'$new_df'" CaseDocs/atm_in || { echo "ERROR: atm_in met_data_file not switched" >&2; return 1; }
 
     if [[ "$cur" != "$cur_new" || "$nxt" != "$nxt_new" ]]; then
         local att=(-a current_metdata_filename,global,o,c,"$cur_new")
@@ -211,7 +218,7 @@ switch_case_to_met_2000_2025() {
     local cur_chk; cur_chk=$(ncks -M "$rfile" | sed -n 's/.*current_metdata_filename = "\(.*\)".*/\1/p')
     [[ "$cur_chk" == "$cur_new" ]] || { echo "ERROR: restart attribute not updated ($cur_chk)" >&2; return 1; }
     echo "restart after:  current='$cur_new' next='$nxt_new'" >> "$log"
-    echo "Switched $casename to $newdir"
+    echo "Switched $casename to $newlist"
 }
 
 ##----------------- restart file handling -----------------##

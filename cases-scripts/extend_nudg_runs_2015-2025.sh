@@ -5,7 +5,7 @@
 # with the MET extension (folder ..._6h_2000-2025, built by
 # preprocess/nudging/copy-nudging-data-to-inputForNudging-directory-2000-2025.sh).
 # Same case, same namelists and output; only the met folder changes
-# (switch_case_to_met_2000_2025: user_nl_cam + met file path stored in the run-dir restart).
+# (switch_case_to_met_list, until 2026-11-15 switch_case_to_met_2000_2025: user_nl_cam + met file path stored in the run-dir restart).
 #
 # Two phases, because the MET data arrive in two segments:
 #   phase1  2015-01-01 -> 2020-01-01 (5 yr)  needs the MET folder through 2020-01-01
@@ -41,6 +41,8 @@ case "$PHASE" in
 esac
 
 export MET_END_YEAR=2026
+# 2000-2025 list; the folder is since 2026-11-15 a symlink to ..._6h_2000-2040 (docs/met-nudg-2026-2040.md)
+MET_LIST=/cluster/shared/noresm/inputdata/noresm-only/inputForNudging/AZ/NF2000norbc_tropstratchem_met_f19_f19_20260422_6h_2000-2025/NF2000norbc_tropstratchem_met_f19_f19_20260422.cam.h1_filelist.txt
 # All b5xxx compute nodes failed on 2026-11-03 (python 'Invalid argument', launch failures).
 # Kept in .submit_options, so it also applies to resubmits and st_archive.
 export SUBMIT_BATCH_ARGS="--exclude=b[5101,5103-5196,5203-5204,5207-5296]"
@@ -75,7 +77,7 @@ for CASENAME in "${CASES[@]}"; do
     # 1. checks only (queue empty, last st_archive success, rpointer at RESTDATE, end <= MET end)
     ( CHECK_ONLY=1 extend_case "$CASENAME" "$NYEARS" "$RESTDATE" )
     # 2. met folder: user_nl_cam + run-dir restart (checks only with --check)
-    ( switch_case_to_met_2000_2025 "$CASENAME" "$RESTDATE" "$NEED_DAY" )
+    ( switch_case_to_met_list "$CASENAME" "$RESTDATE" "$NEED_DAY" "$MET_LIST" )
     # 3. continue run + submit (skipped with --check)
     [[ $CHECK -eq 1 ]] || ( extend_case "$CASENAME" "$NYEARS" "$RESTDATE" )
 done

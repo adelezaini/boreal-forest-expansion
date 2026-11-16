@@ -1,6 +1,6 @@
 #!/bin/bash
 # LCC_FUT_fBVOClccFUT (24g) extension 2015 -> 2026-01-01 (user OK 2026-11-05 18:34), same steps as
-# extend_nudg_runs_2015-2025.sh (switch_case_to_met_2000_2025 + extend_case), after its 2000-2014 run:
+# extend_nudg_runs_2015-2025.sh (switch_case_to_met_list, until 2026-11-15 switch_case_to_met_2000_2025, + extend_case), after its 2000-2014 run:
 #   wait: case known (/cluster/work/users/$USER/run-24g/case), rest 2015-01-01 archived, nothing queued,
 #         MET folder built (BUILD_OK) -> phase1 (5 yr); then rest 2020-01-01 archived, nothing queued -> phase2 (6 yr).
 # Failed st_archive jobs: archive_guard.sh. Detached:
@@ -23,7 +23,7 @@ ready() {   # ready RESTDATE: restart archived, archive after the last run, noth
 }
 phase() {   # phase N RESTDATE NYEARS NEED_DAY
     env -i HOME="$HOME" USER="$USER" bash -l -c "cd '$CS' && export MET_END_YEAR=2026 SUBMIT_BATCH_ARGS='$EXCL' && source cases-setup.sh \
-        && ( CHECK_ONLY=1 extend_case '$CASE' $3 '$2' ) && ( switch_case_to_met_2000_2025 '$CASE' '$2' '$4' ) && ( extend_case '$CASE' $3 '$2' )" \
+        && ( CHECK_ONLY=1 extend_case '$CASE' $3 '$2' ) && ( switch_case_to_met_list '$CASE' '$2' '$4' '/cluster/shared/noresm/inputdata/noresm-only/inputForNudging/AZ/NF2000norbc_tropstratchem_met_f19_f19_20260422_6h_2000-2025/NF2000norbc_tropstratchem_met_f19_f19_20260422.cam.h1_filelist.txt' ) && ( extend_case '$CASE' $3 '$2' )" \
         > "$ST/ext_phase$1.log" 2>&1 || fail "phase$1 failed (see ext_phase$1.log)"
     date '+%F %T' > "$ST/ext_phase$1.ok"; log "phase$1 submitted ($2, $3 yr)"
 }

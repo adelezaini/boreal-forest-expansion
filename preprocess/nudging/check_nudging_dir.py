@@ -5,6 +5,10 @@ Checks (noleap calendar):
   - 4 records per file (00, 06, 12, 18 h); the --end file may have fewer;
   - `time` steps exactly 0.25 days across all files, and date/datesec match the file name;
   - the file list (if present) lists every file, in order, with absolute paths;
+    --filelist FILE: check that list (the folder may hold more than one, e.g. the frozen
+    2000-2025 list next to the 2000-2040 list since 2026-11-15); --list-prefix DIR: paths
+    in the list start with DIR instead of <folder> (the frozen list uses the old folder name,
+    a symlink to <folder>);
   - --compare-rec0 FILE: record 0 of the same-date file in the folder equals record 0 of FILE
     (used for 2015-01-01: the real file vs the old patched one, whose record 0 is original).
 
@@ -41,6 +45,8 @@ def main():
     p.add_argument("--start", required=True)
     p.add_argument("--end", required=True)
     p.add_argument("--compare-rec0", type=Path)
+    p.add_argument("--filelist", type=Path, help="file list to check (default: first *filelist*.txt)")
+    p.add_argument("--list-prefix", help="folder path used in the list (default: <folder>)")
     a = p.parse_args()
 
     files = sorted(a.folder.glob("*.cam.h1.*-00000.nc"))
@@ -73,10 +79,11 @@ def main():
         if i % 1000 == 0:
             print(f"  ... {tag}", flush=True)
 
-    flist = next(a.folder.glob("*filelist*.txt"), None)
+    flist = a.filelist or next(a.folder.glob("*filelist*.txt"), None)
     if flist is not None:
         listed = flist.read_text().split()
-        if listed != [str(by_tag[t]) for t in expected if t in by_tag]:
+        prefix = a.list_prefix.rstrip("/") if a.list_prefix else str(a.folder)
+        if listed != [f"{prefix}/{by_tag[t].name}" for t in expected if t in by_tag]:
             errors.append(f"{flist.name}: does not list exactly the files in date order")
     else:
         print("  (no file list found)")

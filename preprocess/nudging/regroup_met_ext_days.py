@@ -17,7 +17,10 @@ For each day D from 2015-01-01:
     records 1-3 (06-18 h)   = records 0-2 of the D file of the extension
 Variables without a time dimension come from the D file. Global attributes too.
 A day is built only when both sources exist. `--final` also builds the last day
-(2026-01-02, record 0 only: the run stops at 2026-01-02 00 h).
+(--last, default 2026-01-02, record 0 only: the run stops at that day's 00 h).
+--first/--last (added 2026-11-15 for the 2026-2040 continuation, defaults = 2015-2025 build):
+for --first 2026-01-02, record 0 is the last record of the 2026-01-01 file, as for every
+other day; --old-dir is only needed when --first is 2015-01-01.
 Output: NetCDF4, zlib 5 + shuffle (as the old 2000-2015 folder), lossless.
 
 Safety
@@ -31,6 +34,8 @@ Usage
 -----
 python3 regroup_met_ext_days.py --src <archive>/atm/hist --old-dir <..._6h_2000-2015> \
     --out-dir <..._6h_2000-2025> [--run] [--final] [--verify-existing]
+python3 regroup_met_ext_days.py --src <archive>/atm/hist --first 2026-01-02 --last 2041-01-02 \
+    --out-dir <..._6h_2000-2040> [--run] [--final]
 Without --run: dry run, prints which days would be built. Exit 0 = ok.
 """
 import argparse
@@ -43,8 +48,9 @@ import netCDF4
 import numpy as np
 
 MET = "NF2000norbc_tropstratchem_met_f19_f19_20260422"
-FIRST = dt.date(2015, 1, 1)
-FINAL = dt.date(2026, 1, 2)
+OLD_FIRST = dt.date(2015, 1, 1)   # first day of the 2015-2025 build: record 0 from the old folder
+FIRST = dt.date(2015, 1, 1)       # set by --first
+FINAL = dt.date(2026, 1, 2)       # set by --last
 SECS = [0, 21600, 43200, 64800]
 
 
@@ -74,7 +80,7 @@ def out_file(out, d):
 
 def sources(d, src, old_dir):
     """[(file, record index), ...] for records 0..3 of day d (shorter for the final day)."""
-    if d == FIRST:
+    if d == FIRST == OLD_FIRST:
         rec0 = (old_dir / f"{MET}.cam.h1.{d:%Y-%m-%d}-00000.nc", 0)
     else:
         rec0 = (ext_file(src, noleap_prev(d)), 3)
@@ -162,12 +168,18 @@ def verify_day(d, srcs, path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--src", type=Path, required=True, help="extension h1 files (work archive atm/hist)")
-    ap.add_argument("--old-dir", type=Path, required=True, help="old _6h_2000-2015 folder (for 2015-01-01 rec 0)")
+    ap.add_argument("--old-dir", type=Path, help="old _6h_2000-2015 folder (for 2015-01-01 rec 0; only with --first 2015-01-01)")
+    ap.add_argument("--first", default="2015-01-01", help="first day to build (default 2015-01-01)")
+    ap.add_argument("--last", default="2026-01-02", help="final day, record 0 only, built with --final (default 2026-01-02)")
     ap.add_argument("--out-dir", type=Path, required=True)
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--final", action="store_true", help="also build 2026-01-02 (record 0 only)")
     ap.add_argument("--verify-existing", action="store_true")
     a = ap.parse_args()
+    global FIRST, FINAL
+    FIRST, FINAL = dt.date.fromisoformat(a.first), dt.date.fromisoformat(a.last)
+    if FIRST == OLD_FIRST and a.old_dir is None:
+        ap.error("--old-dir is needed with --first 2015-01-01")
 
     days, d = [], FIRST
     while d <= FINAL:
