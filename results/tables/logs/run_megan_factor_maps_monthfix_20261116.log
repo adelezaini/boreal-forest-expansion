@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/runpy.py", line 198, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/runpy.py", line 88, in _run_code
+    exec(code, run_globals)
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/ipykernel_launcher.py", line 16, in <module>
+    from ipykernel import kernelapp as app
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/ipykernel/kernelapp.py", line 21, in <module>
+    from IPython.core.application import (  # type:ignore[attr-defined]
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/__init__.py", line 40, in <module>
+    from .terminal.embed import embed
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/terminal/embed.py", line 13, in <module>
+    from IPython.core.magic import Magics, magics_class, line_magic
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/core/magic.py", line 20, in <module>
+    from . import oinspect
+  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/core/oinspect.py", line 52, in <module>
+    from pygments.lexers import PythonLexer
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1322, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1262, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1532, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1506, in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1624, in find_spec
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/tables/logs/run_nb_inplace.py", line 22, in <module>
+    km, kc = start_new_kernel(kernel_name=args.kernel, cwd=os.path.dirname(path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/manager.py", line 852, in start_new_kernel
+    kc.wait_for_ready(timeout=startup_timeout)
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/client.py", line 208, in _async_wait_for_ready
+    raise RuntimeError("Kernel didn't respond in %d seconds" % timeout)
+RuntimeError: Kernel didn't respond in 60 seconds
