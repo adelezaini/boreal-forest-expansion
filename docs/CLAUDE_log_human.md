@@ -366,13 +366,14 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
-## 2026-11-16 · 13:16 → 13:34 (18 min) · session ada6f70d
+## 2026-11-16 · 13:16 → 13:36 (20 min) · session ada6f70d
 
 **Goal:** make the proposed commits, grouped by topic; fix `lake_fix_effect.ipynb`; commit the latest updates.
 
 **Done:**
 - 8 commits on `main`, not pushed: notes moved to `docs/`; design A split figures; MEGAN LMDI reruns; caches moved to `/cluster/work`; sandbox simulation-year script; simulation-contrasts figures moved to `results/` (work of another session); `lake_fix_effect` fix; logs. Commit proposal from 13:14 (session 90ef7026) done.
 - `lake_fix_effect.ipynb`: now reads the old figures from `results/figures-2001-2014/`; rerun with no errors (open since 13:14, session 90ef7026).
+- `analysis/simulation-contrasts` change: already committed in `1995c62` (notebook + figures moved to `results/figures/simulation-contrasts/`); nothing left to commit.
 - Home folder was at its file limit (99 530 of 100 000), which blocked git and broke reruns. With your OK, 6 unused VS Code server copies were deleted: now 73 949 files.
 
 **Open-next:** two new files from other sessions are not committed: `cases-scripts/run_when_done/megan_lmdi_maps_when_FUT_done.sh`, `sandbox/test_fut_minus_pd.py`. Keep an eye on the file count (`dusage`).
