@@ -148,7 +148,7 @@ These are working hypotheses and known facts as of 2026-10-22, not settled concl
 - Before subtracting fields, check that coordinates, calendar (`noleap`), time coverage, units and spatial basis match. Never silently align away a mismatch.
 - CLM fractions differ: grid cell vs land vs natural vegetation vs PFT. Look alike ≠ equivalent.
 - Time means weighted by month length; spatial means and totals by cell area × the right fraction.
-- Spin-up months are dropped in both `postprocess/pipeline.py` and `analysis/loading.open_cam_monthly`. Drop them **once**: don't feed processed files to the loader.
+- Spin-up months (the first 12 records = year 2000) are dropped **by position, not by date** (`isel`, no check) in `src/boreal_forest_expansion/postprocess/pipeline.py` (via `fileio.drop_spinup`; processed files carry the attribute `spinup_months_dropped`) and in `open_cam_monthly`, defined inside the D1/D2 notebooks in `diagnostics/2_other-BVOC-emission-magnitude/` (reads raw h0). The old `datasets/noresm_datasets.create_dataset` drops 12 too. Drop them **once**: never feed processed files to `open_cam_monthly`, or 2001 is silently lost.
 - Existing output files are not proof of completeness or compatibility. Record input cases, years and processing choices, and keep metadata.
 - Never present unexecuted code as tested; say what was actually checked.
 

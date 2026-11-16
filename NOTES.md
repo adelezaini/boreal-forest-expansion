@@ -26,4 +26,9 @@
     
 - final ems_* files go to /cluster/shared/.../bvoc_emissions, original are left in work directory and delected after 42 days
 
+- nudging: last met file of the 2000-2015 series (`…cam.h1.2015-01-01-00000.nc`) had only 1 record (00:00) 
+    --> patched 23 Oct with `preprocess/nudging/extend_last_met_file.py`: added the 06/12/18 h records, copied from 2014-12-31 (only drive the model past the stop date, output unaffected)
+
 - GAMMA_* is an area mean over vegetated patches, not emission-weighted; EPS/GAMMA only for 7 of 21 MTERP
+
+- MEGAN LMDI, 2000-chain years (2001, 2002): steps were put in the month one 30-min step off (tape-2 days 00:00-23:30)
