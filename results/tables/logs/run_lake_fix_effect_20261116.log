@@ -1,0 +1,14 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (43s)
+--- cell 3 ok (161s)
+--- cell 5 ok (4s)
+--- cell 7 ok (2s)
+--- cell 9 ok (2s)
+--- cell 11 ok (0s)
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb: 6.5 MB < 20 MB, skipped
+Exception ignored in: <function KernelClient.__del__ at 0x7fbc8cd37550>
+Traceback (most recent call last):
+  File "/cluster/home/adelez/.local/lib/python3.9/site-packages/jupyter_client/client.py", line 128, in __del__
+  File "/usr/lib64/python3.9/logging/__init__.py", line 1433, in debug
+  File "/usr/lib64/python3.9/logging/__init__.py", line 1699, in isEnabledFor
+TypeError: 'NoneType' object is not callable
