@@ -38,8 +38,8 @@ Defined once in `src/boreal_forest_expansion/plotting/forcing_maps.py` (`CONTRAS
 | `figures/pd-fut-attribution/` | `analysis/pd-fut-attribution.ipynb`: PD vs FUT comparisons that mix categories. |
 | `figures/timeseries/` | Absolute yearly values of every run (no differences), `analysis/timeseries-responses.ipynb` §3. |
 | `figures/megan_factors/` | `analysis/megan_factor_maps.ipynb` (LCC vs CTRL, same period), `diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb`. |
+| `figures/simulation-contrasts/` | `analysis/simulation-contrasts.ipynb`: one contrast-grid figure per question (`contrast_grid_fig<1a…4b>_*`); deck `pptx/BOREAL_simulation_contrasts_2001-2025_CICERO.pptx` (`pptx/build_contrasts_pptx.py`). Moved here from `analysis/simulation-contrasts_outputs/figures/` 2026-11-16 (2001–2014 ones in `figures-2001-2014/simulation-contrasts/`). |
 
-**Not in `results/`:** the one-figure-per-question contrast grids of `analysis/simulation-contrasts.ipynb` (Figs. 1a–4b, `contrast_grid_fig<N>_{2001_2014,2001_2025}.png`) are saved in **`analysis/simulation-contrasts_outputs/figures/`**; their deck is `results/pptx/BOREAL_simulation_contrasts_2001-2025_CICERO.pptx` (`results/pptx/build_contrasts_pptx.py`).
 
 Code: `forcing_maps.FIG_CATEGORY[<category>]`; grids and Ghan maps of a category go there by default (`make_contrast_grid_figure(<category>, …)`, `make_ghan_contrast_figure(contrast)`).
 

@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from cicero_pptx import Deck, M  # noqa: E402
 
 ROOT = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
-FIGDIR = ROOT / "analysis/simulation-contrasts_outputs/figures"
+FIGDIR = ROOT / "results/figures/simulation-contrasts"
 Y = "2001_2025"
 DB = "Design A: LCC_FUT_fBVOClccFUT is the real run 24g (own LCC_FUT emissions, 2001–2025)."
 
