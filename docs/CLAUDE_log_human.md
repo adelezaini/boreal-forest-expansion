@@ -4,21 +4,58 @@
 
 > **Where things stand (updated every prompt)**
 >
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Commits made (16 Nov, 13:21):** 6 commits on `main` (not pushed): notes moved to `docs/`; design A figures; MEGAN LMDI reruns; caches on `/cluster/work`; sandbox simulation-year script; logs. One slip: `lake_fix_effect.ipynb` went in with its last cell (11) still failing (it looks for an old figure path). Choose: fix the path and rerun it, or take it out of that commit.</span>
+>
+> <span style="color:#999999">**Analysis notes moved to `docs/` (16 Nov, 13:10):** `FBVOC_ARTEFACT.md`, `MEGAN_ATTRIBUTION.md`, `PLOTTED_VARIABLES.md` are now in `docs/`; all mentions point there.</span>
+>
+>
+> <span style="color:#999999">**Contrast figures location noted (16 Nov, 13:08):** `results/README.md` now says that the `simulation-contrasts.ipynb` figures (Figs. 1a–4b) live in `analysis/simulation-contrasts_outputs/figures/`, not in `results/figures/`.</span>
+>
+> <span style="color:#999999">**Old folders checked (16 Nov, 11:50):** nothing changed. `diagnostics/0_check-spinup-equilibrium-uncomplete` is replaced by `0_check-simulation-equilibrium`; only the quick-spin-up figures are unique (worth keeping as a record). `_old/` has nothing that is still needed: its functions are all in `src/`.</span>
+>
+> <span style="color:#999999">**Commits by topic (16 Nov, 11:44):** 4 commits made on `main` (not pushed): MET + nudged runs 2026–2040; MEGAN exact split; design A; background aerosol. Sandbox scripts and logs left out, as you asked. You had already committed the artefact folder rename yourself.</span>
+>
+> <span style="color:#008080">**Background aerosol notebooks (16 Nov, 11:31):** done; both run with results saved, now in `diagnostics/background-aerosol/` (the folders were merged at 11:27). PD/FUT notebook: what each compound does, methane 1778 → 2415 ppb, natural sources (forests emit 3.5× more monoterpenes in FUT). New LCC_FUT − CTRL_FUT notebook: the forest expansion barely changes the aerosol background (global ≤ 0.2 %).</span>
+>
+> <span style="color:#7B2FBE">**Slides updated to design A (16 Nov, 12:33):** All decks checked: none broken. the 4 CICERO decks in `results/pptx/` are rebuilt (figures 340 slides, contrasts, MEGAN with the new exact-split section, land). Two missing design-A figure sets were made: the design-A budget split and maps of the artefact on LCC land with its own emissions (FUT ≥45°N: +0.07 W m⁻², mostly cloud; δ stays ≈ 0). Not rebuilt: the old non-CICERO deck and `simulations-interpretation.pptx`. NIRD problem: many files read only with `HDF5_USE_FILE_LOCKING=FALSE`.</span>
+>
+> <span style="color:#E58AA5">**Simulation-year plots (16 Nov, 13:10):** 6 drift figures in `sandbox/test_cyclical_sim_year_outputs/` (x = simulation year, analysis years shaded, conditions in titles). Seasonal (Jan–Dec) figures not made yet: they need the monthly files on NIRD, which gives read errors today. Seen in the plots: FUT runs with present-day emissions need ~3 years for SOA to settle (year 1 1.9 → 1.3 mg m⁻²); this moves the 25-year mean by only 0.5 %. All `cache/` folders now sit on `/cluster/work` (home quota was full).</span>
+>
+> <span style="color:#AAAAAA">**MET + nudged runs 2026–2040 (16 Nov, 11:02):** MET is running (model year 2029 of 2041; its first 6-yr job ends ~19:00 today). The automatic watcher is now on (started 11:00; it had not started yesterday, which cost nothing). Expected: the 12 runs start ~17 Nov, reach 2041 ~19–20 Nov; postprocessing + analysis ~20–21 Nov.</span>
+>
+> <span style="color:#A84300">**MEGAN attribution maps with the exact split (16 Nov, 13:18):** FUT maps will be added automatically when all FUT years are in (~17 Nov evening). new maps like the old `PD_*_attribution_*` ones, now from the exact LMDI split (PD, 6 years, isoprene and monoterpenes, ANN and JJA): `results/figures/megan_factors/PD_*_attribution_LMDI_*_6yr.png`, notebook `analysis/megan-lmdi-attribution-maps.ipynb`. No residual row any more. Monoterpenes ≥45°N, ANN: emission −0.5 % = composition −4.5 % + activity +4.0 % (leaf area +3.7 %, temperature +0.5 %).</span>
+>
+> <span style="color:#AAAAAA">**FUT MEGAN runs (16 Nov, 11:00):** 2000 and 2005 reduced, 2010 being reduced, 2001 running (done ~17:30). Batch 2 (2002, 2006, 2011) starts by itself tonight; all FUT years expected ~17 Nov evening if the queue is quick.</span>
+>
+> <span style="color:#E58AA5">**FUT − PD figures in the sandbox (15 Nov, 19:24):** new `sandbox/test_fut_minus_pd_outputs/` shows FUT − PD year by year (same nudging year in both), for CTRL, LCC and the fBVOC pairs, plus how the forest effect changes from PD to FUT. Script `sandbox/test_fut_minus_pd.py`. Paper figures not touched.</span>
+>
+> <span style="color:#555555">**MEGAN exact-split workflow drawn (15 Nov, 19:05):** new figure `docs/workflows/workflow_MEGAN_LMDI_logic.png` shows each step of the MEGAN LMDI workflow and why it is done that way (problem → method → tests → runs → reduction → checks → status). Rebuild it with `docs/workflows/draw_workflow_MEGAN_LMDI.py`. The 6 Nov figure is kept.</span>
+>
+> <span style="color:#999999">**What can be cleaned (15 Nov, 18:56):** checked only, nothing deleted. The folder holds 9.7 GB. About 1.9 GB can go with no loss (notebook `cache/` folders + Python caches); about 1.8 GB more are old figure sets you could delete or move to NIRD, including `*-designB-standin-20261111/` (the results as they were on 11 Nov, just before the switch to design A). Git takes 3.8 GB; a cleanup there should wait until the other session's history rewrite is pushed.</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **MET + nudged runs 2026–2040 (15 Nov, 19:02):** MET is in the queue (3 jobs of 6 yr, to 2041-01-02). The automatic watcher that does the rest (met files, check, the 12 runs in 3 phases, NIRD copy, processing, analysis) is written and tested, but I was not allowed to start it. Please start it once: `cd cases-scripts/run_when_done && setsid nohup bash met_nudg_2026-2040_when_done.sh > /cluster/work/users/adelez/met-nudg-2040/watch.log 2>&1 < /dev/null &`. Full workflow: `docs/met-nudg-2026-2040.md`.</span>
+>
 > <span style="color:#999999">**`analysis-2001-2019/` deleted (15 Nov, 18:43):** the failed temporary 2001–2019 set is gone, and its mentions in `.gitignore`, `CLAUDE.md`, `analysis/README.md` and one script comment are removed. Not committed yet.</span>
 >
 > <span style="color:#999999">**Palette check (15 Nov, 16:57):** the project palette is option Q1 (not P): teal, navy, plum, red `#BC423E`, orange, gold (gold = totals). Nothing changed.</span>
 >
 > <span style="color:#999999">**Plans list (11 Nov, 15:44):** `~/.claude/plans/INDEX.md` lists all Claude plans by date with their status, and now stays in order by itself. Still open: Methods rewrite, MET + nudged runs 2026–2040, MEGAN comparison + FUT batches (raw deletion on hold).</span>
 >
-> <span style="color:#AAAAAA">**FUT MEGAN branch runs (15 Nov, 18:37):** the 2000–2001 chain is queued; the launch was interrupted before the 2005 and 2010 chains, so it is being resumed (≈ 30–40 min). Batch 2 (2002, 2006, 2011) starts by itself later. Raw files kept, as for PD.</span>
+> <span style="color:#A84300">**Exact vs approximate MEGAN split (15 Nov, 19:01):** the current attribution maps get the two main terms wrong, even in sign: for isoprene north of 45°N, composition +12 % (approximate) vs −2 % (exact), leaf area −3 % vs +3 %; the big residual of the old maps hid this. Temperature is much smaller than it looked (+0.5 % vs +2.4 %). Notebook `analysis/megan-lmdi-vs-approx.ipynb`.</span>
 >
-> <span style="color:#555555">**Small time shift in MEGAN years 2001–2002 (15 Nov):** the runs started from the spin-up write their daily files 30 min earlier, so each month in the exact split of 2001 and 2002 is shifted by one half-hour step (≤ 0.3 % on monthly emissions at a few cells). The raw files still exist, so it can be redone if you want.</span>
+> <span style="color:#AAAAAA">**FUT MEGAN branch runs (15 Nov, 19:18):** all of batch 1 is submitted (2000–2001, 2005, 2010; the 2000 chain is already running) and the reduction watcher is on. Batch 2 (2002, 2006, 2011) starts by itself after batch 1 is reduced. Raw files kept, as for PD.</span>
+>
+> <span style="color:#555555">**MEGAN 2001–2002 time shift being fixed (16 Nov, 11:06):** as you decided: the reduction now puts every half-hour step in its own month; PD 2001 and 2002 are being re-reduced (~3 h), checked, and swapped in by a script, which then reruns the comparison and the MEGAN factor maps. FUT 2001–2002 will use the fixed code directly.</span>
+>
+> <span style="color:#A84300">**Exact MEGAN attribution maps (16 Nov, 11:06):** the exact maps you asked for last night (`megan-lmdi-attribution-maps.ipynb`, another session) are now the only attribution maps; `megan_factor_maps.ipynb` no longer draws the approximate ones. They are redrawn once 2001–2002 are fixed; FUT follows when 3 FUT years are reduced. The two diagnostics notebooks hit by the ANN bug are rerunning.</span>
 >
 > <span style="color:#A84300">**Bug in the MEGAN annual maps (15 Nov):** "ANN" years were Dec of the year before + Jan–Nov, and the first year was dropped. Fixed in the code; the existing ANN maps of `megan_factor_maps.ipynb` are not redone yet (your call).</span>
 >
 > <span style="color:#7B2FBE">**Design A and B in one notebook, done (15 Nov, 18:52):** both notebooks ran without errors and show the two designs side by side. δ (the part where they differ) is ≈ 0: PD −0.002 ± 0.030, FUT +0.014 ± 0.025 W m⁻² (≥45°N), now in the Methods outline.</span>
 >
-> <span style="color:#555555">**MEGAN raw files checked against the reduced files (15 Nov, 17:58):** a new independent check recomputes emissions and per-patch totals from the raw files: 2005 passes exactly; the other 5 years are running. The new comparison notebook (exact vs approximate split) is running too. No extra copy made.</span>
+> <span style="color:#A84300">**Exact vs approximate MEGAN split (15 Nov, 19:00):** on the same 6 PD years, the current (approximate) maps get the main factors wrong: for isoprene north of 45°N they show composition +12 % and leaf area −3 %, the exact split shows −2 % and +3 % (opposite signs), and the approximate residual (−10 %) is spread over several factors. Use the exact split in the paper. The raw files were not needed for this (`analysis/megan-lmdi-vs-approx.ipynb`).</span>
+>
+> <span style="color:#555555">**MEGAN raw files checked (15 Nov, 18:45):** all 6 PD years match the reduced files exactly; re-reducing July 2005 from the raw files gives a bit-identical file. Before deleting: decide on the 2001–2002 half-hour shift.</span>
 >
 > <span style="color:#A84300">**Methods outline rewritten (15 Nov, 17:35):** `methods-claude.tex` now uses design A, the 2×2 emission sources (all four kept), 2001–2025 numbers, the correct FUT DMS, and no ON-HOLD items. `main.tex`/`methods.tex` not touched (your edits).</span>
 >
@@ -32,7 +69,7 @@
 >
 > <span style="color:#008080">**Background aerosol PD vs FUT (9 Nov, 17:00):** FUT repeats the **year 2100 of SSP5-8.5** for all prescribed emissions (industry, traffic, aircraft, fires, volcanic degassing), plus ocean DMS and SST of 2090–2100; the stratospheric volcanic background is the same file in PD and FUT. Note: the present-day DMS file set in the CTRL_FUT `user_nl_cam` is **ignored** (wrong format), so FUT uses the 2090–2100 DMS. New notebook `diagnostics/background-aerosol-pd-fut/background_aerosol_pd_fut.ipynb` is done. Year read, global: sulfur emissions 70.6 → 29.7 Tg S (in FUT half is volcanic), black carbon −56 %, NOx −23 %, ammonia +48 %, fires within ±20 %. In the model: sulfate −39 %, surface NOx −36 %, ozone +3 %, yet AOD +6 % (more dust/sea salt, likely).</span>
 >
-> <span style="color:#999999">**Commits made (15 Nov, 18:01):** 11 commits on `main` (not pushed): Ghan title fix; LCC_FUT_fBVOClccFUT → design A; `.gitignore` (archive folders and built decks stay local, CICERO template kept); analysis reruns 2001–2025; results 2001–2014 → 2001–2025; fBVOC artefact H6; background aerosol; watcher scripts; pptx builders; READMEs + logs. **Left out on purpose:** `artefact-corrected-split`, `cumulative_radiative_decomposition` and their outputs, the two `*-designA` notebooks (another session is rerunning them), the new `megan-lmdi-vs-approx.ipynb` (another session, just started), `sandbox/final_palette.png`. (Was “Commits + PowerPoint folder”, waiting since 9 Nov.)</span>
+> <span style="color:#999999">**Commits made and pushed (15 Nov, 18:56):** 11 commits on `main` (not pushed): Ghan title fix; LCC_FUT_fBVOClccFUT → design A; `.gitignore` (archive folders and built decks stay local, CICERO template kept); analysis reruns 2001–2025; results 2001–2014 → 2001–2025; fBVOC artefact H6; background aerosol; watcher scripts; pptx builders; READMEs + logs. **Left out on purpose:** `artefact-corrected-split`, `cumulative_radiative_decomposition` and their outputs, the two `*-designA` notebooks (another session is rerunning them), the new `megan-lmdi-vs-approx.ipynb` (another session, just started), `sandbox/final_palette.png`. (Was “Commits + PowerPoint folder”, waiting since 9 Nov.)</span>
 >
 > <span style="color:#A84300">**Land carbon and water plots (9 Nov, 17:20):** as you asked, `analysis/land-carbon-water.ipynb` now writes to `results/` like the other notebooks (grids in `results/figures/<category>/`, seasonal cycle in `results/figures/interactive/`, tables in `results/tables/`); rerun done, no errors, same numbers; old `_outputs/` folder removed. Results: GPP −3 % (PD) / −5 % (FUT), vegetation carbon +3.8 / +8.3 PgC, net CO₂ flux unchanged in PD, +50 TgC/yr in FUT; ET +2–3 mm/yr from ground evaporation. The PowerPoint builder will need these 9 new figures added.</span>
 >
@@ -329,6 +366,299 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
+## 2026-11-16 · 13:16 → 13:21 (5 min) · session ada6f70d
+
+**Goal:** make the proposed commits, grouped by topic.
+
+**Done:** 6 commits on `main`, not pushed: notes moved to `docs/` (+ all references); design A split figures; MEGAN LMDI notebook reruns; caches moved to `/cluster/work`; sandbox simulation-year script; session logs. Commit proposal from 13:14 (session 90ef7026) done.
+
+**Found:** `lake_fix_effect.ipynb` was committed with cell 11 still failing (missing old figure `before_lake_fix/..._2001_2014_...png`); the rest of the notebook ran.
+
+**Open-next:** fix that path + rerun, or remove it from the commit. Two new files from other sessions were left out: `cases-scripts/run_when_done/megan_lmdi_maps_when_FUT_done.sh`, `sandbox/test_fut_minus_pd.py`.
+
+**Files changed:** logs only (plus the commits).
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-16 · 13:08 → 13:14 (6 min) · session 90ef7026
+
+**Goal:** move the Markdown notes out of `analysis/` into `docs/`; suggest commits.
+
+**Done:** 3 notes moved with git (`FBVOC_ARTEFACT.md`, `MEGAN_ATTRIBUTION.md`, `PLOTTED_VARIABLES.md`); all references updated. Commit plan written.
+
+**Found:** two notebook reruns failed: `analysis/megan-lmdi-attribution-maps.ipynb` (NIRD HDF lock error; the committed version is fine) and `diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb` (looks for a figure in the old `results/figures/megan_factors/before_lake_fix/`).
+
+**Open-next:** your go on commits A (housekeeping) and B (design A); fix + rerun the two notebooks; then the one leftover reference in `megan-lmdi-attribution-maps.ipynb`.
+
+**Files changed:** the 3 notes (moved), ~25 files with updated references.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-16 · 13:07 → 13:08 (1 min) · session d963b45a
+**Goal:** say in `results/README.md` where the simulation-contrasts figures are.
+
+**Done:** added a note under the figures table pointing to `analysis/simulation-contrasts_outputs/figures/` and the matching deck.
+
+**Open / next:** nothing.
+
+**Files changed:** `results/README.md`, logs.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-16 · 11:44 → 11:50 (6 min) · session 0706ae25
+**Goal:** see whether the unfinished spin-up check and `_old/` hold anything worth keeping.
+
+**Done:** checked both, changed nothing.
+
+**Found:** the spin-up check was dropped because the NCO scripts were too slow, and its raw input is gone. The newer `0_check-simulation-equilibrium` covers it, except for the quick spin-up (LCC FUT) figures. `_old/`: all functions were moved to `src/`; the rest is notebooks from the earlier idealized setup.
+
+**Open / next:** your OK to archive the spin-up folder (keeping its figures and small files) and to delete `_old/` (git keeps a copy).
+
+**Files changed:** logs only.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-16 · 11:39 → 11:44 (5 min) · session 4d122426
+**Goal:** suggest and make commits for the uncommitted work.
+
+**Done:** commits grouped by topic (your rule from now on: one commit per topic, not per folder). 4 made: MET + nudged runs 2026–2040, MEGAN exact split, design A, background aerosol.
+
+**Open / next:** push when you want; the design-A commit message still mentions the folder rename (already in your own commit), reword if you like.
+
+**Files changed:** logs only.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 10:59 → 11:31 (32 min) · session 6ce7bd45
+
+**Goal:** finish the background-aerosol work: methane values, a table of what each compound does, a section on the natural sources, a new LCC_FUT − CTRL_FUT notebook, and why the cleaner FUT background matters.
+
+**Done:**
+- PD/FUT notebook: roles table; methane 1778 → 2415 ppb (+36 %), N₂O +24 %, CO₂ ×3.1; natural sources section (MEGAN, dust, sea salt, DMS, lightning NOx); longer summary.
+- Checked NH₃ in the model code: no ammonium particles, but NH₃ makes cloud water less acidic, which speeds up sulfate formation in clouds (the earlier "gas only" answer was incomplete).
+- New notebook `background_aerosol_lcc_ctrl_fut.ipynb` (2001–2025, significance tested).
+- "Add CH₄ values and roles table" done (open since 2026-11-15 19:17).
+
+**Found:**
+- PD → FUT: forests emit far more (isoprene +74 %, monoterpenes ×3.5); lightning NOx +36 %; DMS flux +43 % at 46–82°N because of less sea ice.
+- LCC_FUT − CTRL_FUT in the expanded-forest cells: isoprene +2.8 %, monoterpenes −0.6 %, ozone +1.3 %, droplets −0.75 %; particles (SOA, sulfate, AOD) not significantly changed.
+
+**Open-next:** add both notebooks to `diagnostics/README.md` (it still lists the old folder; the folders were moved at 11:27 outside this session); nothing committed.
+
+**Files changed:** `diagnostics/background-aerosol/background_aerosol_pd_fut.ipynb` (+ outputs); new `diagnostics/background-aerosol/background_aerosol_lcc_ctrl_fut.ipynb` (+ outputs).
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-16 · 11:22 → 13:10 (108 min) · session 89a5509c
+
+**Goal:** finish the simulation-year plots; move all caches to the work disk (you asked).
+
+**Done:** all `cache/` folders moved to `/cluster/work/users/adelez/boreal-caches/` (links left in place, ignored by git); year-1 files all made.
+
+**Found:** the write errors came from a full home quota (my sandbox cache, 4.8 GB). Home also has nearly the maximum number of files (99,368 of 100,000).
+
+**Done (2):** 6 drift figures (simulation-year axis) from the existing yearly table + year 1.
+
+**Found (2):** FUT runs with present-day emissions: SOA settles only after ~3 years (mean changes by 0.5 %).
+
+**Open-next:** your feedback; seasonal figures when NIRD reads work.
+
+**Files changed:** `.gitignore`, `CLAUDE.md` (cache location), `sandbox/test_fut_minus_pd_outputs/cache/run_2000_missing.sh`.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-16 · 11:00 → 11:13 (13 min) · session 89a5509c
+
+**Goal:** plot the cyclical PD/FUT runs with simulation year on the x-axis; drift with the analysis period shaded; Jan–Dec seasonal cycle.
+
+**Done:** script `sandbox/test_cyclical_sim_year.py` written.
+
+**Found:** yesterday's year-2000 helper skipped the emission and evapotranspiration files (a script bug); being redone.
+
+**Open-next:** run the script, check the figures.
+
+**Files changed:** `sandbox/test_cyclical_sim_year.py`, `sandbox/test_fut_minus_pd_outputs/cache/run_2000_missing.sh` (new).
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-16 · 10:56 → 11:08 (12 min) · session 1b77ec0b
+
+**Goal:** fix the 2001–2002 time shift, rerun the ANN-affected MEGAN notebooks, switch to exact attribution maps.
+
+**Done:**
+- 2001–2002 time shift: decided "fix" (open since 2026-11-15); reduction code fixed and tested.
+- ANN rerun and exact maps: decided "yes" (open since 2026-11-15); approximate maps removed from `megan_factor_maps.ipynb`, the exact-map notebook is the reference.
+
+**Found:** FUT 2005 already reduced, 2010 reducing; FUT 2001 runs until tonight, so it gets the fix directly.
+
+**Open-next:** check the swap + reruns (~14:30); update the MEGAN slides; PD raw deletion still needs your OK.
+
+**Files changed:** `postprocess/megan_lmdi/reduce_megan_lmdi.py`, `src/.../plotting/megan_maps.py`, `analysis/megan_factor_maps.ipynb`.
+
+</div>
+
+---
+
+<div style="color:#7B2FBE">
+
+## 2026-11-16 · 10:58 → 12:33 (95 min) · session e425a9ff
+
+**Goal:** bring the slide decks in `results/pptx/` up to design A; make the design-A figures that were missing.
+
+**Done:** 4 CICERO decks rebuilt (old copies in `/cluster/work/users/adelez/pptx-backup-20261116/`); new figures `design-A-split/radiative_budget_split_designA_NET_2001_2025.png` and `*_ghan*_artLCCown_*` (8); the notebook runner can now run only some cells (`--cells`); integrity check of all 7 decks and all 339 figures: nothing broken.
+
+**Found:** artefact on LCC land with own emissions, FUT ≥45°N: +0.074 ± 0.027 W m⁻² (cloud +0.080). NIRD lost its file locks: most `RADIATIVE` files need `HDF5_USE_FILE_LOCKING=FALSE`; the Python env also gave I/O errors twice.
+
+**Open-next:** `simulations-interpretation.pptx` and the old non-CICERO deck still show design B; commit when you want.
+
+**Files changed:** `analysis/artefact-corrected-split.ipynb`, `results/tables/logs/run_nb_inplace.py`, `results/pptx/build_{figures,contrasts,megan,land_carbon_water}_pptx.py`, the 4 `*_CICERO.pptx`.
+
+</div>
+
+<div style="color:#AAAAAA">
+
+## 2026-11-16 · 10:59 → 11:02 (3 min) · session fc06b4b6
+
+**Goal:** status of the 2026–2040 runs.
+
+**Done:** watcher started (it was not running; nothing was missed). Archive guard alive.
+
+**Found:** MET runs 6.7 model years per day; job 1 ends ~19:00 today.
+
+**Open-next:** gate check + met days after MET job 1 → the 12 runs start automatically (MET + nudged 2026–2040, open since 11 Nov).
+
+**Files changed:** `docs/met-nudg-2026-2040.md` (job log).
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-16 · 10:58 → 13:18 (140 min) · session ae435137
+
+**Goal:** MEGAN attribution maps like the old PD ones, but from the exact LMDI split; when FUT ends.
+
+**Done:** new notebook `analysis/megan-lmdi-attribution-maps.ipynb` (run, outputs saved) → 4 maps `results/figures/megan_factors/PD_{isoprene,MTERP}_attribution_LMDI_{ANN,JJA}_6yr.png` + table `results/tables/megan_factors/megan_lmdi_attribution_PD_45N.csv`. (Made 15 Nov 19:45.)
+
+**Found:** ≥45°N, ANN, 6 years: isoprene +1.8 % = composition −2.2 % + activity +4.0 % (leaf area +3.3 %); monoterpenes −0.5 % = composition −4.5 % + activity +4.0 % (leaf area +3.7 %). Temperature only +0.5 % in both. FUT: 2000 + 2005 reduced, 2010 reducing, 2001 running.
+
+**Open-next:** your feedback on the maps; FUT LMDI maps once all FUT years are in (~17 Nov evening).
+
+**Found (11:55):** the 2001–2002 half-hour shift was already decided ("fix", 15 Nov 19:51) and is being fixed by another session; my new maps are redrawn automatically once the fixed PD 2001/2002 files are in place. FUT 2001/2002 use the fixed code. My earlier "still waiting on you" was wrong.
+
+**Done (13:18):** the maps notebook now does PD and FUT; FUT is drawn automatically by `cases-scripts/run_when_done/megan_lmdi_maps_when_FUT_done.sh` (running) once all 6 FUT years are reduced (~17 Nov evening). PD results unchanged.
+
+**Open-next (12:50):** nothing needed from you now. Later: MEGAN slides still show the old approximate maps; FUT numbers in the Methods; decide on deleting the MEGAN raw files (the work disk purges them ~mid-December anyway).
+
+**Files changed:** `analysis/megan-lmdi-attribution-maps.ipynb` (new), 4 png + 1 csv (new).
+
+</div>
+
+<div style="color:#555555">
+
+<div style="color:#E58AA5">
+
+## 2026-11-15 · 19:15 → 19:24 (9 min) · session d8d4f4eb
+
+**Goal:** how to plot the PD/FUT time-slice runs; sandbox figures of FUT − PD.
+
+**Done:** advice (pair FUT and PD by nudging year, no 2000→2100 axis); new sandbox folder `test_fut_minus_pd_outputs/` with 4 figures + table.
+
+**Found:** ≥45°N, 2001–2025: FUT − PD net TOA +1.1 W m⁻² (CTRL) vs +2.0 (fBVOC runs with the same emissions in both periods); the forest-expansion effect itself changes little from PD to FUT (−0.04 ± 0.03 W m⁻²).
+
+**Open-next:** your feedback on the layout; a seasonal-cycle version needs the monthly files.
+
+**Files changed:** `sandbox/test_fut_minus_pd.py` (new), `sandbox/test_fut_minus_pd_outputs/` (new).
+
+</div>
+
+## 2026-11-15 · 19:17 → 19:28 (11 min) · session 6ce7bd45
+
+**Goal:** keep the 46–82°N band but explain it better; understand which compounds the background-aerosol notebook looks at and what DMS does.
+
+**Done:** the notebook now says in §6 and §8 that 46–82°N is the forest-expansion band (where LCC land cover differs). Only text was changed; the results are unchanged.
+
+**Found:** the compounds are simply every prescribed emission in the model setup. Some other background inputs are not shown: methane and other greenhouse gases, ocean organic particles, lightning NOx.
+
+**Open-next:** reload the notebook in Jupyter before saving it. Optional: add the methane values and a short table on what each compound does.
+
+**Files changed:** `diagnostics/background-aerosol-pd-fut/background_aerosol_pd_fut.ipynb` (text only).
+
+## 2026-11-15 · 19:14 → 19:15 (1 min) · session 6ce7bd45
+
+**Goal:** understand why the background-aerosol notebook averages over 46–82°N.
+
+**Done:** answered only; nothing changed.
+
+**Found:** 46–82°N is the band where the LCC land cover differs from CTRL (the forest-expansion area). The Arctic (>66.5°N) is already a separate region in the same notebook.
+
+**Open-next:** add a 45–90°N region if you want it.
+
+**Files changed:** none.
+
+## 2026-11-15 · 19:00 → 19:05 (5 min) · session 91ef3258
+
+**Goal:** a workflow picture of the MEGAN exact split (LMDI) that also explains the reasons for each step.
+
+**Done:** new figure `docs/workflows/workflow_MEGAN_LMDI_logic.png` (10 steps, each with a "WHY" line) and its script `docs/workflows/draw_workflow_MEGAN_LMDI.py`.
+
+**Found:** nothing new; the status box shows the state at 19:00 (PD finished, FUT batch 1 started).
+
+**Open-next:** none from this block.
+
+**Files changed:** `docs/workflows/workflow_MEGAN_LMDI_logic.png`, `docs/workflows/draw_workflow_MEGAN_LMDI.py` (both new).
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-15 · 18:41 → 18:56 (15 min) · session 6509e9d2
+
+**Goal:** find what can safely be removed from the project folder (look only).
+
+**Done:** size check of every folder; explained `results/*-designB-standin-20261111/`.
+
+**Found:** caches ~1.7 GB (rebuilt on demand); old figure sets ~1.8 GB; git 3.8 GB. The design-B stand-in folders (573 MB, not in git) are the automatic copy of `results/figures` and `results/tables` made on 11 Nov just before the analysis switched to the real LCC_FUT_fBVOClccFUT run.
+
+**Open-next:** delete or move anything only after your OK, and after the other session's notebook runs finish.
+
+**Files changed:** only these logs.
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-15 · 18:53 → 19:41 (48 min) · session fc06b4b6
+
+**Goal:** run MET and the 12 nudged runs on to 2040, automatically, then redo processing and analysis.
+
+**Done:** plan approved (one met folder 2000–2040, user choice). Folder renamed, old name kept as a link; the folder check passed. Scripts for the folder build, the MET continuation, the 3 run phases, the watcher and the 2001–2040 analysis are written and checked (all 12 runs pass the phase-A check). Workflow record `docs/met-nudg-2026-2040.md`. **MET submitted 18:59** (jobs 1803953 / 1803954).
+
+**Found:** 3 MET jobs of 5 yr would stop at 2041-01-01, one day short, so MET runs 3 × 6 yr instead. MET's bad-node list missed 2 nodes; fixed.
+
+**Open-next:** **start the watcher (you; blocked for me)**, before MET job 1 ends (~21 h after it starts). Then CLAUDE.md / run list / README updates. MET + nudged runs 2026–2040 (open since 11 Nov) in progress.
+
+**Files changed:** `cases-scripts/cases-setup.sh`, `extend_nudg_runs_2015-2025.sh`, `run_when_done/extend_24g_2015-2025_when_done.sh`, `preprocess/nudging/{regroup_met_ext_days,check_nudging_dir}.py`; new `cases-scripts/12e-NF2000norbc_tropstratchem_met_ext_2026-2040_f19_f19.sh`, `extend_nudg_runs_2026-2040.sh`, `run_when_done/{met_nudg_2026-2040,analysis_2001-2040}_when_done.sh`, `preprocess/nudging/build_met_folder.sh`, `build_met_2000-2040_job.sh`, `docs/met-nudg-2026-2040.md`; shared met folder renamed + link; MET case settings (backups `*.before_2026-2040`).
+
+</div>
+
+<div style="color:#999999">
+
 ## 2026-11-15 · 18:39 → 18:43 (4 min) · session 08562175
 **Goal:** remove the old temporary folder `analysis-2001-2019/`.
 
@@ -344,7 +674,7 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
-## 2026-11-15 · 17:54 → 18:48 (54 min) · session 7559c0c6
+## 2026-11-15 · 17:54 → 18:56 (62 min) · session 7559c0c6
 
 **Goal:** suggest commits for the ~600 uncommitted changes, then make them.
 
@@ -358,7 +688,11 @@ One block per working window (a new block starts after more than 1 hour without 
 
 **Done (push fix):** you chose “shrink + keep it small”. New `results/tables/logs/shrink_nb_images.py`; `run_nb_inplace.py` now shrinks notebooks over 20 MB after each run. 10 notebooks shrunk (radiative_forcing 112 → 42 MB, others now 8–17 MB). Commit `3e643af` rewritten with the 3 shrunk analysis notebooks (now `fccaeb8`; later commits, incl. your “final palette”, re-hashed, content unchanged); the other 7 in a new commit. No file over 50 MB left in the push.
 
-**Open-next:** push again (`git push`); commit the held-back notebooks once their runs finish.
+- Held-back notebooks committed after their runs finished: `artefact-corrected-split` + `cumulative_radiative_decomposition` (design A and B side by side) with outputs; `artefact-corrected-split` shrunk 68 → 26 MB.
+- `analysis-2001-2019/` removal (done by another session with your OK) committed.
+- **Pushed to GitHub** (`origin/main` = `9ce308c`).
+
+**Open-next:** other sessions' uncommitted work stays out (MET 2026–2040 scripts, nudging scripts, `megan_maps.py`, `megan-lmdi-vs-approx.ipynb`, `check_reduced_vs_raw.py`).
 
 **Files changed:** `.gitignore`, git history, these logs.
 
@@ -368,15 +702,17 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#AAAAAA">
 
-## 2026-11-15 · 16:57 → 18:53 (116 min) · session 1b77ec0b
+## 2026-11-15 · 16:57 → 19:51 (174 min) · session 1b77ec0b
 
 **Goal:** status; then design A/B notebooks, Methods update, MEGAN questions.
 
 **Done:**
 - Switch to design A finished (open since 2026-11-11 12:33).
 - Design A and B side by side in `artefact-corrected-split` and `cumulative_radiative_decomposition` (design-B notebooks open since 2026-11-11 12:33); running.
+- Exact vs approximate MEGAN comparison done (open since 2026-11-03).
 - MEGAN raw files checked (open since 2026-11-07): all 6 PD years match the reduced files exactly, and re-reducing July 2005 from the raw files gives a bit-identical result.
 - FUT MEGAN batches launched (open since 2026-11-07).
+- LMDI vs approximate comparison done (open since 2026-11-07).
 - ANN season bug in `megan_maps` fixed. LMDI-vs-approx notebook written (LMDI comparison open since 2026-11-07); running.
 - Methods outline rewritten (open since 2026-11-11, plan #29); "main FUT emission source" and journal no longer on hold (open since 2026-11-02).
 - Ghan figure title bug fixed.
