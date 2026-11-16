@@ -2,6 +2,8 @@
 *.nc
 # Regenerable notebook caches (<notebook_stem>_outputs/cache/)
 **/cache/
+# cache symlinks -> /cluster/work/users/adelez/boreal-caches (16 Nov)
+**/cache
 
 #Local machine files:
 
