@@ -16,6 +16,7 @@ from cicero_pptx import Deck, M  # noqa: E402
 ROOT = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 MF = ROOT / "results/figures-2001-2014/megan_factors"
 LAKE = ROOT / "diagnostics/3_megan-exact-split-test/lake_fix_effect_outputs/figures"
+LMDI = ROOT / "results/figures/megan_factors"   # exact LMDI split, PD, 6 years (2001-02, 2005-06, 2010-11)
 Y = "2001_2014"
 GROUP = {"isoprene": "isoprene", "MTERP": "monoterpenes"}
 SEASON = {"ANN": "annual mean", "JJA": "JJA"}
@@ -61,7 +62,16 @@ def build_story():
          dict(num=4, title="FUT: forest expansion in 2100",
               intro="LCC_FUT vs CTRL_FUT. The same split in the SSP5-8.5 2100 background.",
               subs=change_items("FUT")),
-         dict(num=5, title="Appendix: the lake fix",
+         dict(num=5, title="PD: exact LMDI split",
+              intro="Exact LMDI split of the PD emission change from the MEGAN swap runs (6 years: 2001–02, "
+                    "2005–06, 2010–11), and how it compares with the approximate split of sections 3–4.",
+              subs=[(GROUP[g].capitalize(),
+                     [(f(LMDI / f"PD_{g}_attribution_LMDI_{s}_6yr.png"),
+                       f"Exact LMDI attribution, {GROUP[g]}, {SEASON[s]}: LCC_PD vs CTRL_PD") for s in ["ANN", "JJA"]]
+                     + [(f(LMDI / "lmdi-vs-approx" / f"PD_{g}_lmdi_vs_approx_{s}.png"),
+                         f"LMDI vs approximate split, {GROUP[g]}, {SEASON[s]}") for s in ["ANN", "JJA"]])
+                    for g in ["isoprene", "MTERP"]]),
+         dict(num=6, title="Appendix: the lake fix",
               intro="Bug fixed 3 Nov: lake was counted in f, the fraction where CLM defines EPS/GAMMA. "
                     "Verdict: the attribution changes very little (composition term +0.05 to +0.07, 100·Δln, ≥ 45°N).",
               subs=[("Lake-fix effect", [(f(LAKE / "lake_ratio_and_shift.png"),
@@ -135,12 +145,12 @@ if __name__ == "__main__":
     OUT = Path(sys.argv[1])
     d = Deck(*sys.argv[2:3])
     story = build_story()
-    all_png = sorted(MF.rglob("*.png")) + sorted(LAKE.glob("*.png"))
+    all_png = sorted(MF.rglob("*.png")) + sorted(LAKE.glob("*.png")) + sorted(LMDI.rglob("*.png"))
     missing = [p for p in all_png if p not in used]
     assert not missing, "figures not placed:\n" + "\n".join(map(str, missing))
     d.title_slide("What drives the BVOC emission change? MEGAN factors",
-                  "Boreal forest expansion, LCC vs CTRL, PD and FUT, 2001–2014",
-                  ["BOREAL-FOREST-EXPANSION", "NorESM2.3 / CLM5 MEGAN", "9 November 2026"])
+                  "Boreal forest expansion, LCC vs CTRL, PD and FUT, 2001–2014; exact PD LMDI split (6 yr)",
+                  ["BOREAL-FOREST-EXPANSION", "NorESM2.3 / CLM5 MEGAN", "16 November 2026"])
     d.agenda(story)
     for sec in story:
         d.divider(sec)

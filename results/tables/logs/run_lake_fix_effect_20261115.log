@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/tables/logs/run_nb_inplace.py", line 10, in <module>
+    from jupyter_client.manager import start_new_kernel
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/__init__.py", line 4, in <module>
+    from .asynchronous import AsyncKernelClient
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/asynchronous/__init__.py", line 1, in <module>
+    from .client import AsyncKernelClient  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/asynchronous/client.py", line 12, in <module>
+    from ..channels import AsyncZMQSocketChannel, HBChannel
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/channels.py", line 17, in <module>
+    from .session import Session
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/session.py", line 56, in <module>
+    from .jsonutil import extract_dates, json_clean, json_default, squash_dates
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/jsonutil.py", line 15, in <module>
+    from dateutil.parser import isoparse as _dateutil_parse
+  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/dateutil/__init__.py", line 5, in <module>
+    from ._version import version as __version__
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1322, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1262, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1532, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1506, in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1609, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1652, in _fill_cache
+OSError: [Errno 5] Input/output error: '/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/dateutil'

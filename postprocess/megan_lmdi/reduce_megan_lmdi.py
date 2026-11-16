@@ -32,7 +32,11 @@ Method (LMDI; per compound c, matched patch p = same grid cell + same PFT, time 
                  and GAMMAT/P/A are not saved (missing), while GAMMAL/GAMMAC are. Such steps (E = 0, weight > 0,
                  a gamma missing) go to 'cutoff'. Anything else -> 'unexplained' (must be 0).
     Both E = 0:  nothing.
-Grid cell = sum over its matched patches; month = mean over its time steps. All terms are additive, so they
+Grid cell = sum over its matched patches; month = mean over its time steps. Each step belongs to the month of
+its own time stamp (end of the step; a step stamped 00:00 on the 1st belongs to the previous month, as in CLM's
+monthly h0), not to the month of its day file (fix 2026-11-15: hybrid-start chains write day files 00:00-23:30,
+restart chains 00:30-24:00). With --year Y, the first day file of Y+1 is read too (for Y's last step) and steps
+outside Y are not accumulated (they are still read, as the previous step of the drivers). All terms are additive, so they
 can be summed over cells and months afterwards; 100 * dln E_region * C_f / dE_region gives the figures' units.
 Driver swaps: see the docstring of megan_swaps.py. swap4/swap3 are integrated over each month (kg per m2 of grid-cell
 land, sum over steps of rate * 1800 s), per patch pair; sum over terms = Ep_lcc - Ep_ctrl exactly.
@@ -47,7 +51,7 @@ Checks (stop with exit 1, nothing deleted, if any fails):
       G = CLM's GAMMA / GAMMAC, replay_residual at replayed steps (all < 1e-10); share of |dE| on flagged steps
       (not replayable, whole dE -> replay_residual) < 1e-3.
 """
-import argparse, glob, os, sys, time
+import argparse, datetime, glob, os, sys, time
 from pathlib import Path
 import numpy as np
 from netCDF4 import Dataset
@@ -74,6 +78,23 @@ def tape2_files(case, year=None):
         if files:
             return {f.split(".clm2.h1.")[1][:-3]: f for f in files}
     return {}
+
+
+def step_months(nc):
+    """'YYYYMM' of every step of a day file: month of the step's own stamp, 00:00 counted to the previous day."""
+    out = []
+    for d, sec in zip(nc["mcdate"][:], nc["mcsec"][:]):
+        d = int(d); day = datetime.date(d // 10000, d // 100 % 100, d % 100)
+        if int(sec) == 0:
+            day -= datetime.timedelta(days=1)
+        out.append(f"{day.year:04d}{day.month:02d}")
+    return np.array(out)
+
+
+def first_file_of(case, year):
+    """(stamp, path) of the first archived day file of `year`, or None."""
+    files = sorted(glob.glob(f"{ARCHIVE}/{case}/lnd/hist/{case}.clm2.h1.{year:04d}-*.nc"))
+    return (files[0].split(".clm2.h1.")[1][:-3], files[0]) if files else None
 
 
 def predecessor(case, day):
@@ -154,6 +175,12 @@ def main():
     days = sorted(set(f_ctrl) & set(f_lcc))
     if not days or set(f_ctrl) != set(f_lcc):
         raise SystemExit(f"FAIL: day files differ: CTRL {len(f_ctrl)}, LCC {len(f_lcc)}, common {len(days)}")
+    extra = set()                                       # next year's first day file: only for Y's last step
+    if a.year and not (a.max_days or a.from_day):
+        n0_, n1_ = first_file_of(a.ctrl, a.year + 1), first_file_of(a.lcc, a.year + 1)
+        if n0_ and n1_ and n0_[0] == n1_[0]:
+            f_ctrl[n0_[0]], f_lcc[n1_[0]] = n0_[1], n1_[1]
+            days.append(n0_[0]); extra.add(n0_[0])
     if a.from_day:
         days = [x for x in days if x >= a.from_day]
     if a.max_days:
@@ -205,12 +232,17 @@ def main():
             if not np.array_equal(t0, t1):
                 raise SystemExit(f"FAIL: time steps differ in {day}")
             dt = float(np.round((t0[1] - t0[0]) * 86400)) if len(t0) > 1 else 1800.0
-            month = str(int(n0["mcdate"][0]))[:6]
-            s = sums.setdefault(month, {"E0": np.zeros((nc_, ny, nx)), "E1": np.zeros((nc_, ny, nx)),
+            smon = step_months(n0)
+            keep = np.char.startswith(smon, f"{a.year:04d}") if a.year else np.ones(len(smon), bool)
+            parts = []                                   # (accumulator of a month, its steps in this file)
+            for m in sorted(set(smon[keep])):
+                s = sums.setdefault(m, {"E0": np.zeros((nc_, ny, nx)), "E1": np.zeros((nc_, ny, nx)),
                                         "C": np.zeros((nc_, nf, ny, nx)), "n": 0,
                                         "Ep0": np.zeros((nc_, npair)), "Ep1": np.zeros((nc_, npair)),
                                         "S4": np.zeros((nc_, n4, npair)), "S3": np.zeros((nc_, n3, npair))})
-            s["n"] += len(t0)
+                tm = keep & (smon == m)
+                s["n"] += int(tm.sum())
+                parts.append((s, tm))
             T = len(t0)
 
             # drivers of both runs (PREV fields shifted one step), grid-cell light, flags
@@ -263,10 +295,11 @@ def main():
                         else:
                             max_prod_err = max(max_prod_err, float(np.abs(ratio / np.median(ratio) - 1).max()))
                 C = lmdi(E[0], E[1], f0, f1)                 # (factor, t, p)
-                for k in range(nf):
-                    np.add.at(s["C"][ic, k], (jy, jx), C[k].sum(axis=0))
-                np.add.at(s["E0"][ic], (jy, jx), E[0].sum(axis=0))
-                np.add.at(s["E1"][ic], (jy, jx), E[1].sum(axis=0))
+                for s, tm in parts:
+                    for k in range(nf):
+                        np.add.at(s["C"][ic, k], (jy, jx), C[k][tm].sum(axis=0))
+                    np.add.at(s["E0"][ic], (jy, jx), E[0][tm].sum(axis=0))
+                    np.add.at(s["E1"][ic], (jy, jx), E[1][tm].sum(axis=0))
 
                 # driver swaps
                 with np.errstate(invalid="ignore", divide="ignore", over="ignore"):
@@ -290,10 +323,11 @@ def main():
                     swap_stats["flag_absdE"] += float(np.abs(dE[bad]).sum())
                     swap_stats["absdE"] += float(np.abs(dE).sum())
                     swap_stats["n_flag"] += int(bad.sum()); swap_stats["n_ok"] += int(okm.sum())
-                s["S4"][ic] += t4.sum(axis=1) * dt
-                s["S3"][ic] += t3.sum(axis=1) * dt
-                s["Ep0"][ic] += E[0].sum(axis=0) * dt
-                s["Ep1"][ic] += E[1].sum(axis=0) * dt
+                for s, tm in parts:
+                    s["S4"][ic] += t4[:, tm].sum(axis=1) * dt
+                    s["S3"][ic] += t3[:, tm].sum(axis=1) * dt
+                    s["Ep0"][ic] += E[0][tm].sum(axis=0) * dt
+                    s["Ep1"][ic] += E[1][tm].sum(axis=0) * dt
         print(f"  {day} done ({time.time() - t_start:.0f} s)")
 
     # checks
@@ -335,7 +369,8 @@ def main():
         d.createDimension("term4", n4); d.createDimension("term3", n3)
         d.title = "Exact split of the MEGAN emission change LCC - CTRL: LMDI + driver swaps (analysis/MEGAN_ATTRIBUTION.md, options 1 and 1b)"
         d.ctrl_case, d.lcc_case, d.label = a.ctrl, a.lcc, a.label
-        d.days = f"{days[0]} ... {days[-1]} ({len(days)} files)"
+        d.days = f"{days[0]} ... {days[-1]} ({len(days)} files{', last one only for the final step' if extra else ''})"
+        d.month_assignment = "step month = month of its own stamp (00:00 -> previous day); fix 2026-11-15"
         if a.year:
             d.year = a.year
         d.lat_min = a.lat_min
@@ -388,7 +423,7 @@ def main():
 
     if not passed:
         raise SystemExit("FAIL: checks failed, raw files kept")
-    raw = list(f_ctrl.values()) + list(f_lcc.values())
+    raw = [f for k, f in list(f_ctrl.items()) + list(f_lcc.items()) if k not in extra]   # next year's file stays
     if a.delete_dry_run:
         size = sum(os.path.getsize(f) for f in raw) / 1e9
         print(f"DRY RUN: would delete {len(raw)} raw tape-2 files ({size:.1f} GB), e.g. {raw[0]} ... {raw[-1]}")

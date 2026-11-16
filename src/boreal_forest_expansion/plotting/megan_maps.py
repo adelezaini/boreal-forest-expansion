@@ -103,7 +103,9 @@ def _season_mean_by_year(da: xr.DataArray, days: xr.DataArray, months: list[int]
     the following year). Only complete seasons are kept."""
     month = da["time"].dt.month
     year = da["time"].dt.year
-    if 12 in months and 1 in months:                  # DJF: December belongs to the next year
+    # DJF: December belongs to the next year. Not for ANN (all 12 months = calendar year); before the fix of
+    # 2026-11-15 ANN also got the shift (ANN year y = Dec y-1 + Jan-Nov y, first year dropped)
+    if 12 in months and 1 in months and len(months) < 12:
         year = year + (month == 12)
     year = year.rename("year")
     sel = month.isin(months)
