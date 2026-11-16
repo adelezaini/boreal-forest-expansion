@@ -1,61 +1,6 @@
-Traceback (most recent call last):
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/runpy.py", line 198, in _run_module_as_main
-    return _run_code(code, main_globals, None,
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/runpy.py", line 88, in _run_code
-    exec(code, run_globals)
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/ipykernel_launcher.py", line 16, in <module>
-    from ipykernel import kernelapp as app
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/ipykernel/kernelapp.py", line 21, in <module>
-    from IPython.core.application import (  # type:ignore[attr-defined]
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/__init__.py", line 40, in <module>
-    from .terminal.embed import embed
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/terminal/embed.py", line 15, in <module>
-    from IPython.terminal.interactiveshell import TerminalInteractiveShell
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/IPython/terminal/interactiveshell.py", line 37, in <module>
-    from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/__init__.py", line 21, in <module>
-    from .application import Application
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/application/__init__.py", line 3, in <module>
-    from .application import Application
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/application/application.py", line 32, in <module>
-    from prompt_toolkit.buffer import Buffer
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/buffer.py", line 27, in <module>
-    from .completion import (
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/completion/__init__.py", line 3, in <module>
-    from .base import (
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/completion/base.py", line 11, in <module>
-    from prompt_toolkit.formatted_text import AnyFormattedText, StyleAndTextTuples
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/formatted_text/__init__.py", line 16, in <module>
-    from .ansi import ANSI
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/formatted_text/ansi.py", line 6, in <module>
-    from prompt_toolkit.output.vt100 import BG_ANSI_COLORS, FG_ANSI_COLORS
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/output/__init__.py", line 3, in <module>
-    from .base import DummyOutput, Output
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/output/base.py", line 12, in <module>
-    from prompt_toolkit.styles import Attrs
-  File "/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/styles/__init__.py", line 7, in <module>
-    from .base import (
-  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
-  File "<frozen importlib._bootstrap>", line 1322, in _find_and_load_unlocked
-  File "<frozen importlib._bootstrap>", line 1262, in _find_spec
-  File "<frozen importlib._bootstrap_external>", line 1532, in find_spec
-  File "<frozen importlib._bootstrap_external>", line 1506, in _get_spec
-  File "<frozen importlib._bootstrap_external>", line 1609, in find_spec
-  File "<frozen importlib._bootstrap_external>", line 1652, in _fill_cache
-OSError: [Errno 5] Input/output error: '/cluster/home/adelez/nird/.conda/envs/lcc-env/lib/python3.12/site-packages/prompt_toolkit/styles'
-Traceback (most recent call last):
-  File "/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/tables/logs/run_nb_inplace.py", line 22, in <module>
-    km, kc = start_new_kernel(kernel_name=args.kernel, cwd=os.path.dirname(path))
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/manager.py", line 852, in start_new_kernel
-    kc.wait_for_ready(timeout=startup_timeout)
-  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
-    return loop.run_until_complete(inner)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
-    return future.result()
-           ^^^^^^^^^^^^^^^
-  File "/nird/datapeak/NS9188K/adelez/.conda/envs/lcc-env/lib/python3.12/site-packages/jupyter_client/client.py", line 204, in _async_wait_for_ready
-    raise RuntimeError(msg)
-RuntimeError: Kernel died before replying to kernel_info
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (41s)
+--- cell 3 ok (315s)
+--- cell 8 ok (2s)
+--- cell 16 ok (61s)
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/analysis/artefact-corrected-split.ipynb: 33.1 -> 28.7 MB (9 figures re-encoded)
