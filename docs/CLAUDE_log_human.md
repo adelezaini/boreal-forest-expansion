@@ -4,6 +4,16 @@
 
 > **Where things stand (updated every prompt)**
 >
+> <span style="color:#999999">**Commits made (16 Nov, 18:08):** 5 commits on `main` (not pushed): MEGAN month fix; background aerosol 25 yr; notes; sandbox; logs. Split-figure labels (`forcing_maps.py` + `artefact-corrected-split`) held, as you asked. Another session is rerunning the background aerosol notebooks right now, so those will need one more commit.</span>
+>
+> <span style="color:#999999">**NOTES.md filled + CLAUDE.md fixed (16 Nov, 16:27):** `NOTES.md` now has the new cleaning list and notes (your lines kept, typo `.ipynb_checkpoints` fixed; MEGAN month line left out until the swap is done). `CLAUDE.md` spin-up rule now points to the right files.</span>
+>
+> <span style="color:#555555">**MEGAN 2001/2002 month fix (16 Nov, 16:40):** fixed files swapped in at 16:34; old ones in `data/processed-data/megan-lmdi/old-month-offset-20261115/` (moved, same NIRD disk). The 3 MEGAN notebooks are rerunning (megan-lmdi-vs-approx, megan_factor_maps, megan-lmdi-attribution-maps). Both details are now in `NOTES.md`, plus the nudging fix of the last 2015 met file.</span>
+>
+> <span style="color:#008080">**Background aerosol PD/FUT, 25 years + Arctic maps (16 Nov, 15:55):** done and run (results saved in the notebook). Years now 2001–2025; maps show the Arctic (north of 45°N), global maps in an appendix; new bar chart + yearly time series of the online sources. Numbers move ≤ 2 % from 2001–2014. New: north of 66.5°N the droplet column rises 25 % in FUT although sulfate falls 41 % (DMS +413 %).</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Results folder reorganisation (16 Nov, 16:52):** layout agreed: `results/figures/<notebook>/{a_interactive,b_fBVOC,c_non-BVOC}/` (same for tables), mixed figures in the notebook folder, `artefacts/d_artefacts/` + `artefacts/design-B/`, old sets untouched, new notebook `radiative-forcing-decomposition`, new colour scales. Still open in the chat: the art_LCC definition (explained again with numbers) and the period wording in titles (3 options).</span>
+>
 > <span style="color:#999999">**Commits made (16 Nov, 13:34):** 8 commits on `main` (not pushed): notes moved to `docs/`; design A figures; MEGAN LMDI reruns; caches on `/cluster/work`; sandbox script; simulation-contrasts figures moved to `results/`; `lake_fix_effect` fixed and rerun cleanly; logs. Home folder was full (file count); 6 old VS Code server copies deleted (your OK), now 74 000 of 100 000 files.</span>
 >
 > <span style="color:#999999">**Analysis notes moved to `docs/` (16 Nov, 13:10):** `FBVOC_ARTEFACT.md`, `MEGAN_ATTRIBUTION.md`, `PLOTTED_VARIABLES.md` are now in `docs/`; all mentions point there.</span>
@@ -19,7 +29,7 @@
 >
 > <span style="color:#7B2FBE">**Slides updated to design A (16 Nov, 12:33):** All decks checked: none broken. the 4 CICERO decks in `results/pptx/` are rebuilt (figures 340 slides, contrasts, MEGAN with the new exact-split section, land). Two missing design-A figure sets were made: the design-A budget split and maps of the artefact on LCC land with its own emissions (FUT ≥45°N: +0.07 W m⁻², mostly cloud; δ stays ≈ 0). Not rebuilt: the old non-CICERO deck and `simulations-interpretation.pptx`. NIRD problem: many files read only with `HDF5_USE_FILE_LOCKING=FALSE`.</span>
 >
-> <span style="color:#E58AA5">**Simulation-year plots (16 Nov, 13:31):** suggested wording for titles: no calendar years (the winds come from a free-running present-day model run, so "2001–2025" are model labels, not real years); use "25-year mean" + "same nudged winds". Waiting for your choice. Before: 6 drift figures in `sandbox/test_cyclical_sim_year_outputs/` (x = simulation year, analysis years shaded, conditions in titles). Seasonal (Jan–Dec) figures not made yet: they need the monthly files on NIRD, which gives read errors today. Seen in the plots: FUT runs with present-day emissions need ~3 years for SOA to settle (year 1 1.9 → 1.3 mg m⁻²); this moves the 25-year mean by only 0.5 %. All `cache/` folders now sit on `/cluster/work` (home quota was full).</span>
+> <span style="color:#E58AA5">**Period wording in titles (16 Nov, 13:43):** three versions to compare in `sandbox/test_period_wording_outputs/` (A current, B small fix "25-yr mean", C full proposal). Waiting for your choice; paper figures untouched. Earlier: suggested wording for titles: no calendar years (the winds come from a free-running present-day model run, so "2001–2025" are model labels, not real years); use "25-year mean" + "same nudged winds". Waiting for your choice. Before: 6 drift figures in `sandbox/test_cyclical_sim_year_outputs/` (x = simulation year, analysis years shaded, conditions in titles). Seasonal (Jan–Dec) figures not made yet: they need the monthly files on NIRD, which gives read errors today. Seen in the plots: FUT runs with present-day emissions need ~3 years for SOA to settle (year 1 1.9 → 1.3 mg m⁻²); this moves the 25-year mean by only 0.5 %. All `cache/` folders now sit on `/cluster/work` (home quota was full).</span>
 >
 > <span style="color:#AAAAAA">**MET + nudged runs 2026–2040 (16 Nov, 11:02):** MET is running (model year 2029 of 2041; its first 6-yr job ends ~19:00 today). The automatic watcher is now on (started 11:00; it had not started yesterday, which cost nothing). Expected: the 12 runs start ~17 Nov, reach 2041 ~19–20 Nov; postprocessing + analysis ~20–21 Nov.</span>
 >
@@ -366,6 +376,98 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
+## 2026-11-16 · 17:58 → 18:08 (10 min) · session cf84836f
+
+**Goal:** commit the open work by topic.
+
+**Done:** 5 commits: MEGAN 2001–02 month fix + reruns; background aerosol 2001–2025 + Arctic maps; notes (`CLAUDE.md`, `NOTES.md`); sandbox tests; logs.
+
+**Open-next:** split-figure labels commit held until the results-folder reorganisation is settled; background aerosol notebooks being rerun by another session → commit their new outputs after.
+
+**Files changed:** logs only (plus git commits).
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-16 · 16:04 → 16:27 (23 min) · session 9b7c5f07
+
+**Goal:** suggestions for `NOTES.md` in the same style as your notes.
+
+**Done:** suggested new lines for "In cleaning process" (old figure sets, Python caches, test runs, old-chain runs, git size) and "Notes" (old spin-up mismatch, SF vs MEG, matched baseline, purge/quota, spin-up months). Rewrote the spin-up note more clearly: the code removes the first 12 time steps without looking at dates, so running it twice loses a real year.
+
+**Found:** 17 notebook checkpoint folders, 15 Python cache folders, `.git` 4.2 GB, home 14 of 20 GB used.
+
+**Done (later):** added the lines to `NOTES.md` and fixed the spin-up rule in `CLAUDE.md` (you asked).
+
+**Open-next:** nothing.
+
+**Files changed:** `NOTES.md`, `CLAUDE.md`, logs (not committed).
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-16 · 16:00 → 16:40 (40 min) · session 06b518ae
+
+**Goal:** check why the MEGAN 2001/2002 month-fix logs looked silent, then finish the fix.
+
+**Found:** the re-reduction had finished at 14:25 (logs were only buffered). The check before the swap failed on rounding-level differences (1e-16); results are fine.
+
+**Done:** fixed 2001/2002 files swapped in at 16:34 (your "go"); old files in `data/processed-data/megan-lmdi/old-month-offset-20261115/`. Added to `NOTES.md`: the month fix and the nudging fix of the last met file (2015-01-01).
+
+**Open-next:** 3 MEGAN notebooks rerunning (status in `results/tables/logs/run_monthfix_notebooks_20261116.status`). Deleting the PD raw files is no longer blocked, but needs your OK.
+
+**Files changed:** `NOTES.md`; `analysis/megan-lmdi-vs-approx.ipynb` (stricter check, rerun); 2 more notebooks rerun; PD 2001/2002 LMDI files.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 15:27 → 16:38 (71 min) · session f7c9ff9e
+
+**Goal:** background-aerosol PD vs FUT notebook: 25 years, Arctic maps (global as appendix), online sources plotted like the prescribed emissions.
+
+**Done:**
+- `background_aerosol_pd_fut.ipynb` updated and run (0 errors): 2001–2025; all maps polar (north of 45°N, dashed Arctic Circle); global versions in an Appendix (`figures/appendix-global/`); new §9.1 bar chart (25-yr global mean ± 1 s.d., stacked by component) and yearly time series (CTRL_PD solid, CTRL_FUT dashed); summary table with an Arctic column. The LCC_FUT − CTRL_FUT notebook already used 2001–2025 and polar maps (unchanged).
+- Old 2001–2014 figures and tables kept in `background_aerosol_pd_fut_outputs/2001-2014/`.
+- Bar labels now plain numbers (2470, not 2.47e+03); FUT − PD colourbars: the bin around 0 is pure white, other colours unchanged (first rerun failed: Jupyter kernel did not start; second try failed too (the NIRD disk is slow, so Python takes > 2 min to start); third try with a longer start-up wait worked, 0 errors, figures checked).
+
+**Found:** values change ≤ 2 % vs 2001–2014. Arctic (>66.5°N) FUT vs PD: sulfate −41 %, surface DMS +413 %, droplet column **+25 %** (global −9 %). A first run gave a wrong FUT dust (362 Tg) because of a grid mismatch in a reused cache; fixed, now 4.03 Pg as in the LCC notebook.
+
+**Open-next:** why the Arctic droplet column rises (DMS / sea ice / clouds) is not checked.
+
+**Files changed:** `diagnostics/background-aerosol/background_aerosol_pd_fut.ipynb` + outputs; logs.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-16 · 15:11 → 16:52 (101 min) · session e391bcc3
+
+**Goal:** use the slide names (`simulations-interpretation.pptx`) in the six-map forcing figures, design A and B.
+
+**Done:**
+- The plotting function can now take a title name, a label over each group of maps (part of it in bold) and a note under the figure. Old figures look the same unless these are given.
+- Test figures (NET, PD + 3 FUT cases, design A and B) in `sandbox/test_split_aliases_outputs/`; checked by eye.
+- Added the case LCC_FUT − CTRL_PD (land cover + climate change together): left maps LCC_FUT − CTRL_PD (albedo +10.15, total +1.33 W m⁻² over 45–90°N, NET), right maps = the same BVOC maps as the FUT case with ctrlPD emissions. The ±6 colour scale is saturated on the left (snow loss from the climate change).
+
+- You approved the names (design A brackets not bold) and a new file-name pattern; you asked to reorganise `results/` first (one folder per notebook, then interactive / fBVOC / non-BVOC; artefacts only in `artefacts/`; design A everywhere).
+- Found: `radiative_forcing.ipynb` already uses prescribed − prescribed pairs for fBVOC (design A, real LCC_FUT_fBVOClccFUT since 11 Nov); the six-map decomposition figure is only in `artefact-corrected-split.ipynb` now.
+- Explained the two MEGAN notebooks (plain EPS/GAMMA maps vs exact attribution maps).
+
+- 16:35: layout agreed (see box). Computed the spread of every map of the decomposition figures (file `sandbox/test_split_aliases_outputs/decomposition_ranges_q98_designA_2001_2025.csv`) and proposed colour scales. Found that the current art_LCC (LCC − LCC_fBVOCctrl) still contains the BVOC effect, so it is not a pure artefact.
+
+- 16:52: you confirmed `artefacts/d_artefacts/`, `artefacts/design-B/` and the colour scales. Explained the art_LCC question again with numbers; gave 3 options for the period in titles.
+
+**Open-next:** art_LCC choice; title option. Then: move the files, fix the notebook paths, add the names to `analysis/artefact-corrected-split.ipynb` and redraw its split figures (all bands, both colour-scale versions).
+
+**Files changed:** `src/boreal_forest_expansion/plotting/forcing_maps.py`; new `sandbox/test_split_aliases.py` + outputs; logs.
+
+</div>
+
+<div style="color:#999999">
+
 ## 2026-11-16 · 13:16 → 13:36 (20 min) · session ada6f70d
 
 **Goal:** make the proposed commits, grouped by topic; fix `lake_fix_effect.ipynb`; commit the latest updates.
@@ -463,7 +565,7 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#E58AA5">
 
-## 2026-11-16 · 11:22 → 13:31 (129 min) · session 89a5509c
+## 2026-11-16 · 11:22 → 13:43 (141 min) · session 89a5509c
 
 **Goal:** finish the simulation-year plots; move all caches to the work disk (you asked).
 
@@ -475,7 +577,9 @@ One block per working window (a new block starts after more than 1 hour without 
 
 **Found (2):** FUT runs with present-day emissions: SOA settles only after ~3 years (mean changes by 0.5 %).
 
-**Open-next:** your feedback; seasonal figures when NIRD reads work.
+**Done (3):** title wording tried three ways (A/B/C) in `sandbox/test_period_wording_outputs/`.
+
+**Open-next:** pick A/B/C wording; your feedback on the drift plots; seasonal figures when NIRD reads work.
 
 **Files changed:** `.gitignore`, `CLAUDE.md` (cache location), `sandbox/test_fut_minus_pd_outputs/cache/run_2000_missing.sh`.
 
