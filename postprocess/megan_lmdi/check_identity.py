@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bit-identity check of a MEGAN patch-output branch run against its parent (analysis/MEGAN_ATTRIBUTION.md, step 3).
+"""Bit-identity check of a MEGAN patch-output branch run against its parent (docs/MEGAN_ATTRIBUTION.md, step 3).
 
 A branch only adds history output, so everything it shares with the parent must be bit-identical:
   1. CAM h1, 30-min instantaneous SFISOP/SFMTERP, every common step, matched by time value (only where the

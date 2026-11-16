@@ -174,7 +174,7 @@ All three are new-chain runs (`-20261031`), launched and postprocessed by `cases
 
 ## 7. Caveats
 
-- **BVOC effect = the emission change between LCC and CTRL with interactive MEGAN.** That includes the new vegetation and MEGAN's response to the changed climate. The MEGAN split (`MEGAN_ATTRIBUTION.md`) separates them.
+- **BVOC effect = the emission change between LCC and CTRL with interactive MEGAN.** That includes the new vegetation and MEGAN's response to the changed climate. The MEGAN split (`docs/MEGAN_ATTRIBUTION.md`) separates them.
 - The non-BVOC part (LCC^ctrl − CTRL^ctrl) includes every land effect not going through BVOC emissions: albedo, evapotranspiration, dry deposition, and possibly dust (c).
 - **Never mix chains in one contrast.** All runs of a formula must come from the new chain.
 - The 15-year runs (CTRL_PD_fBVOCctrlPD, CTRL_FUT_fBVOCctrlFUT) match the 2001–2014 climatology years, so their mean emissions are right. H6 shows that this does not remove the artefact: in the old 2-year test, the wrong mean of 2001–02 added ≈ 0 to the global burden (it shifted production between 30–60°N bands), and the artefact is mostly the lost weather link.

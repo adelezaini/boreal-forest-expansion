@@ -214,4 +214,4 @@ These show `100 × (LCC − LCC_fBVOC) / mean(LCC_fBVOC)` for each year. Cells w
 
 Code: `src/boreal_forest_expansion/plotting/megan_maps.py` (`make_factor_maps`, `make_attribution_maps`). Figures: `results/figures/megan_factors/`. It plots raw CLM `EPS_*` and `GAMMA*` for isoprene and 7 monoterpenes, as annual and JJA means per run. Grid-cell `GAMMA_*` is an area mean over vegetated patches, not emission-weighted.
 
-Attribution figures (rows, residual, weighting vs co-variation, options to remove the residual): see `MEGAN_ATTRIBUTION.md`.
+Attribution figures (rows, residual, weighting vs co-variation, options to remove the residual): see `docs/MEGAN_ATTRIBUTION.md`.

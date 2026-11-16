@@ -1,5 +1,5 @@
 """Draw docs/workflows/workflow_MEGAN_LMDI_logic.png: the MEGAN exact-split (LMDI)
-workflow, each step with what it does and why. Sources: analysis/MEGAN_ATTRIBUTION.md,
+workflow, each step with what it does and why. Sources: docs/MEGAN_ATTRIBUTION.md,
 cases-scripts/megan-lmdi/README.md, postprocess/megan_lmdi/README.md, docs/CLAUDE_log.md.
 Status box = 15 Nov 2026 19:00. Run: $PY docs/workflows/draw_workflow_MEGAN_LMDI.py
 """
@@ -55,7 +55,7 @@ def arrow(a, b, side="down", rad=0.0):
 ax.text(0.3, 0.45, "Workflow B: MEGAN exact split (LMDI): logic and motivation",
         fontsize=21, weight="bold", va="center")
 ax.text(0.3, 0.85, "Scripts: cases-scripts/megan-lmdi/ (branch, launch, watch), postprocess/megan_lmdi/ "
-        "(identity, LMDI, replay + swaps, checks).  Design and options: analysis/MEGAN_ATTRIBUTION.md (option 1 + 1b).",
+        "(identity, LMDI, replay + swaps, checks).  Design and options: docs/MEGAN_ATTRIBUTION.md (option 1 + 1b).",
         fontsize=10.5, color="#555", va="center")
 ax.text(0.3, 1.1, "State + logs: /cluster/work/users/adelez/megan-lmdi/<PD|FUT>/   ·   "
         "Each box: what it does (black) and WHY ▸ it is done that way (italic).",
@@ -94,7 +94,7 @@ b2 = box(L, b1["y"] + b1["h"] + 0.45, LW, "logic", "2. The logic: split BEFORE a
      "(only namelist changes: hist_dov2xy=.false.), (ii) CTRL and LCC are NUDGED to the same weather and",
      "time step, so every patch-step has a partner.  1b answers the reviewer question 'how much is LAI,",
      "how much the warmer canopy', not 'how much is γT'."])
-b2r = box(R, b2["y"], RW, "out", "Options compared (MEGAN_ATTRIBUTION.md)",
+b2r = box(R, b2["y"], RW, "out", "Options compared (docs/MEGAN_ATTRIBUTION.md)",
     ["1  patch-level output + LMDI: exact, ~4× slower model",
      "1b offline replay on the same output: exact, physical drivers",
      "2  SourceMod, online emission weights: leaves a 'dispersion' term",

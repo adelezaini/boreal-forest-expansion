@@ -5,7 +5,7 @@
 #SBATCH --time=10:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=16G
-# One year pair of the MEGAN exact split (analysis/MEGAN_ATTRIBUTION.md, steps 3-5), submitted by
+# One year pair of the MEGAN exact split (docs/MEGAN_ATTRIBUTION.md, steps 3-5), submitted by
 # cases-scripts/megan-lmdi/watch_megan_lmdi.sh once both runs' tape-2 files of YEAR are archived:
 #   3. identity check of each branch against its parent (check_identity.py)        -> stop if it fails
 #   4. LMDI reduction of YEAR (reduce_megan_lmdi.py --year)                         -> stop if a check fails

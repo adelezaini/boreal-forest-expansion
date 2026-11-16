@@ -1,5 +1,5 @@
 #!/bin/bash
-# MEGAN exact split (analysis/MEGAN_ATTRIBUTION.md, option 1): production branch case.
+# MEGAN exact split (docs/MEGAN_ATTRIBUTION.md, option 1): production branch case.
 # BRANCH of a new-chain nudged run (CTRL_PD, LCC_PD, CTRL_FUT, LCC_FUT) from its archived restart at START_DATE,
 # same model and namelists, only the history output changes (SLIM, user 2026-10-29):
 #   CAM  h0 monthly SFISOP/SFMTERP, h1 30-min SFISOP/SFMTERP (identity check with the parent)

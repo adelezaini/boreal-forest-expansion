@@ -1,5 +1,5 @@
 #!/bin/bash
-# 5-day test for the exact MEGAN factor split (analysis/MEGAN_ATTRIBUTION.md, option 1).
+# 5-day test for the exact MEGAN factor split (docs/MEGAN_ATTRIBUTION.md, option 1).
 # BRANCH of CTRL_PD (old chain, -20261023) at 2005-01-01 with one extra CLM history tape:
 # MEGAN emission, gammas and drivers per patch (PFTS), instantaneous, every time step.
 # SLIM output = the setup for the PRODUCTION branches (user 2026-10-29): all other history output removed, only

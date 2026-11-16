@@ -1,4 +1,4 @@
-"""Offline replay of CLM's MEGAN activity factors (option 1b, analysis/MEGAN_ATTRIBUTION.md).
+"""Offline replay of CLM's MEGAN activity factors (option 1b, docs/MEGAN_ATTRIBUTION.md).
 
 Python copies of get_gamma_L, get_gamma_A, get_gamma_T, get_gamma_P in model/SourceMods/src.clm/VOCEmissionMod.F90
 (same branches, same constants; class constants from megan21_emis_factors_78pft_c20161108.nc, read as float32 like

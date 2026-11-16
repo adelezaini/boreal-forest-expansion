@@ -127,7 +127,7 @@ class VirtualRun(str):
     so derived fields (ratios, in-cloud values, the albedo proxy) are computed per real pair
     and only then combined. The string value is the label used in titles and file names.
 
-    Example (design B, analysis/FBVOC_ARTEFACT.md): with
+    Example (design B, docs/FBVOC_ARTEFACT.md): with
         V = LCC_P^ctrlP - CTRL_P^ctrlP + CTRL_P
     LCC_P - V = (LCC_P - LCC_P^ctrlP) - (CTRL_P - CTRL_P^ctrlP) = (LCC_P - LCC_P^ctrlP) - art_CTRL,P,
     the artefact-corrected BVOC effect (artefact = interactive - prescribed, user 2026-11-07).

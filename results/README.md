@@ -39,6 +39,8 @@ Defined once in `src/boreal_forest_expansion/plotting/forcing_maps.py` (`CONTRAS
 | `figures/timeseries/` | Absolute yearly values of every run (no differences), `analysis/timeseries-responses.ipynb` §3. |
 | `figures/megan_factors/` | `analysis/megan_factor_maps.ipynb` (LCC vs CTRL, same period), `diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb`. |
 
+**Not in `results/`:** the one-figure-per-question contrast grids of `analysis/simulation-contrasts.ipynb` (Figs. 1a–4b, `contrast_grid_fig<N>_{2001_2014,2001_2025}.png`) are saved in **`analysis/simulation-contrasts_outputs/figures/`**; their deck is `results/pptx/BOREAL_simulation_contrasts_2001-2025_CICERO.pptx` (`results/pptx/build_contrasts_pptx.py`).
+
 Code: `forcing_maps.FIG_CATEGORY[<category>]`; grids and Ghan maps of a category go there by default (`make_contrast_grid_figure(<category>, …)`, `make_ghan_contrast_figure(contrast)`).
 
 ## tables/

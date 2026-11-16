@@ -1,6 +1,6 @@
 # MEGAN exact split: production branch runs
 
-Option 1 of `analysis/MEGAN_ATTRIBUTION.md`. Each run is a branch of a new-chain nudged run that adds patch-level MEGAN output. A per-year job turns the output into the exact (LMDI) split, then deletes the raw files.
+Option 1 of `docs/MEGAN_ATTRIBUTION.md`. Each run is a branch of a new-chain nudged run that adds patch-level MEGAN output. A per-year job turns the output into the exact (LMDI) split, then deletes the raw files.
 
 ## Files
 

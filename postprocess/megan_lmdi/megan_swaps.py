@@ -1,4 +1,4 @@
-"""Driver swaps (option 1b of analysis/MEGAN_ATTRIBUTION.md): exact, order-free split of the MEGAN emission change
+"""Driver swaps (option 1b of docs/MEGAN_ATTRIBUTION.md): exact, order-free split of the MEGAN emission change
 LCC - CTRL of each matched patch pair into plant cover + driver groups (Shapley values) + small exact terms.
 
 Per matched patch pair (same grid cell + PFT), time step and compound, both runs present:

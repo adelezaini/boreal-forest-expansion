@@ -1,5 +1,5 @@
 #!/bin/bash
-# Launcher of the MEGAN exact-split branch runs (analysis/MEGAN_ATTRIBUTION.md, option 1). See README.md here.
+# Launcher of the MEGAN exact-split branch runs (docs/MEGAN_ATTRIBUTION.md, option 1). See README.md here.
 #
 #   bash launch_megan_lmdi.sh test  PD                    production test: CTRL_PD + LCC_PD from 2005-01-01, 2 jobs x 30 days
 #                                                           = 2 months + 1 day, restart on 31 Jan (user 2026-11-04; OK 3 Nov,

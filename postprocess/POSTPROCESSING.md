@@ -100,7 +100,7 @@ Computed per month and per grid cell from the monthly means.
 - Interstitial aerosol only: cloud-borne SOA is not in the output.
 - Post-CO₂-fix runs also write CAM's own burdens `cb_SOA_A1`, `cb_SOA_NA`, `cb_SOA_A1_OCW`, `cb_SOA_NA_OCW` (category SOA). CAM computes them every timestep, and the `_OCW` fields include the cloud-borne SOA. Older runs lack them, and the pipeline skips them there.
 
-**In-cloud values (`ACTREL`, `ACTNL`, `AREL`, `AWNC`) are not stored.** The model writes them multiplied by the cloud fraction. They are divided by `FCTL` (or `FREQL`) at analysis time, from means taken over the same months (see `analysis/PLOTTED_VARIABLES.md`).
+**In-cloud values (`ACTREL`, `ACTNL`, `AREL`, `AWNC`) are not stored.** The model writes them multiplied by the cloud fraction. They are divided by `FCTL` (or `FREQL`) at analysis time, from means taken over the same months (see `docs/PLOTTED_VARIABLES.md`).
 
 ## 5. Running
 

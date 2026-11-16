@@ -116,7 +116,7 @@ def intro_slide(d, sec_name, kick):
              ("Period 2001–2014 (not yet redone for 2001–2025).", {"italic": True, "color": "7F7F7F"})]
     d.text(s, M, 1.55, 5.95, 5.3, left, 13, B, space_after=4, name="How MEGAN works")
     d.text(s, M + 6.35, 1.55, 5.95, 5.3, right, 13, B, space_after=4, name="How the change is split")
-    d.finish(s, "analysis/megan_factor_maps.ipynb · analysis/MEGAN_ATTRIBUTION.md",
+    d.finish(s, "analysis/megan_factor_maps.ipynb · docs/MEGAN_ATTRIBUTION.md",
              "Sources: analysis/megan_factor_maps.ipynb (intro and attribution cells), "
              "diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb (definition of f).")
 

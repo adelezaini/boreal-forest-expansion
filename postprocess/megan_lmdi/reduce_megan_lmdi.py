@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Exact split of the MEGAN emission change LCC - CTRL from patch-level branch output: LMDI (factors) + driver swaps.
 
-Options 1 and 1b of analysis/MEGAN_ATTRIBUTION.md. Reads the CLM tape-2 files (clm2.h1.*: MEGAN fields per patch,
+Options 1 and 1b of docs/MEGAN_ATTRIBUTION.md. Reads the CLM tape-2 files (clm2.h1.*: MEGAN fields per patch,
 every 30-min step, instantaneous) of a CTRL and an LCC branch run covering the same days, and writes one small
 netCDF with
   (1) LMDI: per compound, month and grid cell, the mean emission of both runs and the exact contribution of each
@@ -367,7 +367,7 @@ def main():
         d.createDimension("month", len(months)); d.createDimension("lat", ny); d.createDimension("lon", nx)
         d.createDimension("pair", npair)
         d.createDimension("term4", n4); d.createDimension("term3", n3)
-        d.title = "Exact split of the MEGAN emission change LCC - CTRL: LMDI + driver swaps (analysis/MEGAN_ATTRIBUTION.md, options 1 and 1b)"
+        d.title = "Exact split of the MEGAN emission change LCC - CTRL: LMDI + driver swaps (docs/MEGAN_ATTRIBUTION.md, options 1 and 1b)"
         d.ctrl_case, d.lcc_case, d.label = a.ctrl, a.lcc, a.label
         d.days = f"{days[0]} ... {days[-1]} ({len(days)} files{', last one only for the final step' if extra else ''})"
         d.month_assignment = "step month = month of its own stamp (00:00 -> previous day); fix 2026-11-15"

@@ -1,6 +1,6 @@
 # MEGAN exact split (LMDI) — reduction of the patch-level branch output
 
-Option 1 of `analysis/MEGAN_ATTRIBUTION.md`: the MEGAN emission change LCC − CTRL split exactly into composition, γL (LAI), γT (temperature), γP (light), γA (leaf age) and γC (CO₂, isoprene), with no residual.
+Option 1 of `docs/MEGAN_ATTRIBUTION.md`: the MEGAN emission change LCC − CTRL split exactly into composition, γL (LAI), γT (temperature), γP (light), γA (leaf age) and γC (CO₂, isoprene), with no residual.
 
 ## Input
 
@@ -33,7 +33,7 @@ All terms are additive: sum them over cells (× area) and months, then 100 · Δ
 
 ## Method
 
-See the docstring of `reduce_megan_lmdi.py` and `analysis/MEGAN_ATTRIBUTION.md` (option 1). In short:
+See the docstring of `reduce_megan_lmdi.py` and `docs/MEGAN_ATTRIBUTION.md` (option 1). In short:
 - Patches are matched by **grid cell + PFT**: the patch lists of CTRL and LCC differ, because LCC changes which PFTs are present.
 - Both runs emit: LMDI-I, exact and order-free.
 - One run emits zero: the whole change goes to the factor that is zero there (absent patch → composition; e.g. γL = 0 in winter → γL).
