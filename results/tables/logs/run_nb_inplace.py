@@ -1,6 +1,7 @@
 """Execute a notebook in a Jupyter kernel and save the outputs (text, tables, figures) into the .ipynb.
 
-Usage: python run_nb_inplace.py path/to/nb.ipynb [--kernel lcc-env] [--timeout 3600]
+Usage: python run_nb_inplace.py path/to/nb.ipynb [--kernel lcc-env] [--timeout 3600] [--cells 1,3,8]
+--cells: run only these code cells (notebook cell indices, 0-based); the others keep their saved outputs.
 Same idea as `jupyter nbconvert --execute --inplace`, which is not installed (no nbformat/nbclient).
 Stops at the first error; the error is saved in that cell's output.
 At the end, notebooks over 20 MB get their embedded figures shrunk (shrink_nb_images.py).
@@ -12,7 +13,9 @@ p = argparse.ArgumentParser()
 p.add_argument('notebook')
 p.add_argument('--kernel', default='lcc-env')
 p.add_argument('--timeout', type=float, default=3600, help='seconds per cell')
+p.add_argument('--cells', default=None, help='comma-separated cell indices to run (default: all code cells)')
 args = p.parse_args()
+ONLY = None if args.cells is None else {int(c) for c in args.cells.split(',')}
 
 path = os.path.abspath(args.notebook)
 nb = json.load(open(path))
@@ -25,7 +28,7 @@ def save():
 count, failed = 0, False
 try:
     for i, cell in enumerate(nb['cells']):
-        if cell['cell_type'] != 'code':
+        if cell['cell_type'] != 'code' or (ONLY is not None and i not in ONLY):
             continue
         count += 1
         outputs, t0 = [], time.time()

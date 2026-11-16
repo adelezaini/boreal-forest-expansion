@@ -16,7 +16,7 @@ from cicero_pptx import Deck, M  # noqa: E402
 ROOT = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 FIGDIR = ROOT / "analysis/simulation-contrasts_outputs/figures"
 Y = "2001_2025"
-DB = "LCC_FUT_fBVOClccFUT is the design-B stand-in (LCC_FUT − CTRL_FUT + CTRL_FUT_fBVOCctrlFUT) until run 24g is processed."
+DB = "Design A: LCC_FUT_fBVOClccFUT is the real run 24g (own LCC_FUT emissions, 2001–2025)."
 
 # fig id -> (title, [(row label, text)], note)
 FIGS = {
@@ -39,8 +39,7 @@ FIGS = {
            ("Row 2  fBVOC [lccFUT − ctrlFUT], FUT", "emission change from LCC, FUT climate"),
            ("Row 3  fBVOC [lccFUT − lccPD], FUT", "emission change from climate change, LCC vegetation"),
            ("Row 4  fBVOC [lccFUT − ctrlPD], FUT", "emission change from LCC and climate change together")],
-          "Same land and climate in both runs, so the prescription artefact cancels. Rows 2–4: " + DB +
-          " With it the artefact no longer cancels exactly (residual art(LCC land) − art(CTRL land))."),
+          "Same land and climate in both runs, so the prescription artefact cancels (design A). " + DB),
     "2b": ("Supplementary BVOC-related contrasts",
            [("Row 1  fBVOC [ctrlFUT − ctrlPD], FUT", "emission change from climate change, current vegetation"),
             ("Row 2  fBVOC [lccPD − ctrlPD], FUT", "emission change from LCC (PD emissions) in the FUT climate; "
@@ -62,14 +61,14 @@ FIGS = {
            [("Row 1  art_LCC_PD", "LCC_PD − LCC_PD_fBVOCctrlPD"),
             ("Row 2  art_LCC_FUT", "LCC_FUT − LCC_FUT_fBVOCctrlFUT")],
            "Uncorrected BVOC effects: the emission change from LCC plus the prescription artefact. "
-           "Minus Fig. 4b = design-B corrected BVOC effect."),
+           "Minus Fig. 4b = design-B BVOC effect = BVOC_A (Fig. 2) + δ."),
     "4b": ("Prescription artefacts on CTRL land",
            [("Row 1  art_CTRL_PD", "CTRL_PD − CTRL_PD_fBVOCctrlPD"),
             ("Row 2  art_CTRL_FUT", "CTRL_FUT − CTRL_FUT_fBVOCctrlFUT"),
             ("Row 3  row 2 − row 1", "does the artefact change between PD and FUT? ≈ 0 means one correction "
                                      "works in both backgrounds")],
-           "The design-B correction subtracts these; its assumption art(LCC land) ≈ art(CTRL land) is tested "
-           "in how_big_artefact_is_PD.ipynb."),
+           "Design A does not need this correction; δ = art_LCC_own − art_CTRL measures how much the artefact "
+           "depends on the land (artefact-corrected-split.ipynb)."),
 }
 STORY = [  # (section, [fig ids])
     ("Total effects", ["1a", "1b", "1c"]),
@@ -151,7 +150,7 @@ if __name__ == "__main__":
     used = set()
     d.title_slide("Simulation contrasts: BVOC → SOA → cloud",
                   "One figure per question, nudged runs 2001–2025",
-                  ["BOREAL-FOREST-EXPANSION", "analysis/simulation-contrasts.ipynb", "9 November 2026"])
+                  ["BOREAL-FOREST-EXPANSION", "analysis/simulation-contrasts.ipynb", "16 November 2026 · design A"])
     story = [dict(num=i + 1, title=t, subs=[(f"{f} {FIGS[f][0]}", None) for f in figs])
              for i, (t, figs) in enumerate(STORY)]
     d.agenda(story)

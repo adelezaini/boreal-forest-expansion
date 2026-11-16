@@ -3,8 +3,7 @@
 Run: python build_land_carbon_water_pptx.py OUT.pptx [TEMPLATE.pptx]  (needs python-pptx, Pillow, lxml)
 Slides: the 4 carbon grids, the 4 ET-split grids (one per contrast category), the seasonal cycle over the
 modified cells, and the regional table (modified cells) as two table slides. Every figure of the notebook
-must be placed, else it stops with the list. Rows marked "(design B)" in the table = stand-in for
-LCC_FUT_fBVOClccFUT; they disappear once the notebook is rerun with the real run (design A).
+must be placed, else it stops with the list. Design A since 2026-11-11 (real run 24g, no stand-in rows).
 """
 import csv
 import sys
@@ -127,7 +126,7 @@ if __name__ == "__main__":
     d.title_slide("Land carbon and water fluxes",
                   "Forest expansion and climate: GPP, respiration, net CO₂ flux, carbon stocks, ET split",
                   ["BOREAL-FOREST-EXPANSION", "analysis/land-carbon-water.ipynb, nudged runs 2001–2025",
-                   "11 November 2026"])
+                   "16 November 2026 · design A"])
     story = [dict(num=1, title="Carbon fluxes and stocks", subs=[(c, None) for c in CATS]),
              dict(num=2, title="Evapotranspiration split", subs=[(c, None) for c in CATS]),
              dict(num=3, title="Seasonal cycle and regional totals",
@@ -156,7 +155,7 @@ if __name__ == "__main__":
     rows = regional_rows("modified cells")
     note = ("LCC-modified cells; carbon = regional totals (TgC yr⁻¹, stocks PgC), water = area-mean mm yr⁻¹. "
             "Mean of the 25 yearly paired differences ± 95 % t-interval; bold = interval excludes 0. "
-            "(design B) = stand-in for LCC_FUT_fBVOClccFUT.")
+            "Design A: LCC_FUT_fBVOClccFUT = real run 24g.")
     table_slide(d, "3 Seasonal cycle and regional totals", "3  Regional totals · carbon",
                 "Regional totals over the modified cells: carbon", rows,
                 [("GPP", "TgC/yr"), ("NPP", "TgC/yr"), ("NEE", "TgC/yr"), ("NBP", "TgC/yr"),

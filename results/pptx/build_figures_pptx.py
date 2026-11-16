@@ -1,7 +1,9 @@
 """Build a sectioned PowerPoint of results/figures (2001-2025) on the CICERO template.
 
 Run: python build_figures_pptx.py OUT.pptx [TEMPLATE.pptx]  (needs python-pptx, Pillow, lxml)
-Every PNG in results/figures/ must be placed in build_story(), else it stops with the list.
+Every PNG in results/figures/ (except megan_factors/, see build_megan_pptx.py) must be placed in build_story(),
+else it stops with the list. Design A (user 2026-11-16): fBVOC FUT contrasts use the real 24g run; the
+artefacts section shows the design-A split first and design B as comparison.
 """
 import re
 import sys
@@ -23,9 +25,9 @@ CONTRAST = {
     "LCC_FUT-CTRL_PD": "LCC_FUT − CTRL_PD",
     # fBVOC
     "fBVOC_PD_lccPD-ctrlPD": "LCC_PD_fBVOC [lccPD − ctrlPD]",
-    "fBVOC_FUT_lccFUT-ctrlFUT": "LCC_FUT_fBVOC [lccFUT − ctrlFUT] (design B)",
-    "fBVOC_FUT_lccFUT-lccPD": "LCC_FUT_fBVOC [lccFUT − lccPD] (design B)",
-    "fBVOC_FUT_lccFUT-ctrlPD": "LCC_FUT_fBVOC [lccFUT − ctrlPD] (design B)",
+    "fBVOC_FUT_lccFUT-ctrlFUT": "LCC_FUT_fBVOC [lccFUT − ctrlFUT]",
+    "fBVOC_FUT_lccFUT-lccPD": "LCC_FUT_fBVOC [lccFUT − lccPD]",
+    "fBVOC_FUT_lccFUT-ctrlPD": "LCC_FUT_fBVOC [lccFUT − ctrlPD]",
     "fBVOC_FUT_ctrlFUT-ctrlPD": "LCC_FUT_fBVOC [ctrlFUT − ctrlPD]",
     "fBVOC_FUT_lccPD-ctrlPD": "LCC_FUT_fBVOC [lccPD − ctrlPD] (not really physical)",
     # non-BVOC
@@ -56,6 +58,8 @@ GRID = {  # contrast-grid panel set -> title
     "surface_energy": "Surface energy balance",
     "snow_albedo": "Snow and albedo",
     "hydro": "Hydrology",
+    "carbon": "Land carbon fluxes",
+    "et_split": "Evapotranspiration: transpiration, canopy and soil evaporation",
 }
 
 used = set()
@@ -106,7 +110,7 @@ def category_section(cat, num, title, intro, mech_first=False):
         budget += [(f("interactive/cumulative_radiative_decomposition_2001_2025.png"),
                     "Cumulative decomposition of the net TOA change"),
                    (f("interactive/cumulative_radiative_decomposition_2001_2025_vegetation_increments.png"),
-                    "Vegetation increments: non-BVOC vs BVOC (corrected)")]
+                    "Vegetation increments: non-BVOC, BVOC (design B) and its design-A parts BVOC_A + δ")]
     subs.append(("Radiative budget", budget))
     maps = []
     for key in ORDER[cat]:
@@ -138,8 +142,11 @@ def category_section(cat, num, title, intro, mech_first=False):
                    f"Paired years, {BANDNAME[b]}: year-by-year contrasts"))
     subs.append(("Time series and interannual variability", ts))
     surf = [(f(f"{c}/contrast_grid_{g}{sfx}"), GRID[g])
-            for g in ["snow_albedo", "surface_energy", "fsds_split", "hydro"]]
+            for g in ["snow_albedo", "surface_energy", "fsds_split", "hydro", "et_split", "carbon"]]
     surf.append((f(f"{c}/water_budget{sfx}"), "Water budget"))
+    if cat == "interactive":
+        surf.append((f("interactive/seasonal_cycle_carbon_et_modified_2001_2025.png"),
+                     "Seasonal cycle of carbon fluxes and ET, modified cells"))
     cloud = [(f(f"{c}/contrast_grid_context{sfx}"), GRID["context"]),
              (f(f"{c}/contrast_grid_cloud_types{sfx}"), GRID["cloud_types"]),
              (f(f"{c}/contrast_grid_cloud_types_JJA{sfx}"), GRID["cloud_types_JJA"]),
@@ -172,8 +179,8 @@ def build_story():
                               "Land-cover change with BVOC emissions held fixed (prescribed): "
                               "albedo, surface energy and water fluxes."))
     S.append(category_section("fBVOC", 4, "Biogeochemical part: BVOC effect",
-                              "Changing only the prescribed BVOC emissions: the BVOC → SOA → aerosol → cloud chain "
-                              "(FUT contrasts with lccFUT are design-B stand-ins).", mech_first=True))
+                              "Changing only the prescribed BVOC emissions (design A: prescribed − prescribed, so the "
+                              "artefact cancels): the BVOC → SOA → aerosol → cloud chain.", mech_first=True))
     S.append(dict(num=5, title="PD vs FUT attribution",
                   intro="Putting the categories side by side: how the PD and FUT signals compare and "
                         "where the emission changes come from.",
@@ -189,31 +196,68 @@ def build_story():
                             (f("pd-fut-attribution/pd_mechanism_source_boxes_2001_2025.png"), "PD: precursor, SOA and aerosol changes in four source boxes"),
                             (f("pd-fut-attribution/seasonal_chain_bvoc_soa_cloud_sw_2001_2025.png"), "Seasonal chain: BVOC → SOA → cloud → SW")])]))
     art = category_section("artefacts", 6, "Robustness: BVOC prescription artefacts",
-                           "art = interactive − prescribed own emissions. How large the artefact of "
-                           "prescribing a climatology is, and the design-B correction.", mech_first=True)
-    d = "artefacts/design-B-split/"
-    split = [(f(d + "radiative_budget_split_NET_2001_2025.png"), "Artefact-corrected split of the net TOA budget")]
+                           "art = interactive − prescribed own emissions. Design A (used): BVOC_A = "
+                           "prescribed − prescribed, δ = art_LCC_own − art_CTRL; design B (matched "
+                           "baseline) shown for comparison, BVOC_B = BVOC_A + δ.", mech_first=True)
+    dA, dB = "artefacts/design-A-split/", "artefacts/design-B-split/"
+    splitA = [(f(dA + "radiative_budget_split_designA_NET_2001_2025.png"),
+               "Design-A split of the net TOA budget: total = non-BVOC + BVOC_A + δ"),
+              (f(dB + "radiative_budget_split_designB_vs_A_NET_2001_2025.png"),
+               "Design B vs design A, net TOA budget (BVOC_B = BVOC_A + δ)")]
+    srcsA = {"PD": [("", "ctrlPD", "fBVOCctrlPDdesignA")],
+             "FUT": [("", "ctrlFUT", "fBVOCctrlFUTdesignA"), ("-ctrlPD", "ctrlPD", "fBVOCctrlPDdesignA"),
+                     ("-lccPD", "lccPD", "fBVOClccPDdesignA")]}
+    for per in ["PD", "FUT"]:
+        for sfx, src, ctx in srcsA[per]:
+            lab = f"BVOC_A = LCC_{per}_fBVOC[lcc{per} − {src}]"
+            splitA.append((f(dA + f"{per}_{ctx}_bvoc_context_maps_2001_2025.png"),
+                           f"{per}: BVOC_A ({src} emissions), context maps"))
+            for b in BANDS:
+                splitA.append((f(dA + f"{per}_ghan_BVOCA{sfx}_{b}_2001_2025.png"),
+                               f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
+            splitA.append((f(dA + f"{per}_ghan_seasonal_BVOCA{sfx}_NET_2001_2025.png"),
+                           f"{per} seasonal forcing maps, net: {lab}"))
+        for which, lab in [("delta", "δ = art_LCC_own − art_CTRL"),
+                           ("artLCCown", f"art_LCC_own = LCC_{per} − LCC_{per}_fBVOClcc{per}")]:
+            for b in BANDS:
+                splitA.append((f(dA + f"{per}_ghan_{which}_{b}_2001_2025.png"),
+                               f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
+            splitA.append((f(dA + f"{per}_ghan_seasonal_{which}_NET_2001_2025.png"),
+                           f"{per} seasonal forcing maps, net: {lab}"))
+        for b in BANDS:
+            splitA.append((f(dB + f"{per}_ghan_nonBVOC_{b}_2001_2025.png"),
+                           f"{per} forcing maps, {BANDNAME[b]}: non-BVOC part (same in A and B)"))
+        splitA.append((f(dB + f"{per}_ghan_seasonal_nonBVOC_NET_2001_2025.png"),
+                       f"{per} seasonal forcing maps, net: non-BVOC part (same in A and B)"))
+    art["subs"].append(("Design-A split: BVOC_A, δ and non-BVOC", splitA))
+    tagsA = [("PD_fBVOCctrlPDdesignA", "PD, ctrlPD emissions"), ("FUT_fBVOCctrlFUTdesignA", "FUT, ctrlFUT emissions"),
+             ("FUT_fBVOCctrlPDdesignA", "FUT, ctrlPD emissions"), ("FUT_fBVOClccPDdesignA", "FUT, lccPD emissions")]
+    for folder, sub, extra in [("individual-scale", "Design-A decomposition, individual scales", ""),
+                               ("split6-2", "Design-A decomposition, 6 + 2 split", "_split6-2")]:
+        items = []
+        for tag, lab in tagsA:
+            for b in BANDS:
+                items.append((f(dA + f"{folder}/{tag}_forcing_decomposition_{b}{extra}_2001_2025.png"),
+                              f"Forcing decomposition, {BANDNAME[b]}: {lab} (BVOC_A)"))
+        art["subs"].append((sub, items))
+    d = dB
+    split = [(f(d + "radiative_budget_split_NET_2001_2025.png"), "Design-B split of the net TOA budget (comparison)")]
     srcs = {"PD": [("", "ctrlPD", "fBVOCctrlPDcorr")],
             "FUT": [("", "ctrlFUT", "fBVOCctrlFUTcorr"), ("-ctrlPD", "ctrlPD", "fBVOCctrlPDcorr"),
                     ("-lccPD", "lccPD", "fBVOClccPDcorr")]}
     for per in ["PD", "FUT"]:
         for sfx, src, ctx in srcs[per]:
-            lab = f"corrected BVOC part ({src} emissions)"
+            lab = f"corrected BVOC part, design B ({src} emissions)"
             split.append((f(d + f"{per}_{ctx}_bvoc_context_maps_2001_2025.png"),
-                          f"{per}: corrected BVOC effect ({src} emissions), context maps"))
+                          f"{per}: corrected BVOC effect, design B ({src} emissions), context maps"))
             for b in BANDS:
                 split.append((f(d + f"{per}_ghan_BVOCcorr{sfx}_{b}_2001_2025.png"),
                               f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
             split.append((f(d + f"{per}_ghan_seasonal_BVOCcorr{sfx}_NET_2001_2025.png"),
                           f"{per} seasonal forcing maps, net: {lab}"))
-        for b in BANDS:
-            split.append((f(d + f"{per}_ghan_nonBVOC_{b}_2001_2025.png"),
-                          f"{per} forcing maps, {BANDNAME[b]}: non-BVOC part"))
-        split.append((f(d + f"{per}_ghan_seasonal_nonBVOC_NET_2001_2025.png"),
-                      f"{per} seasonal forcing maps, net: non-BVOC part"))
-    art["subs"].append(("Design-B split: BVOC vs non-BVOC", split))
-    for folder, sub, extra in [("individual-scale", "Decomposition, individual scales", ""),
-                               ("split6-2", "Decomposition, 6 + 2 split", "_split6-2")]:
+    art["subs"].append(("Design-B split (comparison)", split))
+    for folder, sub, extra in [("individual-scale", "Design-B decomposition, individual scales", ""),
+                               ("split6-2", "Design-B decomposition, 6 + 2 split", "_split6-2")]:
         items = []
         for tag, lab in [("PD_fBVOCctrlPDcorr", "PD, ctrlPD emissions"),
                          ("FUT_fBVOCctrlPDcorr", "FUT, ctrlPD emissions"),
@@ -221,7 +265,7 @@ def build_story():
                          ("FUT_fBVOClccPDcorr", "FUT, lccPD emissions")]:
             for b in BANDS:
                 items.append((f(d + f"{folder}/{tag}_forcing_decomposition_{b}{extra}_2001_2025.png"),
-                              f"Forcing decomposition, {BANDNAME[b]}: {lab} (corrected)"))
+                              f"Forcing decomposition, {BANDNAME[b]}: {lab} (design B, corrected)"))
         art["subs"].append((sub, items))
     S.append(art)
     return S
@@ -263,13 +307,13 @@ if __name__ == "__main__":
     OUT = Path(sys.argv[1])
     d = Deck(*sys.argv[2:3])
     story = build_story()
-    all_png = sorted(FIG.rglob("*.png"))
+    all_png = sorted(p for p in FIG.rglob("*.png") if "megan_factors" not in p.parts)  # own deck
     missing = [p for p in all_png if p not in used]
     assert not missing, "figures not placed:\n" + "\n".join(map(str, missing))
     d.title_slide("Climatic impacts of the Arctic expansion of boreal forests",
                   f"Results 2001–2025: all {len(all_png)} figures, ordered as a story",
                   ["BOREAL-FOREST-EXPANSION", "NorESM2.3 (CAM tropstratchem + CLM5), nudged runs",
-                   "9 November 2026"])
+                   "16 November 2026 · design A"])
     d.agenda(story)
     for sec in story:
         d.divider(sec)
