@@ -4,12 +4,12 @@
 
 > **Where things stand (updated every prompt)**
 >
-> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Commits made (16 Nov, 13:21):** 6 commits on `main` (not pushed): notes moved to `docs/`; design A figures; MEGAN LMDI reruns; caches on `/cluster/work`; sandbox simulation-year script; logs. One slip: `lake_fix_effect.ipynb` went in with its last cell (11) still failing (it looks for an old figure path). Choose: fix the path and rerun it, or take it out of that commit.</span>
+> <span style="color:#999999">**Commits made (16 Nov, 13:34):** 8 commits on `main` (not pushed): notes moved to `docs/`; design A figures; MEGAN LMDI reruns; caches on `/cluster/work`; sandbox script; simulation-contrasts figures moved to `results/`; `lake_fix_effect` fixed and rerun cleanly; logs. Home folder was full (file count); 6 old VS Code server copies deleted (your OK), now 74 000 of 100 000 files.</span>
 >
 > <span style="color:#999999">**Analysis notes moved to `docs/` (16 Nov, 13:10):** `FBVOC_ARTEFACT.md`, `MEGAN_ATTRIBUTION.md`, `PLOTTED_VARIABLES.md` are now in `docs/`; all mentions point there.</span>
 >
 >
-> <span style="color:#999999">**Contrast figures location noted (16 Nov, 13:08):** `results/README.md` now says that the `simulation-contrasts.ipynb` figures (Figs. 1a–4b) live in `analysis/simulation-contrasts_outputs/figures/`, not in `results/figures/`.</span>
+> <span style="color:#999999">**Contrast figures moved to `results/` (16 Nov, 13:20):** the `simulation-contrasts.ipynb` figures (Figs. 1a–4b) are now in `results/figures/simulation-contrasts/` (2001–2025) and `results/figures-2001-2014/simulation-contrasts/` (2001–2014). The notebook, the deck script and both READMEs point there; the old `analysis/simulation-contrasts_outputs/` is gone. Nothing was rerun.</span>
 >
 > <span style="color:#999999">**Old folders checked (16 Nov, 11:50):** nothing changed. `diagnostics/0_check-spinup-equilibrium-uncomplete` is replaced by `0_check-simulation-equilibrium`; only the quick-spin-up figures are unique (worth keeping as a record). `_old/` has nothing that is still needed: its functions are all in `src/`.</span>
 >
@@ -19,7 +19,7 @@
 >
 > <span style="color:#7B2FBE">**Slides updated to design A (16 Nov, 12:33):** All decks checked: none broken. the 4 CICERO decks in `results/pptx/` are rebuilt (figures 340 slides, contrasts, MEGAN with the new exact-split section, land). Two missing design-A figure sets were made: the design-A budget split and maps of the artefact on LCC land with its own emissions (FUT ≥45°N: +0.07 W m⁻², mostly cloud; δ stays ≈ 0). Not rebuilt: the old non-CICERO deck and `simulations-interpretation.pptx`. NIRD problem: many files read only with `HDF5_USE_FILE_LOCKING=FALSE`.</span>
 >
-> <span style="color:#E58AA5">**Simulation-year plots (16 Nov, 13:10):** 6 drift figures in `sandbox/test_cyclical_sim_year_outputs/` (x = simulation year, analysis years shaded, conditions in titles). Seasonal (Jan–Dec) figures not made yet: they need the monthly files on NIRD, which gives read errors today. Seen in the plots: FUT runs with present-day emissions need ~3 years for SOA to settle (year 1 1.9 → 1.3 mg m⁻²); this moves the 25-year mean by only 0.5 %. All `cache/` folders now sit on `/cluster/work` (home quota was full).</span>
+> <span style="color:#E58AA5">**Simulation-year plots (16 Nov, 13:31):** suggested wording for titles: no calendar years (the winds come from a free-running present-day model run, so "2001–2025" are model labels, not real years); use "25-year mean" + "same nudged winds". Waiting for your choice. Before: 6 drift figures in `sandbox/test_cyclical_sim_year_outputs/` (x = simulation year, analysis years shaded, conditions in titles). Seasonal (Jan–Dec) figures not made yet: they need the monthly files on NIRD, which gives read errors today. Seen in the plots: FUT runs with present-day emissions need ~3 years for SOA to settle (year 1 1.9 → 1.3 mg m⁻²); this moves the 25-year mean by only 0.5 %. All `cache/` folders now sit on `/cluster/work` (home quota was full).</span>
 >
 > <span style="color:#AAAAAA">**MET + nudged runs 2026–2040 (16 Nov, 11:02):** MET is running (model year 2029 of 2041; its first 6-yr job ends ~19:00 today). The automatic watcher is now on (started 11:00; it had not started yesterday, which cost nothing). Expected: the 12 runs start ~17 Nov, reach 2041 ~19–20 Nov; postprocessing + analysis ~20–21 Nov.</span>
 >
@@ -366,17 +366,18 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
-## 2026-11-16 · 13:16 → 13:21 (5 min) · session ada6f70d
+## 2026-11-16 · 13:16 → 13:34 (18 min) · session ada6f70d
 
-**Goal:** make the proposed commits, grouped by topic.
+**Goal:** make the proposed commits, grouped by topic; fix `lake_fix_effect.ipynb`; commit the latest updates.
 
-**Done:** 6 commits on `main`, not pushed: notes moved to `docs/` (+ all references); design A split figures; MEGAN LMDI notebook reruns; caches moved to `/cluster/work`; sandbox simulation-year script; session logs. Commit proposal from 13:14 (session 90ef7026) done.
+**Done:**
+- 8 commits on `main`, not pushed: notes moved to `docs/`; design A split figures; MEGAN LMDI reruns; caches moved to `/cluster/work`; sandbox simulation-year script; simulation-contrasts figures moved to `results/` (work of another session); `lake_fix_effect` fix; logs. Commit proposal from 13:14 (session 90ef7026) done.
+- `lake_fix_effect.ipynb`: now reads the old figures from `results/figures-2001-2014/`; rerun with no errors (open since 13:14, session 90ef7026).
+- Home folder was at its file limit (99 530 of 100 000), which blocked git and broke reruns. With your OK, 6 unused VS Code server copies were deleted: now 73 949 files.
 
-**Found:** `lake_fix_effect.ipynb` was committed with cell 11 still failing (missing old figure `before_lake_fix/..._2001_2014_...png`); the rest of the notebook ran.
+**Open-next:** two new files from other sessions are not committed: `cases-scripts/run_when_done/megan_lmdi_maps_when_FUT_done.sh`, `sandbox/test_fut_minus_pd.py`. Keep an eye on the file count (`dusage`).
 
-**Open-next:** fix that path + rerun, or remove it from the commit. Two new files from other sessions were left out: `cases-scripts/run_when_done/megan_lmdi_maps_when_FUT_done.sh`, `sandbox/test_fut_minus_pd.py`.
-
-**Files changed:** logs only (plus the commits).
+**Files changed:** `diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb` (+ outputs, run log); `~/.vscode-server/` (old copies removed); logs.
 
 </div>
 
@@ -398,14 +399,14 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
-## 2026-11-16 · 13:07 → 13:08 (1 min) · session d963b45a
-**Goal:** say in `results/README.md` where the simulation-contrasts figures are.
+## 2026-11-16 · 13:07 → 13:20 (13 min) · session d963b45a
+**Goal:** put the simulation-contrasts figures in `results/` with the other figures.
 
-**Done:** added a note under the figures table pointing to `analysis/simulation-contrasts_outputs/figures/` and the matching deck.
+**Done:** moved the 9 figures for 2001–2025 to `results/figures/simulation-contrasts/` and the 9 for 2001–2014 to `results/figures-2001-2014/simulation-contrasts/`. The notebook now saves there, and the deck script reads from there. Both READMEs are updated. (At first I had only added a note to the README; you meant a move.)
 
-**Open / next:** nothing.
+**Open / next:** nothing. The automatic 2001–2040 rerun will also write there.
 
-**Files changed:** `results/README.md`, logs.
+**Files changed:** `analysis/simulation-contrasts.ipynb` (path only), `results/pptx/build_contrasts_pptx.py`, `analysis/README.md`, `results/README.md`, logs.
 
 </div>
 
@@ -461,7 +462,7 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#E58AA5">
 
-## 2026-11-16 · 11:22 → 13:10 (108 min) · session 89a5509c
+## 2026-11-16 · 11:22 → 13:31 (129 min) · session 89a5509c
 
 **Goal:** finish the simulation-year plots; move all caches to the work disk (you asked).
 
