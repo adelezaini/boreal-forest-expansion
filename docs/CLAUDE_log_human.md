@@ -4,15 +4,59 @@
 
 > **Where things stand (updated every prompt)**
 >
+> <span style="color:#A84300">**Commits made, old backup removed (21 Nov, 16:21):** 6 topic commits in the project repo and 1 in the draft repo, not pushed. MEGAN, background aerosol and Tang/LPJ-GUESS stay uncommitted, as you chose. The 16 Nov backup folders are deleted (348 files, all recoverable from git).</span>
+>
+> <span style="color:#AAAAAA">**Resubmitted (21 Nov, 15:58):** `LCC_PD_fBVOClccPD` is back in the queue for 2036–2041 (job 1812398, waiting to start). The MEGAN LMDI maps notebook is rerunning. Whether the crash was a one-off is known only once the job passes start-up.</span>
+>
+> <span style="color:#CC0000">**Status check (21 Nov, 15:55):** 11 of the 12 nudged runs are in their last stretch (2036–2041), the slowest should end around 23:00. PD `lcc_fBVOClccPD` crashed at start-up at 02:12, probably a one-off bad read since the surface file is intact. **Waiting on you:** OK to resubmit it. The 2001–2040 analysis waits for this run. The MEGAN LMDI maps notebook also still needs a rerun.</span>
+>
+> <span style="color:#A84300">**Six-map forcing figures cleaned up, deck rebuilt (20 Nov, 16:50):** in `results/figures/radiative-forcing-decomposition/` only the shared-scale (`_split…`) figures are kept: 4 cases × NET/SW/LW. Removed: the old `_split6-2` files, the duplicate case `LCCFUT-CTRLPD_fBVOCctrlPD` (same as `LCCFUT_fBVOCctrlPD` since 19 Nov), and the versions with one colourbar per map. Notebook and deck script now make only the shared-scale version. Main figures deck rebuilt: 307 slides, 297 figures. Not committed.</span>
+>
+> <span style="color:#AAAAAA">**Status check (20 Nov):** the 12 nudged runs finished 2026–2031 and are now running 2031–2036 (LCC_FUT started ~9 h after the others). FUT MEGAN batch 2 finished at 04:12, so all FUT years are in. The automatic rerun of `megan-lmdi-attribution-maps.ipynb` failed 3 times (the Python environment on NIRD failed to load), so it has to be rerun by hand. The archive guard is running. Nothing changed.</span>
+>
+> <span style="color:#008080">**Leaf area: CLM vs LPJ-GUESS (19 Nov, 17:47):** new `diagnostics/lai-clm-vs-lpjguess/clm_vs_lpjguess_lai.ipynb`. Present day the two models agree (summer LAI 1.8 in the forest-change cells). By 2100 CLM's leaf area doubles (×2.1) while LPJ-GUESS's rises ×1.6; through MEGAN this alone can make our future emissions up to ~25–30 % higher. Tang's GFDL-ESM4 SSP5-8.5 warms about as much as our runs (+6–7 K), so the warming is not what makes our monoterpenes so much larger. Not committed.</span>
+>
+> <span style="color:#A84300">**Offline vs coupled emissions (19 Nov, 17:23):** running LPJ-GUESS offline vs our coupled MEGAN is not the main reason our emissions differ from Tang's. Our future increase is warmer leaves (×2.3–2.8, +7.5 K) times twice the leaf area (×2), with CO₂ halving isoprene but nothing holding back monoterpenes. The coupling itself (the new forest warming its own leaves by ~0.3 K in summer) adds only ~3–5 %, though that is as large as the whole vegetation effect on the emission totals.</span>
+>
+> <span style="color:#A84300">**Design A six-map figures, FUT with PD emissions (19 Nov, 16:51):** maps 1–2 (albedo, total) now show LCC_FUT − LCC_PD (lccPD-emission figure) and LCC_FUT − CTRL_PD (ctrlPD-emission figure) instead of [LCC − CTRL]_FUT. They are much bigger (≥45°N NET total +1.07 and +1.33 W m⁻²; albedo +9.7 and +10.2), so the scale is now ±40 / ±15 / ±2 and the files end in `_split40-15-2_designA.png`. The 12 figures are redrawn. The notebook rerun failed on NIRD read errors (NIRD unstable this afternoon), so the notebook still shows that error in its figure cell: rerun it when NIRD is stable. Old `_split6-2` files of these two cases are still there. Not committed.</span>
+>
+> <span style="color:#A84300">**Tang comparison extended (19 Nov, 16:30):** Fig. 5 now outlines the forest-change cells with a thick line. The emission-totals chart now has Tang's CanESM5 too: around 2100 Tang gets isoprene +18 % (GFDL) / +64 % (CanESM5) and monoterpenes −5 % / +13 %; we get +211 % and +352 %. New figure like Tang Fig. 1b,f: our emission change per year 2000→2100 (same unit as Tang, mgC m⁻² yr⁻²) is positive almost everywhere (only 7–9 % of cells go down), while Tang's monoterpenes go down over large parts of the boreal zone. **16:44:** the figure now also shows the vegetation change alone (LCC − CTRL emissions, FUT and PD climate): per year it is 25–50× smaller than the total (ISO +0.11 / +0.07, MT −0.04 / +0.01 mgC m⁻² yr⁻² in the forest-change cells), with the up/down pattern Tang describes. Not committed.</span>
+>
+> <span style="color:#E58AA5">**Tang emission totals bar colour fixed (19 Nov, 15:05):** Tang's ~2100 bar is now orange like our lccFUT (both include the vegetation change), not red (ctrlFUT). Rerun done. **15:10:** in the Tang-range copy of Fig. 5, SOA burden and AOD vis are no longer put on Tang's ranges (they are not the same quantities as Tang's optical depths); the SOA burden bar goes to ±3 in both figures.</span>
+>
+> <span style="color:#E58AA5">**Tang comparison figure restyled (19 Nov, 15:00):** the Tang Fig. 5-style figure now has discrete colour bars like Tang's (blue–red in equal steps, a tick on every step). A second copy uses exactly Tang's colour-bar ranges (`tang_fig5_layout_tanglimits_2001_2025.png`): on those ranges our climate-driven changes in monoterpenes, SOA, AOD and CCN fill the darkest colour almost everywhere, which shows how much bigger they are than Tang's. Not committed.</span>
+>
+> <span style="color:#A84300">**Methods numbers filled (19 Nov, 14:45):** all yellow \NUM boxes except the FUT emission split (waits for FUT batch 2). New: LCC vs CTRL vegetation outside the forest cells differs by ≤ 0.1 % in PD and FUT (2001–2025); the PD LCC − CTRL SOA burden is persistent from year to year, so its map hatching is permissive (675 → 185 significant cells with an effective sample size).</span>
+>
+> <span style="color:#AAAAAA">**Nudged runs 2026–2040 repaired (19 Nov, 14:22):** LCC_FUT resubmitted (job 1809562, bad nodes excluded); MET copied to NIRD (retry OK 14:15); the 3 false failure flags cleared; the watcher now asks the queue up to 3 times and looks twice before calling a run failed, and was restarted at 14:19 (now on login-2). All 12 runs are running or queued. Results 2026–2040 expected ~22–23 Nov.</span>
+>
+> <span style="color:#008080">**Second BVOC means figure (16 Nov, 22:29):** `diagnostics/2_bvoc-emissions/plot_bvoc_means.ipynb` now also plots the other 17 BVOC species MEGAN sends to CAM (methanol, CO, acetone, ethene, …), same CTRL/LCC × PD/FUT layout, in Gg/yr. Over the forest-expansion cells the new forest <i>lowers</i> all of them slightly (PD up to −5 %, FUT up to −8 %), unlike isoprene (+6 % PD); the future climate raises them 4–7×. Yearly totals saved to a CSV so the figure survives the work-archive purge.</span>
+>
+> <span style="color:#008080">**Isoprene: each fBVOC run against its own source (23:26):** section 10 of `isoprene_diurnal_cycle_fBVOC.ipynb`. Every fBVOC run emits exactly its source's 2001–2014 average (all 8 runs, every month 2001–2025), with the same daily cycle (peak ~13:15, ~4 % at night). What it misses is weather: the source's summers vary by ±7–9 % and its day-to-day swings are ~25–35 %, of which the input keeps only 14–25 %. Over 2015–2025 the PD sources emit ~2 % less than the input, FUT ~1 % more. Notebook rerun done without errors. Not committed.</span>
+>
+> <span style="color:#555555">**Slide decks rebuilt (16 Nov, 22:13):** the four CICERO decks in `results/pptx/` were rebuilt from the current figures: main figures deck 325 slides (315 figures), land carbon/water 13 slides, MEGAN factors 55 slides, simulation contrasts 12 slides. Every figure was placed.</span>
+>
+> <span style="color:#008080">**BVOC emissions notebook saves its figures (16 Nov, 22:50):** `diagnostics/2_bvoc-emissions/plot_bvoc_emissions.ipynb` now writes every figure (12 PNGs, 200 dpi) to the new folder `plot_bvoc_emissions_outputs/`, like the time-series notebook. Rerun done without errors (~35 min, mostly reading the files); outputs saved in the notebook. Not committed.</span>
+>
+> <span style="color:#A84300">**Tang et al. 2023 comparison done (17 Nov, 00:30):** `diagnostics/tang2023-comparison/tang2023_comparison.ipynb`. Our vegetation change gives Tang's pattern (monoterpenes down in the southern boreal belt, up in the north; SOA up over northern Canada) but it is ~1 % of the climate effect on emissions, which is several times bigger than in Tang. Note: `AEROD_v` is empty in our output, use `AOD_VIS`.</span>
+>
+> <span style="color:#008080">**Isoprene diurnal cycle, fixed-BVOC runs + hourly time series (16 Nov, 21:10):** new `diagnostics/2_isoprene-diurnal-cycle/isoprene_diurnal_cycle_fBVOC.ipynb`, same figures as the interactive notebook. The production fBVOC runs write no 30-min output, so their isoprene is taken from the prescribed input files (checked: a test run emits exactly what the file gives, to 0.05 %). The prescribed isoprene keeps the interactive daily cycle (peak ~13:15 local, ~4 % at night) and the LCC − CTRL difference (PD summer, expansion area ~+6.5 %), but loses the day-to-day weather swings. Full hourly series for every year of the MEGAN runs, the input files and the 2001–02 test runs are in `isoprene_diurnal_cycle_fBVOC_outputs/figures/`. FUT 2002/2006/2011 follow when FUT batch 2 is done (rerun the reducer, then the notebook). Not committed.</span>
+>
+> <span style="color:#008080">**Isoprene diurnal cycle + BVOC plots moved (16 Nov, 19:14):** new `diagnostics/2_isoprene-diurnal-cycle/isoprene_diurnal_cycle.ipynb` from the 30-min output of the MEGAN split runs (PD 6 years, FUT 3 so far). Isoprene peaks at ~13:00 local time with almost nothing at night; forest expansion raises it by ~6.5 % (PD, summer, expansion area) at every hour, so the timing does not change. The 30-min data are saved as monthly diurnal averages on NIRD, so they survive the /cluster/work purge. The `plot*` notebooks moved from `preprocess/bvoc-emissions/` to `diagnostics/2_bvoc-emissions/` (paths fixed, not rerun). Nothing committed.</span>
+>
+> <span style="color:#555555">**Archive guard checked (16 Nov, 18:29):** still running on login-3 (since 5 Nov), so not restarted. Its log is quiet because it only writes when it fixes something; last fix 13:12 today.</span>
+>
+> <span style="color:#62733B">**BVOC means plot (16 Nov, 20:57):** `diagnostics/2_bvoc-emissions/plot_bvoc_means.ipynb` redrawn: x axis VEG_CTRL / VEG_LCC, arrows with the run names along them, colours in a legend, "25-year mean ± 1σ" as subtitle. The PD → FUT arrow now ends on the LCC_FUT point (the earlier shift was only for visibility; same run).</span>
+>
 > <span style="color:#999999">**Commits made (16 Nov, 18:08):** 5 commits on `main` (not pushed): MEGAN month fix; background aerosol 25 yr; notes; sandbox; logs. Split-figure labels (`forcing_maps.py` + `artefact-corrected-split`) held, as you asked. Another session is rerunning the background aerosol notebooks right now, so those will need one more commit.</span>
 >
 > <span style="color:#999999">**NOTES.md filled + CLAUDE.md fixed (16 Nov, 16:27):** `NOTES.md` now has the new cleaning list and notes (your lines kept, typo `.ipynb_checkpoints` fixed; MEGAN month line left out until the swap is done). `CLAUDE.md` spin-up rule now points to the right files.</span>
 >
 > <span style="color:#555555">**MEGAN 2001/2002 month fix (16 Nov, 16:40):** fixed files swapped in at 16:34; old ones in `data/processed-data/megan-lmdi/old-month-offset-20261115/` (moved, same NIRD disk). The 3 MEGAN notebooks are rerunning (megan-lmdi-vs-approx, megan_factor_maps, megan-lmdi-attribution-maps). Both details are now in `NOTES.md`, plus the nudging fix of the last 2015 met file.</span>
 >
-> <span style="color:#008080">**Background aerosol PD/FUT, 25 years + Arctic maps (16 Nov, 15:55):** done and run (results saved in the notebook). Years now 2001–2025; maps show the Arctic (north of 45°N), global maps in an appendix; new bar chart + yearly time series of the online sources. Numbers move ≤ 2 % from 2001–2014. New: north of 66.5°N the droplet column rises 25 % in FUT although sulfate falls 41 % (DMS +413 %).</span>
+> <span style="color:#008080">**Background aerosol notebooks split (16 Nov, 18:10):** the PD/FUT notebook is now two: `background_aerosol_pd_fut_prescribed.ipynb` (emission files, ocean DMS, greenhouse gases) and `background_aerosol_pd_fut_online.ipynb` (what the model makes of it + MEGAN, dust, sea salt, DMS flux, lightning). The LCC notebook is renamed `background_aerosol_lcc_ctrl_fut_online.ipynb`. Bar charts and time series now also exist for north of 40°N. Both ran without errors; the old notebook is removed. North of 40°N: sulfur emissions 19.5 → 4.2 Tg S, MEGAN 56 → 191 Tg, DMS flux +39 %. Earlier (15:55): 25 years, Arctic maps, global maps in an appendix; north of 66.5°N the droplet column rises 25 % in FUT although sulfate falls 41 %.</span>
 >
-> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Results folder reorganisation (16 Nov, 16:52):** layout agreed: `results/figures/<notebook>/{a_interactive,b_fBVOC,c_non-BVOC}/` (same for tables), mixed figures in the notebook folder, `artefacts/d_artefacts/` + `artefacts/design-B/`, old sets untouched, new notebook `radiative-forcing-decomposition`, new colour scales. Still open in the chat: the art_LCC definition (explained again with numbers) and the period wording in titles (3 options).</span>
+> <span style="color:#A84300">**Results folder reorganised, all reruns done (16 Nov, 20:40):** `results/figures/<notebook>/{a_interactive,b_fBVOC,c_non-BVOC}/` (same for tables); pure artefacts (art_LCC, art_CTRL, δ) in `artefacts/d_artefacts/`, design B in `artefacts/design-B/`; titles without years ("25-year mean" in the subtitle); new notebook `radiative-forcing-decomposition`. All 10 notebooks reran without errors (18:15–20:16). Old set: `results/figures-pre-reorg-20261116/`. Slide-deck builders updated (20:55) and test-built; the decks in `results/pptx/` themselves are not rebuilt yet (waiting for your OK).</span>
 >
 > <span style="color:#999999">**Commits made (16 Nov, 13:34):** 8 commits on `main` (not pushed): notes moved to `docs/`; design A figures; MEGAN LMDI reruns; caches on `/cluster/work`; sandbox script; simulation-contrasts figures moved to `results/`; `lake_fix_effect` fixed and rerun cleanly; logs. Home folder was full (file count); 6 old VS Code server copies deleted (your OK), now 74 000 of 100 000 files.</span>
 >
@@ -374,6 +418,410 @@ One block per working window (a new block starts after more than 1 hour without 
 
 ---
 
+<div style="color:#A84300">
+
+## 2026-11-21 · 16:02 → 16:21 (19 min) · session 6f761ff3
+
+**Goal:** commit the work by topic; remove the 16 Nov pre-reorganisation figures and tables.
+
+**Done:**
+- Project repo, 6 commits: results layout and artefacts, MET 2026–2040, BVOC plots, isoprene diurnal cycle, equilibrium and autocorrelation, diagnostics index + runner + logs.
+- Draft repo, 1 commit: Methods values, setup figure, LaTeX fixes. Nothing pushed.
+- Deleted `results/figures-pre-reorg-20261116/` (331 files) and `results/tables-pre-reorg-20261116/` (17 files).
+
+**Found:** all 348 deleted files were in git history and no code used them.
+
+**Open-next:** commit MEGAN (after the maps notebook ends), background aerosol and Tang/LPJ-GUESS when you want; push.
+
+**Files changed:** `.gitignore`, `CLAUDE.md`, `results/README.md`, both logs.
+
+</div>
+
+<div style="color:#AAAAAA">
+
+## 2026-11-21 · 15:55 → 15:58 (3 min) · session d2e64b8d
+
+**Goal:** resubmit the crashed run and rerun the maps notebook.
+
+**Done:** `LCC_PD_fBVOClccPD` resubmitted from its intact 2036 restart (crash open since 21 Nov 15:55 block). Maps notebook restarted.
+
+**Found:** restart files, met list and settings all checked OK before submitting.
+
+**Open-next:** confirm the run passes start-up; read the maps result; fill the last Methods number.
+
+**Files changed:** `docs/met-nudg-2026-2040.md`, logs; failure flag moved to `met-nudg-2040/retry-20261121/`.
+
+</div>
+
+## 2026-11-21 · 15:52 → 15:55 (3 min) · session d2e64b8d
+- **Goal:** status and to-do list.
+- **Found:** 11/12 nudged runs on track; PD `lcc_fBVOClccPD` crashed at start-up (surface file intact, likely bad read). MEGAN LMDI maps notebook still failed.
+- **Open-next:** your OK to resubmit the run; rerun the maps notebook and fill the last Methods number.
+- **Files changed:** logs only.
+
+## 2026-11-20 · 16:45 → 16:50 (5 min) · session 4607124c
+
+**Goal:** tidy the design A six-map forcing figures and update the slide deck.
+
+**Done**
+- Deleted the 6 out-of-date `_split6-2` figures (asked on 19 Nov).
+- Dropped the duplicate case `LCCFUT-CTRLPD_fBVOCctrlPD` (identical to `LCCFUT_fBVOCctrlPD`) from the notebook and deck script; its 6 figures deleted (asked on 19 Nov).
+- Deleted the 12 one-colourbar-per-map figures; the notebook now draws only the shared-scale version.
+- Rebuilt `results/pptx/BOREAL_figures_2001-2025_CICERO.pptx`: 307 slides, 297 figures; section 5.2 has the 12 shared-scale figures.
+
+**Open-next**
+- Notebook code changed but not rerun (its saved outputs are still from before).
+- Commit when you want.
+
+**Files changed:** `analysis/radiative-forcing-decomposition.ipynb`, `results/pptx/build_figures_pptx.py`, `results/pptx/BOREAL_figures_2001-2025_CICERO.pptx`, figures folder above.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-19 · 16:28 → 16:51 (23 min) · session 21b50ffc
+
+**Goal:** in the design A six-map figures for FUT with PD emissions, show LCC_FUT − LCC_PD (lccPD) and LCC_FUT − CTRL_PD (ctrlPD) in maps 1–2.
+
+**Done:** `analysis/radiative-forcing-decomposition.ipynb` cases changed; colour scale ±40/±15/±2 (`split40-15-2`); deck builder entries updated (deck not rebuilt). 12 figures redrawn (script with retries, inputs copied to /cluster/work because of NIRD read errors). Notebook rerun failed on NIRD (HDF read errors, broken imports), so its figure cell shows an error.
+
+**Found:** LCC_FUT − LCC_PD, ≥45°N, 98th percentile: albedo 38, total NET 12, SW 20, LW 12 W m⁻². Means ≥45°N NET: total +1.07 (vs LCC_PD) / +1.33 (vs CTRL_PD), albedo +9.7 / +10.2 W m⁻². The ctrlPD figure is now the same as the existing `LCCFUT-CTRLPD_fBVOCctrlPD` figure.
+
+**Open-next:** rerun the notebook when NIRD is stable; old `_split6-2` files of these two cases are stale (delete?); drop the duplicate LCCFUT-CTRLPD case?
+
+**Files changed:** `analysis/radiative-forcing-decomposition.ipynb`, `results/pptx/build_figures_pptx.py`, figures in `results/figures/radiative-forcing-decomposition/`.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-19 · 16:10 → 17:47 (97 min) · session 2ca075af
+
+**Goal:** Tang comparison: outline the forest-change cells, add Tang's CanESM5 to the totals, and a figure like Tang Fig. 1b,f (then also with the vegetation-only differences, FUT and PD).
+
+**Done:** thick outline of the modified cells in both Fig. 5 versions; CanESM5 bars (with the spread across scenarios) in the totals chart; new trend-map figure in Tang's unit (mgC m⁻² yr⁻²) with histograms, with three columns: total (lccFUT − ctrlPD), vegetation only in FUT (lccFUT − ctrlFUT) and in PD (lccPD − ctrlPD). Notebook rerun.
+
+**Found:** Tang's present-day isoprene is ~12.5 TgC/yr, not ~14 as noted before (misread). Our emissions grow far more than Tang's in both models (ISO +211 % vs +18 / +64 %; MT +352 % vs −5 / +13 %). Our monoterpene change is positive almost everywhere; Tang's falls over much of the boreal zone (CO₂ inhibition, which our model lacks for monoterpenes). The vegetation change alone is small per year (forest-change cells: ISO +0.11 FUT / +0.07 PD, MT −0.04 / +0.01 mgC m⁻² yr⁻²) and goes both ways (about a third of the cells go down). Offline vs coupled: our PD→FUT increase = leaf temperature ×2.3–2.8 × leaf area ×2 (isoprene halved by CO₂, monoterpenes not); the coupled feedback of the new forest on its own leaf temperature (+0.3 K in summer) is worth only ~3–5 %. Correction: Tang's 2.4 / 2.8 °C warming is the mean over all 5 scenarios, so it is not comparable with our SSP5-8.5-only +6.6 K (land 46–82°N); Tang's Supp. Fig. 4a (you checked): SSP5-8.5 CanESM5 ~+12 K, GFDL ~+6–7 K, so GFDL warms like our runs. New LAI notebook: PD LAI agrees with LPJ-GUESS; by 2100 CLM's grows ×2.1 vs ×1.6. No notebook yet compares CLM's leaf area with LPJ-GUESS's.
+
+**Open-next:** maybe drop "≈ OD550" from the Fig. 5 row labels and the side-by-side table (asked 15:11).  
+
+**Files changed:** new `diagnostics/lai-clm-vs-lpjguess/clm_vs_lpjguess_lai.ipynb` + outputs, `diagnostics/README.md`; `diagnostics/tang2023-comparison/tang2023_comparison.ipynb`, its Fig. 5, totals and new `tang_fig1bf_trend_maps_2001_2025.png` + `fig1bf_trend_values_2001_2025.csv`.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-19 · 15:02 → 15:11 (9 min) · session 2ca075af
+
+**Goal:** fix the colour of Tang's 2100 bar in the emission totals figure; in Fig. 5, keep Tang's ranges only for quantities that match.
+
+**Done:** Tang's 2100 bar is now orange (= lccFUT, vegetation + climate), not red (ctrlFUT). In the Tang-range copy of Fig. 5, SOA burden and AOD vis keep our own scale (a burden is not an optical depth); the SOA burden bar goes to ±3 in both Fig. 5 versions. Notebook rerun.
+
+**Found:** nothing new.
+
+**Open-next:** maybe drop "≈ OD550" from the row labels and the side-by-side table (asked).
+
+**Files changed:** `diagnostics/tang2023-comparison/tang2023_comparison.ipynb`, its emission-totals and 2 Fig. 5 PNGs.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-19 · 14:50 → 15:00 (10 min) · session 2ca075af
+
+**Goal:** Tang comparison Fig. 5: colour bars like Tang's, plus a copy on Tang's ranges.
+
+**Done:** discrete colour bars (4 steps per side, round numbers); copy with Tang's exact ranges (columns 1–2; column 3 keeps its own scale because Tang's third column is a different experiment). Notebook rerun, outputs saved.
+
+**Found:** on Tang's ranges, our MT, SOA, AOD and CCN changes are past the end of the bar almost everywhere; ISO stays within it.
+
+**Open-next:** none.
+
+**Files changed:** `diagnostics/tang2023-comparison/tang2023_comparison.ipynb`, its 2 Fig. 5 PNGs.
+
+</div>
+
+<div style="color:#AAAAAA">
+
+## 2026-11-19 · 14:12 → 14:47 (35 min) · session fff6dc27
+
+**Goal:** fix the nudged 2026–2040 problems (your go); show where open science items 6–8 live; recap from 9 Nov; fill the Methods \NUM boxes; disk space; run timeline.
+
+**Done:** LCC_FUT resubmitted (open since 13:55). MET copied to NIRD (open since 13:55). 3 false failure flags cleared (open since 13:55). Watcher queue check fixed and watcher restarted 14:19 (open since 13:55). Told you where items 6–8 are; recap since 9 Nov, newest first, with the reasons.
+
+- Methods \NUM boxes filled (open since 4 Nov): FPC numbers (99.7 % BoNET expansion, densification < 5 % in every scenario), vegetation equilibrium PD + FUT on 2001–2025 (new notebook; outside the modified cells LCC and CTRL differ by ≤ 0.1 %), year-to-year independence on 25 years (rerun; radiation/temperature/cloud fine; PD LCC − CTRL SOA has real persistence: its significant cells drop 675 → 185 with an effective sample size). Only the FUT emission split is left. Both .tex files compile.
+
+**Found:** the nn9188k project disk is a shared group quota: 954 of 1000 GiB; our part is ≈ 137 GB (restarts 86, input data 31, `_old` 20). The runs write to /cluster/work, so they are not at risk (inference). NIRD's whole disk is 99 % full.
+
+**Open-next:** PD raw deletion, commits; science items 6–8 not investigated; FUT LMDI box after batch 2.
+
+**Files changed:** `cases-scripts/run_when_done/met_nudg_2026-2040_when_done.sh` (queue check); `boreal-forest-expantion-draft/methods.tex` (3 macros), `methods-claude.tex` (5 boxes); new `diagnostics/0_check-simulation-equilibrium/check_LCC_vs_CTRL_vegetation_state_2001-2025.ipynb`; `diagnostics/yearly-difference-autocorrelation/yearly_difference_autocorrelation.ipynb` (2001–2025, old outputs kept in `_outputs_2001-2014/`). Not committed.
+
+</div>
+
+<div style="color:#AAAAAA">
+
+## 2026-11-19 · 13:55 → 14:10 (15 min) · session fff6dc27
+
+**Goal:** status check today, list of open topics, recap of recent sessions.
+
+**Found:** the nudged 2026–2040 runs mostly started overnight (11 of 12 running). LCC_FUT crashed at start-up (segfault reading the restart, 09:53). The watcher marked 3 runs as failed that are actually running (false alarms from its queue check). The MET copy to NIRD failed (NIRD read error). Met build 3 done (met files reach 2041-01-02). FUT MEGAN batch 2 is running.
+
+**Open-next:** your OK: resubmit LCC_FUT, clear the 3 false failure flags, retry the MET NIRD copy, fix the watcher's queue check.
+
+**Files changed:** none (logs only).
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-18 · 20:11 → 20:22 (11 min) · session af520c06
+
+**Goal:** fix and relaunch the two stalled chains (your go).
+
+**Done:** (1) Nudged runs 2026–2040: fixed the check that failed falsely (it allowed only spaces, but `atm_in` uses tabs) in `cases-scripts/cases-setup.sh` and the same check in `extend_nudg_runs_2026-2040.sh`. Old failure files moved to `/cluster/work/users/adelez/met-nudg-2040/falsefail-20261117/`. Dry run clean, watcher restarted 20:12. It submitted met build 2 and phase A of all 12 runs by 20:20, none failing (the restart files are now switched too). (2) FUT MEGAN batch 2 (2002, 2006, 2011) launched 20:15 (6 cases, 12 jobs); reduction watcher started.
+
+**Found:** the 17 Nov failure was only the check, and no run was touched beyond `user_nl_cam`.
+
+**Open-next:** 2026–2040 results expected ~22–23 Nov; FUT batch 2 done in ~11 h, then the maps waiter reruns the reducer and notebook; PD raw deletion and commits still wait for you.
+
+**Files changed:** `cases-scripts/cases-setup.sh` (lines 210–211), `cases-scripts/extend_nudg_runs_2026-2040.sh` (line 83). Not committed.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-18 · 19:40 → 19:50 (10 min) · session af520c06
+
+**Goal:** status check: what is on the plate.
+
+**Found:** two automatic chains stopped and nothing has run since. (1) FUT MEGAN batch 2 (2002, 2006, 2011) was never launched: at 20:11 on 16 Nov the waiter saw a from2000 job still queued and refused. (2) All 12 nudged 2026–2040 runs: phase A **false-failed** at 02:30 on 17 Nov. The met switch worked (user_nl_cam + atm_in show the 2000–2040 list), but the check greps `name *=` and atm_in uses tabs. The watcher exited, so the met folder only reaches 2031-12-31, although MET finished to 2041 (14:33 today). /cluster/projects is at 954 of 1000 GiB.
+
+**Open-next:** your OK: fix the grep and resubmit the 12 runs + restart the watcher; relaunch FUT batch 2; PD raw deletion (~6.3 TB, purge ~mid Dec); commits (41 M, 457 D, 42 new).
+
+**Files changed:** none (logs only).
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-16 · 22:00 → 00:30 (150 min) · session 06c39ecc
+
+**Goal:** compare our results with Tang et al. 2023 (Figs. 1, 2, 5), then make the same kind of maps for our runs.
+
+**Done:** answered in chat first. Built and ran `diagnostics/tang2023-comparison/tang2023_comparison.ipynb`: Tang Fig. 5 layout (standard / noVegDym / vegetation effect), regional boxes, PFT cover change, emission totals vs Tang, side-by-side table, written reading (section 7).
+
+**Found:** the vegetation effect has Tang's monoterpene pattern (−5 to −10 % in the southern boreal belt and Fennoscandia, +15 to +26 % in Alaska, N Canada, E Siberia) but over ≥45°N it changes SOA, AOD and CCN by only ~0.3 %, against +235 % SOA, +8 % AOD, +46 % CCN from the future climate on emissions. Isoprene drops in Fennoscandia/E Siberia, opposite to Tang. `AEROD_v` is empty in our files (use `AOD_VIS`). NIRD gave read errors all evening; files fine (BVOCOX too).
+
+**Open-next:** check why isoprene falls where broadleaf trees expand (CLM-MEGAN emission factors?); commit the notebook if you want it.
+
+**Files changed:** `diagnostics/tang2023-comparison/` (new notebook + `_outputs/`, cache symlink to /cluster/work).
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 22:08 → 22:29 (21 min) · session 79aa63f4
+
+**Goal:** second figure in `plot_bvoc_means.ipynb` with all other BVOC seen by CAM.
+
+**Done:** new section 4: the 17 other MEGAN species (`MEG_*`, biogenic only), mean ± 1σ over 2001–2025, LCC-modified cells, Gg/yr, one panel each, sorted by size. Yearly totals cached in `plot_bvoc_means_outputs/bvoc_other_yearly_totals_2001-2025.csv`.
+
+**Found:** over the modified cells the forest effect on all 17 species is small and negative (PD −0.3 to −5 %, FUT −0.7 to −8 %; only acetaldehyde/ethanol +1 % in PD). Climate effect +345 to +621 % (β-caryophyllene largest). Several species change by exactly the same %, as MEGAN splits them from shared emission classes (inference).
+
+**Open-next:** none; figure checked.
+
+**Files changed:** `diagnostics/2_bvoc-emissions/plot_bvoc_means.ipynb`; new CSV + PNG in `plot_bvoc_means_outputs/`.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 22:13 → 23:49 (96 min) · session 16ac98c9
+
+**Goal:** say what `diagnostics/2_isoprene-diurnal-cycle` is for; then compare each fBVOC run with its own interactive source.
+
+**Done:**
+- Answered: the folder only partly did this (input files vs other MEGAN runs).
+- New script `reduce_isoprene_fbvoc_vs_source.py` and notebook section 10 (checks, diurnal cycle, monthly 2001–2025, variability, summary).
+
+**Found:** fBVOC runs = source average exactly, same daily cycle; they lack the weather-driven swings (summers ±7–9 %, days ±25–35 %); 2015–2025 PD sources ~2 % below the input. NIRD gives random read errors (~5 %), none from `/cluster/work`.
+
+**Open-next:** commit when you want.
+
+**Files changed:** new `reduce_isoprene_fbvoc_vs_source.py`, `isoprene_diurnal_cycle_fBVOC.ipynb` (+ section 10, + 3 figures, 3 tables), new files in `data/processed-data/isoprene-diurnal/`.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 22:09 → 22:50 (41 min) · session 6722329d
+
+**Goal:** give `plot_bvoc_emissions.ipynb` a figures folder.
+
+**Done:**
+- Each figure is saved as PNG in `diagnostics/2_bvoc-emissions/plot_bvoc_emissions_outputs/` (annual maps, LCC − CTRL maps, seasonal cycles, seasonal maps).
+
+**Open-next:** commit when you want.
+
+**Files changed:** `diagnostics/2_bvoc-emissions/plot_bvoc_emissions.ipynb`, new `plot_bvoc_emissions_outputs/`.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 20:43 → 21:10 (27 min) · session 64634bba
+
+**Goal:** repeat the isoprene diurnal-cycle notebook for the fixed-BVOC runs, and plot the whole time series hour by hour.
+
+**Done:**
+- New reducer `reduce_isoprene_fbvoc_and_timeseries.py`: daily-cycle averages of the 4 prescribed input files and of the 2 fBVOC test runs with 30-min output; 30-min regional totals for all runs (saved on NIRD, so they survive the /cluster/work purge).
+- New notebook `isoprene_diurnal_cycle_fBVOC.ipynb`, run with outputs saved: seasons, LCC − CTRL, month × hour, latitude shape, summary, test runs, full hourly series + a July zoom.
+
+**Found:**
+- The model emits the file values as given (replay test = its source run to 0.05 %).
+- The input's yearly totals are within 2.5 % of the interactive runs; daily shape and LCC − CTRL by hour are the same. Only the day-to-day weather signal is smoothed out.
+
+**Open-next:** FUT 2002/2006/2011 after FUT batch 2: rerun the reducer, then the notebook.
+
+**Files changed:** `diagnostics/2_isoprene-diurnal-cycle/{reduce_isoprene_fbvoc_and_timeseries.py, isoprene_diurnal_cycle_fBVOC.ipynb, isoprene_diurnal_cycle_fBVOC_outputs/}`; `data/processed-data/isoprene-diurnal/{fbvoc,timeseries}/`; logs.
+
+</div>
+
+<div style="color:#62733B">
+
+## 2026-11-16 · 20:48 → 21:05 (17 min) · session e5c7a527
+
+**Goal:** fix and restyle the BVOC means plot.
+
+**Done:**
+- Why the two LCC_FUT points did not overlap: I had shifted the open marker on purpose (same run, same value). Shift removed; the PD → FUT arrow ends on LCC_FUT.
+- x labels VEG_CTRL / VEG_LCC; lines are arrows with the run names along them; colours in a legend; period as non-bold subtitle.
+
+**Open-next:** none (error bars still ± 1 SD between years; standard error possible on request).
+
+**Files changed:** `diagnostics/2_bvoc-emissions/plot_bvoc_means.ipynb` + its figure; logs.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-16 · 20:39 → 20:55 (16 min) · session e391bcc3
+
+**Goal:** check that the reorganisation reruns finished.
+
+**Done:**
+- All 10 notebooks reran without errors (18:15–20:16): radiative-forcing-decomposition, artefact-corrected-split, radiative_forcing, bvoc-soa-cloud-interactions, land-carbon-water, biogeophysical-hydro, cumulative_radiative_decomposition, timeseries-responses, pd-fut-attribution, simulation-contrasts (open since 17:58).
+- Slide-deck builders updated to the new folders (figures, land carbon/water, MEGAN; contrasts needed nothing). Test builds in the scratchpad: all 4 OK, every figure placed (main deck 325 slides / 315 figures, with a new section 5 "Forcing decomposition"; land 13, MEGAN 55, contrasts 12 slides). `fut-fbvoc-emission-source-choice` left as it is (you asked).
+- 29 empty folders removed. Checked the new δ_FUT Ghan figure: δ is small and not significant (NET ≥45°N +0.014 ± 0.025 W m⁻²).
+
+**Open-next:** rebuild the 4 decks in `results/pptx/` (your OK); commit (another session holds my changes, on your instruction).
+
+**Files changed:** `results/pptx/build_figures_pptx.py`, `build_land_carbon_water_pptx.py`, `build_megan_pptx.py`; results (reruns, empty folders removed); logs.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 18:20 → 19:14 (54 min) · session 8fca3854
+
+**Goal:** diurnal cycle of isoprene from the saved 30-min output; move the `plot*` BVOC notebooks to diagnostics.
+
+**Done:**
+- `reduce_isoprene_diurnal.py` turns the 30-min isoprene/monoterpene output of the MEGAN split runs into monthly average days, saved on NIRD (`data/processed-data/isoprene-diurnal/`). PD: 2001–02, 2005–06, 2010–11. FUT: 2001, 2005, 2010.
+- `isoprene_diurnal_cycle.ipynb` (outputs saved): cycle in local solar time by season, LCC − CTRL by hour, month × hour, shape by latitude, summary table.
+- Moved `plot_bvoc_emissions`, `plot_bvoc_timeseries`, `plot_bvoc_means` (+ figure folders) to `diagnostics/2_bvoc-emissions/`. Paths fixed, not rerun.
+
+**Found:**
+- Peak at 12:45–13:15 local time; 3–5 % of the summer emission is at night (18–06).
+- LCC − CTRL in summer over the expansion area: +6.5 % (PD), +4 % (FUT, only 3 years, not significant). Almost the same % at every hour.
+- Further north the cycle is flatter (long days): summer peak 3.7 × the daily mean in the tropics, 2.7 × at 65–90°N.
+
+**Open-next:** when FUT batch 2 (2002, 2006, 2011) is archived, rerun the script and the notebook. Nothing committed.
+
+**Files changed:** `diagnostics/2_isoprene-diurnal-cycle/` (new), `diagnostics/2_bvoc-emissions/` (moved), `diagnostics/README.md`, `preprocess/bvoc-emissions/README.md`.
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-16 · 18:26 → 18:29 (3 min) · session 017a5cd2
+
+**Goal:** know what keeps running without internet; restart the archive guard.
+
+**Done:**
+- Checked what runs where. Slurm jobs and detached scripts keep going without you. The Claude sessions in VS Code only last until the VS Code server gives up waiting for you to reconnect (about 3 h, not verified).
+- Archive guard: found it alive on login-3 (its lock file is held), so no restart was needed.
+
+**Found:** pgrep can't see login-3 from login-2. Checking the lock file works from any node.
+
+**Open-next:** nothing.
+
+**Files changed:** logs only.
+
+</div>
+
+<div style="color:#62733B">
+
+## 2026-11-16 · 18:16 → 18:27 (11 min) · session e5c7a527
+
+**Goal:** one plot condensing the BVOC time series into mean values (your sketch).
+
+**Done:**
+- New `preprocess/bvoc-emissions/plot_bvoc_means.ipynb` (run, outputs saved). Figure `plot_bvoc_means_outputs/bvoc_means_veg_x_climate_modified_2001-2025.png`: one panel each for ISOP and MTERP.
+
+**Found:** (Tg/yr, LCC-modified cells, 2001–2025) ISOP 4.1 → 4.3 (PD), 12.6 → 12.9 (FUT); MTERP 4.9 → 5.0 (PD), 22.8 → 22.6 (FUT). Forest effect is small next to the climate effect.
+
+**Open-next:** check that the open "PD → FUT" marker means what you meant (now = LCC_FUT, shifted right); error bars are ± 1 SD of yearly totals (could be standard error instead).
+
+**Files changed:** `preprocess/bvoc-emissions/plot_bvoc_means.ipynb` + `plot_bvoc_means_outputs/` (new); logs.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-16 · 17:58 → 18:36 (38 min) · session e391bcc3
+
+**Goal:** reorganise `results/` per notebook, use design A everywhere, new forcing-decomposition notebook, period wording in titles.
+
+**Done:**
+- `results/` reorganised as you asked (layout above); old 2001–2025 set archived in `results/figures-pre-reorg-20261116/` and `results/tables-pre-reorg-20261116/` (not in git). MEGAN figures and tables moved to their notebook folders (no rerun needed).
+- art_LCC_P redefined as LCC_P − LCC_P_fBVOClccP (own emissions); δ_P added as an artefact contrast (open since 16:47).
+- Titles: years removed, map subtitles say "Maps: 25-year mean" (open since 16:47; also answers the 13:43 period-wording item).
+- New notebook `analysis/radiative-forcing-decomposition.ipynb`: six-map figures (design A, slide names, new colour scales, new file names) for PD, 3 FUT cases and LCC_FUT − CTRL_PD, plus the design-A split budget.
+- `artefact-corrected-split.ipynb` now only design B (→ `artefacts/design-B/`) and the B-vs-A comparison.
+- 9 other notebooks point to their new folders; `results/README.md` and `CLAUDE.md` updated.
+
+- First rerun attempt failed at once: the notebook kernel took more than 60 s to start (slow NIRD disk). The runner now waits up to 10 min (`run_nb_inplace.py --startup-timeout`); reruns restarted 18:15. First new figures (PD, FUT ctrlFUT) look right: slide names, no years in the title, "Maps: 25-year mean" in the subtitle, BVOC maps on ±0.5 now show their pattern (PD NET ≥45°N: albedo +0.44, total +0.26, BVOC −0.020 ± 0.023 W m⁻², not significant).
+- New decomposition notebook finished without errors (21 min): 30 six-map figures + the design-A budget; the split adds up exactly (1.6e-15). LCC_FUT − CTRL_PD (NET, ≥45°N): albedo +10.15, total +1.33, BVOC −1.00 ± 0.02 W m⁻² (cloud −1.10). The other 9 notebooks are running.
+
+**Open-next:** check the reruns; slide-deck builders still expect the old folders (not changed yet); `fut-fbvoc-emission-source-choice` still writes to its own `_outputs/` folder.
+
+**Files changed:** `src/.../plotting/forcing_maps.py`, `megan_maps.py`; `results/tables/logs/run_nb_inplace.py`; 12 notebooks in `analysis/` (1 new); `results/README.md`, `CLAUDE.md`, `.gitignore`; watcher comment in `cases-scripts/run_when_done/megan_lmdi_maps_when_FUT_done.sh`; logs.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-16 · 18:03 → 18:33 (30 min) · session f7c9ff9e
+
+**Goal:** split the background-aerosol PD/FUT notebook into a prescribed and an online notebook; rename the LCC notebook to `_online`; bar charts and time series also north of 40°N.
+
+**Done:**
+- Two new notebooks in `diagnostics/background-aerosol/`: `background_aerosol_pd_fut_prescribed.ipynb` and `background_aerosol_pd_fut_online.ipynb`, each with its own outputs folder.
+- North of 40°N: emission totals (bars) and file time series in the prescribed notebook; online-source bars and time series in the online notebook (no lightning: it exists only as a global number).
+- `background_aerosol_lcc_ctrl_fut_online.ipynb` (renamed, with its outputs folder; not rerun, only paths changed). `diagnostics/README.md` updated.
+
+**Found:** north of 40°N, FUT vs PD: sulfur emissions 19.5 → 4.2 Tg S (−79 %), BC −46 %, OM +17 % (fires), NOx −34 %, NH₃ unchanged; MEGAN 56 → 191 Tg (×3.4), DMS flux 1.12 → 1.56 Tg S (+39 %), dust and sea salt about the same.
+
+**Done (18:31):** both notebooks ran without errors (24 and 15 min; NIRD slow); 40°N figures checked; old `background_aerosol_pd_fut.ipynb` and its outputs folder deleted (still in git, commit 58de6c2).
+
+**Open-next:** commit the split (not done).
+
+**Files changed:** the notebooks above + outputs; `diagnostics/README.md`; logs.
+
+</div>
+
 <div style="color:#999999">
 
 ## 2026-11-16 · 17:58 → 18:08 (10 min) · session cf84836f
@@ -424,7 +872,7 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#008080">
 
-## 2026-11-16 · 15:27 → 16:38 (71 min) · session f7c9ff9e
+## 2026-11-16 · 15:27 → 16:37 (70 min) · session f7c9ff9e
 
 **Goal:** background-aerosol PD vs FUT notebook: 25 years, Arctic maps (global as appendix), online sources plotted like the prescribed emissions.
 
@@ -443,7 +891,7 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#E58AA5">
 
-## 2026-11-16 · 15:11 → 16:52 (101 min) · session e391bcc3
+## 2026-11-16 · 15:11 → 16:47 (96 min) · session e391bcc3
 
 **Goal:** use the slide names (`simulations-interpretation.pptx`) in the six-map forcing figures, design A and B.
 

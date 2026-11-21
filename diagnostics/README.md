@@ -66,5 +66,31 @@ Their results describe those runs and are **not** results for the current setup.
 
 | Notebook | Runs / inputs read | What |
 |---|---|---|
-| `background-aerosol-pd-fut/background_aerosol_pd_fut.ipynb` | resolved `CaseDocs/atm_in` + all 83+83 emission files of CTRL_PD `-20261029` (CMIP6 hist, year 2000) and CTRL_FUT `-20261028` (SSP5-8.5, year 2100); ocean DMS files; processed CTRL_PD/CTRL_FUT atm 2001–2014 | prescribed emission totals by sector, PD/FUT/diff maps, time series of the whole files (year read marked), model AOD, sulfate, CDNC, surface SO₂/DMS/NOx/O₃/CO. SOx 70.6 → 29.7 Tg S (half volcanic in FUT), BC −56 %, NOx −23 %, NH3 +48 %, fires ±20 %; global AOD +6 % despite sulfate −39 % |
+| `background-aerosol/background_aerosol_pd_fut_prescribed.ipynb` | resolved `CaseDocs/atm_in` + all 83+83 emission files of CTRL_PD `-20261029` (CMIP6 hist, year 2000) and CTRL_FUT `-20261028` (SSP5-8.5, year 2100); ocean DMS files; GHG `flbc_file` | prescribed inputs: emission totals by sector (global and north of 40°N), Arctic PD/FUT/diff maps (global in appendix), time series of the whole files (global and >40°N), ocean DMS concentration, CH₄/N₂O/CO₂. SOx 70.6 → 29.7 Tg S (half volcanic in FUT), NH3 +48 %, fires ±20 % |
+| `background-aerosol/background_aerosol_pd_fut_online.ipynb` | processed CTRL_PD/CTRL_FUT atm + lnd 2001–2025, raw CLM h0 (dust), atm.log (lightning) | model response (AOD, sulfate, CDNC, surface SO₂/DMS/NOx/O₃/CO) and online sources (MEGAN, dust, sea salt, DMS flux, lightning NOx): tables, Arctic maps (global in appendix), bar charts and yearly time series, global and north of 40°N. Global AOD +6 % despite sulfate −39 %; monoterpenes ×3.6 |
+| `background-aerosol/background_aerosol_lcc_ctrl_fut_online.ipynb` | processed CTRL_FUT/LCC_FUT 2001–2025 | LCC_FUT − CTRL_FUT of the same model fields and online sources |
 
+
+## BVOC emission plots (moved from `preprocess/bvoc-emissions/`, 2026-11-16, user request)
+
+| Notebook | What |
+|---|---|
+| `2_bvoc-emissions/plot_bvoc_emissions.ipynb` | maps, Tg/yr table and seasonal cycles of the prescribed-emission climatology files (19 species; CTRL/LCC, PD/FUT). Imports `preprocess/bvoc-emissions/create_bvoc_emissions_climatology_staged.py` and writes `preprocess/bvoc-emissions/bvoc_totals_tg_per_yr.csv` (read by `bvoc_species_processes.ipynb`, which stayed there) |
+| `2_bvoc-emissions/plot_bvoc_timeseries.ipynb` | yearly ISOP/MTERP time series, LCC-modified cells, interactive vs fBVOC runs and artefacts; figures in `plot_bvoc_timeseries_outputs/` |
+| `2_bvoc-emissions/plot_bvoc_means.ipynb` | VEG × climate interaction plot of 2001–2025 mean ISOP/MTERP, LCC-modified cells; figure in `plot_bvoc_means_outputs/` |
+
+Only paths were changed in the moved notebooks (import folder, CSV and output folders); they were not rerun, and the saved outputs are those of the last run in `preprocess/`.
+
+## Isoprene diurnal cycle (2026-11-16)
+
+| Notebook / script | Runs read | What |
+|---|---|---|
+| `2_isoprene-diurnal-cycle/reduce_isoprene_diurnal.py` | 30-min `cam.h1` (`SFISOP`, `SFMTERP`, instantaneous) of the MEGAN exact-split branch runs on `/cluster/work/users/adelez/archive` (`*_meganpatch_*-from2000/2005/2010`) | monthly diurnal composites per run-year → `data/processed-data/isoprene-diurnal/diurnal_<ALIAS>_<YEAR>.nc` (NIRD; the raw tape is purged ~Dec 2026). A stamp *t* is assigned to the step centre *t* − 15 min. Skips existing files and incomplete years: rerun when FUT batch 2 (2002, 2006, 2011) is archived |
+| `2_isoprene-diurnal-cycle/isoprene_diurnal_cycle.ipynb` | the reduced files: CTRL_PD/LCC_PD 2001–02, 2005–06, 2010–11; CTRL_FUT/LCC_FUT 2001, 2005, 2010 (so far) | diurnal cycle in local solar time: regional totals (LCC-modified cells, ≥ 45°N) by season, LCC − CTRL (paired yearly Δ, 95 % CI, absolute and %), month × hour, JJA shape by latitude band, summary table (peak hour, peak/mean, night share) |
+
+## Comparison with Tang et al. (2023) and LPJ-GUESS (2026-11-17 / 19)
+
+| Notebook | Runs / inputs read | What |
+|---|---|---|
+| `tang2023-comparison/tang2023_comparison.ipynb` | processed files 2001–2025: LCC_FUT_fBVOC{ctrlPD,ctrlFUT,lccFUT}, LCC_PD_fBVOC{ctrlPD,lccPD}; LCC/CTRL surfdata | our fBVOC runs in the layout of Tang Fig. 5 (discrete bars; copy on Tang's ranges for ISO, MT, SOA_surf, CCN), Fig. 2 (PFT cover change), Fig. 1d,h (emission totals vs Tang GFDL-ESM4 and CanESM5, read by eye) and Fig. 1b,f (emission change per year, mgC m⁻² yr⁻²: total and vegetation-only, FUT and PD) |
+| `lai-clm-vs-lpjguess/clm_vs_lpjguess_lai.ipynb` (2026-11-19) | processed lnd LAND (`TLAI`) of CTRL_PD, CTRL_FUT, LCC_PD, LCC_FUT, 2001–2025; LPJ-GUESS LAI 1971–2000 and GFDL-ESM4 SSP5-8.5 2071–2100 (`data/edit-surfdata/LPJ-GUESS/`) | CLM vs LPJ-GUESS leaf area on the CLM grid: PD agrees (JJA 1.77 vs 1.84 in the modified cells), FUT CLM grows ~2× more (JJA ×2.07 vs ×1.57); annual LPJ-GUESS file = annual peak |

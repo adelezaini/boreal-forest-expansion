@@ -13,13 +13,14 @@ p = argparse.ArgumentParser()
 p.add_argument('notebook')
 p.add_argument('--kernel', default='lcc-env')
 p.add_argument('--timeout', type=float, default=3600, help='seconds per cell')
+p.add_argument('--startup-timeout', type=float, default=600, help='seconds to wait for the kernel to start (imports from NIRD can take minutes; was 60)')
 p.add_argument('--cells', default=None, help='comma-separated cell indices to run (default: all code cells)')
 args = p.parse_args()
 ONLY = None if args.cells is None else {int(c) for c in args.cells.split(',')}
 
 path = os.path.abspath(args.notebook)
 nb = json.load(open(path))
-km, kc = start_new_kernel(kernel_name=args.kernel, cwd=os.path.dirname(path))
+km, kc = start_new_kernel(kernel_name=args.kernel, cwd=os.path.dirname(path), startup_timeout=args.startup_timeout)
 kc.execute_interactive('%matplotlib inline', timeout=60)
 
 def save():
