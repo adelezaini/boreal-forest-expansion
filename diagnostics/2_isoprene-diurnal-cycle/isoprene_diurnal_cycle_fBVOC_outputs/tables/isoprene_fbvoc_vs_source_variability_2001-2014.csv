@@ -1,0 +1,9 @@
+source,region,check_input_vs_source_mean_pct,R2_30min,R2_daily,R2_daily_anomaly,rmse_daily_pct_of_mean,sd_daily_anomaly_source_pct,sd_daily_anomaly_input_pct
+CTRL_PD,LCC-modified cells,0.0,0.884,0.948,0.144,37.514,32.483,12.322
+CTRL_PD,≥ 45°N,0.0,0.919,0.968,0.171,28.387,24.081,9.964
+LCC_PD,LCC-modified cells,0.0,0.881,0.945,0.135,38.706,33.511,12.328
+LCC_PD,≥ 45°N,0.0,0.919,0.968,0.17,28.759,24.468,10.096
+CTRL_FUT,LCC-modified cells,0.0,0.93,0.969,0.216,30.281,27.003,12.54
+CTRL_FUT,≥ 45°N,0.0,0.95,0.98,0.253,23.552,20.876,10.495
+LCC_FUT,LCC-modified cells,0.0,0.929,0.968,0.203,30.735,27.611,12.433
+LCC_FUT,≥ 45°N,0.0,0.948,0.98,0.244,23.694,21.243,10.483
