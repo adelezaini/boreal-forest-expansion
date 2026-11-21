@@ -1,0 +1,10 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (136s)
+--- cell 3 ok (632s)
+--- cell 5 ok (356s)
+--- cell 7 ok (277s)
+--- cell 9 ok (172s)
+--- cell 11 ok (61s)
+--- cell 12 ok (0s)
+--- cell 13 ok (3s)
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/analysis/biogeophysical-hydro.ipynb: 50.1 -> 18.7 MB (20 figures re-encoded)

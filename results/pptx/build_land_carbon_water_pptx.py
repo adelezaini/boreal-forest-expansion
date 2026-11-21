@@ -16,8 +16,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 from cicero_pptx import Deck, M  # noqa: E402
 
 ROOT = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
-FIG = ROOT / "results/figures"
-TAB = ROOT / "results/tables/land_carbon_water_regional_2001_2025.csv"
+# layout 2026-11-16 (user): results/{figures,tables}/<notebook>/<a_/b_/c_ subfolder>, artefacts/d_artefacts/
+FIG = ROOT / "results/figures/land-carbon-water"
+TAB = ROOT / "results/tables/land-carbon-water/land_carbon_water_regional_2001_2025.csv"
+SUB = {"interactive": FIG / "a_interactive", "fBVOC": FIG / "b_fBVOC", "non-BVOC": FIG / "c_non-BVOC",
+       "artefacts": ROOT / "results/figures/artefacts/d_artefacts"}
 Y = "2001_2025"
 CATS = ["interactive", "fBVOC", "non-BVOC", "artefacts"]
 CAT_TEXT = {
@@ -135,7 +138,7 @@ if __name__ == "__main__":
     for k, (stem, label, cols) in enumerate([("carbon", "Carbon fluxes and stocks", CARBON),
                                              ("et_split", "Evapotranspiration split", ET)], 1):
         for cat in CATS:
-            p = FIG / cat / f"contrast_grid_{stem}_{cat}_{Y}.png"
+            p = SUB[cat] / f"contrast_grid_{stem}_{cat}_{Y}.png"
             assert p.exists(), p
             used.add(p)
             blocks = [(f"Category: {cat}", CAT_TEXT[cat]), ("Columns", cols.split(": ", 1)[1]),
@@ -143,7 +146,7 @@ if __name__ == "__main__":
             if stem == "carbon":
                 blocks.append(("Caveat", CAVEAT))
             grid_slide(d, f"{k} {label}", f"{k}  {label} · {cat}", f"{label}: {cat} contrasts", p, blocks)
-    p = FIG / "interactive" / f"seasonal_cycle_carbon_et_modified_{Y}.png"
+    p = SUB["interactive"] / f"seasonal_cycle_carbon_et_modified_{Y}.png"
     assert p.exists(), p
     used.add(p)
     grid_slide(d, "3 Seasonal cycle and regional totals", "3  Seasonal cycle · modified cells",
@@ -163,8 +166,8 @@ if __name__ == "__main__":
     table_slide(d, "3 Seasonal cycle and regional totals", "3  Regional totals · water",
                 "Regional totals over the modified cells: evapotranspiration", rows,
                 [("ET", "mm/yr"), ("QVEGT", "mm/yr"), ("QVEGE", "mm/yr"), ("QSOIL", "mm/yr")], note)
-    nb_figs = {FIG / c / f"contrast_grid_{s}_{c}_{Y}.png" for c in CATS for s in ("carbon", "et_split")}
-    nb_figs.add(FIG / "interactive" / f"seasonal_cycle_carbon_et_modified_{Y}.png")
+    nb_figs = {SUB[c] / f"contrast_grid_{s}_{c}_{Y}.png" for c in CATS for s in ("carbon", "et_split")}
+    nb_figs.add(SUB["interactive"] / f"seasonal_cycle_carbon_et_modified_{Y}.png")
     missing = [p for p in nb_figs if p not in used]
     assert not missing, "figures not placed:\n" + "\n".join(map(str, missing))
     d.save(OUT, "Land carbon and water 2001–2025")

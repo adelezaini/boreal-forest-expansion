@@ -1,0 +1,7 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (117s)
+--- cell 3 ok (402s)
+--- cell 4 ok (24s)
+--- cell 6 ok (441s)
+--- cell 8 ok (1901s)
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/analysis/radiative_forcing.ipynb: 125.8 -> 47.0 MB (142 figures re-encoded)

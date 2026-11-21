@@ -1,0 +1,7 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (117s)
+--- cell 3 ok (741s)
+--- cell 5 ok (429s)
+--- cell 7 ok (360s)
+--- cell 9 ok (2089s)
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/analysis/bvoc-soa-cloud-interactions.ipynb: 48.3 -> 17.8 MB (24 figures re-encoded)

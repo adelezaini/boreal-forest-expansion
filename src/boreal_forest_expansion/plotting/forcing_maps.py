@@ -36,6 +36,7 @@ import matplotlib.colors as mcolors
 from . import palette as pal
 import matplotlib.ticker as mticker
 from matplotlib.transforms import offset_copy
+from matplotlib.offsetbox import AnnotationBbox, HPacker, TextArea
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.util import add_cyclic_point
@@ -68,6 +69,29 @@ TABLE_FBVOC_B = TABLE_DIR / "artefact-design-B"
 CATEGORIES = ("interactive", "fBVOC", "non-BVOC", "artefacts")
 FIG_CATEGORY = {c: FIGURE_DIR / c for c in CATEGORIES}
 TABLE_CATEGORY = {c: TABLE_DIR / c for c in CATEGORIES}
+
+# Layout since 2026-11-16 (user): results/{figures,tables}/<notebook stem>/{a_interactive,b_fBVOC,c_non-BVOC}/,
+# figures mixing categories directly in <notebook stem>/; the proper artefacts of every notebook in
+# results/{figures,tables}/artefacts/d_artefacts/; design B in results/{figures,tables}/artefacts/design-B/.
+RESULTS_DIR = REPO_DIR / "results"
+CATEGORY_SUBDIR = {"interactive": "a_interactive", "fBVOC": "b_fBVOC", "non-BVOC": "c_non-BVOC"}
+ARTEFACT_SUBDIR = Path("artefacts") / "d_artefacts"
+
+
+def set_output_notebook(stem: str) -> tuple[Path, Path]:
+    """Route this module's outputs to the layout of notebook `stem` (call once in the setup cell):
+    FIGURE_DIR / TABLE_DIR = results/{figures,tables}/<stem>/ (figures and tables mixing categories),
+    FIG_CATEGORY / TABLE_CATEGORY[<category>] = its a_/b_/c_ subfolder, artefacts -> artefacts/d_artefacts/.
+    Returns (FIGURE_DIR, TABLE_DIR)."""
+    global FIGURE_DIR, TABLE_DIR
+    FIGURE_DIR, TABLE_DIR = RESULTS_DIR / "figures" / stem, RESULTS_DIR / "tables" / stem
+    for c in CATEGORIES:
+        sub = CATEGORY_SUBDIR.get(c)
+        FIG_CATEGORY[c] = FIGURE_DIR / sub if sub else RESULTS_DIR / "figures" / ARTEFACT_SUBDIR
+        TABLE_CATEGORY[c] = TABLE_DIR / sub if sub else RESULTS_DIR / "tables" / ARTEFACT_SUBDIR
+    for d in (FIGURE_DIR, TABLE_DIR, *FIG_CATEGORY.values(), *TABLE_CATEGORY.values()):
+        d.mkdir(parents=True, exist_ok=True)
+    return FIGURE_DIR, TABLE_DIR
 
 
 def figure_path(figdir: Path | None, filename: str) -> Path:
@@ -197,7 +221,8 @@ class Contrast:
 
     @property
     def design_b(self) -> bool:
-        return isinstance(self.case1, VirtualRun) or isinstance(self.case2, VirtualRun)
+        """True only for the LCC_FUT_fBVOClccFUT design-B stand-in (δ is a VirtualRun too)."""
+        return any(isinstance(x, VirtualRun) and "design B" in x for x in self.pair)
 
     @property
     def one_line(self) -> str:
@@ -207,6 +232,11 @@ class Contrast:
     @property
     def row_label(self) -> str:
         return self.label + ("\n(design B)" if self.design_b else "")
+
+
+def delta_reference(P: str) -> VirtualRun:
+    """V with LCC_P − V = δ_P = (LCC_P − LCC_P^lccP) − (CTRL_P − CTRL_P^ctrlP) = art_LCC_P − art_CTRL_P."""
+    return VirtualRun(f"LCC_{P}_delta", {f"LCC_{P}_fBVOClcc{P}": 1.0, f"CTRL_{P}": 1.0, f"CTRL_{P}_fBVOCctrl{P}": -1.0})
 
 
 def _contrasts():
@@ -248,14 +278,19 @@ def _contrasts():
              "[LCC_FUT − CTRL_PD]\n_fBVOCctrlPD", "non-BVOC effect of LCC and climate change together"),
         ],
         "artefacts": [
-            ("art_LCC_PD", "LCC_PD", "LCC_PD_fBVOCctrlPD", "art_LCC_PD",
-             "LCC land, PD: interactive − CTRL_PD emissions prescribed"),
-            ("art_LCC_FUT", "LCC_FUT", "LCC_FUT_fBVOCctrlFUT", "art_LCC_FUT",
-             "LCC land, FUT: interactive − CTRL_FUT emissions prescribed"),
+            # redefined 2026-11-16 (user): own emissions prescribed (was LCC_P − LCC_P_fBVOCctrlP, which is
+            # BVOC_A + art, not a pure artefact)
+            ("art_LCC_PD", "LCC_PD", "LCC_PD_fBVOClccPD", "art_LCC_PD",
+             "LCC land, PD: interactive − own emissions prescribed"),
+            ("art_LCC_FUT", "LCC_FUT", lccfut, "art_LCC_FUT",
+             "LCC land, FUT: interactive − own emissions prescribed"),
             ("art_CTRL_PD", "CTRL_PD", "CTRL_PD_fBVOCctrlPD", "art_CTRL_PD",
              "CTRL land, PD: interactive − own emissions prescribed"),
             ("art_CTRL_FUT", "CTRL_FUT", "CTRL_FUT_fBVOCctrlFUT", "art_CTRL_FUT",
              "CTRL land, FUT: interactive − own emissions prescribed"),
+            # δ_P = art_LCC_P − art_CTRL_P (land dependence of the artefact; design A: total = non-BVOC + BVOC + δ)
+            *(("delta_" + P, "LCC_" + P, delta_reference(P), "δ_" + P + " =\nart_LCC_" + P + " − art_CTRL_" + P,
+               f"land dependence of the artefact, {P}") for P in ("PD", "FUT")),
         ],
     }
     return {cat: [Contrast(cat, *r) for r in rs] for cat, rs in rows.items()}
@@ -378,6 +413,9 @@ FORCING_PANELS = forcing_panels("NET")
 SUMMARY_SCALES = {
     "shared6": [([0, 1, 2, 3, 4, 5], 6.0)],                    # all six panels [-6, 6]
     "split6-2": [([0, 1], 6.0), ([2, 3, 4, 5], 2.0)],          # albedo + total [-6, 6], BVOC terms [-2, 2]
+    # families (user 2026-11-16, from the 98th percentiles of |map| >= 45°N, 2001–2025, design A):
+    "split6-0.5": [([0, 1], 6.0), ([2, 3, 4, 5], 0.5)],        # same period, E = ctrl<P> (BVOC maps 0.15–0.41)
+    "split40-15-2": [([0], 40.0), ([1], 15.0), ([2, 3, 4, 5], 2.0)],   # LCC_FUT − CTRL_PD (albedo 38, total 12.5)
 }
 
 
@@ -748,19 +786,28 @@ GRID_TITLE_FONTSIZE = 11.5  # column titles of the contrast grids (other maps: 9
 GRID_TITLE_WRAP = 22        # characters per line of those titles
 
 
-def mean_subtitle(mean_lat_min: float | None) -> str:
+def n_years(start_year: int, end_year: int) -> int:
+    return end_year - start_year + 1
+
+
+def mean_subtitle(mean_lat_min: float | None, years: int | None = None) -> str:
+    """Subtitle of the map figures. The period is given as "N-year mean", not as calendar years: the
+    years are labels of the nudging winds (a free-running present-day run), user 2026-11-16 (option 1)."""
     region = f"over {mean_lat_min:g}–90°N" if mean_lat_min is not None else "global"
-    return rf"$\mathit{{Under\ the\ maps}}$: area-weighted mean {region} ± 95 % CI of the yearly means"
+    under = rf"$\mathit{{Under\ the\ maps}}$: area-weighted mean {region} ± 95 % CI of the"
+    if years is None:
+        return f"{under} yearly means"
+    return rf"$\mathit{{Maps}}$: {years}-year mean · {under} {years} yearly means"
 
 
 def add_suptitle(fig, title: str, mean_lat_min: float | None, fontsize: float = 14, y: float | None = None,
-                 subtitle: str | None = None):
+                 subtitle: str | None = None, years: int | None = None):
     """Bold figure title plus a plain subtitle saying what the numbers under the maps are
     (`subtitle` replaces the default text)."""
     # The second line " " reserves room for the subtitle: constrained layout only knows the
     # suptitle, and only when y is not given (an explicit y switches its space off).
     st = fig.suptitle(f"{title}\n ", fontsize=fontsize, fontweight="bold", **({} if y is None else {"y": y}))
-    fig.text(0.5, st.get_position()[1], subtitle or mean_subtitle(mean_lat_min), ha="center", va="top", fontsize=0.8 * fontsize,
+    fig.text(0.5, st.get_position()[1], subtitle or mean_subtitle(mean_lat_min, years), ha="center", va="top", fontsize=0.8 * fontsize,
              transform=offset_copy(fig.transFigure, fig=fig, y=-1.3 * fontsize, units="points"))
 
 
@@ -806,16 +853,21 @@ def map_grid(nrows: int, ncols: int, under: float | None = None, titles_every_ro
     return fig, axes
 
 
-def add_group_label(fig, axes_group, text: str, fontsize: float = 11):
+def add_group_label(fig, axes_group, text, fontsize: float = 11, fontweight: str = "semibold"):
     """One line of text centred over `axes_group` (maps of one row), above their panel titles,
-    with a thin bracket line spanning the group. Needs map_grid(..., top_extra=GROUP_LABEL_SPACE)."""
+    with a thin bracket line spanning the group. Needs map_grid(..., top_extra=GROUP_LABEL_SPACE).
+    `text` = str (one weight, `fontweight`) or [(piece, weight), ...] to mix weights in one line,
+    e.g. [("LCC_FUT_fBVOC ", "normal"), ("[lccFUT − ctrlFUT]", "bold")]."""
     boxes = [ax.get_position() for ax in np.atleast_1d(axes_group)]
     x0, x1, y_top = min(b.x0 for b in boxes), max(b.x1 for b in boxes), max(b.y1 for b in boxes)
     H = fig.get_figheight()
     y_line = y_top + (TITLE_SPACE + 0.06) / H
     fig.add_artist(plt.Line2D([x0, x1], [y_line, y_line], transform=fig.transFigure, color="0.3", lw=0.8))
-    fig.text((x0 + x1) / 2, y_line + 0.05 / H, text, ha="center", va="bottom", fontsize=fontsize,
-             fontweight="semibold")
+    pieces = [(text, fontweight)] if isinstance(text, str) else list(text)
+    areas = [TextArea(t, textprops=dict(fontsize=fontsize, fontweight=w)) for t, w in pieces]
+    fig.add_artist(AnnotationBbox(HPacker(children=areas, align="baseline", pad=0, sep=0),
+                                  ((x0 + x1) / 2, y_line + 0.05 / H), xycoords=fig.transFigure,
+                                  box_alignment=(0.5, 0.0), frameon=False, pad=0))
 
 
 def _five_ticks(vmax: float) -> list[float]:
@@ -1178,6 +1230,10 @@ def make_forcing_summary_figure(
     fdr_alpha: float = 0.10,
     scales: str | list[tuple[list[int], float]] | None = None,
     pairs: dict | None = None,
+    title: str | None = None,
+    group_labels: dict | None = None,
+    footnote: str | None = None,
+    design: str | None = None,
 ):
     """
     Create six-panel forcing decomposition figure.
@@ -1204,6 +1260,13 @@ def make_forcing_summary_figure(
         the name is added to the file name.
     pairs: role -> alias, overrides BVOC_PAIRS[experiment]; `experiment` is then only a label
         (title, file name), e.g. "FUT_fBVOCctrlFUT".
+    title: replaces `experiment` in the figure title (file name unchanged), e.g. "[LCC − CTRL] _FUT".
+    group_labels: {"ctrl": label, "fbvoc": label} over the panels of each case2 role (albedo + total,
+        BVOC terms); a label is a str or [(piece, weight), ...] (add_group_label). None = only the
+        BVOC group, "<lcc> − <fbvoc>". A role missing from the dict gets no label.
+    footnote: small text under the figure, bottom left (e.g. "* = artefact corrected").
+    design: added at the end of the file name, e.g. "designA". File name (user 2026-11-16):
+        <experiment>_forcing_decomposition_<band>_<y0>_<y1>[_<scales>][_<design>].png
     """
     if pairs is None and experiment not in BVOC_PAIRS:
         raise ValueError(f"experiment must be one of {list(BVOC_PAIRS)}")
@@ -1218,8 +1281,12 @@ def make_forcing_summary_figure(
     fig, axes = map_grid(1, len(panels), map_size=map_size, col_gap=col_gap, top_extra=GROUP_LABEL_SPACE)
     axes = axes[0]
     # the BVOC decomposition panels are LCC − LCC_fBVOC; albedo and total are LCC − CTRL
-    bvoc_idx = [i for i, p in enumerate(panels) if p.case2_role == "fbvoc"]
-    add_group_label(fig, [axes[i] for i in bvoc_idx], f"{pairs['lcc']} − {pairs['fbvoc']}")
+    if group_labels is None:
+        group_labels = {"fbvoc": f"{pairs['lcc']} − {pairs['fbvoc']}"}
+    for role, label in group_labels.items():
+        idx = [i for i, p in enumerate(panels) if p.case2_role == role]
+        add_group_label(fig, [axes[i] for i in idx], label,
+                        **({} if len(group_labels) == 1 else {"fontweight": "normal"}))
 
     for i, (ax, panel) in enumerate(zip(axes, panels)):
         _plot_panel(
@@ -1238,12 +1305,14 @@ def make_forcing_summary_figure(
         _cbar_below(fig, [axes[i] for i in idx], sm, f"radiative effect difference [{panels[idx[0]].units}]",
                     CBAR_LABELSIZE_SHARED, shrink=0.8 if len(idx) > 2 else 0.9)
 
-    add_suptitle(fig, f"{experiment}: radiative forcing decomposition, {band} ({start_year}–{end_year})",
-                 mean_lat_min, y=_suptitle_y(fig))
+    add_suptitle(fig, f"{title or experiment}: radiative forcing decomposition, {band}",
+                 mean_lat_min, y=_suptitle_y(fig), years=n_years(start_year, end_year))
+    if footnote:
+        fig.text(axes[0].get_position().x0, 0.0, footnote, ha="left", va="top", fontsize=9)
 
     if save:
-        suffix = f"_{scale_tag}" if scale_tag else ""
-        path = figure_path(figdir, f"{experiment}_forcing_decomposition_{band}{suffix}_{start_year}_{end_year}.png")
+        suffix = "".join(f"_{t}" for t in (scale_tag, design) if t)
+        path = figure_path(figdir, f"{experiment}_forcing_decomposition_{band}_{start_year}_{end_year}{suffix}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=transparent_background)
         print(f"Saved {path}")
 
@@ -1308,8 +1377,8 @@ def make_context_maps_figure(
     for ax in axes[len(panels):]:
         ax.set_axis_off()
 
-    add_suptitle(fig, f"BVOC/SOA/cloud maps: {pairs['lcc']} − {pairs['fbvoc']} ({start_year}–{end_year})",
-                 mean_lat_min, y=_suptitle_y(fig))
+    add_suptitle(fig, f"BVOC/SOA/cloud maps: {pairs['lcc']} − {pairs['fbvoc']}",
+                 mean_lat_min, y=_suptitle_y(fig), years=n_years(start_year, end_year))
 
     if save:
         path = figure_path(figdir, f"{experiment}_bvoc_context_maps_{start_year}_{end_year}.png")
@@ -1427,8 +1496,8 @@ def make_ghan_figure(
 
     c1, c2 = pairs[role1], pairs[role2]
     kind = "seasonal " if seasonal else ""
-    add_suptitle(fig, f"{kind}Ghan decomposition, {band}: {label or f'{c1} − {c2}'} ({start_year}–{end_year})",
-                 mean_lat_min, y=_suptitle_y(fig))
+    add_suptitle(fig, f"{kind}Ghan decomposition, {band}: {label or f'{c1} − {c2}'}",
+                 mean_lat_min, y=_suptitle_y(fig), years=n_years(start_year, end_year))
     if save:
         if contrast == "bvoc":   # name the fBVOC run, e.g. LCC-fBVOCctrlPD (user 2026-10-28)
             tag = f"{short_alias(c1)}-{short_alias(c2)}"
@@ -1668,8 +1737,8 @@ def make_contrast_grid_figure(
                         ha="right", va="center", fontsize=10, fontweight="bold")
 
     title = "BVOC/SOA/cloud" if name == "context" else name
-    add_suptitle(fig, f"{title}: {CONTRAST_LABELS.get(contrast_set, contrast_set)} ({start_year}–{end_year})", mean_lat_min, fontsize=15,
-                 y=_suptitle_y(fig))
+    add_suptitle(fig, f"{title}: {CONTRAST_LABELS.get(contrast_set, contrast_set)}", mean_lat_min, fontsize=15,
+                 y=_suptitle_y(fig), years=n_years(start_year, end_year))
     if save:
         path = figure_path(figdir, f"contrast_grid_{name}_{contrast_set}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
@@ -2046,8 +2115,8 @@ def make_radiative_budget_figure(t, save=True, figdir: Path | None = None, dpi=2
                 ax.set_ylabel("W m$^{-2}$", fontsize=8)
     axes[0, 1].legend(fontsize=7, ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.35))
     title = title or "LCC − CTRL, LCC − LCC_fBVOC, CTRL_FUT − CTRL_PD"
-    fig.suptitle(f"Radiative budget: {title}; mean ± 95 % CI over years "
-                 f"({start_year}–{end_year})", fontsize=12, fontweight="bold")
+    fig.suptitle(f"Radiative budget: {title}; mean ± 95 % CI over "
+                 f"{n_years(start_year, end_year)} years", fontsize=12, fontweight="bold")
     if save:
         path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
@@ -2078,7 +2147,7 @@ def make_paired_years_figure(t, region="≥45°N", band="NET", save=True, figdir
         ax.tick_params(labelsize=7)
     axes[0].set_ylabel(f"{region} difference [W m$^{{-2}}$]", fontsize=8)
     colours = "(blue PD, red FUT)" if set(groups) <= set(BVOC_PAIRS) else f"({', '.join(groups)})"
-    fig.suptitle(f"Paired yearly regional means ({region}, {start_year}–{end_year}): dots = years "
+    fig.suptitle(f"Paired yearly regional means ({region}, {n_years(start_year, end_year)} years): dots = years "
                  f"{colours}, diamond = mean ± 95 % t-interval", fontsize=11, fontweight="bold")
     if save:
         path = figure_path(figdir, f"{name}_{band}_{start_year}_{end_year}.png")
@@ -2228,7 +2297,7 @@ def make_cloud_profile_figure(rows=None, fields=tuple(PROFILE_FIELDS), name="clo
             if i == len(rows) - 1:
                 ax.set_xlabel("latitude [°N]", fontsize=7.5)
     axes[0, 0].set_ylim(1000, p_top)   # shared y, pressure decreasing upwards
-    fig.suptitle(f"Zonal-mean cloud change, {season}, {lat_min:.0f}–90°N, all longitudes ({start_year}–{end_year}); "
+    fig.suptitle(f"Zonal-mean cloud change, {season}, {lat_min:.0f}–90°N, all longitudes ({n_years(start_year, end_year)}-year mean); "
                  f"hatched: not significant (FDR α={fdr_alpha})", fontsize=11, fontweight="bold")
     if save:
         path = figure_path(figdir, f"{name}_{season}_{start_year}_{end_year}.png")
@@ -2326,8 +2395,8 @@ def make_percent_change_figure(start_year=2001, end_year=2014, extent_lat=45.0, 
                         stipple, fdr_alpha, d=pct, add_cbar=True)
         axes[i, 0].text(-0.08, 0.5, row_label, transform=axes[i, 0].transAxes,
                         ha="right", va="center", fontsize=9, fontweight="bold")
-    add_suptitle(fig, f"{title or 'LCC − LCC_fBVOC relative to LCC_fBVOC'} [%] ({start_year}–{end_year})",
-                 extent_lat, fontsize=13, y=_suptitle_y(fig))
+    add_suptitle(fig, f"{title or 'LCC − LCC_fBVOC relative to LCC_fBVOC'} [%]",
+                 extent_lat, fontsize=13, y=_suptitle_y(fig), years=n_years(start_year, end_year))
     if save:
         path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
         fig.savefig(path, dpi=dpi, bbox_inches="tight")

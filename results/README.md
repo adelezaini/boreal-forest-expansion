@@ -23,33 +23,33 @@ Defined once in `src/boreal_forest_expansion/plotting/forcing_maps.py` (`CONTRAS
 | | [LCC_FUT − CTRL_FUT]_fBVOCctrlFUT | LCC_FUT_fBVOCctrlFUT − CTRL_FUT_fBVOCctrlFUT | `nonBVOC_LCC-CTRL_FUT` |
 | | [LCC_FUT − LCC_PD]_fBVOCctrlPD | LCC_FUT_fBVOCctrlPD − LCC_PD_fBVOCctrlPD | `nonBVOC_LCC_FUT-PD` |
 | | [LCC_FUT − CTRL_PD]_fBVOCctrlPD | LCC_FUT_fBVOCctrlPD − CTRL_PD_fBVOCctrlPD | `nonBVOC_LCC_FUT-CTRL_PD` |
-| **artefacts** | art_LCC_PD | LCC_PD − LCC_PD_fBVOCctrlPD | `art_LCC_PD` |
-| | art_LCC_FUT | LCC_FUT − LCC_FUT_fBVOCctrlFUT | `art_LCC_FUT` |
+| **artefacts** | art_LCC_PD | LCC_PD − LCC_PD_fBVOClccPD (own emissions, since 2026-11-16) | `art_LCC_PD` |
+| | art_LCC_FUT | LCC_FUT − LCC_FUT_fBVOClccFUT (own emissions, since 2026-11-16) | `art_LCC_FUT` |
 | | art_CTRL_PD | CTRL_PD − CTRL_PD_fBVOCctrlPD | `art_CTRL_PD` |
 | | art_CTRL_FUT | CTRL_FUT − CTRL_FUT_fBVOCctrlFUT | `art_CTRL_FUT` |
+| | δ_PD, δ_FUT | art_LCC_P − art_CTRL_P (VirtualRun `LCC_P_delta`) | `delta_PD`, `delta_FUT` |
 
 **`LCC_FUT_fBVOClccFUT` is a design-B stand-in, to be replaced:** until the run (24g) is postprocessed it is LCC_FUT − art_CTRL_FUT = LCC_FUT − CTRL_FUT + CTRL_FUT_fBVOCctrlFUT (assumes art(LCC land) = art(CTRL land)). Rows/titles using it say "(design B)". To replace it: `forcing_maps.LCC_FUT_FBVOCLCCFUT_DESIGN_B = False`, then rerun `analysis/`.
 
-## figures/
+## Layout (since 2026-11-16, user)
 
-| Folder | What |
-|---|---|
-| `figures/interactive/`, `figures/fBVOC/`, `figures/non-BVOC/`, `figures/artefacts/` | Everything about the contrasts of that category: contrast grids (`contrast_grid_<panels>_<category>_*`), Ghan maps per contrast (`ghan[_seasonal]_<key>_<band>_*`), radiative budget bars and paired years per category, seasonal cloud types, cloud profiles, water budget, land carbon and ET-split grids (`contrast_grid_{carbon,et_split}_*`, `analysis/land-carbon-water.ipynb`; `interactive/` also its seasonal cycle), yearly time series per contrast (`timeseries_<key>_*`). `interactive/` also holds the cumulative decomposition (T = LCC_FUT − CTRL_PD; `analysis/cumulative_radiative_decomposition.ipynb`); `artefacts/design-B-split/` the closed split [LCC − CTRL]_P = non-BVOC + (art_LCC_P − art_CTRL_P) (`analysis/artefact-corrected-split.ipynb`); its six-panel forcing summaries (`<P>_fBVOC<E>corr_forcing_decomposition_<band>[_split6-2]_*`; FUT also E = ctrlPD, lccPD, made 2026-11-09 by a separate script) are in `design-B-split/individual-scale/` (per-panel scales) and `design-B-split/split6-2/` (albedo + total ±6, BVOC terms ±2), same in `figures-2001-2014/`. |
-| `figures/pd-fut-attribution/` | `analysis/pd-fut-attribution.ipynb`: PD vs FUT comparisons that mix categories. |
-| `figures/timeseries/` | Absolute yearly values of every run (no differences), `analysis/timeseries-responses.ipynb` §3. |
-| `figures/megan_factors/` | `analysis/megan_factor_maps.ipynb` (LCC vs CTRL, same period), `diagnostics/3_megan-exact-split-test/lake_fix_effect.ipynb`. |
-| `figures/simulation-contrasts/` | `analysis/simulation-contrasts.ipynb`: one contrast-grid figure per question (`contrast_grid_fig<1a…4b>_*`); deck `pptx/BOREAL_simulation_contrasts_2001-2025_CICERO.pptx` (`pptx/build_contrasts_pptx.py`). Moved here from `analysis/simulation-contrasts_outputs/figures/` 2026-11-16 (2001–2014 ones in `figures-2001-2014/simulation-contrasts/`). |
+```
+results/figures/<notebook stem>/            figures that mix categories (e.g. six-map decomposition, PD–FUT attribution)
+results/figures/<notebook stem>/a_interactive/
+results/figures/<notebook stem>/b_fBVOC/
+results/figures/<notebook stem>/c_non-BVOC/
+results/figures/artefacts/d_artefacts/      proper artefacts of every notebook: art_LCC_P, art_CTRL_P, δ_P
+results/figures/artefacts/design-B/         design B (analysis/artefact-corrected-split.ipynb)
+results/tables/…                            same structure; tables/logs/ = run scripts and logs
+```
 
+Code: `forcing_maps.set_output_notebook("<stem>")` in each notebook's setup cell sets `FIGURE_DIR`/`TABLE_DIR` (notebook folder) and `FIG_CATEGORY`/`TABLE_CATEGORY` (a_/b_/c_ subfolders, artefacts → `artefacts/d_artefacts/`). Notebooks: `radiative_forcing`, `radiative-forcing-decomposition` (six-map figures, design A, + design-A split budget), `bvoc-soa-cloud-interactions`, `biogeophysical-hydro`, `land-carbon-water`, `timeseries-responses`, `pd-fut-attribution`, `cumulative_radiative_decomposition`, `simulation-contrasts`, `megan-lmdi-attribution-maps`, `megan-lmdi-vs-approx`, `megan_factor_maps`. Not moved: `fut-fbvoc-emission-source-choice` (still writes to `analysis/fut-fbvoc-emission-source-choice_outputs/`).
 
-Code: `forcing_maps.FIG_CATEGORY[<category>]`; grids and Ghan maps of a category go there by default (`make_contrast_grid_figure(<category>, …)`, `make_ghan_contrast_figure(contrast)`).
+**Artefacts (user 2026-11-16):** art_LCC_P = LCC_P − LCC_P_fBVOClccP (own emissions prescribed; before: LCC_P − LCC_P_fBVOCctrlP, which = BVOC_A + artefact), art_CTRL_P = CTRL_P − CTRL_P_fBVOCctrlP, δ_P = art_LCC_P − art_CTRL_P. Design A is the default: total [LCC − CTRL]_P = non-BVOC + BVOC_A + δ_P.
 
-## tables/
+**Titles (user 2026-11-16, option 1):** no calendar years in figure titles (the years label the nudging winds of a free-running present-day run); map subtitles say "Maps: N-year mean". File names keep `_<y0>_<y1>`.
 
-| Path | What |
-|---|---|
-| `tables/*_2001_2025.csv` | Tables that span categories: `radiative_budget_categories[_yearly]`, `water_budget_categories`, `timeseries_regional_means` (column `category`), `timeseries_absolute`, `cumulative_radiative_decomposition`, `pd_fut_*`, `baseline_aerosol_cloud`, `emission_origin_annual`, `land_carbon_water_regional`, `seasonal_cycle_lcc_minus_ctrl_modified`. |
-| `tables/<category>/` | Tables of one category (`TABLE_CATEGORY`), e.g. `artefacts/` = design-B split. |
-| `tables/logs/` | Notebook run scripts (`run_nb_inplace.py`) and run logs. |
+**Forcing decomposition files:** `<LCCP>_fBVOC<E>_forcing_decomposition_<band>_<y0>_<y1>[_<scale>]_<design>.png`, e.g. `LCCFUT_fBVOClccPD_forcing_decomposition_NET_2001_2025_split6-2_designA.png`; `LCCFUT-CTRLPD_fBVOCctrlPD_…` = LCC_FUT − CTRL_PD.
 
 ## Old sets (not regenerated)
 

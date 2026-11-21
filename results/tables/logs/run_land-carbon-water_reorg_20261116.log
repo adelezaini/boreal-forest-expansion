@@ -1,0 +1,8 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+--- cell 1 ok (156s)
+--- cell 3 ok (414s)
+--- cell 5 ok (183s)
+--- cell 7 ok (68s)
+--- cell 8 ok (0s)
+--- cell 10 ok (12s)
+/cluster/home/adelez/BOREAL-FOREST-EXPANSION/analysis/land-carbon-water.ipynb: 15.7 MB < 20 MB, skipped

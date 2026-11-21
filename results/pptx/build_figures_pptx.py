@@ -1,9 +1,10 @@
 """Build a sectioned PowerPoint of results/figures (2001-2025) on the CICERO template.
 
 Run: python build_figures_pptx.py OUT.pptx [TEMPLATE.pptx]  (needs python-pptx, Pillow, lxml)
-Every PNG in results/figures/ (except megan_factors/, see build_megan_pptx.py) must be placed in build_story(),
-else it stops with the list. Design A (user 2026-11-16): fBVOC FUT contrasts use the real 24g run; the
-artefacts section shows the design-A split first and design B as comparison.
+Every PNG in results/figures/ (except megan*/ and simulation-contrasts/, which have their own decks) must be placed in
+build_story(), else it stops with the list. Design A (user 2026-11-16): fBVOC FUT contrasts use the real 24g run.
+Layout since 2026-11-16 (user): results/figures/<notebook>/{a_interactive,b_fBVOC,c_non-BVOC}/, artefacts/d_artefacts/,
+artefacts/design-B/; figures are looked up by file name (names are unique across the folders).
 """
 import re
 import sys
@@ -16,6 +17,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 from cicero_pptx import Deck, M  # noqa: E402
 
 FIG = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION/results/figures")
+# own decks: megan* (build_megan_pptx.py), simulation-contrasts (build_contrasts_pptx.py)
+_own_deck = lambda p: p.relative_to(FIG).parts[0].startswith(("megan", "simulation-contrasts"))
+ALL = sorted(p for p in FIG.rglob("*.png") if not _own_deck(p))
+INDEX = {p.name: p for p in ALL}
+assert len(INDEX) == len(ALL), "file names not unique across results/figures/"
 
 # ---------------------------------------------------------------- labels
 CONTRAST = {
@@ -38,13 +44,14 @@ CONTRAST = {
     # artefacts
     "art_LCC_PD": "art_LCC_PD", "art_LCC_FUT": "art_LCC_FUT",
     "art_CTRL_PD": "art_CTRL_PD", "art_CTRL_FUT": "art_CTRL_FUT",
+    "delta_PD": "δ_PD = art_LCC_PD − art_CTRL_PD", "delta_FUT": "δ_FUT = art_LCC_FUT − art_CTRL_FUT",
 }
 ORDER = {
     "interactive": ["LCC-CTRL_PD", "LCC-CTRL_FUT", "CTRL_FUT-PD", "LCC_FUT-PD", "LCC_FUT-CTRL_PD"],
     "fBVOC": ["fBVOC_PD_lccPD-ctrlPD", "fBVOC_FUT_lccFUT-ctrlFUT", "fBVOC_FUT_ctrlFUT-ctrlPD",
               "fBVOC_FUT_lccFUT-lccPD", "fBVOC_FUT_lccFUT-ctrlPD", "fBVOC_FUT_lccPD-ctrlPD"],
     "non-BVOC": ["nonBVOC_LCC-CTRL_PD", "nonBVOC_LCC-CTRL_FUT", "nonBVOC_LCC_FUT-PD", "nonBVOC_LCC_FUT-CTRL_PD"],
-    "artefacts": ["art_LCC_PD", "art_CTRL_PD", "art_LCC_FUT", "art_CTRL_FUT"],
+    "artefacts": ["art_LCC_PD", "art_CTRL_PD", "delta_PD", "art_LCC_FUT", "art_CTRL_FUT", "delta_FUT"],
 }
 BANDS = ["NET", "SW", "LW"]
 BANDNAME = {"NET": "net", "SW": "shortwave", "LW": "longwave"}
@@ -65,9 +72,15 @@ GRID = {  # contrast-grid panel set -> title
 used = set()
 
 
+def opt(name):
+    """Path of figure `name` wherever it lives under results/figures/, or None."""
+    return INDEX.get(Path(name).name)
+
+
 def f(rel):
-    p = FIG / rel
-    assert p.exists(), p
+    """Path of a figure that must exist (`rel` = file name; any folder prefix is ignored)."""
+    p = opt(rel)
+    assert p is not None, rel
     used.add(p)
     return p
 
@@ -78,8 +91,8 @@ def per_contrast(cat, prefix, band=None):
     for key in ORDER[cat]:
         for b in ([band] if band else [None]):
             name = f"{prefix}{key}" + (f"_{b}" if b else "") + "_2001_2025.png"
-            p = FIG / cat / name
-            if p.exists():
+            p = opt(name)
+            if p:
                 out.append(p)
     return out
 
@@ -117,26 +130,26 @@ def category_section(cat, num, title, intro, mech_first=False):
         for b in BANDS:
             pref = "ghan_" if cat in ("interactive", "fBVOC", "artefacts") else "ghan_nonBVOC_"
             k = key.replace("nonBVOC_", "")
-            p = FIG / c / f"{pref}{k}_{b}_2001_2025.png"
-            if p.exists():
-                maps.append((f(p.relative_to(FIG)), ghan_title(p, False)))
+            p = opt(f"{pref}{k}_{b}_2001_2025.png")
+            if p:
+                maps.append((f(p.name), ghan_title(p, False)))
     subs.append(("Annual forcing maps", maps))
     smaps = []
     for key in ORDER[cat]:
         for b in BANDS:
             pref = "ghan_seasonal_" if cat != "non-BVOC" else "ghan_seasonal_nonBVOC_"
             k = key.replace("nonBVOC_", "")
-            p = FIG / c / f"{pref}{k}_{b}_2001_2025.png"
-            if p.exists():
-                smaps.append((f(p.relative_to(FIG)), ghan_title(p, True)))
+            p = opt(f"{pref}{k}_{b}_2001_2025.png")
+            if p:
+                smaps.append((f(p.name), ghan_title(p, True)))
     subs.append(("Seasonal forcing maps", smaps))
     ts = []
     for key in ORDER[cat]:
         k = key.replace("nonBVOC_", "")
         pref = "timeseries_nonBVOC_" if cat == "non-BVOC" else "timeseries_"
-        p = FIG / c / f"{pref}{k}_2001_2025.png"
-        if p.exists():
-            ts.append((f(p.relative_to(FIG)), ts_title(p)))
+        p = opt(f"{pref}{k}_2001_2025.png")
+        if p:
+            ts.append((f(p.name), ts_title(p)))
     for b in BANDS:
         ts.append((f(f"{c}/paired_years_{cat}_{b}_2001_2025.png"),
                    f"Paired years, {BANDNAME[b]}: year-by-year contrasts"))
@@ -160,6 +173,25 @@ def category_section(cat, num, title, intro, mech_first=False):
     return dict(num=num, title=title, intro=intro, subs=subs)
 
 
+DECOMP = [("LCCPD_fBVOCctrlPD", "[LCC − CTRL]_PD + LCC_PD_fBVOC [lccPD − ctrlPD]", "split6-0.5"),
+          ("LCCFUT_fBVOCctrlFUT", "[LCC − CTRL]_FUT + LCC_FUT_fBVOC [lccFUT − ctrlFUT]", "split6-0.5"),
+          ("LCCFUT_fBVOClccPD", "LCC_FUT − LCC_PD + LCC_FUT_fBVOC [lccFUT − lccPD]", "split40-15-2"),
+          ("LCCFUT_fBVOCctrlPD", "LCC_FUT − CTRL_PD + LCC_FUT_fBVOC [lccFUT − ctrlPD]", "split40-15-2")]
+
+
+def decomposition_section(num):
+    """analysis/radiative-forcing-decomposition.ipynb: six-map figures (design A) + design-A split budget."""
+    subs = [("Design-A split of the budget", [(f("radiative_budget_split_NET_2001_2025_designA.png"),
+                                              "Design-A split of the net TOA budget: total = non-BVOC + BVOC_A + δ")])]
+    # shared family scales only (user 2026-11-20: per-map-colourbar versions dropped)
+    subs.append(("Six-map decomposition", [(f(f"{tag}_forcing_decomposition_{b}_2001_2025_{fam}_designA.png"),
+                                            f"Forcing decomposition, {BANDNAME[b]}: {lab}")
+                                           for tag, lab, fam in DECOMP for b in BANDS]))
+    return dict(num=num, title="Forcing decomposition: land cover and BVOC",
+                intro="Albedo and total forcing of the land-cover change next to the BVOC part (design A: "
+                      "prescribed − prescribed, no artefact), on shared colour scales per family.", subs=subs)
+
+
 def build_story():
     S = []
     S.append(dict(num=1, title="Experiment and runs",
@@ -181,7 +213,8 @@ def build_story():
     S.append(category_section("fBVOC", 4, "Biogeochemical part: BVOC effect",
                               "Changing only the prescribed BVOC emissions (design A: prescribed − prescribed, so the "
                               "artefact cancels): the BVOC → SOA → aerosol → cloud chain.", mech_first=True))
-    S.append(dict(num=5, title="PD vs FUT attribution",
+    S.append(decomposition_section(5))
+    S.append(dict(num=6, title="PD vs FUT attribution",
                   intro="Putting the categories side by side: how the PD and FUT signals compare and "
                         "where the emission changes come from.",
                   subs=[("Radiative budget across categories", [
@@ -195,76 +228,42 @@ def build_story():
                         ("Mechanism chain", [
                             (f("pd-fut-attribution/pd_mechanism_source_boxes_2001_2025.png"), "PD: precursor, SOA and aerosol changes in four source boxes"),
                             (f("pd-fut-attribution/seasonal_chain_bvoc_soa_cloud_sw_2001_2025.png"), "Seasonal chain: BVOC → SOA → cloud → SW")])]))
-    art = category_section("artefacts", 6, "Robustness: BVOC prescription artefacts",
-                           "art = interactive − prescribed own emissions. Design A (used): BVOC_A = "
-                           "prescribed − prescribed, δ = art_LCC_own − art_CTRL; design B (matched "
-                           "baseline) shown for comparison, BVOC_B = BVOC_A + δ.", mech_first=True)
-    dA, dB = "artefacts/design-A-split/", "artefacts/design-B-split/"
-    splitA = [(f(dA + "radiative_budget_split_designA_NET_2001_2025.png"),
-               "Design-A split of the net TOA budget: total = non-BVOC + BVOC_A + δ"),
-              (f(dB + "radiative_budget_split_designB_vs_A_NET_2001_2025.png"),
-               "Design B vs design A, net TOA budget (BVOC_B = BVOC_A + δ)")]
-    srcsA = {"PD": [("", "ctrlPD", "fBVOCctrlPDdesignA")],
-             "FUT": [("", "ctrlFUT", "fBVOCctrlFUTdesignA"), ("-ctrlPD", "ctrlPD", "fBVOCctrlPDdesignA"),
-                     ("-lccPD", "lccPD", "fBVOClccPDdesignA")]}
-    for per in ["PD", "FUT"]:
-        for sfx, src, ctx in srcsA[per]:
-            lab = f"BVOC_A = LCC_{per}_fBVOC[lcc{per} − {src}]"
-            splitA.append((f(dA + f"{per}_{ctx}_bvoc_context_maps_2001_2025.png"),
-                           f"{per}: BVOC_A ({src} emissions), context maps"))
-            for b in BANDS:
-                splitA.append((f(dA + f"{per}_ghan_BVOCA{sfx}_{b}_2001_2025.png"),
-                               f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
-            splitA.append((f(dA + f"{per}_ghan_seasonal_BVOCA{sfx}_NET_2001_2025.png"),
-                           f"{per} seasonal forcing maps, net: {lab}"))
-        for which, lab in [("delta", "δ = art_LCC_own − art_CTRL"),
-                           ("artLCCown", f"art_LCC_own = LCC_{per} − LCC_{per}_fBVOClcc{per}")]:
-            for b in BANDS:
-                splitA.append((f(dA + f"{per}_ghan_{which}_{b}_2001_2025.png"),
-                               f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
-            splitA.append((f(dA + f"{per}_ghan_seasonal_{which}_NET_2001_2025.png"),
-                           f"{per} seasonal forcing maps, net: {lab}"))
-        for b in BANDS:
-            splitA.append((f(dB + f"{per}_ghan_nonBVOC_{b}_2001_2025.png"),
-                           f"{per} forcing maps, {BANDNAME[b]}: non-BVOC part (same in A and B)"))
-        splitA.append((f(dB + f"{per}_ghan_seasonal_nonBVOC_NET_2001_2025.png"),
-                       f"{per} seasonal forcing maps, net: non-BVOC part (same in A and B)"))
-    art["subs"].append(("Design-A split: BVOC_A, δ and non-BVOC", splitA))
-    tagsA = [("PD_fBVOCctrlPDdesignA", "PD, ctrlPD emissions"), ("FUT_fBVOCctrlFUTdesignA", "FUT, ctrlFUT emissions"),
-             ("FUT_fBVOCctrlPDdesignA", "FUT, ctrlPD emissions"), ("FUT_fBVOClccPDdesignA", "FUT, lccPD emissions")]
-    for folder, sub, extra in [("individual-scale", "Design-A decomposition, individual scales", ""),
-                               ("split6-2", "Design-A decomposition, 6 + 2 split", "_split6-2")]:
-        items = []
-        for tag, lab in tagsA:
-            for b in BANDS:
-                items.append((f(dA + f"{folder}/{tag}_forcing_decomposition_{b}{extra}_2001_2025.png"),
-                              f"Forcing decomposition, {BANDNAME[b]}: {lab} (BVOC_A)"))
-        art["subs"].append((sub, items))
-    d = dB
-    split = [(f(d + "radiative_budget_split_NET_2001_2025.png"), "Design-B split of the net TOA budget (comparison)")]
+    art = category_section("artefacts", 7, "Robustness: BVOC prescription artefacts",
+                           "art = interactive − prescribed own emissions (art_LCC_P = LCC_P − LCC_P_fBVOClccP, "
+                           "art_CTRL_P = CTRL_P − CTRL_P_fBVOCctrlP), δ_P = art_LCC_P − art_CTRL_P. Design A (used): "
+                           "total = non-BVOC + BVOC_A + δ; design B (matched baseline) shown for comparison, "
+                           "BVOC_B = BVOC_A + δ.", mech_first=True)
+    d = "artefacts/design-B/"
+    split = [(f("radiative_budget_split_NET_2001_2025.png"), "Design-B split of the net TOA budget (comparison)"),
+             (f("radiative_budget_split_designB_vs_A_NET_2001_2025.png"),
+              "Design B vs design A, net TOA budget (BVOC_B = BVOC_A + δ)")]
     srcs = {"PD": [("", "ctrlPD", "fBVOCctrlPDcorr")],
             "FUT": [("", "ctrlFUT", "fBVOCctrlFUTcorr"), ("-ctrlPD", "ctrlPD", "fBVOCctrlPDcorr"),
                     ("-lccPD", "lccPD", "fBVOClccPDcorr")]}
     for per in ["PD", "FUT"]:
         for sfx, src, ctx in srcs[per]:
             lab = f"corrected BVOC part, design B ({src} emissions)"
-            split.append((f(d + f"{per}_{ctx}_bvoc_context_maps_2001_2025.png"),
+            split.append((f(f"{per}_{ctx}_bvoc_context_maps_2001_2025.png"),
                           f"{per}: corrected BVOC effect, design B ({src} emissions), context maps"))
             for b in BANDS:
-                split.append((f(d + f"{per}_ghan_BVOCcorr{sfx}_{b}_2001_2025.png"),
-                              f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
-            split.append((f(d + f"{per}_ghan_seasonal_BVOCcorr{sfx}_NET_2001_2025.png"),
+                split.append((f(f"{per}_ghan_BVOCcorr{sfx}_{b}_2001_2025.png"), f"{per} forcing maps, {BANDNAME[b]}: {lab}"))
+            split.append((f(f"{per}_ghan_seasonal_BVOCcorr{sfx}_NET_2001_2025.png"),
                           f"{per} seasonal forcing maps, net: {lab}"))
+        for b in BANDS:
+            split.append((f(f"{per}_ghan_nonBVOC_{b}_2001_2025.png"),
+                          f"{per} forcing maps, {BANDNAME[b]}: non-BVOC part (same in A and B)"))
+        split.append((f(f"{per}_ghan_seasonal_nonBVOC_NET_2001_2025.png"),
+                      f"{per} seasonal forcing maps, net: non-BVOC part (same in A and B)"))
     art["subs"].append(("Design-B split (comparison)", split))
-    for folder, sub, extra in [("individual-scale", "Design-B decomposition, individual scales", ""),
-                               ("split6-2", "Design-B decomposition, 6 + 2 split", "_split6-2")]:
+    for scale, sub in [(None, "Design-B decomposition, individual scales"), ("family", "Design-B decomposition, shared scales")]:
         items = []
-        for tag, lab in [("PD_fBVOCctrlPDcorr", "PD, ctrlPD emissions"),
-                         ("FUT_fBVOCctrlPDcorr", "FUT, ctrlPD emissions"),
-                         ("FUT_fBVOCctrlFUTcorr", "FUT, ctrlFUT emissions"),
-                         ("FUT_fBVOClccPDcorr", "FUT, lccPD emissions")]:
+        for tag, lab, fam in [("LCCPD_fBVOCctrlPD", "[LCC − CTRL]_PD, ctrlPD emissions", "split6-0.5"),
+                              ("LCCFUT_fBVOCctrlFUT", "[LCC − CTRL]_FUT, ctrlFUT emissions", "split6-0.5"),
+                              ("LCCFUT_fBVOClccPD", "[LCC − CTRL]_FUT, lccPD emissions", "split6-2"),
+                              ("LCCFUT_fBVOCctrlPD", "[LCC − CTRL]_FUT, ctrlPD emissions", "split6-2")]:
             for b in BANDS:
-                items.append((f(d + f"{folder}/{tag}_forcing_decomposition_{b}{extra}_2001_2025.png"),
+                tail = f"_{fam}_designB" if scale else "_designB"
+                items.append((f(f"{tag}_forcing_decomposition_{b}_2001_2025{tail}.png"),
                               f"Forcing decomposition, {BANDNAME[b]}: {lab} (design B, corrected)"))
         art["subs"].append((sub, items))
     S.append(art)
@@ -307,7 +306,7 @@ if __name__ == "__main__":
     OUT = Path(sys.argv[1])
     d = Deck(*sys.argv[2:3])
     story = build_story()
-    all_png = sorted(p for p in FIG.rglob("*.png") if "megan_factors" not in p.parts)  # own deck
+    all_png = ALL
     missing = [p for p in all_png if p not in used]
     assert not missing, "figures not placed:\n" + "\n".join(map(str, missing))
     d.title_slide("Climatic impacts of the Arctic expansion of boreal forests",
