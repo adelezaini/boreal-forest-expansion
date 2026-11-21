@@ -27,7 +27,7 @@ source run with cam_diagnostics HR_BVOC_ALL (13a, 23a; 14a for LCC_PD)
      → /cluster/shared/noresm/inputdata/atm/cam/prescribed_data/bvoc_emissions/ems_<case>_<y0>-<y1>_on_yr2100_<VAR>.nc
      (EMS_PREFIX in the fBVOC case scripts points to the shared folder)
   ▼
-4. plot_bvoc_emissions.ipynb      maps, totals and seasonal cycles of the files (CTRL and LCC, PD and FUT)
+4. ../../diagnostics/2_bvoc-emissions/plot_bvoc_emissions.ipynb   maps, totals and seasonal cycles of the files (CTRL and LCC, PD and FUT)
   ▼
 5. fBVOC case script: prescribed_bvoc_emissions_all <2000|2100> "$EMS_PREFIX"   (cases-scripts/cases-setup.sh)
 ```
@@ -59,7 +59,7 @@ bash create_bvoc_emissions_for_year_2100.sh NF2100ssp585norbc_tropstratchem_nudg
 | `create_bvoc_emissions_climatology.sh` | The same as the array, run serially on the login node. Slow; mainly for single species. |
 | `check_bvoc_climatology.py` | Per species: number of records, units, annual mean vs h0 mean (should be 1 to ~1e-7), global total in Tg/yr. Exit 1 on any failure. |
 | `create_bvoc_emissions_for_year_2100.sh` | Works in the shared folder (`EMS_DIR` overrides). Copies files with `date` + 1000000 and the time units moved to 2100 (values unchanged), for FUT runs (`srf_emis_cycle_yr = 2100`). Refuses to overwrite. |
-| `plot_bvoc_emissions.ipynb` | Annual and seasonal maps, Tg/yr table (global, >45°N, modified cells) and seasonal cycles for the 19 species: CTRL_PD vs CTRL_FUT, LCC − CTRL per period (new chain). |
+| `../../diagnostics/2_bvoc-emissions/plot_bvoc_emissions.ipynb` (moved 2026-11-16 with `plot_bvoc_means`, `plot_bvoc_timeseries`; still writes `bvoc_totals_tg_per_yr.csv` here for `bvoc_species_processes.ipynb`) | Annual and seasonal maps, Tg/yr table (global, >45°N, modified cells) and seasonal cycles for the 19 species: CTRL_PD vs CTRL_FUT, LCC − CTRL per period (new chain). |
 | `prescribe-just-ISOP-MTERP/` | Original ISOP/MTERP-only scripts and notebook. |
 | `to-clean/` | Old material. |
 
