@@ -80,7 +80,7 @@ for CASENAME in "${CASES[@]}"; do
     if [[ "$PHASE" == phaseA ]]; then
         ( switch_case_to_met_list "$CASENAME" "$RESTDATE" "$NEED_DAY" "$MET_LIST" )
     else
-        grep -q "met_filenames_list *= *'$MET_LIST'" "$HOME/cases/BRL_FRST_XPSN/$CASENAME/CaseDocs/atm_in" \
+        grep -q "met_filenames_list[[:space:]]*=[[:space:]]*'$MET_LIST'" "$HOME/cases/BRL_FRST_XPSN/$CASENAME/CaseDocs/atm_in" \
             || { echo "ERROR: $CASENAME does not read $MET_LIST (phase A switch missing)" >&2; exit 1; }
         last=$(tail -n 1 "$MET_LIST" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}-00000\.nc$' | cut -c1-10)
         [[ ! "$last" < "$NEED_DAY" ]] || { echo "ERROR: $MET_LIST ends at $last, $PHASE needs $NEED_DAY" >&2; exit 1; }

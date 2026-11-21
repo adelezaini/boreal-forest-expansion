@@ -207,8 +207,8 @@ switch_case_to_met_list() {
     [[ -f "user_nl_cam.before_met$tag" ]] || cp -p user_nl_cam "user_nl_cam.before_met$tag"
     sed -i -E "s|^( *met_filenames_list *= *).*|\1'$newlist'|; s|^( *met_data_file *= *).*|\1'$new_df'|" user_nl_cam
     ./preview_namelists > /dev/null || return 1
-    grep -q "met_filenames_list *= *'$newlist'" CaseDocs/atm_in || { echo "ERROR: atm_in met_filenames_list not switched" >&2; return 1; }
-    grep -q "met_data_file *= *'$new_df'" CaseDocs/atm_in || { echo "ERROR: atm_in met_data_file not switched" >&2; return 1; }
+    grep -q "met_filenames_list[[:space:]]*=[[:space:]]*'$newlist'" CaseDocs/atm_in || { echo "ERROR: atm_in met_filenames_list not switched" >&2; return 1; }
+    grep -q "met_data_file[[:space:]]*=[[:space:]]*'$new_df'" CaseDocs/atm_in || { echo "ERROR: atm_in met_data_file not switched" >&2; return 1; }
 
     if [[ "$cur" != "$cur_new" || "$nxt" != "$nxt_new" ]]; then
         local att=(-a current_metdata_filename,global,o,c,"$cur_new")

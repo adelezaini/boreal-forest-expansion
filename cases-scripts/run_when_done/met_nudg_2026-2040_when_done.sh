@@ -46,7 +46,17 @@ record() { (( DRY )) || echo "- $(date '+%F %T') $*" >> "$RECORD"; }
 ext() { env -i HOME="$HOME" USER="$USER" bash -l -c "cd '$CS' && bash '$SCRIPT' $*"; }
 last_line() { grep -n "$2" "$1/CaseStatus" | tail -1 | cut -d: -f1; }
 archived() { local lr la; lr=$(last_line "$1" 'case.run success'); la=$(last_line "$1" 'st_archive success'); (( ${la:-0} > ${lr:-0} )); }
-queued() { squeue -u "$USER" -h -o %Z | grep -qx -- "$(realpath "$1")"; }
+# queued: squeue failed/timed out on 18-19 Nov (4 running/pending runs flagged FAILED) -> retry; if squeue
+# keeps failing, answer "queued" (wait) rather than declare a failure.
+queued() {
+    local out i
+    for i in 1 2 3; do
+        out=$(squeue -u "$USER" -h -o %Z 2>/dev/null) && [[ -n "$out" ]] && break
+        out=""; sleep 20
+    done
+    [[ -z "$out" ]] && { log "squeue failed/empty 3x: treating $(basename "$1") as queued"; return 0; }
+    grep -qx -- "$(realpath "$1")" <<< "$out"
+}
 list_last() { [[ -f "$METLIST" ]] && tail -n 1 "$METLIST" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}-00000\.nc$' | cut -c1-10; }
 alias_of() { grep -F " $1" "$STATE/aliases.txt" | cut -d' ' -f1; }
 
@@ -130,6 +140,7 @@ run_step() {   # one nudged run
         # previous phase finished and archived?
         if [[ -n "${PH_PREV[$p]:-}" ]]; then
             if ! grep -q "${PH_START[$p]}" "$rundir/rpointer.atm"; then
+                sleep 60; queued "$wd" && return     # second look before declaring a failure
                 echo "phase ${PH_PREV[$p]} stopped, rpointer: $(head -1 "$rundir/rpointer.atm")" > "$STATE/phase${PH_PREV[$p]}_$c.failed"
                 log "$c: phase ${PH_PREV[$p]} FAILED (no job queued, restart not advanced)"; record "$(alias_of "$c"): phase ${PH_PREV[$p]} FAILED"; return
             fi
@@ -150,6 +161,7 @@ run_step() {   # one nudged run
     done
     # all three phases submitted: done?
     if ! grep -q 2041-01-01-00000 "$rundir/rpointer.atm"; then
+        sleep 60; queued "$wd" && return
         echo "phase C stopped, rpointer: $(head -1 "$rundir/rpointer.atm")" > "$STATE/phaseC_$c.failed"
         log "$c: phase C FAILED"; record "$(alias_of "$c"): phase C FAILED"; return
     fi
