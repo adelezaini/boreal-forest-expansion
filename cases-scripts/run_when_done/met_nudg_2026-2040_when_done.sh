@@ -48,13 +48,22 @@ last_line() { grep -n "$2" "$1/CaseStatus" | tail -1 | cut -d: -f1; }
 archived() { local lr la; lr=$(last_line "$1" 'case.run success'); la=$(last_line "$1" 'st_archive success'); (( ${la:-0} > ${lr:-0} )); }
 # queued: squeue failed/timed out on 18-19 Nov (4 running/pending runs flagged FAILED) -> retry; if squeue
 # keeps failing, answer "queued" (wait) rather than declare a failure.
+# Fix 2026-11-23: three successful but empty answers = the user has no jobs = NOT queued (the old check
+# answered "queued" forever once the last job had left, which stalled the watcher on 22 Nov).
 queued() {
-    local out i
+    local out="" i err=0
     for i in 1 2 3; do
-        out=$(squeue -u "$USER" -h -o %Z 2>/dev/null) && [[ -n "$out" ]] && break
-        out=""; sleep 20
+        if out=$(squeue -u "$USER" -h -o %Z 2>/dev/null); then
+            [[ -n "$out" ]] && { err=0; break; }
+        else
+            err=1; out=""
+        fi
+        (( i < 3 )) && sleep 20
     done
-    [[ -z "$out" ]] && { log "squeue failed/empty 3x: treating $(basename "$1") as queued"; return 0; }
+    if [[ -z "$out" ]]; then
+        (( err )) && { log "squeue failed: treating $(basename "$1") as queued"; return 0; }
+        return 1
+    fi
     grep -qx -- "$(realpath "$1")" <<< "$out"
 }
 list_last() { [[ -f "$METLIST" ]] && tail -n 1 "$METLIST" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}-00000\.nc$' | cut -c1-10; }
