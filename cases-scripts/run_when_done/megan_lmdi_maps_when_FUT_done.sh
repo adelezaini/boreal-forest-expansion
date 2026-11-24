@@ -1,7 +1,7 @@
 #!/bin/bash
 # Rerun analysis/megan-lmdi-attribution-maps.ipynb once all 6 FUT LMDI years are reduced and copied
 # (user OK 2026-11-16 13:06, session ae435137): adds the FUT exact attribution maps
-# results/figures/megan_factors/FUT_<group>_attribution_LMDI_<season>_6yr.png (+ table megan_lmdi_attribution_FUT_45N.csv).
+# results/figures/megan-lmdi-attribution-maps/FUT_<group>_attribution_LMDI_<season>_6yr.png (+ table megan_lmdi_attribution_FUT_45N.csv).
 #
 # Waits for FUT_<y>.copied (y = 2001 2002 2005 2006 2010 2011) in the FUT state folder of the MEGAN LMDI watcher
 # and for the file megan_lmdi_FUT_<y>.nc; stops if any FUT_<y>.failed appears. Does not run while another run of

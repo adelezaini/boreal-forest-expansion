@@ -62,7 +62,7 @@ from boreal_forest_expansion.analysis.regions import load_modified_cells
 
 REPO_DIR = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 MODIFIED_CELLS = REPO_DIR / "diagnostics/lcc-modified-cells/modified_cells.csv"
-MEGAN_FIG_DIR = FIGURE_DIR / "megan_factors"
+MEGAN_FIG_DIR = FIGURE_DIR / "megan_factor_maps"   # results/figures/<notebook> (layout 2026-11-16)
 
 K_UNITS = 1e-9 / 3600.0        # ug m-2 h-1 -> kg m-2 s-1 (megemis_units_factor * 1e-3)
 

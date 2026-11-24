@@ -16,7 +16,8 @@ from cicero_pptx import Deck, M  # noqa: E402
 ROOT = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 MF = ROOT / "results/figures-2001-2014/megan_factors"
 LAKE = ROOT / "diagnostics/3_megan-exact-split-test/lake_fix_effect_outputs/figures"
-LMDI = ROOT / "results/figures/megan_factors"   # exact LMDI split, PD, 6 years (2001-02, 2005-06, 2010-11)
+LMDI = ROOT / "results/figures/megan-lmdi-attribution-maps"   # exact LMDI split, PD, 6 years (2001-02, 2005-06, 2010-11)
+LVA = ROOT / "results/figures/megan-lmdi-vs-approx"   # layout 2026-11-16: one folder per notebook
 Y = "2001_2014"
 GROUP = {"isoprene": "isoprene", "MTERP": "monoterpenes"}
 SEASON = {"ANN": "annual mean", "JJA": "JJA"}
@@ -68,7 +69,7 @@ def build_story():
               subs=[(GROUP[g].capitalize(),
                      [(f(LMDI / f"PD_{g}_attribution_LMDI_{s}_6yr.png"),
                        f"Exact LMDI attribution, {GROUP[g]}, {SEASON[s]}: LCC_PD vs CTRL_PD") for s in ["ANN", "JJA"]]
-                     + [(f(LMDI / "lmdi-vs-approx" / f"PD_{g}_lmdi_vs_approx_{s}.png"),
+                     + [(f(LVA / f"PD_{g}_lmdi_vs_approx_{s}.png"),
                          f"LMDI vs approximate split, {GROUP[g]}, {SEASON[s]}") for s in ["ANN", "JJA"]])
                     for g in ["isoprene", "MTERP"]]),
          dict(num=6, title="Appendix: the lake fix",
@@ -145,7 +146,7 @@ if __name__ == "__main__":
     OUT = Path(sys.argv[1])
     d = Deck(*sys.argv[2:3])
     story = build_story()
-    all_png = sorted(MF.rglob("*.png")) + sorted(LAKE.glob("*.png")) + sorted(LMDI.rglob("*.png"))
+    all_png = sorted(MF.rglob("*.png")) + sorted(LAKE.glob("*.png")) + sorted(LMDI.rglob("*.png")) + sorted(LVA.glob("*.png"))
     missing = [p for p in all_png if p not in used]
     assert not missing, "figures not placed:\n" + "\n".join(map(str, missing))
     d.title_slide("What drives the BVOC emission change? MEGAN factors",
