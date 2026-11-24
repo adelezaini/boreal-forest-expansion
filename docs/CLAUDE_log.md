@@ -15,8 +15,17 @@ Human twin: `docs/CLAUDE_log_human.md`.
 ---
 
 ## NOW (overwrite every turn)
+- [40b2b6a1] 17:12 24 Nov: user OK 17:09 'commit them all'. Committed on main, NOT pushed (a): c9b9264 MEGAN LMDI folders, 02ccdc7 background aerosol twin online nbs, e582ece LAI CLM vs LPJ-GUESS, ed6f264 Tang 2023, 0fdde45 MET nudg squeue fix + 2041 log, 121483d sandbox (vegetation regions, forcing tree, LMDI row scales), then logs commit. Draft repo: 234c620 Methods+SI vegetation regions. Left untracked on purpose: results/tables/logs/run_megan_lmdi_maps_FUT.status (runtime state). Session 560cc914 was editing sandbox/vegetation_regions + draft tex until 17:01 -> commits are a snapshot; its later edits stay uncommitted.
+- [ee15eedf] 16:30 24 Nov: user OK 16:27. Postprocessing recovery 2 for LCC_PD_fBVOClccPD RUNNING on login-2: /cluster/work/users/adelez/met-nudg-2040/recover2_LCC_PD_fBVOClccPD.sh (pid 2269664, log recover2_LCC_PD_fBVOClccPD.log, per-attempt pp_LCC_PD_fBVOClccPD_r2_{1,2,3}.log). Deleted the 19 stale .nc.part in staging (a). Attempts: run_all_parallel 3 workers, then 2, 2 (15 min apart, --skip-existing keeps done streams). On 19/19: removes pp_*.err, touches pp_LCC_PD_fBVOClccPD.ok, starts analysis_2001-2040_when_done.sh detached (waits for 228 files, checks 2001-2025 slice, moves to postprocessing/, copies results -> *-2001-2025, patches years incl. forcing_maps.py EARLY/LATE -> sandbox sessions importing fm may see 2015-2040). Else pp_*.err. Previous attempts took 2-3.5 h with 6/4 workers -> expect ~4-6 h (b). Background waiter in this session. Watcher NOT restarted (not needed; recover2 starts analysis).
+- [560cc914] 17:01 24 Nov: vegetation regions. USER DECISIONS 16:32: calculations use regions BY CLASS (region_cells.png left panel; little gain excluded from regional means); dashed/solid lines = display only; two-line layout liked; subtitle = option A (user 16:46): FINAL (user 16:57): "Maps: N-year mean · Under the maps: area-weighted mean ± 95 % CI of the N yearly means over 45–90°N, broadleaf- and needleleaf-expansion cells*" + lines legend line; FOOTNOTE at figure bottom, left-aligned, 10 pt: "*cells with ≤ 1 pp tree gain left out (Supplementary Sect. S1)". Test: subtitle_a() patches fm.mean_subtitle; add_footnote_on_save() patches Figure.savefig (text 0.12 in below fig tightbbox). Both test figs redrawn 17:01, viewed, no overlap (a). Caveat: draft SI currently numbers the section 5.1 (subsection under unnumbered Appendix), not S1 — fix numbering in main.tex later. Regions: broadleaf exp. = class 1 (266 cells, 29.7 % land area AREA×LANDFRAC_PFT), needleleaf exp. = class 3+2 (529+47, 46.2+4.7 %), little = class 0 (319, 19.4 %, median gain 0, max 0.97 pp), threshold tv.THRESHOLD 1 pp, needle PFTs 1-3, broad 6-8; modified = any PCT_NAT_PFT diff > 1e-6 pp (1161) (a). Draft repo boreal-forest-expantion-draft (Overleaf, NOT committed): NEW supplementary-material.tex §"Vegetation regions used for the regional means" (definitions, Table tab:si-vegetation-classes, regional-mean method, lines = display only, Fig fig:si-vegetation-regions), main.tex: \input{supplementary-material} under the Supplementary heading, NEW figures/vegetation_regions_by_class.png (from sandbox/vegetation_regions/si_region_map.py → region_cells_outputs/si_region_classes.png). Compiled OK with tectonic to scratchpad, pages 13-14 viewed (a). methods-claude.tex was already modified before (other session). Layout test: sandbox/vegetation_regions/test_region_numbers.py {ghan,context} [layouts], two_lines params CBAR_OFFSET 0.92 UNDER_CBAR 1.75, main mean −0.26 in, region lines −17/−32 pt at 10.5 pt; outputs region_numbers_outputs/two_lines/ (a). Ghan NET LCC-CTRL_FUT: TOTAL broad −0.58±0.05 needle +1.31±0.04; CLOUD +1.03/−0.76 (a). WAITING ON USER: OK to apply to src forcing_maps (+ megan_maps), ask which figures/rerun (memory: ask before rerunning analysis).
+- [0fee2434] 21:55 23 Nov: MEGAN LMDI maps, row scales SANDBOX ONLY: 8 PNGs in `sandbox/test_megan_lmdi_row_scales_outputs/` (row 1 +/-60 PD, +/-100 FUT; row 2 +/-10, LAI saturates), stats `row_scale_stats.csv`. analysis/ and results/ not edited by this session. (a) PD isoprene JJA 45N: dlnE +2.09, composition -1.90, activity +3.95, gammaL +3.27, T +0.49+/-0.50, P -0.13+/-0.13, A +0.32; modified cells activity +8.59, gammaL +7.62. (a) safeguard = total gamma outside [0,100) -> MEG=0, +0.029. (a) nudging U,V,PS only. (b) years needed from 6-yr SD: PD isoprene T ~7, P ~7, C ~75; PD MTERP net dlnE ~113. Advice: no extra MEGAN years. WAITING: user choice on LAI scale, then apply to notebook.
+- [bb091224] 21:52 23 Nov: user OK 21:33. Fixed `queued()` in cases-scripts/run_when_done/met_nudg_2026-2040_when_done.sh (3 successful empty squeue = not queued; squeue error = wait) (uncommitted). Watcher restarted 21:35, login-3, pid 641632. First rsync of LCC_PD_fBVOClccPD ended 21:50 with code 23, NIRD Input/output errors (a; rsync_LCC_PD_fBVOClccPD.attempt0-20261123.log); NIRD then lacked 1 ice/hist + 2 rest files (a). Removed pp_LCC_PD_fBVOClccPD.err so watcher does not exit. Recovery running: /cluster/work/users/adelez/met-nudg-2040/recover_LCC_PD_fBVOClccPD.sh, pid 717556, log recover_LCC_PD_fBVOClccPD.log: same rsync up to 8 tries 10 min apart, then run_all_parallel into staging, .ok only with 19 files, else .err (watcher then exits 'only 11/12'). On .ok watcher starts analysis_2001-2040 (state /cluster/work/users/adelez/analysis-2001-2040). Background waiter bkn1x1ary in this session. After copy: check no leftover hidden .* temp files in NIRD case folder (protected, ask before deleting). Analysis patches forcing_maps.py EARLY/LATE to 2015-2040 while parallel sandbox sessions import it.
+- [4cd451a7] Q cloud masking vs real: answered (no files). APRP inputs all in processed RADIATIVE (variables.py l.128-137: SOLIN, FSNTOA(C), FSDS(C), FSNS(C), CLDTOT, clean FSDS_DRF/FSUS_DRF/FSUTADRF/FSDSCDRF; no clean clear-sky sfc upward) (a). Offered sandbox APRP. 16:56 24 Nov: row-4 titles now '<NON-BVOC|BVOC> <TERM> <SW|LW>' (8.5 pt, fit (a)); 4 PNG redrawn. Explained Ghan terms (derived.py l.113-129: dir=FSNT−FSNT_DRF, cloud=FSNT_DRF−FSNTCDRF, rest=FSNTCDRF, LW analogues with −FLNT*) (a); process attribution given as (b). Earlier: forcing tree, 2 sandbox layouts. (1) 3-row v2 sandbox/test_forcing_tree.py (16:31; colourbars rows 1–2, albedo title 'ALBEDO / SW CLEAR-SKY FORCING', LW w/o albedo/rest; 12 PNG; cache /cluster/work/users/adelez/boreal-caches/forcing-tree). (2) NEW sandbox/test_forcing_tree_4rows.py {compute,draw} (imports test_forcing_tree as t3, reuses its cache; own cache boreal-caches/forcing-tree-4rows = non-BVOC Ghan {cloud,dir,rest}×{NET,SW,LW}): rows NET total → N,B → Ghan 3+3 (titles CLOUD/DIRECT/CLEAN-CLEAR-SKY, no physical labels) → SW,LW each (12 maps, map_size 2.0, gap 0.55, fig ~30 in wide). Closure checked: Ghan sum = branch, SW+LW = NET ≤7.5e-6 (a). Scales automatic nice(q98≥45N), rows 3–4 per branch shared (PD n 12/b 0.4; FUT n 8/b 0.4; climate cases n 40/b 2). LCC_FUT−CTRL_PD ≥45N (a): N cloud −1.40 (SW −0.63, LW −0.77), dir −0.25, ccs +3.96 (SW +10.12, LW −6.16); B cloud −1.10 (SW −1.12), dir −0.040, ccs +0.142 (SW −0.047, LW +0.189). Viewed PD + ctrlPD PNGs (a). The 4rows .py changed on disk after my write (not by me, 16:4x) — current content used for the final draw. WAITING ON USER: choose layout → analysis/.
+- [8f7da9d1] 17:14 22 Nov: PAPER STORY CHANGED (user). Old: BVOC-cloud effects can offset LCC albedo warming. New: future LCC plays a minor regional role even under the most extreme scenario because climate change dominates. Recorded in memory boreal-paper-story. Wording under discussion; main.tex/title NOT edited. Numbers (a, results/tables/pd-fut-attribution/*_2001_2025.csv, modified cells, 25 yr): NET TOA CTRL_[FUT−PD] +2.86, [LCC−CTRL]_FUT +0.51 (18%), albedo proxy 11.72 vs 0.83 (7%); LCC effect FUT−PD NET −0.074±0.057, albedo −0.244±0.033; BVOC NET −0.039±0.030 PD, −0.071±0.029 FUT. Caveat (b): fixed SST/sea ice + PD nudging favours climate in the comparison. WAITING ON USER: choose framing.
+- [36563bcd] DONE: twin notebooks `diagnostics/background-aerosol/background_aerosol_pd_fut_online.ipynb` (CTRL_FUT−CTRL_PD) and `background_aerosol_lcc_ctrl_fut_online.ipynb` (LCC_FUT−CTRL_FUT) have the same merged analysis; only the config block, summary and LCC §3.1 tropical check differ. Executed, 0 errors, outputs saved; levels match previous tables (rel diff <1e-14) (a). Previous versions: `<stem>_outputs/previous-version-20261121/`. All uncommitted. WAITING ON USER: keep or delete the extra combined nb `background_aerosol_lcc_ctrl_pd_fut_online.ipynb` (only place with LCC_PD and ΔFUT−ΔPD).
+- 16:26 21 Nov session fff170e9 (block 16:24): user suspected Fig. 1c row 2 = row 1 (results/figures/simulation-contrasts/contrast_grid_fig1c_2001_2025.png). NOT a bug (a): forcing_maps._contrasts row 1 = CTRL_FUT − CTRL_PD, row 2 = LCC_FUT − LCC_PD. Recomputed from processed atm 2001–2025, 45–90°N, cos-lat weights: not identical; pattern r SFISOP 0.989, SFMTERP 0.992, cb_SOA_NA 0.996, cb_SOA_A1 0.999; RMS(row2−row1)/RMS(row1) 14 %, 12 %, 3.6 %, 1.5 %. Other 4 columns not recomputed (c). One transient NetCDF HDF read error on first try; per-record reread had no unreadable records for these 4 vars (a). No code/figure changed. Open: user may want row 2 replaced/rescaled to make the difference visible.
 - 16:21 21 Nov session 6f761ff3 (block 16:02): user OK commits except proposal #3 MEGAN, #4 background aerosol, #7 Tang/LPJ. Committed on main, NOT pushed (a): 9d8be8e results layout/artefacts, 40c6aed MET 2026-2040, f9be173 BVOC plots, 8ddb633 isoprene diurnal, 6e86c49 equilibrium/autocorrelation, then diagnostics index + runner + logs; draft repo methods commit (not pushed). diagnostics/README.md committed whole, so it already lists the uncommitted background-aerosol/Tang/LPJ files. STILL UNCOMMITTED by user choice: MEGAN files (nb, megan_maps.py, build_megan_pptx.py, waiter, megan figures/tables), diagnostics/background-aerosol/, tang2023-comparison/, lai-clm-vs-lpjguess/; run_megan_lmdi_maps_FUT.status left out. MEGAN waiter pid 2738837 status RUNNING attempt 2 since 16:08:50. Deleted results/{figures,tables}-pre-reorg-20261116 (348 files, all blobs in git history, no code refs (a)). KEPT *-pre-reorg-20261108.
-- 15:58 21 Nov session d2e64b8d (block 15:55), user OK: LCC_PD_fBVOClccPD phase C resubmitted by direct case.submit (same exclude list): case.run 1812398 PENDING, st_archive 1812399. extend script --check refuses because last CaseStatus line is the crash, so checked by hand (a): 6 rpointers 2036-01-01, archive rest/2036 present (.gz), run-dir restarts present, cam.r met path = _6h_2000-2040, list ends 2041-01-02, STOP 5 yr, RESUBMIT 0. phaseC .failed moved to met-nudg-2040/retry-20261121/ so watcher counts the run again; watcher liveness still unverified from login-3 (c). If it is dead, done/postprocessing will not start: check watch.log for 'at 2041-01-01' lines tonight. Maps: megan_lmdi_maps_when_FUT_done.sh restarted 15:57 login-3 (pid 2738837, 3 attempts), status results/tables/logs/run_megan_lmdi_maps_FUT.status = RUNNING; background wait b4h0xvhps. NEXT: read notebook result, then LMDI FUT \NUM in methods-claude.tex (not filled yet). If 1812398 crashes the same way: stop and investigate, no blind retry.
+- 17:42 21 Nov session d2e64b8d (block 15:55): maps nb analysis/megan-lmdi-attribution-maps.ipynb OK 17:38 on attempt 6/8 (a; failures = NIRD imports/kernel death), 8 PNGs + PD/FUT 45N CSV in results/*/megan-lmdi-attribution-maps/, FUT closure <=2.8e-13. LMDI FUT \NUM filled in boreal-forest-expantion-draft/methods-claude.tex (ANN >=45N, 100*dln, 6-yr 95% CI): ISOP dlnE +0.60+-0.60, composition -2.06+-0.27, activity +2.65+-0.70, gL +1.69+-0.70, gT +0.59+-0.30; MT -1.48+-0.52, -3.47+-0.04, +1.99+-0.54, +1.55+-0.47, +0.54+-0.23 (a). No \NUM left; compiled OK via scratch wrapper (file is a fragment). methods-claude.tex uncommitted, not pushed (Overleaf repo). Watcher alive (a, 17:15). LCC_PD_fBVOClccPD 1812398 running, last to finish ~09:00-10:00 22 Nov (b). NEXT: main.tex tables, methods.tex cleanup (ask first), corrected deck, commits.
 - 15:55 21 Nov session d2e64b8d, status check (read-only except logs). 11/12 nudged runs in phase C (2036->2041): 10 at 2040-05..12, LCC_FUT 1811849 at 2038-10, ETA ~23:00 (b). FAILED: NF2000 nudg_lcc_fBVOClccPD_20261031 job 1811597 02:12 at init, surfrd_veg_all wt_nat_patch sum 0.99882 at nl=5664; fsurdat PCT_NAT_PFT intact (all cells 100, nl 5664 = 100) and same file used by sibling runs -> transient bad read likely (b), rpointer 2036-01-01, phaseC_<case>.failed set. NEXT, needs user OK: resubmit phase C; it blocks 2001-2040 postprocessing/analysis (watcher step 5 needs all 12). Watcher not visible from login-3 (last action 06:50, probably login-2), liveness unverified. analysis/megan-lmdi-attribution-maps.ipynb still has NetCDF HDF error in cell 0 -> rerun, then fill last LMDI FUT \NUM in methods-claude.tex. nn9188k 954 GiB/1 TiB. git 561 paths uncommitted. archive_guard lock HELD.
 - 16:50 20 Nov session 4607124c (block 16:45): user → (1) deleted 6 stale LCCFUT_fBVOC{lccPD,ctrlPD}_*_split6-2_designA.png; (2) dropped duplicate tag LCCFUT-CTRLPD_fBVOCctrlPD (md5-identical to LCCFUT_fBVOCctrlPD) from analysis/radiative-forcing-decomposition.ipynb cell 1 + build_figures_pptx.py DECOMP, its 6 PNGs deleted; (3) per-map-colourbar (no-scale-suffix) design A six-map PNGs deleted (12), nb cell 3 now draws only family scale (cells 0,2 md updated), deck 5.2 = 'Six-map decomposition' (12 figs, shared scales only). Folder now 12 six-map PNGs + budget split (a). Nb NOT rerun (code edit only; outputs still old/cell 3 error). Design B (artefacts/design-B, deck 7.8/7.9) untouched. Deck rebuilt → results/pptx/BOREAL_figures_2001-2025_CICERO.pptx 307 slides / 297 figs, all placed (a); python-pptx venv in scratchpad 4607124c/venv (lcc-env --system-site-packages + pip python-pptx 1.0.2). Backups nb/script .bak in scratchpad. Title slide date still hard-coded '16 November 2026'. Not committed.
 - 20 Nov status check (read-only, no files changed): 12 nudged runs phase A done, phase B running (11 R since ~04–06 h; LCC_FUT phase B started 14:07, behind by ~9 h); 12 PD after-jobs queued. FUT MEGAN batch 2 DONE (2002/2006/2011 .ok+.copied, last 04:12) (a). megan_lmdi_maps_when_FUT_done → analysis/megan-lmdi-attribution-maps.ipynb FAILED 3× 04:20–04:58 (lcc-env ImportError platformdirs.unix = NIRD conda flakiness), status file FAILED (a) → rerun by hand. archive_guard lock held (alive), last fix 19 Nov 23:52 (a). git: ~560 uncommitted paths.
@@ -27,11 +36,83 @@ Human twin: `docs/CLAUDE_log_human.md`.
 
 ---
 
+## 2026-11-24 · 17:09 → 17:12 (3 min) · session 40b2b6a1
+Commits by topic (user OK 17:09). Project repo: c9b9264, 02ccdc7, e582ece, ed6f264, 0fdde45, 121483d + logs; draft repo 234c620. Not pushed. Checked first: only postprocessing (NIRD staging) running, nothing writes into the repo (a, ps). Largest files: notebooks with outputs, 3 sandbox PNGs >5 MB (a).
+
+## 2026-11-24 · 16:40 → 17:07 (27 min) · session 4cd451a7
+- 4-row forcing tree (Ghan both branches + SW/LW), sandbox; 4 figs. See NOW.
+
+## 2026-11-24 · 16:13 → 16:31 (18 min) · session 4cd451a7
+- Forcing tree v2: per-map colourbars rows 1–2, albedo title, LW without albedo branch; 12 sandbox figs. See NOW.
+
+## 2026-11-24 · 16:03 → 17:01 (58 min) · session 560cc914
+- Vegetation region numbers: by-class regions confirmed by user, two-line layout + subtitle A (with * footnote) chosen and drawn on 2 test figures, SI section + figure added to draft (uncommitted); details NOW.
+
+## 2026-11-23 · 21:32 → 21:50 (18 min) · session 9f4eadd9
+
+- Forcing tree drawn for 4 cases x NET/SW in sandbox; closure and scales in NOW (a). results/ untouched. Waiting on user.
+
+## 2026-11-23 · 21:45 → 21:55 (10 min) · session 0fee2434
+- User: MEGAN attribution maps, separate scale per row; what is the CLM safeguard; more years? Sandbox script written, stats running. See NOW.
+
+## 2026-11-23 · 21:33 → 21:52 (19 min) · session bb091224
+
+- Watcher queue check fixed and watcher restarted (pid 641632, login-3). First NIRD copy of LCC_PD_fBVOClccPD failed on I/O errors (a); recovery script retrying copy, then postprocessing (pid 717556). Outcome pending.
+
+## 2026-11-23 · 21:20 → 21:23 (3 min) · session bb091224
+
+- Status check: 12/12 nudged runs done to 2041; watcher stalled on empty-squeue bug, so LCC_PD_fBVOClccPD NIRD copy + postprocessing and the 2001-2040 analysis did not run (a). Nothing changed except logs. Waiting on user.
+
+## 2026-11-23 · 21:05 → 21:10 (5 min) · session 9f4eadd9
+
+- 3-row forcing decomposition proposed (see NOW); inputs and closure checked (a); nothing drawn. Waiting on user.
+
+## 2026-11-22 · 17:10 → 17:14 (4 min) · session 8f7da9d1
+
+- Story change recorded; forcing ratios computed from existing yearly tables, no result file changed (a). Open: user decision on framing.
+
+## 2026-11-23 · 21:02 → 21:58 (56 min) · session c88bbb02
+
+- Gulf of Finland piece removed, user subtitle added, title gap increased; 4 real figures redrawn and headers checked (a). New test folder `sandbox/vegetation_regions/`: region map and monoterpene means/totals per region (a).
+
+## 2026-11-22 · 16:30 → 17:27 (57 min) · session c88bbb02
+
+- Line design final (user). Four real test figures redrawn with the fixed file and viewed; results/ untouched (a). Waiting on user for paper figures and subtitle/caption.
+
+## 2026-11-22 · 15:00 → 15:21 (21 min) · session c88bbb02
+
+- Central Siberia closure redrawn on the user's sketched route (710 km, 499 km added) in a candidate file (a); left-out figure and table updated from it (a). Approved line file unchanged (a).
+
+## 2026-11-22 · 01:39 → 01:49 (10 min) · session c88bbb02
+
+- Real-figure test finished: 4/4 figures OK with lines (a); wrapper axis bug fixed; results/ untouched (a). Open: user approval, legend/caption, SNOW PERSISTENCE values (c).
+
+## 2026-11-21 · 23:07 → 00:18 (71 min) · session c88bbb02
+- User: mostly-land modified line OK; west Alaska restored, Kola link removed; modified line removed inside 2 boxes; chose black lines + 30 % transparent white edge, drawn on 6 variables PD+FUT. Sandbox only (a), details in NOW.
+
+## 2026-11-21 · 16:39 → 17:17 (38 min) · session 36563bcd
+- First version: combined nb `background_aerosol_lcc_ctrl_pd_fut_online.ipynb` executed; kept until user decides.
+- 16:51 user: two notebooks, same merged analysis. Rebuilt both from one body (inputs diff, sources, totals/series, model union incl. SOA/BVOC/OH/CH4, A/B/diff maps with FDR hatching, regions incl. modified cells, global appendix). Fixes: % title format; linear diff levels for one-signed fields (>=90 %). README row updated.
+- NIRD gave transient Errno 5 on imports twice; PD/FUT rerun OK. Checks (a): 53 + 51 figures regenerated, 0 errors, old rows reproduced.
+- PD→FUT modified cells (a): SOA 1.31→4.07 mg/m2 (+210 %), sulfate −45 %, OH −33 %, CDNUMC −13 %.
+
+## 2026-11-21 · 16:47 → 18:11 (84 min) · session c88bbb02
+- User: vegetation border on maps, now dashed 0.7 with yellow in NL; left-out parts mapped; modified line limited to edges against unmodified land. Sandbox only (a), details in NOW.
+
+## 2026-11-21 · 16:29 → 16:42 (13 min) · session c88bbb02
+- User: mark broadleaf-gain and needleleaf-gain areas on all result maps, start with tests. Sandbox classes + 3 outline styles done (a), details in NOW.
+
+## 2026-11-21 · 16:23 → 16:27 (4 min) · session 36563bcd
+- Task: online background-aerosol notebook for LCC−CTRL across PD/FUT. New nb + `_outputs/` (cache symlink on /cluster/work). Execution running; results not yet checked (c).
+
+## 2026-11-21 · 16:24 → 16:26 (2 min) · session fff170e9
+Fig. 1c row 2 checked against row 1: correct runs, fields differ (a); numbers in NOW. Read-only except logs.
+
 ## 2026-11-21 · 16:02 → 16:21 (19 min) · session 6f761ff3
 Deleted results/{figures,tables}-pre-reorg-20261116 (348 files, all in git history (a), no code refs). 6 BOREAL topic commits + 1 draft commit, not pushed. MEGAN, background aerosol, Tang/LPJ left uncommitted (user). 20261108 backups kept.
 
-## 2026-11-21 · 15:55 → 15:58 (3 min) · session d2e64b8d
-- User OK: crashed LCC_PD_fBVOClccPD resubmitted (1812398), maps notebook rerun started. Details in NOW.
+## 2026-11-21 · 15:55 → 17:42 (107 min) · session d2e64b8d
+- Crashed LCC_PD_fBVOClccPD resubmitted (1812398), passed start-up. Watcher confirmed alive. Maps nb OK (attempt 6), last Methods \NUM filled. Details in NOW.
 
 ## 2026-11-21 · 15:52 → 15:55 (3 min) · session d2e64b8d
 - Status check. One nudged run failed at init (likely bad read), awaiting user OK to resubmit. Details in NOW.

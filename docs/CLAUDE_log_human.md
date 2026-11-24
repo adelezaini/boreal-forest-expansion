@@ -4,9 +4,25 @@
 
 > **Where things stand (updated every prompt)**
 >
+> <span style="color:#999999"><!--40b2b6a1-->**Commits made (24 Nov, 17:12):** 7 topic commits in the project repo (MEGAN LMDI folders; background aerosol notebooks; leaf area CLM vs LPJ-GUESS; Tang 2023; MET nudging fix; sandbox; logs) and 1 in the draft repo (vegetation regions in Methods + SI). Not pushed.</span>
+>
+> <span style="color:#CC0000"><!--0fee2434--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **MEGAN attribution maps (23 Nov, 21:55):** test figures with one colour scale per row are in the sandbox. LAI saturates at ±10, so choose whether it gets its own scale. More MEGAN years are not recommended. Paper figures are unchanged.</span>
+>
+> <span style="color:#555555"><!--ee15eedf-->**Last run being postprocessed again (24 Nov, 16:30):** with your OK, the 19 broken files were removed and postprocessing of `LCC_PD_fBVOClccPD` restarted with fewer parallel jobs (up to 3 tries). It should take about 4–6 hours. When all 19 files are there, the 2001–2040 analysis starts by itself.</span>
+>
+> <span style="color:#CC0000"><!--4cd451a7--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Forcing decomposition tree, two layouts (24 Nov, 16:47):** (1) 3 rows with albedo, colourbars on rows 1–2, LW added: `sandbox/test_forcing_tree_outputs/` (12 figures). (2) NEW 4-row layout: total → non-BVOC / BVOC → Ghan terms of both → each split into SW and LW, no physical labels: `sandbox/test_forcing_tree_4rows_outputs/` (4 figures). Choose one for `analysis/`.</span>
+>
+> <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **New paper story (22 Nov, 17:14):** the story moves from "BVOC-cloud effects offset the albedo warming" to "future land-cover change plays a minor regional role because climate change dominates". Decide the final framing. The manuscript is unchanged.</span>
+>
+> <span style="color:#008080"><!--36563bcd--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Background aerosol, two notebooks (21 Nov, 17:17):** PD vs FUT and LCC vs CTRL now have the same merged analysis, run and checked. Decide whether to keep the extra combined notebook.</span>
+>
+> <span style="color:#CC0000"><!--560cc914--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Vegetation region numbers on maps (24 Nov, 16:50):** regional means use the cell classes (not the drawn lines); two number lines under each map, subtitle A and a footnote ("*cells with ≤ 1 pp tree gain left out (Supplementary Sect. S1)") are drawn on the two test figures (`sandbox/vegetation_regions/region_numbers_outputs/two_lines/`). The definition is in the draft Supplementary material (not committed). Next: OK to apply to the paper figures, and which ones.</span>
+>
+> <span style="color:#A84300">**Fig. 1c checked (21 Nov, 16:26):** row 2 is not a copy of row 1. It uses the right runs (`LCC_FUT − LCC_PD`). The rows look alike because climate change dominates both. Nothing changed.</span>
+>
 > <span style="color:#A84300">**Commits made, old backup removed (21 Nov, 16:21):** 6 topic commits in the project repo and 1 in the draft repo, not pushed. MEGAN, background aerosol and Tang/LPJ-GUESS stay uncommitted, as you chose. The 16 Nov backup folders are deleted (348 files, all recoverable from git).</span>
 >
-> <span style="color:#AAAAAA">**Resubmitted (21 Nov, 15:58):** `LCC_PD_fBVOClccPD` is back in the queue for 2036–2041 (job 1812398, waiting to start). The MEGAN LMDI maps notebook is rerunning. Whether the crash was a one-off is known only once the job passes start-up.</span>
+> <span style="color:#A84300">**MEGAN LMDI FUT done (21 Nov, 17:42):** the maps notebook ran cleanly and the last open number in the Methods outline is filled. With the forest expansion in FUT, isoprene changes by +0.60 ± 0.60 and monoterpenes by −1.48 ± 0.52 (100·Δln, ≥45°N, annual): the composition change lowers emissions, higher leaf area partly offsets it. The watcher is alive, and `LCC_PD_fBVOClccPD` should finish last, around 09:00–10:00 on 22 Nov.</span>
 >
 > <span style="color:#CC0000">**Status check (21 Nov, 15:55):** 11 of the 12 nudged runs are in their last stretch (2036–2041), the slowest should end around 23:00. PD `lcc_fBVOClccPD` crashed at start-up at 02:12, probably a one-off bad read since the surface file is intact. **Waiting on you:** OK to resubmit it. The 2001–2040 analysis waits for this run. The MEGAN LMDI maps notebook also still needs a rerun.</span>
 >
@@ -418,6 +434,357 @@ One block per working window (a new block starts after more than 1 hour without 
 
 ---
 
+<div style="color:#999999">
+
+## 2026-11-24 · 17:09 → 17:12 (3 min) · session 40b2b6a1
+
+**Goal:** commit the open work by topic.
+
+**Done:** 7 commits in the project repo, 1 in the draft repo, not pushed. Includes MEGAN, background aerosol and Tang/LPJ-GUESS (left out on 21 Nov, open since 2026-11-21).
+
+**Open-next:** push when you want; the vegetation-regions session may still change its files after this snapshot.
+
+**Files changed:** only the two logs.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-24 · 16:40 → 17:07 (27 min) · session 4cd451a7
+
+**Goal:** Try a 4-row forcing tree: Ghan terms of both branches, then SW/LW of each, no physical labels.
+
+**Done:** new script and folder `sandbox/test_forcing_tree_4rows*`; 4 figures (one per case). Checked: Ghan terms add up to each branch, SW + LW = NET (errors < 1e-5 W m⁻²). Rows 3–4 of each branch share one colour scale.
+
+**Found:** `LCC_FUT − CTRL_PD`, ≥45°N: non-BVOC clean-clear-sky +3.96 = SW +10.12, LW −6.16; BVOC cloud −1.10, almost all SW (−1.12).
+
+**Also:** row-4 titles now say NON-BVOC / BVOC; explained which processes each SW/LW Ghan map contains.
+
+**Open / next:** choose layout 3-row or 4-row; say if you want the APRP test that separates cloud masking from real cloud changes.
+
+**Files changed:** `sandbox/test_forcing_tree_4rows.py` (new), `sandbox/test_forcing_tree_4rows_outputs/` (4 PNG + 2 CSV), cache `/cluster/work/users/adelez/boreal-caches/forcing-tree-4rows/`
+
+</div>
+
+---
+
+<div style="color:#E58AA5">
+
+## 2026-11-24 · 16:13 → 16:31 (18 min) · session 4cd451a7
+
+**Goal:** Forcing decomposition tree: colourbars on rows 1–2, usual albedo name, add LW.
+
+**Done:** each map of rows 1–2 (total, non-BVOC, BVOC) has its own colourbar; albedo panel = "ALBEDO / SW CLEAR-SKY FORCING"; LW figures drawn without the albedo/rest split. 12 figures redrawn (sandbox only).
+
+**Found:** LW, ≥45°N: same-climate cases are small (total ±0.4 W m⁻² scale); with climate change total ≈ −6.8 W m⁻² (`LCC_FUT − CTRL_PD`), BVOC +0.21, mostly the chemistry/residual term (+0.19).
+
+**Open / next:** your OK on the design, then move it to `analysis/`.
+
+**Files changed:** `sandbox/test_forcing_tree.py`, `sandbox/test_forcing_tree_outputs/*` (12 PNG + 2 CSV), cache `/cluster/work/users/adelez/boreal-caches/forcing-tree/`
+
+</div>
+
+---
+
+<div style="color:#555555">
+
+## 2026-11-24 · 16:15 → 16:30 (15 min) · session ee15eedf
+
+**Goal:** Check the runs and get the last one postprocessed.
+
+**Found:** all 12 nudged runs are finished and copied to NIRD. Postprocessing of `LCC_PD_fBVOClccPD` failed twice overnight on NIRD read/write errors, so the 2001–2040 analysis had not started (open since 23 Nov).
+
+**Done:** removed the 19 broken partial files and restarted postprocessing with fewer parallel jobs. It starts the 2001–2040 analysis by itself when it succeeds.
+
+**Open / next:** check that postprocessing reaches 19/19 and the analysis starts.
+
+**Files changed:** `/cluster/work/users/adelez/met-nudg-2040/recover2_LCC_PD_fBVOClccPD.sh` (new), `docs/CLAUDE_log.md`, `docs/CLAUDE_log_human.md`
+
+</div>
+
+---
+
+<div style="color:#CC0000">
+
+## 2026-11-24 · 16:03 → 17:01 (58 min) · session 560cc914
+
+**Goal:** finish the vegetation-region numbers (broadleaf vs needleleaf expansion) and choose how to show them on the maps.
+
+**Done:**
+- Answered: "little tree gain" = largest tree gain (broadleaf or needleleaf) ≤ 1 percentage point of the cell. 319 cells, 19 % of the modified area, median gain 0.
+- New sandbox test `sandbox/vegetation_regions/test_region_numbers.py`: regional means added to the real Ghan figure and context grid in 3 layouts, all checked by eye.
+- Two extra lines under each map: clean in both figures. One line: values run into each other. Side block: runs into the next map and makes the figure very wide.
+- You chose: regions by cell class (lines only for display), two-line layout, subtitle A with an asterisk and a footnote at the bottom. Both test figures redrawn with it and checked.
+- Draft: new Supplementary section "Vegetation regions used for the regional means" (definitions, class table, how the means are computed, lines are display only) + region figure; compiles. Not committed.
+
+**Found:** Ghan NET [LCC − CTRL]_FUT: broadleaf exp. −0.58 ± 0.05, needleleaf exp. +1.31 ± 0.04 W m⁻², against +0.22 over 45–90°N. Cloud term reverses sign between the two regions (+1.03 vs −0.76).
+
+**Open-next:** apply to the paper figures (shared plotting code) and decide which figures to redraw. The draft numbers the new section 5.1, not S1: fix when the Supplementary gets its own numbering. The "needleleaf exp." region also contains 47 cells where broadleaf gains without replacing needleleaf (5 % of the area).
+
+**Files changed:** `sandbox/vegetation_regions/test_region_numbers.py`, `si_region_map.py` + outputs (new); draft `supplementary-material.tex`, `main.tex` (one `\input` line), `figures/vegetation_regions_by_class.png`.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-23 · 21:32 → 21:50 (18 min) · session 9f4eadd9
+
+**Goal:** draw the three-row forcing decomposition for all existing cases.
+
+**Done:** 8 figures (4 cases, NET and SW) in the sandbox, with δ quantified on each. Mapping and albedo choice confirmed (open since 21:10 today).
+
+**Found:** δ is at most 0.021 W m⁻² in NET at ≥45°N and within its uncertainty in every case. When climate is included, albedo (about +10) and rest (about −8) largely cancel in NET.
+
+**Open-next:** user decides if the design is final, and whether LW is needed. `results/figures` not touched.
+
+**Files changed:** `sandbox/test_forcing_tree.py`, `sandbox/test_forcing_tree_outputs/`, these logs.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-23 · 21:45 → 21:55 (10 min) · session 0fee2434
+
+**Goal:** separate colour scale per row on the MEGAN attribution maps; explain the CLM safeguard; judge whether more years are needed.
+
+**Done:** 8 sandbox figures with one colour scale per row (row 2 at ±10).
+
+**Found:** the CLM safeguard sets the emission to zero when the total activity factor is outside 0 to 100. Its effect is tiny (+0.03 for PD isoprene in JJA). LAI drives the activity change (+3.3 of +4.0). Temperature, light and leaf age are small, and more years would narrow their uncertainty without making them larger.
+
+**Open-next:** user chooses the LAI scale, then the notebook can be updated.
+
+**Files changed:** `sandbox/test_megan_lmdi_row_scales.py` (new).
+
+</div>
+
+<div style="color:#555555">
+
+## 2026-11-23 · 21:33 → 21:52 (19 min) · session bb091224
+**Goal:** Fix the stalled watcher and restart the 2001–2040 chain.
+
+**Done:**
+- Watcher stall fixed and watcher restarted (open since 23 Nov, 21:23). A dry run first confirmed it would act only on `LCC_PD_fBVOClccPD`.
+
+- Automatic retry of the NIRD copy started, followed by postprocessing of that run.
+
+**Found:** The first copy of that run failed on NIRD input/output errors. One sea-ice file and two restart files were missing on NIRD afterwards; the originals are safe in the work archive.
+
+**Open / next:** Check the retry result. Then the 2001–2040 analysis starts by itself.
+
+**Files changed:** `cases-scripts/run_when_done/met_nudg_2026-2040_when_done.sh`, `docs/CLAUDE_log.md`, `docs/CLAUDE_log_human.md`
+
+---
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-23 · 21:20 → 21:23 (3 min) · session bb091224
+**Goal:** Check how the runs are going.
+
+**Found:**
+- All 12 nudged runs reached 2041 and are archived. The queue is empty.
+- The automatic watcher stalled on 22 Nov: it read the empty queue as a queue error and kept waiting for the last run.
+- Because of this, `LCC_PD_fBVOClccPD` has no NIRD copy past 2014 and no postprocessing (209 of 228 files), and the 2001–2040 analysis has not started.
+
+**Open / next:** OK to fix the watcher and restart it.
+
+**Files changed:** `docs/CLAUDE_log.md`, `docs/CLAUDE_log_human.md`
+
+---
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-23 · 21:05 → 21:10 (5 min) · session 9f4eadd9
+
+**Goal:** plan a three-row radiative forcing decomposition figure and confirm it before drawing.
+
+**Done:** proposed the panels and the simulations behind each one. Checked that the non-BVOC runs have the fields needed.
+
+**Found:** total = non-BVOC + BVOC + a small artefact term (≥45°N NET: PD −0.002, FUT +0.014 W m⁻²).
+
+**Open-next:** user confirms the mapping, the albedo definition, and PD + FUT. Then draw in the sandbox only.
+
+**Files changed:** these logs.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-22 · 17:10 → 17:14 (4 min) · session 8f7da9d1
+
+**Goal:** record the new paper story and discuss it.
+
+**Done:** story recorded in memory and logs.
+
+**Found:** in the changed cells, forest expansion is 18 % of the climate signal in net TOA radiation and 7 % in the albedo term. Climate change reduces the albedo effect of the forest by 23 %. BVOC effects are small (−0.04 PD, −0.07 W/m² FUT).
+
+**Open-next:** choose the framing. Fixed ocean and nudged winds favour climate in this comparison, so the wording must account for that.
+
+**Files changed:** `docs/CLAUDE_log.md`, `docs/CLAUDE_log_human.md`.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-23 · 21:02 → 21:58 (56 min) · session c88bbb02
+
+**Goal:** finish the line edits and subtitle, then test region maps and regional numbers.
+
+**Done:** removed the coastal piece, added your subtitle and a little more title space. Created `sandbox/vegetation_regions/` with a region map and a monoterpene table.
+
+**Found:** the whole-area monoterpene mean hides two opposite signals: in FUT, −1.49 Tg/yr in the broadleaf region and +1.35 Tg/yr in the other tree-gain region. Adding the 319 little-gain cells to a region lowers its mean, but barely changes its total.
+
+**Open-next:** choose the region definition and number layout, then decide on applying to paper figures. Snow persistence still to check. Coastline white-edge test not reviewed.
+
+**Files changed:** `sandbox/vegetation_regions/region_cells.py` and its outputs, `sandbox/test_vegetation_siberia_closed.py`, `sandbox/test_vegetation_real_figures.py`, `sandbox/test_vegetation_outlines_outputs/vegetation_map_lines.json` (backup `vegetation_map_lines_before_estonia_trim.json`), test figures.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-22 · 16:30 → 17:27 (57 min) · session c88bbb02
+
+**Goal:** finish the two map lines: land-only modified line, smoother Siberia closure, west Alaska, Estonia and Sweden.
+
+**Done:** all line edits saved as the fixed file, with a backup. The four real test figures are redrawn with it and checked.
+
+**Found:** dashed border 17,620 km. Modified-cell line on land: 17,088 km drawn, 5,751 km removed. A 140 km opening stays in west Alaska.
+
+**Open-next:** apply to paper figures, subtitle or caption, snow persistence. Coastline white-edge test not reviewed.
+
+**Files changed:** `sandbox/test_vegetation_left_out.py`, `sandbox/test_vegetation_siberia_closed.py`, `sandbox/test_vegetation_outlines_outputs/vegetation_map_lines.json` (backup `vegetation_map_lines_before_siberia.json`), test figures.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-22 · 15:00 → 15:21 (21 min) · session c88bbb02
+
+**Goal:** see whether the open dashed line in Russia can be closed.
+
+**Done:** closed the central Siberia gap along your sketched route (710 km, 499 km of it new). Updated the left-out figure and table.
+
+**Found:** the final line is 17,543 km and leaves out 1,689 km of small pieces. The Far East gap has no vegetation border to follow, and Kola stays open as you asked.
+
+**Open-next:** keep the route or not. Coastline white-edge test was stopped and not reviewed. Earlier open items stay: apply to paper figures, subtitle or caption, snow persistence.
+
+**Files changed:** `sandbox/test_vegetation_russia_gap.py`, `sandbox/test_vegetation_siberia_closed.py`, `sandbox/test_vegetation_left_out.py`, `sandbox/test_vegetation_coast_edge.py`, test outputs in `sandbox/test_vegetation_outlines_outputs/`.
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-22 · 01:39 → 01:49 (10 min) · session c88bbb02
+
+**Goal:** test the final vegetation lines on the real figures, in the sandbox.
+
+**Done:** all four test figures drawn with both lines and checked. Test-script bug fixed.
+
+**Found:** nothing was written to `results/`. The snow persistence panel shows about −18,900 days for FUT − PD, which cannot be a yearly length (already there before the lines, cause not checked).
+
+**Open-next:** user decides on applying to paper figures and on subtitle or caption. Check snow persistence.
+
+**Files changed:** `sandbox/test_vegetation_real_figures.py`, `sandbox/test_vegetation_outlines_outputs/real_figures/`.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-21 · 23:07 → 00:18 (71 min) · session c88bbb02
+
+**Goal:** finish the candidate lines for the result maps and test their style on other variables.
+
+**Done:** mostly-land modified-cell line chosen (open since 16:47 block). West Alaska border parts restored and Kola link removed. Modified-cell line removed inside the 2 marked boxes. Black lines with a 30 % transparent white edge chosen and drawn on forcing, 2 m temperature, spring albedo, leaf area, SOA burden and liquid water path, for PD and FUT.
+
+**Found:** the white edge keeps the black lines readable on the dark cells.
+
+**Open-next:** check the real-figure test (running), then decide on applying the lines to the paper figures.
+
+**Files changed:** `sandbox/test_vegetation_final_lines.py`, `sandbox/test_vegetation_line_colours.py`, `sandbox/test_vegetation_line_halo.py`, `sandbox/test_vegetation_line_style_final.py`, `sandbox/test_vegetation_outlines_outputs/`.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-21 · 16:39 → 17:17 (38 min) · session 36563bcd
+
+**Goal:** keep two background-aerosol notebooks (PD vs FUT, LCC vs CTRL) with the same merged analysis.
+
+**Done:** both rebuilt and run with outputs. Numbers shared with the earlier versions are unchanged. Earlier versions are saved in each `_outputs/previous-version-20261121/`.
+
+**Found:** over the future forest area, FUT has about 3 times more SOA than PD (+210 %) and 45 % less sulfate. The forest expansion itself does not significantly change SOA, sulfate or AOD there in FUT.
+
+**Open-next:** keep or delete the extra combined notebook `background_aerosol_lcc_ctrl_pd_fut_online.ipynb`. Nothing is committed.
+
+**Files changed:** `diagnostics/background-aerosol/background_aerosol_pd_fut_online.ipynb`, `background_aerosol_lcc_ctrl_fut_online.ipynb`, their outputs, `diagnostics/README.md`.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-21 · 16:47 → 18:11 (84 min) · session c88bbb02
+
+**Goal:** mark the modified cells and the border between broadleaf and needleleaf regions on the result maps, in a simple style.
+
+**Done:** chose a dashed border, width 0.7, with the yellow cells in the needleleaf area. Mapped everything the line leaves out. Tested a modified-cell line drawn only against unmodified land. Checked the red cells outside the needleleaf area.
+
+**Found:** the border leaves out about 4,700 of 18,700 km: 3 small Alaska/Yukon loops, the pieces in the marked boxes and 7 short fragments. Keeping the modified line only against mostly-land cells cuts it from about 74,000 to 23,000 km and removes the coast tracing.
+
+**Open-next:** confirm the modified-line version and the left-out parts, then save one fixed border and test on other figures.
+
+**Files changed:** `sandbox/test_vegetation_*.py`, `sandbox/test_vegetation_outlines_outputs/`.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-21 · 16:29 → 16:42 (13 min) · session c88bbb02
+
+**Goal:** mark on the result maps where broadleaf trees gain or replace needleleaf trees, and where needleleaf trees advance.
+
+**Done:** sandbox test with a class map and 3 outline styles on the PD total forcing map.
+
+**Found:** of the modified land area, broadleaf replaces needleleaf in 30 %, broadleaf gains most in 5 %, needleleaf gains most in 46 %, and 19 % has almost no tree gain.
+
+**Open-next:** choose the style and confirm the rule, then test on the other figure types.
+
+**Files changed:** `sandbox/test_vegetation_outlines.py`, `sandbox/test_vegetation_outlines_outputs/`.
+
+</div>
+
+<div style="color:#008080">
+
+## 2026-11-21 · 16:23 → 16:27 (4 min) · session 36563bcd
+
+**Goal:** same online background-aerosol analysis for LCC − CTRL in both PD and FUT climates.
+
+**Done:** notebook written, run started.
+
+**Open-next:** check the numbers, write the summary.
+
+**Files changed:** `diagnostics/background-aerosol/background_aerosol_lcc_ctrl_pd_fut_online.ipynb` (new).
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-21 · 16:24 → 16:26 (2 min) · session fff170e9
+
+**Goal:** check whether row 2 of Fig. 1c wrongly repeats row 1.
+
+**Done:** checked the contrast definitions and recomputed both rows from the processed files for isoprene, monoterpene and the two SOA burdens (2001–2025, 45–90°N).
+
+**Found:** not a bug. The maps differ, but are very similar (pattern correlation 0.989–0.999). The difference is 14 % of the climate signal for isoprene, 12 % for monoterpene, and 1.5–3.6 % for SOA burdens.
+
+**Open-next:** decide whether Fig. 1c should keep both rows or show the difference more prominently.
+
+**Files changed:** logs only.
+
+</div>
+
 <div style="color:#A84300">
 
 ## 2026-11-21 · 16:02 → 16:21 (19 min) · session 6f761ff3
@@ -439,17 +806,17 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#AAAAAA">
 
-## 2026-11-21 · 15:55 → 15:58 (3 min) · session d2e64b8d
+## 2026-11-21 · 15:55 → 17:42 (107 min) · session d2e64b8d
 
 **Goal:** resubmit the crashed run and rerun the maps notebook.
 
-**Done:** `LCC_PD_fBVOClccPD` resubmitted from its intact 2036 restart (crash open since 21 Nov 15:55 block). Maps notebook restarted.
+**Done:** `LCC_PD_fBVOClccPD` resubmitted from its intact 2036 restart (crash open since 21 Nov 15:55 block). Maps notebook rerun OK on attempt 6 (failed since 20 Nov). Last Methods number (LMDI FUT, open since 2 Nov) filled.
 
-**Found:** restart files, met list and settings all checked OK before submitting.
+**Found:** restart files, met list and settings all checked OK before submitting. The run passed start-up. The maps notebook failed 3 times on NIRD import errors, so it is rerunning with a stability check. The watcher is alive: 3 runs picked up by 17:15.
 
-**Open-next:** confirm the run passes start-up; read the maps result; fill the last Methods number.
+**Open-next:** `main.tex` tables, `methods.tex` cleanup, corrected deck, commits.
 
-**Files changed:** `docs/met-nudg-2026-2040.md`, logs; failure flag moved to `met-nudg-2040/retry-20261121/`.
+**Files changed:** `methods-claude.tex`, maps notebook + its figures and tables, `docs/met-nudg-2026-2040.md`, logs; failure flag moved to `met-nudg-2040/retry-20261121/`.
 
 </div>
 
