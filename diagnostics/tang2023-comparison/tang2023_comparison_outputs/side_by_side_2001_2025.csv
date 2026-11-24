@@ -1,0 +1,5 @@
+quantity,Tang standard,Tang noVegDym,ours std (≥45°N),ours noVegDym (≥45°N),ours veg effect (≥45°N)
+SOA_surf ratio,up to +2.7 (std; Fig. 5g),"much smaller, Canada patch (Fig. 5h)",2.356867971588692,2.3507436000688853,0.0018277648936434708
+OD550soa ratio (ours: SOA burden),+0.29 (std; text),"small, central/E Canada (Fig. 5k)",2.029934874996867,2.0306547641864197,-0.00023753586124697815
+OD550aer ratio (ours: AOD_VIS),+0.041 (std; text),small (Fig. 5n),0.0818858648976689,0.07844308013092875,0.003192365763357834
+CCN1.0 ratio,"mostly ±0.04, +0.16 max (Fig. 5p)",±0.04 (Fig. 5q),0.4596832973463097,0.45521947277693225,0.003067457969662421
