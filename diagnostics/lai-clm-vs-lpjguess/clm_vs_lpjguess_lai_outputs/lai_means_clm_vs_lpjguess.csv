@@ -1,0 +1,37 @@
+series,quantity,region,LAI
+LPJ-GUESS PD (1971–2000),annual mean,modified cells,1.1490693579973446
+LPJ-GUESS PD (1971–2000),annual mean,common cells ≥45°N,1.1680908221423123
+LPJ-GUESS PD (1971–2000),JJA mean,modified cells,1.840392658078737
+LPJ-GUESS PD (1971–2000),JJA mean,common cells ≥45°N,1.8621581796055697
+LPJ-GUESS PD (1971–2000),seasonal max,modified cells,1.9481165050115028
+LPJ-GUESS PD (1971–2000),seasonal max,common cells ≥45°N,1.968456671105378
+LPJ-GUESS FUT (2071–2100),annual mean,modified cells,1.8793879088513303
+LPJ-GUESS FUT (2071–2100),annual mean,common cells ≥45°N,1.887055003909213
+LPJ-GUESS FUT (2071–2100),JJA mean,modified cells,2.8828757550089446
+LPJ-GUESS FUT (2071–2100),JJA mean,common cells ≥45°N,2.8932158140613877
+LPJ-GUESS FUT (2071–2100),seasonal max,modified cells,2.938904010018239
+LPJ-GUESS FUT (2071–2100),seasonal max,common cells ≥45°N,2.948614753538816
+CTRL_PD,annual mean,modified cells,1.1546738650344939
+CTRL_PD,annual mean,common cells ≥45°N,1.175134457237676
+CTRL_PD,JJA mean,modified cells,1.7692614744510067
+CTRL_PD,JJA mean,common cells ≥45°N,1.7918821961010136
+CTRL_PD,seasonal max,modified cells,2.0846800254435762
+CTRL_PD,seasonal max,common cells ≥45°N,2.1074253307623243
+CTRL_FUT,annual mean,modified cells,2.564524652372857
+CTRL_FUT,annual mean,common cells ≥45°N,2.596858796767402
+CTRL_FUT,JJA mean,modified cells,4.071009883618635
+CTRL_FUT,JJA mean,common cells ≥45°N,4.092931947368483
+CTRL_FUT,seasonal max,modified cells,4.491125588840542
+CTRL_FUT,seasonal max,common cells ≥45°N,4.510090274901318
+LCC_PD,annual mean,modified cells,1.1098587822878545
+LCC_PD,annual mean,common cells ≥45°N,1.131168912873925
+LCC_PD,JJA mean,modified cells,1.654446490482082
+LCC_PD,JJA mean,common cells ≥45°N,1.6788964265236808
+LCC_PD,seasonal max,modified cells,1.9289930131577748
+LCC_PD,seasonal max,common cells ≥45°N,1.9545557712558728
+LCC_FUT,annual mean,modified cells,2.400422124544694
+LCC_FUT,annual mean,common cells ≥45°N,2.435319542014752
+LCC_FUT,JJA mean,modified cells,3.657075355785549
+LCC_FUT,JJA mean,common cells ≥45°N,3.6860827688456945
+LCC_FUT,seasonal max,modified cells,4.018907459477601
+LCC_FUT,seasonal max,common cells ≥45°N,4.046145634848982
