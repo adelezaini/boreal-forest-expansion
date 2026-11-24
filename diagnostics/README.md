@@ -68,7 +68,7 @@ Their results describe those runs and are **not** results for the current setup.
 |---|---|---|
 | `background-aerosol/background_aerosol_pd_fut_prescribed.ipynb` | resolved `CaseDocs/atm_in` + all 83+83 emission files of CTRL_PD `-20261029` (CMIP6 hist, year 2000) and CTRL_FUT `-20261028` (SSP5-8.5, year 2100); ocean DMS files; GHG `flbc_file` | prescribed inputs: emission totals by sector (global and north of 40°N), Arctic PD/FUT/diff maps (global in appendix), time series of the whole files (global and >40°N), ocean DMS concentration, CH₄/N₂O/CO₂. SOx 70.6 → 29.7 Tg S (half volcanic in FUT), NH3 +48 %, fires ±20 % |
 | `background-aerosol/background_aerosol_pd_fut_online.ipynb` | processed CTRL_PD/CTRL_FUT atm + lnd 2001–2025, raw CLM h0 (dust), atm.log (lightning) | model response (AOD, sulfate, CDNC, surface SO₂/DMS/NOx/O₃/CO) and online sources (MEGAN, dust, sea salt, DMS flux, lightning NOx): tables, Arctic maps (global in appendix), bar charts and yearly time series, global and north of 40°N. Global AOD +6 % despite sulfate −39 %; monoterpenes ×3.6 |
-| `background-aerosol/background_aerosol_lcc_ctrl_fut_online.ipynb` | processed CTRL_FUT/LCC_FUT 2001–2025 | LCC_FUT − CTRL_FUT of the same model fields and online sources |
+| `background-aerosol/background_aerosol_lcc_ctrl_fut_online.ipynb` | processed CTRL_FUT/LCC_FUT 2001–2025 | LCC_FUT − CTRL_FUT with the same merged analysis as the PD/FUT notebook (twin notebooks since 2026-11-21); adds a tropical far-field check |
 
 
 ## BVOC emission plots (moved from `preprocess/bvoc-emissions/`, 2026-11-16, user request)
