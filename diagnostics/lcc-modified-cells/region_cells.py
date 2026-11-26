@@ -6,7 +6,7 @@ Two ways to define the regions:
             region around them, and little-gain cells join the region they reach without crossing the line.
 
 Monoterpene numbers use the same method as the maps: cos-lat mean of the yearly differences, 95 % t-interval.
-Writes into sandbox/vegetation_regions/region_cells_outputs/ only (not paper output).
+Writes into diagnostics/lcc-modified-cells/region_cells_outputs/ only (not paper output).
 """
 import json
 import sys
@@ -15,8 +15,8 @@ from dataclasses import replace
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SANDBOX = HERE.parent
-sys.path[:0] = [str(SANDBOX.parent / "src"), str(SANDBOX)]
+REPO = HERE.parents[1]
+sys.path[:0] = [str(REPO / "src"), str(HERE)]
 
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -29,16 +29,14 @@ from matplotlib.patches import Patch
 from shapely import STRtree
 from shapely.geometry import LineString
 
-import test_vegetation_line_colours as tc
-import test_vegetation_outlines as tv
-import test_vegetation_real_figures as tr
+import vegetation_helpers as vh
 from boreal_forest_expansion.plotting import forcing_maps as fm
 from boreal_forest_expansion.plotting import palette as pal
 from boreal_forest_expansion.plotting.style import set_default_style
 
 OUT = HERE / "region_cells_outputs"
 LITTLE, BROADLEAF, OTHER = 0, 1, 2
-NAMES = {BROADLEAF: "Broadleaf replaces needleleaf", OTHER: "Other tree gain", LITTLE: "Little tree gain"}
+NAMES = {BROADLEAF: "Broadleaf replaces needleleaf", OTHER: "Net tree gain", LITTLE: "Little tree gain"}
 COLOURS = {BROADLEAF: pal.ORANGE, OTHER: pal.TEAL, LITTLE: "#CCCCCC"}
 MAX_PATCH_CELLS = 10  # larger patches keep their class even with no dashed line around them
 CONTRASTS = {"PD": ("LCC_PD", "CTRL_PD"), "FUT": ("LCC_FUT", "CTRL_FUT")}
@@ -122,7 +120,7 @@ def regions_by_line(by_class, crosses):
 
 
 def read_difference(panel, pairs, lat, lon):
-    d = tc.read(panel, pairs)
+    d = vh.read(panel, pairs)
     if not (np.allclose(d["lat"], lat, atol=1e-9) and np.allclose(d["lon"], lon, atol=1e-9)):
         raise ValueError("model and surface-data grids differ")
     return d.assign_coords(lat=lat, lon=lon)
@@ -151,15 +149,15 @@ def table(maps, panel, lat, lon, cell_km2):
 def main():
     set_default_style()
     OUT.mkdir(exist_ok=True)
-    _, _, classes, modified, _ = tv.load_classes()
+    _, _, classes, modified, _ = vh.load_classes()
     lat, lon = classes["lat"].values, classes["lon"].values
-    with xr.open_dataset(tv.LCC_SURF, decode_times=False) as s:
+    with xr.open_dataset(vh.LCC_SURF, decode_times=False) as s:
         print("AREA units:", s["AREA"].attrs.get("units"))
         cell_km2 = s["AREA"].load().values
     raw = classes.values
     by_class = np.full(raw.shape, -1)
     by_class[raw == 0], by_class[raw == 1], by_class[(raw == 2) | (raw == 3)] = LITTLE, BROADLEAF, OTHER
-    stored = json.loads(tr.LINES_FILE.read_text())
+    stored = json.loads(vh.LINES_FILE.read_text())
     lines = {k: [np.asarray(xy) for xy in stored[k]] for k in ("border", "modified")}
     by_line = regions_by_line(by_class, crossing_test(lines["border"], lat, lon))
     maps = {"by class": by_class, "by line": by_line}
@@ -170,18 +168,18 @@ def main():
     fig, axes = plt.subplots(1, 2, figsize=(12, 6.6), subplot_kw={"projection": ccrs.Orthographic(0, 90)})
     colours = ListedColormap([COLOURS[LITTLE], COLOURS[BROADLEAF], COLOURS[OTHER]])
     for ax, (name, labels) in zip(axes, maps.items()):
-        tv.base_map(ax)
+        vh.base_map(ax)
         ax.pcolormesh(lon, lat, np.ma.masked_less(labels, 0), cmap=colours, norm=BoundaryNorm([-0.5, 0.5, 1.5, 2.5], 3),
                       transform=ccrs.PlateCarree(), shading="nearest", zorder=1)
         ax.coastlines(linewidth=0.4, color="#8C8C8C", zorder=3)
-        tr.add_lines(ax, lines)
+        vh.add_lines(ax, lines)
         ax.set_title(f"Regions {name}", fontsize=12, fontweight="semibold")
     rows, cols = np.nonzero(changed)
     axes[1].scatter(lon[cols], lat[rows], s=2.5, c="k", linewidths=0, transform=ccrs.PlateCarree(), zorder=7)
     handles = [Patch(color=COLOURS[v], label=NAMES[v]) for v in (BROADLEAF, OTHER, LITTLE)]
     handles += [Line2D([], [], color="k", marker=".", ls="", ms=4, label="Cell placed differently from its class"),
-                Line2D([], [], color="k", lw=tr.tm.BORDER_WIDTH, ls=tr.tm.BORDER_DASH, label="Dashed border"),
-                Line2D([], [], color="k", lw=tr.tm.MODIFIED_WIDTH, label="Limit of perturbed cells")]
+                Line2D([], [], color="k", lw=vh.BORDER_WIDTH, ls=vh.BORDER_DASH, label="Dashed border"),
+                Line2D([], [], color="k", lw=vh.MODIFIED_WIDTH, label="Limit of perturbed cells")]
     fig.legend(handles=handles, loc="lower center", ncol=3, frameon=False, fontsize=9)
     fig.subplots_adjust(bottom=0.14, top=0.93, wspace=0.03)
     fig.savefig(OUT / "region_cells.png", dpi=200, bbox_inches="tight")

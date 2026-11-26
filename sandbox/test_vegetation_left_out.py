@@ -128,7 +128,7 @@ def main():
     for ax in axes:
         tv.base_map(ax)
     import test_vegetation_real_figures as tr  # imported here: it imports this module
-    stored = json.loads((tv.OUT / "vegetation_map_lines_siberia_closed.json").read_text())
+    stored = json.loads((tv.OUT / "vegetation_map_lines.json").read_text())
     lines = {k: [np.asarray(xy) for xy in stored[k]] for k in ("border", "modified")}
     raw = tv.divider_lines(version, area, sigma=(0.0, 0.0), min_km=0.0)
     removed, added = compare_with_final(raw, lines["border"], axes[0])

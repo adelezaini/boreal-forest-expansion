@@ -1,5 +1,0 @@
-findfont: Font family ['cursive'] not found. Falling back to DejaVu Sans.
-findfont: Generic family 'cursive' not found because none of the following families were found: Apple Chancery, Textile, Zapf Chancery, Sand, Script MT, Felipa, Comic Neue, Comic Sans MS, cursive
-findfont: Failed to find font weight semibold, now using 700.
-Saved /cluster/home/adelez/BOREAL-FOREST-EXPANSION/sandbox/vegetation_regions/region_numbers_outputs/two_lines/contrast_grid_context_interactive_2001_2025.png
-context two_lines done
