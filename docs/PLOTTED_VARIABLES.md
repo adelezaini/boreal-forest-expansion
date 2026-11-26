@@ -141,7 +141,7 @@ Vertical structure (`make_cloud_profile_figure`, `PROFILE_FIELDS`): zonal mean o
 | SNOW COVER | `FSNO` | lnd SNOW | fraction of ground covered by snow | model output | fraction |
 | SNOW COVER (MAM) | `FSNO` | lnd SNOW | fraction of ground covered by snow | March–May mean only | fraction |
 | SNOW WATER EQUIVALENT | `H2OSNO` | lnd SNOW | snow depth (liquid water) | model output | mm |
-| SNOW PERSISTENCE | `SNOW_PERSISTENCE` | lnd SNOW | Length of time of continuous snow cover (nat. veg. landunits only) | yearly mean ÷ 86400 (s → days). **Suspect:** values of thousands of days seen on 2026-10-28; the yearly mean of a running length is probably the wrong aggregation. Not checked yet. | days |
+| SNOW PERSISTENCE | `SNOW_PERSISTENCE` | lnd SNOW | Length of time of continuous snow cover (nat. veg. landunits only) | **snow-season length** (fixed 2026-11-24, `forcing_maps._snow_season_days`): largest monthly mean of the running length in each calendar year ÷ 86400, capped at 365 d. The counter never resets under perennial snow (556 of 4316 land cells; up to ~10⁶ d, counted since the spin-up), so the former yearly mean gave −18,920 d over 45–90°N. Check 2001–2025, ≥45°N land, cos-lat: CTRL_PD 169 d, LCC_FUT 122 d. Monthly means put the maximum up to ~half a month below the true length. | days |
 | CANOPY SNOW | `SNOCAN` | lnd SNOW | intercepted snow | model output | mm |
 | SURFACE ALBEDO (MAM) | `FSR / FSDS` (`ALBEDO`) | lnd ENERGY | FSR: reflected solar radiation; FSDS: atmospheric incident solar radiation | `annual_mean(FSR) / annual_mean(FSDS)` over March–May (a ratio of means, not a mean of monthly ratios), NaN where FSDS < 1 W m⁻² | – |
 | LEAF AREA INDEX | `TLAI` | lnd LAND | total projected leaf area index | model output | m² m⁻² |

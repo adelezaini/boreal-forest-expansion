@@ -19,6 +19,8 @@ t-interval across the yearly regional means.
 from __future__ import annotations
 
 from collections import Counter
+import json
+import os
 import re
 import textwrap
 
@@ -52,7 +54,10 @@ from boreal_forest_expansion.analysis.regions import load_modified_cells
 
 REPO_DIR = Path("/cluster/home/adelez/BOREAL-FOREST-EXPANSION")
 
-POSTPROCESSED_DIR = REPO_DIR / "data" / "processed-data" / "postprocessing"
+# BOREAL_POSTPROCESSED_DIR (optional): read processed files from a staged copy, e.g. on /cluster/work when
+# NIRD gives HDF read errors (2026-11-25). Same file names; default = the NIRD folder below.
+POSTPROCESSED_DIR = Path(os.environ.get("BOREAL_POSTPROCESSED_DIR",
+                                        REPO_DIR / "data" / "processed-data" / "postprocessing"))
 
 FIGURE_DIR = REPO_DIR / "results" / "figures"
 # Figure folders by contrast (user 2026-11-04). fBVOC/ itself is for the design-A artefact correction.
@@ -577,6 +582,22 @@ def annual_mean(da: xr.DataArray, ds: xr.Dataset, months=None) -> xr.DataArray:
     return (da * days).groupby(year).sum("time") / days.groupby(year).sum("time")
 
 
+def _snow_season_days(ds: xr.Dataset, months=None) -> xr.DataArray:
+    """Snow-season length per calendar year [days]: largest monthly mean of CLM's SNOW_PERSISTENCE (running length
+    of continuous snow cover, s) in the year, capped at 365 days. The counter never resets under perennial snow
+    (Greenland, Arctic islands: up to ~1e6 days, counted since the spin-up), so the former yearly mean of the
+    counter gave -18,900 days over 45-90°N (fixed 2026-11-24, user). Monthly means put the maximum up to ~half a
+    month below the true season length."""
+    da = ds["SNOW_PERSISTENCE"] / 86400
+    if months is not None:
+        da = da.isel(time=ds["time"].dt.month.isin(list(months)).values)
+    year = da["time"].dt.year
+    n = da["time"].groupby(year).count()
+    if not (n == (12 if months is None else len(months))).all():
+        raise ValueError(f"Incomplete years in {ds.attrs.get('alias', '?')}: {dict(zip(n.year.values, n.values))}")
+    return da.groupby(year).max("time").clip(max=365.0)
+
+
 def _require(ds: xr.Dataset, names: Iterable[str], what: str):
     missing = [v for v in names if v not in ds]
     if missing:
@@ -618,7 +639,7 @@ YEARLY_DERIVED = {
     "PRECT_mmday": lambda ds, mo: annual_mean(ds["PRECC"] + ds["PRECL"], ds, mo) * 1e3 * 86400,
     "QRUNOFF_mmday": lambda ds, mo: annual_mean(ds["QRUNOFF"], ds, mo) * 86400,
     "QSNOMELT_mmday": lambda ds, mo: annual_mean(ds["QSNOMELT"], ds, mo) * 86400,
-    "SNOW_PERSISTENCE_days": lambda ds, mo: annual_mean(ds["SNOW_PERSISTENCE"], ds, mo) / 86400,
+    "SNOW_PERSISTENCE_days": lambda ds, mo: _snow_season_days(ds, mo),   # longest continuous cover, <= 365 d
     "ALBEDO": lambda ds, mo: _ratio(ds, "FSR", "FSDS", mo, min_den=1.0),          # CLM surface albedo
     "BOWEN": lambda ds, mo: _ratio(ds, "SHFLX", "LHFLX", mo, min_den=5.0),
     "FSDS_cloud": lambda ds, mo: annual_mean(ds["FSDS"] - ds["FSDSC"], ds, mo),
@@ -793,21 +814,29 @@ def n_years(start_year: int, end_year: int) -> int:
 def mean_subtitle(mean_lat_min: float | None, years: int | None = None) -> str:
     """Subtitle of the map figures. The period is given as "N-year mean", not as calendar years: the
     years are labels of the nudging winds (a free-running present-day run), user 2026-11-16 (option 1)."""
-    region = f"over {mean_lat_min:g}–90°N" if mean_lat_min is not None else "global"
-    under = rf"$\mathit{{Under\ the\ maps}}$: area-weighted mean {region} ± 95 % CI of the"
+    region = f"over {mean_lat_min:g}–90°N" if mean_lat_min is not None else "over the globe"
+    if SHOW_VEGETATION:   # user 2026-11-24 (option A): the three numbers under the maps, in their order;
+        # region names: user 2026-11-25 19:41, back to "broadleaf exp." / "needleleaf exp."
+        region += ", broadleaf- and needleleaf-expansion cells*"
+    under = rf"$\mathit{{Under\ the\ maps}}$: area-weighted mean ± 95 % CI of the"
     if years is None:
-        return f"{under} yearly means"
-    return rf"$\mathit{{Maps}}$: {years}-year mean · {under} {years} yearly means"
+        return f"{under} yearly means {region}"
+    return rf"$\mathit{{Maps}}$: {years}-year mean · {under} {years} yearly means {region}"
 
 
 def add_suptitle(fig, title: str, mean_lat_min: float | None, fontsize: float = 14, y: float | None = None,
                  subtitle: str | None = None, years: int | None = None):
     """Bold figure title plus a plain subtitle saying what the numbers under the maps are
-    (`subtitle` replaces the default text)."""
+    (`subtitle` replaces the default text). With SHOW_VEGETATION, LINES_LEGEND is added as one more line."""
+    subtitle = subtitle or mean_subtitle(mean_lat_min, years)
+    if SHOW_VEGETATION:
+        subtitle = f"{subtitle}\n{LINES_LEGEND}"
+        if y is not None:   # room for that line above the panel titles
+            y += 1.6 * 0.8 * fontsize / 72 / fig.get_figheight()
     # The second line " " reserves room for the subtitle: constrained layout only knows the
     # suptitle, and only when y is not given (an explicit y switches its space off).
     st = fig.suptitle(f"{title}\n ", fontsize=fontsize, fontweight="bold", **({} if y is None else {"y": y}))
-    fig.text(0.5, st.get_position()[1], subtitle or mean_subtitle(mean_lat_min, years), ha="center", va="top", fontsize=0.8 * fontsize,
+    fig.text(0.5, st.get_position()[1], subtitle, ha="center", va="top", fontsize=0.8 * fontsize,
              transform=offset_copy(fig.transFigure, fig=fig, y=-1.3 * fontsize, units="points"))
 
 
@@ -820,13 +849,110 @@ MAP_COL_GAP = 0.45   # between map columns
 TITLE_SPACE = 0.45   # panel title above a map
 TITLE_PAD = 10       # gap between panel title and map [pt]
 ROW_GAP = 0.35       # extra gap between rows without panel titles
-UNDER_CBAR = 1.35    # under a map: mean + colourbar with ticks and a 2-line label
+REGION_SPACE = 0.47  # under a map, for the two region lines below the mean (vegetation regions, 2026-11-24)
+UNDER_CBAR = 1.35 + REGION_SPACE  # under a map: mean, region lines, colourbar with ticks and a 2-line label
 FIG_TOP = 0.65       # figure title + subtitle
-CBAR_OFFSET = 0.52   # top of a colourbar below the bottom of its map(s), leaves room for the mean
+MEAN_OFFSET = 0.26   # centre of the mean line below the bottom of its map
+CBAR_OFFSET = 0.52 + REGION_SPACE  # top of a colourbar below the bottom of its map(s), leaves room for the mean
 CBAR_HEIGHT = 0.16   # thickness of a colourbar under one map
 CBAR_SHRINK = 1.12   # length of a colourbar under one map, relative to the map width
 CBAR_HEIGHT_SHARED = 0.22  # thickness of a colourbar shared by several maps
 GROUP_LABEL_SPACE = 0.32   # extra space above the panel titles for a label spanning several panels
+
+# Vegetation regions and lines on every boreal map (user 2026-11-24; draft Supplementary Sect. S1).
+# Regional means use the cell classes of VEGETATION_REGIONS (diagnostics/lcc-modified-cells/
+# build_vegetation_regions.py): broadleaf expansion (broadleaf replaces needleleaf), needleleaf expansion (all other
+# tree gain > 1 pp: mostly needleleaf, incl. 47 cells of broadleaf gain without needleleaf loss); cells with <= 1 pp tree gain are
+# left out. The two lines (VEGETATION_LINES, edited by hand in sandbox/test_vegetation_real_figures.py) are for
+# display only. SHOW_VEGETATION = False gives the maps without lines and region lines (spacing stays).
+SHOW_VEGETATION = True
+VEGETATION_REGIONS = REPO_DIR / "diagnostics" / "lcc-modified-cells" / "vegetation_regions.nc"
+VEGETATION_LINES = REPO_DIR / "diagnostics" / "lcc-modified-cells" / "vegetation_map_lines.json"
+REGION_LABELS = {1: "broadleaf exp.", 2: "needleleaf exp."}   # region value -> label under the maps (user 2026-11-25 19:41)
+REGION_FONTSIZE = 10.5
+REGION_LINE_OFFSETS = (17, 32)   # centres of the region lines below the centre of the mean line [pt]
+LINES_LEGEND = "solid line: limit of perturbed vegetation cells • dashed line: broadleaf/needleleaf expansion border"
+REGION_FOOTNOTE = ("*broadleaf exp.: broadleaf replaces needleleaf · needleleaf exp.: other tree gain, mostly needleleaf · "
+                   "cells with ≤ 1 pp tree gain left out from regional means (Supplementary Sect. S1)")
+REGION_FOOTNOTE_FONTSIZE = 9   # grey, italic, centred under the figure (user 2026-11-26; was 10, black, left)
+REGION_FOOTNOTE_COLOUR = "0.45"
+REGION_FOOTNOTE_GAP = 0.25     # inches between the lowest element and the footnote (was 0.12)
+LINE_COLOUR, LINE_EDGE_ALPHA, LINE_EDGE_EXTRA = "#000000", 0.7, 1.0   # black on a 30 % transparent white edge
+LINE_COLOURS_DARK = ("#FFFFFF", "#000000")   # (line, edge) on dark colour maps (viridis), user 2026-11-24
+MODIFIED_LINE_WIDTH, BORDER_LINE_WIDTH, BORDER_LINE_DASH = 0.5, 0.7, (0, (2.2, 1.0))
+_VEGETATION_CACHE: dict = {}
+
+
+def vegetation_lines() -> dict[str, list[np.ndarray]]:
+    """Map lines in lon/lat degrees: "modified" (solid) and "border" (dashed)."""
+    if "lines" not in _VEGETATION_CACHE:
+        stored = json.loads(VEGETATION_LINES.read_text())
+        _VEGETATION_CACHE["lines"] = {k: [np.asarray(xy) for xy in stored[k]] for k in ("border", "modified")}
+    return _VEGETATION_CACHE["lines"]
+
+
+def draw_vegetation_lines(ax, dark: bool = False):
+    """Solid limit of the perturbed cells and dashed broadleaf/needleleaf expansion border.
+    dark=True: white lines on a black edge (LINE_COLOURS_DARK), for dark colour maps such as viridis."""
+    colour, edge = LINE_COLOURS_DARK if dark else (LINE_COLOUR, "white")
+    lines = vegetation_lines()
+    for key, width, style in (("modified", MODIFIED_LINE_WIDTH, {}),
+                              ("border", BORDER_LINE_WIDTH, {"ls": BORDER_LINE_DASH})):
+        for xy in lines[key]:
+            ax.plot(xy[:, 0], xy[:, 1], color=edge, alpha=LINE_EDGE_ALPHA, lw=width + LINE_EDGE_EXTRA,
+                    solid_capstyle="round", solid_joinstyle="round", transform=ccrs.PlateCarree(), zorder=4.5)
+            ax.plot(xy[:, 0], xy[:, 1], color=colour, lw=width, transform=ccrs.PlateCarree(), zorder=6, **style)
+
+
+def vegetation_region_masks(like: xr.DataArray) -> dict[str, xr.DataArray]:
+    """{label: cells of the region} on the grid of `like`; {} (with a message) if the grids differ."""
+    if "region" not in _VEGETATION_CACHE:
+        with xr.open_dataset(VEGETATION_REGIONS) as r:
+            _VEGETATION_CACHE["region"] = r["region"].load()
+    region = _VEGETATION_CACHE["region"]
+    lat, lon = like["lat"].values, like["lon"].values % 360
+    # `like` may be a sub-grid (e.g. MEGAN LMDI data cut at 40°N; 2026-11-25): match cells by coordinate
+    rlat, rlon = region["lat"].values, region["lon"].values % 360
+    ilat = np.abs(rlat[None, :] - lat[:, None]).argmin(1)
+    ilon = np.abs(rlon[None, :] - lon[:, None]).argmin(1)
+    if not (np.allclose(rlat[ilat], lat, atol=1e-6) and np.allclose(rlon[ilon], lon, atol=1e-6)):
+        print(f"vegetation regions: grid {lat.size}x{lon.size} is not part of the surface-data grid, no region means")
+        return {}
+    n_in = lambda r: int(r.isin(list(REGION_LABELS)).sum())
+    dropped = n_in(region) - n_in(region.isel(lat=ilat, lon=ilon))
+    if dropped:
+        print(f"vegetation regions: {dropped} classified cells outside the grid of the data")
+    region = region.isel(lat=ilat, lon=ilon).assign_coords(lat=like["lat"], lon=like["lon"])
+    return {label: region == value for value, label in REGION_LABELS.items()}
+
+
+def region_mean_texts(d: xr.DataArray, interval=None) -> list[str]:
+    """'label: mean ± CI' for each vegetation region; `interval(d_region)` -> (mean, half),
+    default regional_mean_interval (same method as the 45-90°N mean)."""
+    interval = interval or regional_mean_interval
+    return [f"{label}: {_format_interval(*interval(d.where(mask)))}"
+            for label, mask in vegetation_region_masks(d).items()]
+
+
+def draw_region_texts(ax, texts, map_height_in: float | None = None):
+    """Region lines under the mean line of `ax`; marks the figure for add_region_footnote."""
+    if not texts:
+        return
+    h = map_height_in or ax.get_position().height * ax.figure.get_figheight()
+    for offset, text in zip(REGION_LINE_OFFSETS, texts):
+        ax.text(0.5, -MEAN_OFFSET / h - offset / 72 / h, text, transform=ax.transAxes, ha="center", va="center",
+                fontsize=REGION_FONTSIZE)
+    ax.figure._region_footnote = True
+
+
+def add_region_footnote(fig):
+    """REGION_FOOTNOTE under everything else, centred, grey italic, if the figure has region lines. Call before savefig."""
+    if not getattr(fig, "_region_footnote", False) or any(t.get_text() == REGION_FOOTNOTE for t in fig.texts):
+        return
+    box = fig.get_tightbbox(fig.canvas.get_renderer())   # inches
+    W, H = fig.get_size_inches()
+    fig.text((box.x0 + box.x1) / 2 / W, (box.y0 - REGION_FOOTNOTE_GAP) / H, REGION_FOOTNOTE, ha="center", va="top",
+             fontsize=REGION_FOOTNOTE_FONTSIZE, color=REGION_FOOTNOTE_COLOUR, style="italic")
 
 
 def map_grid(nrows: int, ncols: int, under: float | None = None, titles_every_row: bool = False,
@@ -882,14 +1008,16 @@ def _five_ticks(vmax: float) -> list[float]:
 
 
 def _cbar_below(fig, axes_group, mappable, label, labelsize, shrink=0.88, height=None, five_ticks=False,
-                extend="both"):
-    """Horizontal colourbar under `axes_group` (one or more map axes of a map_grid), below the mean text."""
+                extend="both", offset=None):
+    """Horizontal colourbar under `axes_group` (one or more map axes of a map_grid), below the mean text.
+    `offset` = inches between the maps and the bar (default CBAR_OFFSET; smaller for maps without numbers)."""
+    offset = CBAR_OFFSET if offset is None else offset
     boxes = [ax.get_position() for ax in np.atleast_1d(axes_group)]
     x0, x1, y0 = min(b.x0 for b in boxes), max(b.x1 for b in boxes), min(b.y0 for b in boxes)
     H = fig.get_figheight()
     height = CBAR_HEIGHT_SHARED if height is None else height
     w = (x1 - x0) * shrink
-    cax = fig.add_axes([x0 + (x1 - x0 - w) / 2, y0 - (CBAR_OFFSET + height) / H, w, height / H])
+    cax = fig.add_axes([x0 + (x1 - x0 - w) / 2, y0 - (offset + height) / H, w, height / H])
     cb = fig.colorbar(mappable, cax=cax, orientation="horizontal", extend=extend)
     if five_ticks:
         cb.set_ticks(_five_ticks(mappable.norm.vmax))
@@ -1018,6 +1146,7 @@ def plot_single_boreal_panel(
     sig_style: str = "dots",
     mean_text: str | None = None,
     mean_fontsize: float | None = None,
+    region_text: list[str] | None = None,
 ):
     """
     Plot one polar boreal map panel.
@@ -1041,6 +1170,9 @@ def plot_single_boreal_panel(
         Text under the panel (units are appended), normal weight (bold parts via _bold);
         default is the area-weighted mean of `da`, in bold.
         The region goes in the figure subtitle (add_suptitle), not here.
+    region_text:
+        Lines under the mean, one per vegetation region (region_mean_texts). With SHOW_VEGETATION the
+        vegetation lines are drawn on the map too.
     """
     if vmax is None:
         vmax = symmetric_vmax(da)
@@ -1084,6 +1216,8 @@ def plot_single_boreal_panel(
 
     if sig is not None and bool(sig.any()):
         add_stippling(ax, sig, style=sig_style, zorder=ocean_zorder + 2)
+    if SHOW_VEGETATION:
+        draw_vegetation_lines(ax)
 
     ax.set_title(
         title,
@@ -1096,11 +1230,11 @@ def plot_single_boreal_panel(
     if mean_text is None:
         mean_text = _bold(format_forcing_mean(area_weighted_mean(da, lat_min=mean_lat_min)))
 
-    # centred between the map and its colourbar (CBAR_OFFSET below the map, see _cbar_below)
+    # MEAN_OFFSET below the map; region lines below it, colourbar CBAR_OFFSET below the map (_cbar_below)
     map_height_in = ax.get_position().height * ax.figure.get_figheight()
     ax.text(
         0.5,
-        -0.5 * CBAR_OFFSET / map_height_in,
+        -MEAN_OFFSET / map_height_in,
         f"{mean_text} {unit_text}" if unit_text not in ("", "–", "-") else mean_text,   # no dash for unitless
         transform=ax.transAxes,
         ha="center",
@@ -1109,6 +1243,7 @@ def plot_single_boreal_panel(
         fontweight="normal",
         color="black",
     )
+    draw_region_texts(ax, region_text, map_height_in)
 
     cb = None
 
@@ -1199,6 +1334,7 @@ def _plot_panel(ax, panel, pairs, start_year, end_year, extent_lat, mean_lat_min
         cbar_label=f"{panel.long_label or panel.variable}\n[{panel.units}]",
         sig=sig,
         mean_text=_format_interval(m, half),
+        region_text=region_mean_texts(d) if SHOW_VEGETATION and mean_lat_min is not None else None,
         **kwargs,
     )
     return d
@@ -1313,6 +1449,7 @@ def make_forcing_summary_figure(
     if save:
         suffix = "".join(f"_{t}" for t in (scale_tag, design) if t)
         path = figure_path(figdir, f"{experiment}_forcing_decomposition_{band}_{start_year}_{end_year}{suffix}.png")
+        add_region_footnote(fig)
         fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=transparent_background)
         print(f"Saved {path}")
 
@@ -1382,6 +1519,7 @@ def make_context_maps_figure(
 
     if save:
         path = figure_path(figdir, f"{experiment}_bvoc_context_maps_{start_year}_{end_year}.png")
+        add_region_footnote(fig)
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
 
@@ -1475,7 +1613,7 @@ def make_ghan_figure(
     rows = list(SEASONS.items()) if seasonal else [("ANN", None)]
 
     # seasonal: one vertical colourbar right of each row; annual: one horizontal colourbar below
-    fig, axes = map_grid(len(rows), 4, under=0.5 if seasonal else UNDER_CBAR, titles_every_row=seasonal,
+    fig, axes = map_grid(len(rows), 4, under=0.5 + REGION_SPACE if seasonal else UNDER_CBAR, titles_every_row=seasonal,
                          right=1.4 if seasonal else 0.25)
     for i, (season, months) in enumerate(rows):
         panels = ghan_panels(band, role1, role2, months)
@@ -1504,6 +1642,7 @@ def make_ghan_figure(
         stem = (f"{stem}.png" if stem else
                 f"{experiment}_ghan_{'seasonal_' if seasonal else ''}{tag}_{band}_{start_year}_{end_year}.png")
         path = figure_path(figdir, stem)
+        add_region_footnote(fig)
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1589,7 +1728,7 @@ SNOW_ALBEDO_PANELS = [
     _panel("fsno_mam", "SNOW COVER (MAM)", "SNOW", "FSNO", "fraction", "FSNO, MAM (land)", "lnd", MAM),
     _panel("h2osno", "SNOW WATER EQUIVALENT", "SNOW", "H2OSNO", "mm", "H2OSNO (land)", "lnd"),
     _panel("snowpers", "SNOW PERSISTENCE", "SNOW", "SNOW_PERSISTENCE_days", "days",
-           "continuous snow cover length (land)", "lnd"),
+           "longest continuous snow cover in the year, ≤ 365 d (land)", "lnd"),
     _panel("snocan", "CANOPY SNOW", "SNOW", "SNOCAN", "mm", "SNOCAN (land)", "lnd"),
     _panel("albedo_mam", "SURFACE ALBEDO (MAM)", "ENERGY", "ALBEDO", "–", "FSR / FSDS, MAM (land)", "lnd", MAM),
     _panel("tlai", "LEAF AREA INDEX", "LAND", "TLAI", "m$^2$ m$^{-2}$", "TLAI (land)", "lnd"),
@@ -1741,6 +1880,7 @@ def make_contrast_grid_figure(
                  y=_suptitle_y(fig), years=n_years(start_year, end_year))
     if save:
         path = figure_path(figdir, f"contrast_grid_{name}_{contrast_set}_{start_year}_{end_year}.png")
+        add_region_footnote(fig)
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes
@@ -1858,7 +1998,7 @@ def make_water_budget_figure(table, contrast_set: str, save: bool = True, figdir
 # =============================================================================
 
 EARTH_RADIUS = 6.371e6   # m
-EARLY_YEARS, LATE_YEARS = (2001, 2014), (2015, 2025)   # user 2026-11-08: early = fBVOC climatology years, late = years outside it (was 2001-2007 / 2008-2014)
+EARLY_YEARS, LATE_YEARS = (2001, 2014), (2015, 2040)   # user 2026-11-08: early = fBVOC climatology years, late = years outside it (was 2001-2007 / 2008-2014)
 SOURCE_BOXES = {          # lat_min, lat_max, lon_min, lon_max (degrees east; lon_min > lon_max wraps)
     "Alaska/W Canada": (50, 72, 190, 245),
     "E Canada": (45, 65, 245, 300),
@@ -2399,6 +2539,7 @@ def make_percent_change_figure(start_year=2001, end_year=2014, extent_lat=45.0, 
                  extent_lat, fontsize=13, y=_suptitle_y(fig), years=n_years(start_year, end_year))
     if save:
         path = figure_path(figdir, f"{name}_{start_year}_{end_year}.png")
+        add_region_footnote(fig)
         fig.savefig(path, dpi=dpi, bbox_inches="tight")
         print(f"Saved {path}")
     return fig, axes

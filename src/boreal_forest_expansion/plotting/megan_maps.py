@@ -197,8 +197,10 @@ def _modified_mask(like: xr.DataArray) -> xr.DataArray | None:
         return None
 
 
-def _panel(ax, da, norm, cmap, title, extent_lat=45.0, not_sig=None, modified=None, text=None):
-    """One polar map as in forcing_maps.plot_single_boreal_panel, plus the modified-cells outline.
+def _panel(ax, da, norm, cmap, title, extent_lat=45.0, not_sig=None, modified=None, text=None, region_text=None):
+    """One polar map as in forcing_maps.plot_single_boreal_panel.
+    With fm.SHOW_VEGETATION: the two vegetation lines (`modified` is ignored) and `region_text` (lines under
+    `text`, see _region_texts); otherwise the dashed outline of the `modified` cells.
     not_sig: cells hatched as not significant (IPCC look, as the forcing maps)."""
     cut_extent_Orthographic(ax, lat=extent_lat)
     ax_map_properties(ax, alpha=0.25, coastlines=False, gridlines=False, ocean=False,
@@ -206,18 +208,43 @@ def _panel(ax, da, norm, cmap, title, extent_lat=45.0, not_sig=None, modified=No
     p = da.plot.pcolormesh(ax=ax, x="lon", y="lat", transform=ccrs.PlateCarree(),
                            cmap=cmap, norm=norm, add_colorbar=False, zorder=1)
     ax.coastlines(linewidth=0.6, zorder=3)
-    if modified is not None:
+    if fm.SHOW_VEGETATION:
+        fm.draw_vegetation_lines(ax, dark=cmap == "viridis")
+    elif modified is not None:
         data, lon_c = add_cyclic_point(modified.astype(float).values, coord=modified["lon"].values)
         ax.contour(lon_c, modified["lat"], data, levels=[0.5], colors="0.15", linewidths=0.9,
                    linestyles="--", transform=ccrs.PlateCarree(), zorder=3)
     if not_sig is not None and bool(not_sig.any()):
         add_stippling(ax, not_sig, style="lines", zorder=4)
     ax.set_title(title or "", fontsize=9.5, fontweight="semibold", pad=fm.TITLE_PAD)   # "" replaces xarray's "time = ..."
-    if text:   # centred between the map and its colourbar, as in the forcing maps
+    if text:   # fm.MEAN_OFFSET below the map, as in the forcing maps
         h = ax.get_position().height * ax.figure.get_figheight()
-        ax.text(0.5, -0.5 * fm.CBAR_OFFSET / h, text, transform=ax.transAxes, ha="center", va="center",
+        ax.text(0.5, -fm.MEAN_OFFSET / h, text, transform=ax.transAxes, ha="center", va="center",
                 fontsize=fm.MEAN_FONTSIZE)
+        fm.draw_region_texts(ax, region_text, h)
     return p
+
+
+def _region_texts(like, interval, suffix="", unsigned=False):
+    """'label: mean ± CI' per vegetation region (fm.vegetation_region_masks); interval(mask) -> (mean, half),
+    with the same weights as the 45-90°N number. None without fm.SHOW_VEGETATION."""
+    if not fm.SHOW_VEGETATION:
+        return None
+    out = []
+    for label, mask in fm.vegetation_region_masks(like).items():
+        t = f"{label}: {fm._format_interval(*interval(mask))}{suffix}"
+        out.append(t.replace("+", "", 1) if unsigned else t)
+    return out
+
+
+def _regions_subtitle(lat_min):
+    """End of the 'Under the maps' text: which numbers, in their order (as fm.mean_subtitle)."""
+    cells = ", broadleaf- and needleleaf-expansion cells*" if fm.SHOW_VEGETATION else ""
+    return f"over {lat_min:g}–90°N{cells}"
+
+
+def _outline_note():
+    return "" if fm.SHOW_VEGETATION else " · dashed line: modified cells"
 
 
 def _not_significant(d, extent_lat, fdr_alpha):
@@ -262,6 +289,7 @@ def _title(fig, title, subtitle):
 def _save(fig, name, dpi):
     MEGAN_FIG_DIR.mkdir(parents=True, exist_ok=True)
     path = MEGAN_FIG_DIR / name
+    fm.add_region_footnote(fig)
     fig.savefig(path, dpi=dpi, bbox_inches="tight")
     print(f"Saved {path}")
 
@@ -302,8 +330,10 @@ def make_factor_maps(group: str = "isoprene", experiment: str = "PD", season: st
         norm = mcolors.Normalize(0, vmax)
         for i, x in enumerate((a, b)):
             m, half = _interval(x[f], land_w, extent_lat)
+            regions = _region_texts(x[f], lambda r, y=x[f]: _interval(y.where(r), land_w, extent_lat), unsigned=True)
             p = _panel(axes[i, j], x[f].mean("year"), norm, "viridis", FACTOR_TITLE[f] if i == 0 else "",
-                       extent_lat, modified=modified, text=fm._format_interval(m, half).replace("+", "", 1))
+                       extent_lat, modified=modified, text=fm._format_interval(m, half).replace("+", "", 1),
+                       region_text=regions)
         fm._cbar_below(fig, axes[1, j], p, f"{f}\n[{units}]", fm.CBAR_LABELSIZE, shrink=fm.CBAR_SHRINK,
                        height=fm.CBAR_HEIGHT, extend="max")
         # relative change from paired yearly log ratios
@@ -311,9 +341,11 @@ def make_factor_maps(group: str = "isoprene", experiment: str = "PD", season: st
         rel = 100 * (np.exp(dln.mean("year")) - 1)
         v = symmetric_vmax(rel.where(rel["lat"] >= extent_lat), q=0.95, fallback=10.0)
         m, half = _ratio_interval(a[f], b[f], land_w, extent_lat)
+        regions = _region_texts(a[f], lambda r: _ratio_interval(a[f].where(r), b[f].where(r), land_w, extent_lat),
+                                suffix=" %")
         p = _panel(axes[2, j], rel, mcolors.TwoSlopeNorm(vmin=-v, vcenter=0, vmax=v), "RdBu_r", "",
                    extent_lat, not_sig=_not_significant(dln, extent_lat, fdr_alpha), modified=modified,
-                   text=f"{fm._format_interval(m, half)} %")
+                   text=f"{fm._format_interval(m, half)} %", region_text=regions)
         fm._cbar_below(fig, axes[2, j], p, f"{f}: LCC vs CTRL\n[%]", fm.CBAR_LABELSIZE, shrink=fm.CBAR_SHRINK,
                        height=fm.CBAR_HEIGHT, five_ticks=True)
     for i, txt in enumerate((pairs["ctrl"], pairs["lcc"], f"{pairs['lcc']}\nvs {pairs['ctrl']}\n(% change)")):
@@ -321,9 +353,9 @@ def make_factor_maps(group: str = "isoprene", experiment: str = "PD", season: st
 
     cov = f" (coverage of MEG_MTERP ≥{extent_lat:g}°N: {a.attrs['coverage_45N']:.0%})" if "coverage_45N" in a.attrs else ""
     _title(fig, f"MEGAN factors, {GROUP_TITLE[group]}{cov}: {experiment}, {season} ({start_year}–{end_year})",
-           rf"$\mathit{{Under\ the\ maps}}$: mean over vegetated land {extent_lat:g}–90°N ± 95 % CI of the yearly means"
-           " (row 3: % change of that mean)"
-           f" · hatched: not significant · dashed line: modified cells")
+           rf"$\mathit{{Under\ the\ maps}}$: mean over vegetated land ± 95 % CI of the yearly means"
+           f" (row 3: % change of that mean) {_regions_subtitle(extent_lat)}"
+           f" · hatched: not significant{_outline_note()}")
     if save:
         _save(fig, f"{experiment}_{group}_factors_{season}_{start_year}_{end_year}.png", dpi)
     return fig, axes
@@ -392,9 +424,10 @@ def make_attribution_maps(group: str = "isoprene", experiment: str = "PD", seaso
                 continue
             x = 100 * d[keys[j]].where(keep)
             m, half = _interval(x, w_em, extent_lat)
+            regions = _region_texts(x, lambda r, y=x: _interval(y.where(r), w_em, extent_lat))
             p = _panel(axes[i, j], x.mean("year"), norm, "RdBu_r", TITLE[keys[j]], extent_lat,
                        not_sig=_not_significant(x, extent_lat, fdr_alpha), modified=modified,
-                       text=fm._format_interval(m, half))
+                       text=fm._format_interval(m, half), region_text=regions)
     _row_label(axes[0, 0], "Δln E\n= Δln(f·ε)\n+ Δln γ$_{eff}$")
     _row_label(axes[1, 0], "Δln γ$_{eff}$\n= Σ Δln γ$_i$\n+ residual")
     _row_label(axes[2, 0], "residual\n= weighting\n+ co-variation")
@@ -404,8 +437,8 @@ def make_attribution_maps(group: str = "isoprene", experiment: str = "PD", seaso
 
     _title(fig, f"Attribution of the emission change, {GROUP_TITLE[group]}: {experiment} "
                 f"{pairs['lcc']} vs {pairs['ctrl']}, {season} ({start_year}–{end_year})",
-           rf"$\mathit{{Under\ the\ maps}}$: CTRL-emission-weighted mean {extent_lat:g}–90°N ± 95 % CI of the yearly means"
-           f" · hatched: not significant · dashed line: modified cells")
+           rf"$\mathit{{Under\ the\ maps}}$: CTRL-emission-weighted mean ± 95 % CI of the yearly means"
+           f" {_regions_subtitle(extent_lat)} · hatched: not significant{_outline_note()}")
     if save:
         _save(fig, f"{experiment}_{group}_attribution_{season}_{start_year}_{end_year}.png", dpi)
     return fig, axes
@@ -416,6 +449,7 @@ def make_attribution_maps(group: str = "isoprene", experiment: str = "PD", seaso
 # =============================================================================
 
 GAMMA_COMPOUNDS = ["isoprene"] + GROUPS["MTERP"]
+GAMMA_UNDER, GAMMA_CBAR_OFFSET = 0.85, 0.22   # inches; no numbers under these maps, so the bar sits close
 GAMMA_FIELDS = ["EPS", "GAMMA", "GAMMAL", "GAMMAT", "GAMMAP", "GAMMAA", "GAMMAC"]
 _FIELD_TITLE = {"EPS": "EPS (ε)", "GAMMA": "GAMMA (TOTAL γ)", "GAMMAL": "GAMMAL (LAI)",
                 "GAMMAT": "GAMMAT (TEMPERATURE)", "GAMMAP": "GAMMAP (LIGHT)",
@@ -474,7 +508,7 @@ def make_gamma_maps(experiment: str = "PD", season: str = "ANN", compounds=GAMMA
 
     figs = {}
     for m in members:
-        fig, axes = fm.map_grid(len(compounds), len(fields), under=1.0, left=1.3, map_size=2.0)
+        fig, axes = fm.map_grid(len(compounds), len(fields), under=GAMMA_UNDER, left=1.3, map_size=2.0)
         last = {}
         for i, c in enumerate(compounds):
             _row_label(axes[i, 0], c)
@@ -488,14 +522,14 @@ def make_gamma_maps(experiment: str = "PD", season: str = "ANN", compounds=GAMMA
                            extent_lat, modified=modified)
                 if f == "EPS":
                     fm._cbar_below(fig, ax, p, "[µg m$^{-2}$ h$^{-1}$]", fm.CBAR_LABELSIZE, shrink=fm.CBAR_SHRINK,
-                                   height=fm.CBAR_HEIGHT, extend="max")
+                                   height=fm.CBAR_HEIGHT, extend="max", offset=GAMMA_CBAR_OFFSET)
                 else:
                     last[f] = (p, ax)
         for f, (p, ax) in last.items():
             fm._cbar_below(fig, ax, p, f"{f}\n[1]", fm.CBAR_LABELSIZE, shrink=fm.CBAR_SHRINK,
-                           height=fm.CBAR_HEIGHT, extend="max")
+                           height=fm.CBAR_HEIGHT, extend="max", offset=GAMMA_CBAR_OFFSET)
         _title(fig, f"{m}: CLM MEGAN fields, {season} mean ({start_year}–{end_year})",
-               "Grid-cell values = area means over vegetated patches · dashed line: modified cells")
+               f"Grid-cell values = area means over vegetated patches{_outline_note()}")
         if save:
             _save(fig, f"{m}_gammas_{season}_{start_year}_{end_year}.png", dpi)
         figs[m] = (fig, axes)
