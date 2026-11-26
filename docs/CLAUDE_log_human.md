@@ -4,19 +4,41 @@
 
 > **Where things stand (updated every prompt)**
 >
+> <span style="color:#CC0000"><!--5b362f0a--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Git commits, home folder full (26 Nov, 15:12):** 5 of the 7 commits are made (vegetation regions, sandbox, old archives out of git, new analyses APRP/land temperature/forcing tree, draft Methods+SI). The big one, the **2001–2040 rerun (notebooks + ~310 figures)**, needs ~1.2 GB and only ~0.8 GB is free in the home folder (20 GiB quota). Free ~1 GB more and it can go in. The VS Code backup was moved to `/cluster/work/users/adelez/home-backups/`. Nothing pushed.</span>
+>
+> <span style="color:#A84300"><!--448d3011-->**APRP for evapotranspiration? (26 Nov, 14:52):** question answered in chat. APRP itself is radiation-only, but the same "swap one factor at a time" idea works for ET with Penman–Monteith (energy, air dryness, temperature, aerodynamic and stomatal resistance). Offered a sandbox test. No files changed.</span>
+>
+> <span style="color:#E58AA5"><!--9576fddd-->**Forcing tree, new layout (26 Nov, 14:43):** section labels on the tree; non-BVOC / BVOC maps beside TOTAL; closure note centred, "(δ not drawn)" removed (renaming art to "prescription artefact" was tried and undone at your request); 'other' note grey italic; rows 3–5 share one tall colourbar (non-BVOC left, BVOC right). **The * footnote changed for all figures** (\"left out from regional means\", centred, grey, italic, smaller); old figures change only when redrawn. Test figure: `sandbox/test_forcing_tree_5rows_outputs/`. The 4 paper figures are redrawn (14:47) in `results/figures/radiative-forcing-tree-5rows/`.</span>
+>
+> <span style="color:#999999"><!--9261baaa-->**Vegetation test scripts cleaned (25 Nov, 19:51):** 5 sandbox scripts removed (recoverable from git, not committed); `left_out` now reads the current lines file and gives the same figure. 11 scripts kept, all working.</span>
+>
+> <span style="color:#E58AA5"><!--aa1522f0-->**Region names back to broadleaf exp. / needleleaf exp. (25 Nov, 19:58):** code, region file, CLAUDE.md and notebook texts changed back (cells unchanged). Redrawn in results/: forcing decomposition (13) and MEGAN attribution (8). Land-temperature and cloud-masking notebooks restarted 19:54 with the old names. Draft SI section S1, Methods line and SI figure changed back; draft compiles, table fits.</span>
+>
+> <span style="color:#999999"><!--eab501a1-->**Vegetation-region scripts tidied (25 Nov, 20:08):** in `diagnostics/lcc-modified-cells/` there are now 3 scripts (`region_cells.py`, `si_vegetation_classes.py`, `dominant_pft_change.py`) + one helper file `vegetation_helpers.py`, outputs in `region_cells_outputs/`. `si_region_map.py` was folded into `si_vegetation_classes.py` (which now also prints the SI table numbers) and deleted; the SI figure is unchanged. Not committed.</span>
+>
+> <span style="color:#CC0000"><!--b631a2eb--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **APRP function and formula subtitles (25 Nov, 18:33):** the APRP calculation is now a reusable function, `aprp()` in `src/boreal_forest_expansion/analysis/aprp.py`, and it gives exactly the notebook's numbers. Test figures with, under each panel title, how it is calculated from the model output variables (SOLIN, FSUTADRF, CLDTOT …), plus a footnote are in `sandbox/test_aprp_formula_titles_outputs/`. Say if the design is OK; it goes into `cloud-masking-aprp.ipynb` once the 2001–2040 run of that notebook has finished.</span>
+>
+> <span style="color:#E58AA5"><!--cdb1451a-->**Forcing tree, now 5 rows (25 Nov, 19:00):** row 5 = cloud SW split into real cloud change + surface-albedo masking + atmosphere masking & other, same colour scale as rows 3–4 (your choice). Renamed everywhere to `radiative_forcing_tree_5rows.py` / `radiative-forcing-tree-5rows/`. The 2001–2040 figures are redrawn automatically once the cloud-masking notebook (running now) finishes; the old 4-row figures are then removed.</span>
+>
+> <span style="color:#A84300"><!--499a01f9-->**2001–2040 analysis (25 Nov, 18:29):** all 10 main notebooks done; `results/figures/` holds only 2001–2040 (and MEGAN) figures. Forcing tree (3 rows) done for 2001–2040. NIRD froze the other jobs at 16:45; restarted at 18:28 on login-2: forcing decomposition, cloud masking, 4-row tree and the new land-temperature notebook. Draft Methods outline: 2001–2040 numbers, significance shares, MEGAN grouping + safeguard, soil-moisture factor (switched off in CLM), forest-vs-climate section (corrected: the difference at the top of the atmosphere is longwave, not clouds; nudging point softened). **19:01:** forcing decomposition and 4-row tree done for 2001–2040; cloud masking and land temperature still running. MEGAN maps: new layout (LAI in row 1, no safeguard panel) applied to the paper notebook, rerun running. **19:05:** MEGAN paper maps redrawn with the new layout (LAI in row 1, no safeguard panel); the replacement / net-tree-gain numbers are back. **20:30:** land temperature done: forest warming is 1.5 % of the climate warming over the modified cells (0.11 vs 7.4 K; 3.4 % in spring), in the draft. Cloud masking failed (my mistake: cloud fields missing from the copy), rerunning; the 5-row tree follows it. Two figure flaws fixed in the land-temperature code, waiting for your OK to redraw.</span>
+>
+> <span style="color:#A84300"><!--dbee06ab-->**Forcing-tree scripts now in analysis (24 Nov, 17:33):** `analysis/forcing_tree.py` (3 rows) and `analysis/forcing_tree_4rows.py` (4 rows) write to `results/figures/forcing-tree{,-4rows}/` and `results/tables/forcing-tree{,-4rows}/`. All 16 figures were redrawn; the tables match the earlier ones exactly. Not committed. The old copies in `analysis/test_forcing_tree*_outputs/` can be deleted.</span>
+>
+> <span style="color:#A84300"><!--47db7f49-->**Vegetation-region names (25 Nov, 19:29):** you chose **A**. The two regions are now **replacement** (broadleaf replaces needleleaf) and **net tree gain** (any other tree gain, mostly needleleaf, including the 47 light-teal cells). Same cells, new names in the plotting code, the SI section, its figure (redrawn) and the methods text. Test maps in `sandbox/vegetation_regions/src_maps_outputs/` redrawn and checked: the new labels and footnote fit; the figures in `results/` still have the old names until the analysis notebooks are rerun (your OK needed).</span>
+>
 > <span style="color:#999999"><!--40b2b6a1-->**Commits made (24 Nov, 17:12):** 7 topic commits in the project repo (MEGAN LMDI folders; background aerosol notebooks; leaf area CLM vs LPJ-GUESS; Tang 2023; MET nudging fix; sandbox; logs) and 1 in the draft repo (vegetation regions in Methods + SI). Not pushed.</span>
 >
 > <span style="color:#CC0000"><!--0fee2434--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **MEGAN attribution maps (23 Nov, 21:55):** test figures with one colour scale per row are in the sandbox. LAI saturates at ±10, so choose whether it gets its own scale. More MEGAN years are not recommended. Paper figures are unchanged.</span>
 >
 > <span style="color:#555555"><!--ee15eedf-->**Last run being postprocessed again (24 Nov, 16:30):** with your OK, the 19 broken files were removed and postprocessing of `LCC_PD_fBVOClccPD` restarted with fewer parallel jobs (up to 3 tries). It should take about 4–6 hours. When all 19 files are there, the 2001–2040 analysis starts by itself.</span>
 >
-> <span style="color:#CC0000"><!--4cd451a7--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Forcing decomposition tree, two layouts (24 Nov, 16:47):** (1) 3 rows with albedo, colourbars on rows 1–2, LW added: `sandbox/test_forcing_tree_outputs/` (12 figures). (2) NEW 4-row layout: total → non-BVOC / BVOC → Ghan terms of both → each split into SW and LW, no physical labels: `sandbox/test_forcing_tree_4rows_outputs/` (4 figures). Choose one for `analysis/`.</span>
+> <span style="color:#CC0000"><!--4cd451a7--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Forcing decomposition tree, two layouts (24 Nov, 16:47):** (1) 3 rows with albedo, colourbars on rows 1–2, LW added: `sandbox/test_forcing_tree_outputs/` (12 figures). (2) NEW 4-row layout: total → non-BVOC / BVOC → Ghan terms of both → each split into SW and LW, no physical labels: `sandbox/test_forcing_tree_4rows_outputs/` (4 figures). Choose one for `analysis/`. **Cloud masking (17:42):** APRP notebook `analysis/cloud-masking-aprp.ipynb` done: the negative SW cloud term of the land-cover part is masking of the darker surface, the clouds themselves reflect slightly less; for BVOC the cloud term is a real cloud brightening.</span>
 >
 > <span style="color:#CC0000"><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **New paper story (22 Nov, 17:14):** the story moves from "BVOC-cloud effects offset the albedo warming" to "future land-cover change plays a minor regional role because climate change dominates". Decide the final framing. The manuscript is unchanged.</span>
 >
 > <span style="color:#008080"><!--36563bcd--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Background aerosol, two notebooks (21 Nov, 17:17):** PD vs FUT and LCC vs CTRL now have the same merged analysis, run and checked. Decide whether to keep the extra combined notebook.</span>
 >
-> <span style="color:#CC0000"><!--560cc914--><span style="background:#CC0000;color:#FFFFFF;padding:0 4px;border-radius:3px">**WAITING ON YOU**</span> **Vegetation region numbers on maps (24 Nov, 16:50):** regional means use the cell classes (not the drawn lines); two number lines under each map, subtitle A and a footnote ("*cells with ≤ 1 pp tree gain left out (Supplementary Sect. S1)") are drawn on the two test figures (`sandbox/vegetation_regions/region_numbers_outputs/two_lines/`). The definition is in the draft Supplementary material (not committed). Next: OK to apply to the paper figures, and which ones.</span>
+> <span style="color:#A84300"><!--560cc914-->**Vegetation regions on all result maps (24 Nov, 17:47):** the two lines and the broadleaf/needleleaf-expansion numbers are in the shared plotting code, checked on 7 kinds of figures. Also fixed: white lines on dark MEGAN maps, tighter gamma maps, and snow persistence (now snow-season length, ≤ 365 days; it was −18,900 days because the model counter never resets under permanent snow). The 12 notebooks with maps are rerunning in the background (started 17:29). Draft Supplementary numbered S1. Not committed.</span>
 >
 > <span style="color:#A84300">**Fig. 1c checked (21 Nov, 16:26):** row 2 is not a copy of row 1. It uses the right runs (`LCC_FUT − LCC_PD`). The rows look alike because climate change dominates both. Nothing changed.</span>
 >
@@ -436,6 +458,262 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#999999">
 
+## 2026-11-26 · 14:57 → 15:12 (15 min) · session 5b362f0a
+
+**Goal:** commit all open work by topic; gitignore the local archive folders.
+
+**Done:** commits for vegetation regions, sandbox, archives out of git, new analyses, draft Methods+SI; 2001–2025 / design-B / pre-CO₂-fix archive folders added to `.gitignore`; VS Code backup moved to `/cluster/work` to free space.
+
+**Found:** the home folder was over its quota (20.2 of 20 GiB, and too many files), which blocked every git write.
+
+**Open-next:** commit the 2001–2040 rerun once ~1 GB more is free; push when you say.
+
+**Files changed:** `.gitignore`
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-26 · 14:02 → 14:52 (50 min) · session 9576fddd
+
+**Goal:** forcing tree (5 rows): less vertical space, text spread over the tree.
+
+**Done:** layout code changed; one shared colourbar for rows 3–5, section labels placed; test figure drawn (FUT case); 4 paper figures redrawn after your OK; second round: row 2 beside TOTAL, closure note centred, 'other' on two lines, unit label closer, * footnote back; third/fourth round: 'other' grey italic, closure-text rename tried and undone, "(δ not drawn)" removed, * footnote restyled for all figures.
+
+**Open-next:** other map figures get the new footnote style only when their notebooks are rerun. Deck with process chips next to each map (`results/pptx/build_forcing_tree_processes_pptx.py`) being built. Nothing committed.
+
+**Files changed:** `analysis/radiative_forcing_tree_5rows.py`, `sandbox/test_forcing_tree_5rows.py`, `src/boreal_forest_expansion/plotting/forcing_maps.py` (footnote)
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-25 · 19:40 → 19:51 (11 min) · session 9261baaa
+
+**Goal:** remove `sandbox/test_vegetation_*.py` scripts that no longer reproduce a saved figure.
+
+**Done:** removed 5 scripts: 4 whose figures are gone (coast_edge, dash_density, line_style_final, red_cells) and `siberia_closed` (its input file is lost). `left_out` now reads `vegetation_map_lines.json`; rerun gives an identical figure and table. Kept 11, all import fine.
+
+**Found:** two line files (`_siberia_closed`, `_before_siberia`) had disappeared after 19:26 (not in git). `siberia_gap_closed.png` stays in the outputs folder without a script.
+
+**Open-next:** commit the removal.
+
+**Files changed:** 5 scripts removed (git rm), `sandbox/test_vegetation_left_out.py` (one path).
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-25 · 19:42 → 19:44 (2 min) · session a03fb91c
+**Goal:** why is the 5-row forcing-tree figure folder empty?
+**Done:** checked: the folder was created empty at 19:00; the redraw waits for the cloud-masking notebook (running since 18:28) and starts by itself after it.
+**Found:** the waiting job is alive; nothing broken.
+**Open-next:** look at the 4 new 5-row figures once they appear.
+**Files changed:** none (logs only).
+
+<div style="color:#E58AA5">
+
+## 2026-11-25 · 19:41 → 19:58 (17 min) · session aa1522f0
+
+**Goal:** region names back to broadleaf exp. / needleleaf exp., redraw straight in results/, fix the draft SI.
+
+**Done:** names changed back in the plotting code, region file (cells identical: 266 / 576 / 319), CLAUDE.md and 3 notebook texts; footnote keeps the short definitions. Redrawn: forcing decomposition (13 figures), MEGAN attribution (8). Land-temperature and cloud-masking notebooks stopped and restarted (19:54) so they use the old names. Draft: SI section S1 (text, list, table, captions), one Methods line, SI figure redrawn; compiled, table fits.
+
+**Open-next:** look at the land-temperature and cloud-masking figures when they finish (hours). The 4 old 4-row forcing-tree figures go away when the 5-row tree is drawn.
+
+**Files changed:** forcing_maps.py, megan_maps.py, build_vegetation_regions.py + vegetation_regions.nc, si_region_map.py, si_vegetation_classes.py, CLAUDE.md, 3 notebooks (text), draft supplementary-material.tex, methods-claude.tex, figures/vegetation_regions_by_class.png.
+
+</div>
+
+## 2026-11-25 · 19:37 → 19:40 (3 min) · session aa1522f0
+
+**Goal:** check that all figures say broadleaf exp. / needleleaf exp., not replacement / net tree gain.
+
+**Done:** checked code and figure dates; viewed 3 new figures. Nothing changed.
+
+**Found:** 25 figures + the SI figure made after 17:40 say replacement / net tree gain; older ones say broadleaf/needleleaf exp. The code, the SI text and CLAUDE.md all follow option A.
+
+**Open-next:** you confirm the revert → change names back in the code, SI legend and draft, redraw the 25 figures + SI figure.
+
+**Files changed:** logs only.
+
+</div>
+
+<div style="color:#999999">
+
+## 2026-11-25 · 19:25 → 20:08 (43 min) · session eab501a1
+
+**Goal:** clean the sandbox; move the vegetation-region scripts to diagnostics.
+
+**Done:** deleted `vegetation_map_lines_before_estonia_trim.json` and `region_cells_outputs/region_monoterpene.csv` (neither used by any script). Moved `region_cells_outputs/` + 4 scripts to `diagnostics/lcc-modified-cells/`, fixed their paths, reran all 4 (OK). Merged the sandbox helpers they need into one `vegetation_helpers.py` there; figures pixel-identical. Folded `si_region_map.py` into `si_vegetation_classes.py` (your OK), deleted it; SI figure identical, it prints the SI table numbers.
+
+**Found:** `vegetation_map_lines.json` and `_siberia_closed.json` are identical to the live file in `diagnostics/lcc-modified-cells/`; both are still read by sandbox scripts, as is `_before_siberia.json`.
+
+**Open-next:** commit. The sandbox helper originals stay (10 other sandbox tests use them).
+
+**Files changed:** 2 sandbox files deleted; 4 scripts + 1 folder moved to `diagnostics/lcc-modified-cells/` (paths edited); new `vegetation_helpers.py`; `si_region_map.py` deleted.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-25 · 18:02 → 18:33 (31 min) · session b631a2eb
+
+**Goal:** explain the APRP method; turn it into a function; show how each mapped term is calculated under the figure titles.
+
+**Done:**
+- Explained APRP and its variables (in chat).
+- New function `aprp()` (+ `aprp_parameters()`) in `src/.../analysis/aprp.py`; checked on LCC_PD − CTRL_PD 2001–2002: identical to the notebook (difference 0).
+- Sandbox test figures with formulas under the panel titles, written with the model output variables (your correction 18:28): masking, APRP split, cloud variables ([LCC − CTRL]_PD).
+
+**Found:** nothing new about the science.
+
+**Open-next:**
+- Your OK on the formula design → add it to `analysis/cloud-masking-aprp.ipynb` after its 2001–2040 run ends (ask before rerun).
+
+**Files changed:** `src/boreal_forest_expansion/analysis/aprp.py` (new), `src/boreal_forest_expansion/analysis/__init__.py`, `sandbox/test_aprp_module.py`, `sandbox/test_aprp_formula_titles.py` (+ outputs).
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-25 · 17:39 → 19:29 (110 min) · session 47db7f49
+
+**Goal:** settle the names of the two vegetation regions (broadleaf vs needleleaf expansion).
+
+**Done:**
+- Region names decided: option A, "replacement" / "net tree gain" (open since 2026-11-24, 17:33).
+- Test maps redrawn in the sandbox (7 kinds), new labels and footnote fit.
+- One-row context grid for [LCC − CTRL]_FUT only (isoprene … evapotranspiration): `sandbox/vegetation_regions/src_maps_outputs/contrast_grid_context_context_LCC-CTRL_FUT_2001_2025.png`.
+- Dominant-PFT map (CTRL, LCC, change): `sandbox/vegetation_regions/src_maps_outputs/dominant_pft_change.png`.
+- Copy of the vegetation-classes figure with the two lines: `sandbox/test_vegetation_outlines_outputs/vegetation_classes_with_lines.png` (original unchanged); kept as reference.
+- New SI figure (tree-cover change of broadleaf and needleleaf + the region map): `sandbox/vegetation_regions/region_cells_outputs/si_vegetation_classes.png`, now in the draft.
+- SI legend reframed around needleleaf, in the order teal / light teal / orange: "Needleleaf expansion (net tree gain)", "No needleleaf loss, but broadleaf gains (net tree gain)", "Needleleaf decrease, replaced by broadleaf (replacement)", "Little tree gain (≤ 1 pp, left out from regional means)". Both SI figures redrawn.
+- Draft S1: the 3-panel figure replaces the single map; class list and table rewritten in the same order and wording; compiled and checked.
+- Renamed everywhere: map labels, subtitle, line legend and footnote; the region file (rebuilt, same 266 / 576 / 319 cells); the SI section S1, its table and figure; one sentence in the methods draft; text in 3 notebooks.
+
+**Found:** the methods sentence speaks of an "increase" in the net-tree-gain cells, but PD isoprene there changes by −0.53 (log 25 Nov, 16:06). Worth a look. The dominant plant type changes in only 188 of 1161 modified cells (17 % of their area), mostly arctic grass → needleleaf trees or shrubs; broadleaf becomes dominant in just 7 cells, so in the replacement region broadleaf is added as a minority type. Raising the 1 pp threshold does not remove the light-teal cells (broadleaf gain median +6 pp): it moves replacement cells into them (47 → 63 cells at 3–5 pp).
+
+**Open-next:** the Δ formula in S1 runs past the right margin (was already so); rerun the analysis notebooks so `results/figures` get the new names (ask first).
+
+**Files changed:** `src/.../plotting/forcing_maps.py`, `megan_maps.py`, `diagnostics/lcc-modified-cells/build_vegetation_regions.py` + `vegetation_regions.nc`, `sandbox/vegetation_regions/si_region_map.py`, `region_cells.py`, draft `supplementary-material.tex`, `methods-claude.tex`, `figures/vegetation_regions_by_class.png`, 3 `analysis/` notebooks (text only), `CLAUDE.md`
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-25 · 18:26 → 19:00 (34 min) · session cdb1451a
+
+**Goal:** get the 5th-row test figure drawn, then put it in the paper figures.
+
+**Done:** test figure drawn and checked (`sandbox/test_forcing_tree_5rows_outputs/`). Non-BVOC (≥45°N): −0.065 = +0.16 real − 0.23 masking; BVOC −0.020 ≈ real cloud change. Scale kept shared (you). Renamed 4rows → 5rows (script, results folders, tables, cache, README, watcher script). Automatic redraw of the 2001–2040 figures set up.
+
+**Found:** first test job was killed with the old session. The 2001–2040 rerun had stopped at 16:04 but another session restarted it at 18:28; its 4-row tree ran at 18:33 without row 5 (cloud-masking caches not ready yet).
+
+**Open-next:** look at the four 2001–2040 five-row figures when the redraw is done (log `/cluster/work/users/adelez/analysis-2001-2040/tree5/run.log`).
+
+**Files changed:** `analysis/radiative_forcing_tree_5rows.py` (was `_4rows`), `analysis/README.md`, `cases-scripts/run_when_done/analysis_2001-2040_when_done.sh`, `sandbox/test_forcing_tree_5rows.py`, `results/tables/radiative-forcing-tree-5rows/`
+
+</div>
+
+<div style="color:#E58AA5">
+
+## 2026-11-25 · 17:00 → 17:20 (20 min) · session cdb1451a
+
+**Goal:** add a 5th row to the 4-row forcing tree: cloud SW = real cloud change + masking.
+
+**Done:** code added to `analysis/radiative_forcing_tree_4rows.py`; sandbox test script `sandbox/test_forcing_tree_5rows.py`.
+
+**Open-next:** look at the test figure; redraw the paper figures (2001–2040) once the cloud-masking notebook run has finished (ask first).
+
+**Files changed:** `analysis/radiative_forcing_tree_4rows.py`, `sandbox/test_forcing_tree_5rows.py`
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-25 · 15:10 → 15:10 (0 min) · session ba876485
+
+**Goal:** check whether cloud vertical profiles exist for the non-artefact contrasts.
+
+**Found:** yes, for interactive, fBVOC and non-BVOC (annual + JJA, 2001–2040) in `results/figures/bvoc-soa-cloud-interactions/`.
+
+**Files changed:** none.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-25 · 20:24 → 20:30 · session 499a01f9
+
+**Goal:** finish the 2001–2040 reruns and put the land-temperature numbers in the draft.
+
+**Done:** land-temperature notebook done; draft M5b filled with its numbers. Cloud-masking rerun relaunched with the missing cloud fields; 5-row tree redraw chained to it. Land-temperature figure flaws (doubled "K K", overlapping bar labels) fixed in the notebook code and tested in the sandbox.
+
+**Found:** over the modified cells the forest warms land air 0.11 K (FUT) vs 7.4 K for climate = 1.5 % (spring 3.4 %, winter 0.4 %); warming comes from the needleleaf-expansion cells, broadleaf cells ~0 and cooler in winter; no warming outside the modified cells. Cloud masking failed 4× because my staged copy had only total cloud.
+
+**Open-next:** OK to redraw the land-temperature figures; cloud-masking numbers into the draft; delete the staging copy afterwards.
+
+**Files changed:** `analysis/climate-vs-lcc-land-temperature.ipynb` (cells 5–6), `sandbox/test_land_temp_ratio.py`, draft `methods-claude.tex`.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-25 · 15:01 → 19:04 (~4 h) · session 499a01f9
+
+**Goal:** rerun the 3 missing items for 2001–2040; only 2001–2040 in `results/figures/`; add them to the automatic chain; MEGAN maps with leaf area in row 1; update the draft (numbers, MEGAN grouping, forest-vs-climate note); land temperature comparison.
+
+**Done:** 334 figures for 2001–2025 deleted from `results/figures/`. `results/tables/forcing-tree*` → `radiative-forcing-tree*`. Automatic chain: + 3 items + the new land-temperature notebook, 3 tries each. Draft `methods-claude.tex`: 2001–2040 numbers, significance shares, MEGAN grouping + safeguard notes, new section M5b. MEGAN sandbox figures with leaf area in row 1. Fixed: vegetation-region numbers missing on cropped maps (MEGAN).
+
+**Found:** correction: forest vs climate differ at TOA because of longwave (climate −7 W m⁻², forest −0.1), not cloud masking (clouds hide ~half of the surface darkening in both). MEGAN soil-moisture factor is always 1 in CLM. 2001–2040 numbers move ≤ 0.01 W m⁻², intervals 15–30 % narrower; significant cells up for every forest contrast. MEGAN safeguard = CLM sets emission to 0 when γ < 0, caused by a negative isoprene leaf-age factor in fast spring leaf-out; ≤ +0.03 isoprene, 0 monoterpenes. PD isoprene: broadleaf cells gain through leaf area, needleleaf cells through temperature. NIRD unstable all afternoon.
+
+**Open-next:** the 3 reruns and the land-temperature notebook (running); land-temperature number box in the draft; rerun the MEGAN notebook (your OK) and choose its layout; check the citations in M5b; equilibrium and autocorrelation still on 25 years; you review `diagnostics/background-aerosol/`; `results/tables/` still has both periods.
+
+**Files changed:** `src/.../plotting/forcing_maps.py`, `analysis/radiative_forcing_tree{,_4rows}.py`, `radiative-forcing-decomposition.ipynb`, `cloud-masking-aprp.ipynb`, `climate-vs-lcc-land-temperature.ipynb` (new), `analysis/README.md`, `cases-scripts/run_when_done/analysis_2001-2040_when_done.sh`, `sandbox/test_megan_lmdi_lai_row1.py`, `sandbox/significance_2025_vs_2040/`, draft `methods-claude.tex`; `results/figures/` (deletions), `results/tables/` (rename).
+
+</div>
+
+<div style="color:#AAAAAA">
+
+## 2026-11-25 · 14:58 → 14:58 (0 min) · session 499a01f9
+
+**Goal:** status of analysis and runs. All runs done; 2001–2040 analysis finished without errors at 00:08. Read-only.
+
+</div>
+
+<div style="color:#A84300">
+
+## 2026-11-24 · 17:23 → 17:33 (10 min) · session dbee06ab
+
+**Goal:** move the forcing-tree scripts from the sandbox to `analysis/`, outputs in `results/`.
+
+**Done:** scripts moved and renamed (`forcing_tree.py`, `forcing_tree_4rows.py`); 16 figures and 4 tables written to `results/{figures,tables}/forcing-tree{,-4rows}/`; tables identical to the sandbox ones; README row added.
+
+**Open-next:** delete the old copies `analysis/test_forcing_tree*_outputs/`; commit.
+
+**Files changed:** `analysis/forcing_tree.py`, `analysis/forcing_tree_4rows.py` (moved), `analysis/README.md`, `results/figures/forcing-tree*/`, `results/tables/forcing-tree*/`.
+
+</div>
+
+<div style="color:#CC0000">
+
+## 2026-11-24 · 17:13 → 17:33 (20 min) · session 4e079785
+
+**Goal:** understand the light-teal class in `si_region_classes.png` and why it counts as needleleaf region.
+
+**Done:** explained it from the code: the regions split "broadleaf replaces needleleaf" from "any other tree gain", so broadleaf gain without replacement lands in the second group.
+
+**Found:** light-teal cells (47): broadleaf +6.2 pp, needleleaf +1.7 pp (medians); needleleaf also grows > 1 pp in 55 % of them.
+
+**Open-next:** **WAITING ON YOU:** choose legend/region names A, B or C (A recommended; see box above). Then apply to `si_region_map.py`, the SI text, and the map subtitles/labels in `forcing_maps` and `megan_maps`.
+
+**Files changed:** none (logs only).
+
+</div>
+
+<div style="color:#999999">
+
 ## 2026-11-24 · 17:09 → 17:12 (3 min) · session 40b2b6a1
 
 **Goal:** commit the open work by topic.
@@ -450,7 +728,7 @@ One block per working window (a new block starts after more than 1 hour without 
 
 <div style="color:#E58AA5">
 
-## 2026-11-24 · 16:40 → 17:07 (27 min) · session 4cd451a7
+## 2026-11-24 · 16:40 → 17:42 (62 min) · session 4cd451a7
 
 **Goal:** Try a 4-row forcing tree: Ghan terms of both branches, then SW/LW of each, no physical labels.
 
@@ -460,9 +738,11 @@ One block per working window (a new block starts after more than 1 hour without 
 
 **Also:** row-4 titles now say NON-BVOC / BVOC; explained which processes each SW/LW Ghan map contains.
 
-**Open / next:** choose layout 3-row or 4-row; say if you want the APRP test that separates cloud masking from real cloud changes.
+**Cloud masking (APRP), done:** new notebook `analysis/cloud-masking-aprp.ipynb` (figures and tables in `results/*/cloud-masking-aprp/`). The negative SW cloud term of the land-cover (non-BVOC) part is masking: clouds hide part of the darker surface. The clouds themselves reflect slightly less (present day ≥45°N: cloud term −0.07 = real cloud change +0.16 + masking −0.23 W m⁻²). For BVOC there is no masking: the cloud term is a real brightening of clouds.
 
-**Files changed:** `sandbox/test_forcing_tree_4rows.py` (new), `sandbox/test_forcing_tree_4rows_outputs/` (4 PNG + 2 CSV), cache `/cluster/work/users/adelez/boreal-caches/forcing-tree-4rows/`
+**Open / next:** choose layout 3-row or 4-row; read the APRP findings (§5 of the notebook).
+
+**Files changed:** `sandbox/test_forcing_tree_4rows.py` (new), `analysis/cloud-masking-aprp.ipynb` (new), `analysis/README.md`, `results/{figures,tables}/cloud-masking-aprp/` (new), `sandbox/test_forcing_tree_4rows_outputs/` (4 PNG + 2 CSV), cache `/cluster/work/users/adelez/boreal-caches/forcing-tree-4rows/`
 
 </div>
 
@@ -504,9 +784,9 @@ One block per working window (a new block starts after more than 1 hour without 
 
 ---
 
-<div style="color:#CC0000">
+<div style="color:#A84300">
 
-## 2026-11-24 · 16:03 → 17:01 (58 min) · session 560cc914
+## 2026-11-24 · 16:03 → 17:47 (104 min) · session 560cc914
 
 **Goal:** finish the vegetation-region numbers (broadleaf vs needleleaf expansion) and choose how to show them on the maps.
 
@@ -515,13 +795,17 @@ One block per working window (a new block starts after more than 1 hour without 
 - New sandbox test `sandbox/vegetation_regions/test_region_numbers.py`: regional means added to the real Ghan figure and context grid in 3 layouts, all checked by eye.
 - Two extra lines under each map: clean in both figures. One line: values run into each other. Side block: runs into the next map and makes the figure very wide.
 - You chose: regions by cell class (lines only for display), two-line layout, subtitle A with an asterisk and a footnote at the bottom. Both test figures redrawn with it and checked.
+- Applied to all result maps (you, 17:12): region file + lines file in `diagnostics/lcc-modified-cells/`, shared plotting code (`forcing_maps.py`, `megan_maps.py`) and the two MEGAN LMDI notebooks. Checked on 7 kinds of figure drawn directly from the new code; colourbars moved a little lower so their ×10ⁿ label does not touch the numbers.
+- 12 notebooks with maps rerunning in the background (started 17:29, `/cluster/work/users/adelez/veg-regions-rerun/run.log`).
+- Draft: Supplementary numbering S1, S2, Table S1, Fig. S1 (compiled).
+- Fixed (you, 17:35): white lines on the dark MEGAN maps; gamma-map colourbars closer to the maps; **snow persistence** (open since 2026-10-28) now = snow-season length (longest continuous snow cover in the year, ≤ 365 d). The old value (−18,900 days) came from CLM's counter, which never resets under permanent snow. Now LCC_FUT − CTRL_PD ≈ −47 days of snow season over 45–90°N; LCC − CTRL ≈ −0.5 to −0.8 days.
 - Draft: new Supplementary section "Vegetation regions used for the regional means" (definitions, class table, how the means are computed, lines are display only) + region figure; compiles. Not committed.
 
 **Found:** Ghan NET [LCC − CTRL]_FUT: broadleaf exp. −0.58 ± 0.05, needleleaf exp. +1.31 ± 0.04 W m⁻², against +0.22 over 45–90°N. Cloud term reverses sign between the two regions (+1.03 vs −0.76).
 
-**Open-next:** apply to the paper figures (shared plotting code) and decide which figures to redraw. The draft numbers the new section 5.1, not S1: fix when the Supplementary gets its own numbering. The "needleleaf exp." region also contains 47 cells where broadleaf gains without replacing needleleaf (5 % of the area).
+**Open-next:** check the reruns when they finish. The "needleleaf exp." region also contains 47 cells where broadleaf gains without replacing needleleaf (5 % of the area).
 
-**Files changed:** `sandbox/vegetation_regions/test_region_numbers.py`, `si_region_map.py` + outputs (new); draft `supplementary-material.tex`, `main.tex` (one `\input` line), `figures/vegetation_regions_by_class.png`.
+**Files changed:** `src/.../plotting/forcing_maps.py`, `megan_maps.py`; `diagnostics/lcc-modified-cells/build_vegetation_regions.py`, `vegetation_regions.nc`, `vegetation_map_lines.json` (new); `analysis/megan-lmdi-attribution-maps.ipynb`, `megan-lmdi-vs-approx.ipynb`; `CLAUDE.md`; `docs/PLOTTED_VARIABLES.md`; sandbox test scripts + outputs; draft `supplementary-material.tex`, `main.tex`, `figures/vegetation_regions_by_class.png`. Results figures being regenerated.
 
 </div>
 
